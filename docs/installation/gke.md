@@ -5,7 +5,7 @@ weight: 2
 
 In this document we will review how to install Gloo on Google Kubernetes Engine.
 
-# Configure kubectl
+## Configure kubectl
 
 Configure kubectl to use with your cluster:
 
@@ -18,9 +18,9 @@ Validate that kubectl was successfully configured with:
 kubectl cluster-info
 ```
 
-# Install Gloo
+## Install Gloo
 
-Use kubectl to install gloo using it's released kubernetes manifest:
+Use kubectl to install gloo using its released kubernetes manifest:
 ```
 kubectl apply -f https://github.com/solo-io/gloo/releases/download/v0.6.19/gloo-gateway.yaml
 ```
@@ -29,7 +29,7 @@ In this example we are installing version 0.6.19. You can install any other rele
 
 The installation takes a few minutes to fully complete.
 
-# Access from the Internet
+## Access from the Internet
 
 Accessing your Gloo virtual services from the internet is easy with Google Kubernetes Engine.
 
@@ -45,7 +45,7 @@ For Example:
 
 You can now use the endpoints as your public address for requests.
 
-# Final Notes
+## Final Notes
 
 In addition to Gloo, usually you will also want to:
 

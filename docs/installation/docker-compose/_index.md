@@ -8,7 +8,7 @@ weight: 3
 1. You can optionally set GLOO_VERSION environment variable to the gloo version you want (defaults to "0.6.19").
 1. Run `docker compose up`
 
-# Example
+## Example
 
 This configuration comes pre-loaded with an example upstream:
 
