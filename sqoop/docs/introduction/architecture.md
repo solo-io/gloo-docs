@@ -1,3 +1,9 @@
+---
+weight: 3
+title: Architecture
+---
+
+
 # Architecture
 
 The Architecture of Sqoop can be understood as follows:

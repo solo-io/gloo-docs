@@ -1,3 +1,8 @@
+---
+weight: 1
+title: Kubernetes
+---
+
 # Getting Started on Kubernetes
 
 ### What you'll need

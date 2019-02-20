@@ -1,3 +1,8 @@
+---
+weight: 1
+title: Docker
+---
+
 # Getting started on Docker
 
 #### What you'll need
