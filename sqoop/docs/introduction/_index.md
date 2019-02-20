@@ -6,7 +6,7 @@ title: Introduction
 
 # Introduction
 
-![Overview](high_level_architecture.png "High Level Architecture")
+![Overview](../img/high_level_architecture.png "High Level Architecture")
 
 
 ### What is Sqoop?

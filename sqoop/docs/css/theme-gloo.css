@@ -64,9 +64,9 @@ color: var(--MENU-VISITED-color);
   color: var(--MENU-SEARCH-BOX-color);
   border-color: var(--MENU-HEADER-BORDER-color);
 }
-/* #sidebar #header-wrapper #header #logo {
+#sidebar #header-wrapper #header #logo {
   width: 50%;
-} */
+}
 #sidebar .searchbox {
   border-color: var(--MENU-SEARCH-BOX-color);
   background: white;
