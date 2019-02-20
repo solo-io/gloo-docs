@@ -1,16 +1,26 @@
 ---
-title: "glooctl install"
+title: "glooctl install kube"
 weight: 5
 ---
-## glooctl install
+## glooctl install kube
 
-install gloo on different platforms
+install Gloo on kubernetes to the gloo-system namespace
 
 ### Synopsis
 
-choose which version of Gloo to install.
+requires kubectl to be installed
+
+```
+glooctl install kube [flags]
+```
 
 ### Options
+
+```
+  -h, --help   help for kube
+```
+
+### Options inherited from parent commands
 
 ```
       --docker-email string      Email for docker registry. Use for pulling private images.
@@ -19,18 +29,11 @@ choose which version of Gloo to install.
       --docker-username string   Username for Docker registry authentication. Use for pulling private images.
   -d, --dry-run                  Dump the raw installation yaml instead of applying it to kubernetes
   -f, --file string              Install Gloo from this kubernetes manifest yaml file rather than from a release
-  -h, --help                     help for install
+  -i, --interactive              use interactive mode
       --release string           install using this release version. defaults to the latest github release
-```
-
-### Options inherited from parent commands
-
-```
-  -i, --interactive   use interactive mode
 ```
 
 ### SEE ALSO
 
-* [glooctl](../glooctl)	 - CLI for Gloo
-* [glooctl install kube](../glooctl_install_kube)	 - install Gloo on kubernetes to the gloo-system namespace
+* [glooctl install](../glooctl_install)	 - install gloo on different platforms
 
