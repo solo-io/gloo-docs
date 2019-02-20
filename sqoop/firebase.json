@@ -1,6 +1,6 @@
 {
   "hosting": {
-    "target": "glooe-site",
+    "target": "sqoop-site",
     "public": "site",
     "ignore": [
       "firebase.json",
