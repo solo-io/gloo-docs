@@ -1,6 +1,6 @@
 {
   "hosting": {
-    "target": "glooe-site",
+    "target": "gloo-docs",
     "public": "site",
     "ignore": [
       "firebase.json",
