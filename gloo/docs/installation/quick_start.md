@@ -1,5 +1,5 @@
 ---
-title: Installing Gloo
+title: Gloo Quick Start
 weight: 2
 ---
 
