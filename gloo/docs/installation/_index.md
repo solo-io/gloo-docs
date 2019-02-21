@@ -11,8 +11,8 @@ follow the **[open source quick start guide](quick_start)**.
 
 <table>
 <tr>
-<td>
-<img src="kube.png" width="40%" />
+<td  width="30%">
+<img src="kube.png" />
 </td>
 <td>
 To quickly get up and running with open source Gloo on Kubernetes, check out the <a href="quick_start"><b>quick start guide</b></a>. 
@@ -24,11 +24,12 @@ To quickly get up and running with open source Gloo on Kubernetes, check out the
 
 There are several different ways to deploy open source Gloo. 
 
+<div class="table">
 <table>
 <tr>
-<td><img src="helm.png" width="80%"/></td>
-<td><img src="gke-logo.png" /></td>
-<td><img src="docker.png" width="340%"/></td>
+<td width="33%"><img src="helm.png"/></td>
+<td width="33%"><img src="gke-logo.png" /></td>
+<td width="33%"><img src="docker.png"/></td>
 </tr>
 <tr>
 <td>
@@ -43,4 +44,5 @@ Gloo can be deployed locally for testing purposes using <b><a href="docker-compo
 </td>
 </tr>
 </table>
+</div>
 
