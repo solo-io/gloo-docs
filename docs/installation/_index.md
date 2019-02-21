@@ -48,6 +48,17 @@ Once your Kubernetes cluster is up and running, run the following command to dep
 glooctl install gateway 
 ```
 
+---
+**NOTE:** You can install gloo to am existing namespace by providing the `-n` option:
+
+```bash
+glooctl install gateway -n my-namespace
+```
+
+If the option is not provided, the namespace defaults to `gloo-system`.
+
+---
+
 Check that the Gloo pods and services have been created:
 
 ```bash
@@ -205,6 +216,12 @@ To uninstall Gloo and all related components, simply run
 
 ```bash
 glooctl uninstall
+```
+
+If you installed gloo to a different namespace you have to specify it using the `-n` option: 
+
+```bash
+glooctl uninstall -n my-namespace
 ```
 
 Note that this will also remove Knative-Serving, if it was installed by Glooctl.
