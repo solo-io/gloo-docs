@@ -5,8 +5,8 @@
   "targets": {
     "solo-corp": {
       "hosting": {
-        "glooe-site": [
-          "glooe-docs"
+        "gloo-docs": [
+          "gloo-docs"
         ]
       }
     }
