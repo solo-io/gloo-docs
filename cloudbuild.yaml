@@ -4,7 +4,17 @@ steps:
   args: ['deploy-site']
   env:
   - 'TAGGED_VERSION=$TAG_NAME'
+  dir: 'gloo'
   secretEnv: ['FIREBASE_TOKEN']
+  waitFor: ['-']
+
+- name: 'gcr.io/solo-public/go-mod-make:0.1.1'
+  args: ['deploy-site']
+  env:
+  - 'TAGGED_VERSION=$TAG_NAME'
+  dir: 'sqoop'
+  secretEnv: ['FIREBASE_TOKEN']
+  waitFor: ['-']
 
 secrets:
 - kmsKeyName: projects/solo-public/locations/global/keyRings/build/cryptoKeys/build-key

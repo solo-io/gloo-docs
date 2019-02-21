@@ -1,4 +1,7 @@
 .idea
+.vscode
 site
 themes
 resources
+
+.DS_Store
