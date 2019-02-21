@@ -60,7 +60,7 @@ the two additional options, otherwise Helm will install Gloo to the `default` na
 
 ### Ingress & Knative
 The Gloo chart archive contains the necessary value files for each of the remaining deployment options. Run the 
-following commandTo download and extract the archive to the current directory:
+following command to download and extract the archive to the current directory:
 
 ```bash
 helm fetch --untar=true --untardir=. gloo/gloo
