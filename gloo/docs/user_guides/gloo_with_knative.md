@@ -1,6 +1,6 @@
 ---
 title: Gloo with Knative
-weight: 6
+weight: 7
 ---
 
 Google's Knative project leverages a Kubernetes Cluster Ingress Controller to route requests to apps managed and autoscaled by Knative.

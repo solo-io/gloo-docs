@@ -1,6 +1,6 @@
 ---
 title: External Auth (Enterprise)
-weight: 8
+weight: 9
 ---
 
 ## ExtAuth

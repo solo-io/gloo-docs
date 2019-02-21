@@ -1,6 +1,6 @@
 ---
 title: OIDC (Enterprise)
-weight: 7
+weight: 8
 ---
 
 ## Authentication

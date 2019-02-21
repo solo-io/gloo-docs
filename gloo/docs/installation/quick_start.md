@@ -1,6 +1,6 @@
 ---
-title: Gloo Quick Start
-weight: 2
+title: Open Source Quick Start
+weight: -1
 ---
 
 ## 1. Install Glooctl

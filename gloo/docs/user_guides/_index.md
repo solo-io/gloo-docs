@@ -11,6 +11,7 @@ Follow these guides to get started using Gloo!
 * [Function Routing](function_routing)
 * [External API Routing](external_api_routing)
 * [Rate Limiting (Enterprise)](ratelimit)
+* [Exposing Gloo with NodePort](node_port)
 
 **Ingress:**
 

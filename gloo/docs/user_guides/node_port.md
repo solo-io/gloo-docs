@@ -1,6 +1,6 @@
 ---
-title: Production Deployment Using NodePort
-weight: 7
+title: Exposing Gloo with NodePort
+weight: 5
 ---
 
 ## Motivation
