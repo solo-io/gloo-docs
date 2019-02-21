@@ -216,3 +216,17 @@ color: var(--MENU-VISITED-color);
 #body li {
   list-style-type: circle;
 }
+
+
+@media only all and (max-width: 59.938em)
+  #body {
+    margin-left: 230px;
+  }
+}
+
+@media only all and (max-width: 47.938em)
+  #body {
+    margin-left: 0;
+  }
+}
+
