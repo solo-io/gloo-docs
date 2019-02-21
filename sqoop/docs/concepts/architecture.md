@@ -20,8 +20,8 @@ Sqoop is composed of two components: a GraphQL service and an Envoy Proxy functi
 its own sidecar, Sqoop directs Envoy to connect to Gloo as its [control plane](https://github.com/envoyproxy/data-plane-api/blob/master/XDS_PROTOCOL.md), 
 allowing Sqoop to leverage [Gloo's large set of HTTP routing features](https://gloo.solo.io/#features).
 
-Sqoop generates [Gloo config objects](https://gloo.solo.io/v1/virtualservice/) in a self-service fashion, allowing Gloo
-to handle service discovery, [Gloo plugin configuration](https://gloo.solo.io/plugins/aws/), and configuration of 
+Sqoop generates [Gloo config objects](https://gloo.solo.io/v1/github.com/solo-io/gloo/projects/gateway/api/v1/virtual_service.proto.sk/#VirtualService) in a self-service fashion, allowing Gloo
+to handle service discovery, [Gloo plugin configuration](https://gloo.solo.io/v1/github.com/solo-io/gloo/projects/gloo/api/v1/plugins/aws/aws.proto.sk/), and configuration of 
 [Envoy HTTP Filters](https://www.envoyproxy.io/docs/envoy/latest/intro/arch_overview/http_filters.html)
 
 Once Gloo has applied the desired configuration to Envoy, Sqoop begins listening for incoming GraphQL requests, serving queries 
