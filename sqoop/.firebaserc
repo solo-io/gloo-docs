@@ -5,7 +5,7 @@
   "targets": {
     "solo-corp": {
       "hosting": {
-        "sqoop-site": [
+        "sqoop-docs": [
           "sqoop-docs"
         ]
       }

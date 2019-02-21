@@ -8,7 +8,7 @@ site:
 
 .PHONY: deploy-site
 deploy-site: site
-	firebase deploy --only hosting:sqoop-site
+	firebase deploy --only hosting:sqoop-docs
 
 .PHONY: serve-site
 serve-site: site
