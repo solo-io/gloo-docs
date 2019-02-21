@@ -3,41 +3,111 @@ title: Installing Gloo with Helm
 weight: 1
 ---
 
-This document outlines instructions for the setup and configuration of Gloo using Helm. This is the recommended install method for installing Gloo to your production environment as it offers rich customization to the Gloo control plane and the proxies Gloo manages.
-
-## Installation
-
-To install with Helm:
-
-1. Add the Gloo Helm repository: 
-
-        helm repo add gloo https://storage.googleapis.com/solo-public-helm
-        
-1. (Optional) Customize the Gloo installation with a `value-overrides.yaml` file: 
-
-        # example value-overrides.yaml
-        namespace:
-          create: false
-        settings:
-          integrations:
-            knative:
-              enabled: true
-          watchNamespaces: []
-          writeNamespace: mycustomnamespace   
-
-     See [customizing Helm options](#Customizing-Helm-Options) for the full list of values and their purpose.
-
-1. Install Gloo from the Helm Repository: 
-    
-        helm install gloo/gloo 
-    
-     If you're using custom overrides:
-
-        helm install gloo/gloo --values value-overrides.yaml
+This document outlines instructions for the setup and configuration of Gloo using Helm. This is the recommended method 
+for installing Gloo to your production environment as it offers rich customization to the Gloo control plane and the 
+proxies Gloo manages.
 
 
-<a name="Customizing-Helm-Options"></a>
-## Customizing Helm Options
+## Accessing the Gloo chart repository
+As a first step, you have to add the Gloo repository to the list of known chart repositories:
+
+```bash
+helm repo add gloo https://storage.googleapis.com/solo-public-helm
+```
+
+You can then list all the charts in the repository by running the following command:
+
+```bash
+helm search gloo/gloo --versions  
+
+NAME         	CHART VERSION	APP VERSION	DESCRIPTION
+gloo/gloo    	0.7.6        	           	Gloo Helm chart for Kubernetes
+gloo/gloo    	0.7.5        	           	Gloo Helm chart for Kubernetes
+gloo/gloo    	0.7.4        	           	Gloo Helm chart for Kubernetes
+gloo/gloo    	0.7.1        	           	Gloo Helm chart for Kubernetes
+gloo/gloo    	0.7.0        	           	Gloo Helm chart for Kubernetes
+gloo/gloo    	0.6.24       	           	Gloo Helm chart for Kubernetes
+gloo/gloo    	0.6.23       	           	Gloo Helm chart for Kubernetes
+gloo/gloo    	0.6.22       	           	Gloo Helm chart for Kubernetes
+gloo/gloo    	0.6.21       	           	Gloo Helm chart for Kubernetes
+gloo/gloo    	0.6.20       	           	Gloo Helm chart for Kubernetes
+...
+```
+
+
+## Choosing a deployment option
+As we saw in the [**previous section**](../#2-choosing-a-deployment-option), there are three deployment options for Gloo:
+
+1. gateway
+2. ingress
+3. knative
+
+The option to be installed is determined by the values that are passed to the Gloo Helm chart. 
+
+
+### Gateway
+By default, the Gloo Helm 
+chart is configured with the values for the `gateway` deployment. Hence, if you run 
+
+```bash
+helm install gloo/gloo --name gloo-0.7.6 --namespace my-namespace
+```
+
+Helm will install the `gateway` deployment of Gloo to the cluster your _KUBECONFIG_ is pointing to. Remember to specify 
+the two additional options, otherwise Helm will install Gloo to the `default` namespace and generate a funny release 
+`name` for it.
+
+
+### Ingress & Knative
+The Gloo chart archive contains the necessary value files for each of the remaining deployment options. Run the 
+following command to download and extract the archive to the current directory:
+
+```bash
+helm fetch --untar=true --untardir=. gloo/gloo
+```
+
+You can then use either
+
+- `values-ingress.yaml` or
+- `values-knative.yaml`
+
+to install the correspondent flavour of Gloo. For example, to install Gloo as your Knative Ingress you can run:
+
+```bash
+helm install gloo/gloo --name gloo-knative-0.7.6 --namespace my-namespace -f values-knative.yaml
+```
+
+
+## Customizing your installation
+You can customize the Gloo installation by providing your own value file.
+
+For example, you can create a file named `value-overrides.yaml` with the following content:
+
+```yaml
+rbac:
+  create: false
+settings:
+  writeNamespace: my-custom-namespace
+``` 
+
+and use it to override default values in the Gloo Helm chart:
+
+```bash
+helm install gloo/gloo --name gloo-custom-0.7.6 --namespace my-namespace -f value-overrides.yaml 
+```
+
+The install command accepts multiple value files, so if you want to override the default values for a `knative` 
+deployment you can run:
+
+```bash
+helm install gloo/gloo --name gloo-custom-knative-0.7.6 --namespace my-namespace -f values-knative.yaml -f value-overrides.yaml
+```
+
+The right-most file specified takes precedence (see the [Helm docs](https://docs.helm.sh/helm/#helm-install) for more 
+info on the `install` command).
+
+### List of Gloo chart values
+The table below describes all the values that you can override in your custom values file.
 
 option | type | description
 --- | --- | ---

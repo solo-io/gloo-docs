@@ -43,4 +43,4 @@ Gloo can be deployed locally for testing purposes using <b><a href="docker-compo
 </td>
 </tr>
 </table>
- 
+

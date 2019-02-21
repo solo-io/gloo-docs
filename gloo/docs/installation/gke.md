@@ -20,7 +20,7 @@ kubectl cluster-info
 
 ## Install Gloo
 
-Use kubectl to install gloo using it's released kubernetes manifest:
+Use kubectl to install gloo using its released kubernetes manifest:
 ```
 kubectl apply -f https://github.com/solo-io/gloo/releases/download/v0.6.19/gloo-gateway.yaml
 ```

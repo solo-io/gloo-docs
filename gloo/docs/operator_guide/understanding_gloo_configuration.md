@@ -23,6 +23,7 @@ Each of the Gloo configuration objects (virtual services, upstreams, etc.) is an
 [Kubernetes Custom Resource Definition (CRD)](https://kubernetes.io/docs/tasks/access-kubernetes-api/custom-resources/custom-resource-definitions).
 
 Storing configuration as Kubernetes CRDs has several advantages:
+
 1. **All Gloo resources can be managed using standard Kubernetes APIs and tools.** You can interact with them using
 `kubectl` just as you would with normal Kubernetes resources. Moreover, you can perform the same actions programmatically 
 via the [Kubernetes REST API](https://kubernetes.io/docs/reference/using-api/api-overview/) and the provided 
