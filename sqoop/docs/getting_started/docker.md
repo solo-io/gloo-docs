@@ -129,7 +129,7 @@ sqoopctl schema create petstore -f petstore.graphql
 
 #### OPTIONAL: View the Generated Resolvers
 
-A Sqoop [**ResolverMap**](https://sqoop.solo.io/v1/resolver_map/) will have been generated
+A Sqoop [**ResolverMap**](../../v1/github.com/solo-io/sqoop/api/v1/resolver_map.proto.sk) will have been generated
 for the new schema.
 
 Take a look at its structure:
@@ -157,7 +157,7 @@ types:
       pets: {}
 ```
 
-The empty `{}`'s are Sqoop [**Resolver**](https://sqoop.solo.io/v1/resolver_map/#sqoop.api.v1.Resolver)
+The empty `{}`'s are Sqoop [**Resolver**](../../v1/github.com/solo-io/sqoop/api/v1/resolver_map.proto.sk/#sqoop.api.v1.Resolver)
 objects, waiting to be filled in. Sqoop supports a variety of Resolver types (and supports extension to its
 resolution system). In this tutorial, we will create Gloo resolvers, which allow you to connect schema fields
 to REST APIs, serverless functions and other Gloo functions. 

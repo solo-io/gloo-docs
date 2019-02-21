@@ -3,9 +3,6 @@ weight: 1
 title: Docker
 ---
 
-
-# Installing on Docker
-
 ## Installing with `sqoopctl`
 
 #### What you'll need
@@ -85,4 +82,4 @@ CONTAINER ID        IMAGE                              COMMAND                  
 
 Everything should be up and running. If this process does not work, please [open an issue](https://github.com/solo-io/gloo/issues/new). We are happy to answer questions on our diligently staffed [Slack channel](https://slack.solo.io)
 
-See [Getting Started on Docker](../getting_started/docker/1.md) to get started creating your first GraphQL endpoint with Sqoop.
+See [Getting Started on Docker](../../getting_started/docker) to get started creating your first GraphQL endpoint with Sqoop.

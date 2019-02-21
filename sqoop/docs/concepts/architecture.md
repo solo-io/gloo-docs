@@ -3,9 +3,6 @@ weight: 3
 title: Architecture
 ---
 
-
-# Architecture
-
 The Architecture of Sqoop can be understood as follows:
 
 ![Architecture](../../img/low_level_arch.png "Sqoop Architecture")
@@ -13,7 +10,7 @@ The Architecture of Sqoop can be understood as follows:
 
 Sqoop users interact via the [Storage Layer API](https://github.com/solo-io/sqoop/tree/master/pkg/storage).
 
-Declarative API Objects ([Schemas](../v1/schema.md) and [ResolverMaps](../v1/resolver_map.md)) are
+Declarative API Objects ([Schemas](../../v1/github.com/solo-io/sqoop/api/v1/schema.proto.sk) and [ResolverMaps](../../v1/github.com/solo-io/sqoop/api/v1/resolver_map.proto.sk)) are
 written by the User (usually via `sqoopctl`, the Sqoop CLI) and polled by Sqoop.
 
 When Sqoop detects an update to an API Object, it re-syncs its state to match
@@ -28,4 +25,4 @@ to handle service discovery, [Gloo plugin configuration](https://gloo.solo.io/pl
 [Envoy HTTP Filters](https://www.envoyproxy.io/docs/envoy/latest/intro/arch_overview/http_filters.html)
 
 Once Gloo has applied the desired configuration to Envoy, Sqoop begins listening for incoming GraphQL requests, serving queries 
-against the schema(s) provided by the user(s), and making requests via Envoy based on the configuration in the user-defined [ResolverMaps](../v1/resolver_map.md)
+against the schema(s) provided by the user(s), and making requests via Envoy based on the configuration in the user-defined [ResolverMaps](../../v1/github.com/solo-io/sqoop/api/v1/resolver_map.proto.sk)

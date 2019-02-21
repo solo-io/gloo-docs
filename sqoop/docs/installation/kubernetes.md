@@ -3,9 +3,6 @@ weight: 1
 title: Kubernetes
 ---
 
-
-# Installing on Kubernetes
-
 ## Installing with `kubectl`
 
 #### What you'll need
@@ -73,4 +70,4 @@ replicaset.apps/sqoop-855dc98dfd           1         1         1       2m5s
 Everything should be up and running. If this process does not work, please [open an issue](https://github.com/solo-io/sqoop/issues/new). We are happy to answer
 questions on our [diligently staffed Slack channel](https://slack.solo.io/).
 
-See [Getting Started on Kubernetes](../getting_started/kubernetes) to get started creating your first GraphQL endpoint with Sqoop.
+See [Getting Started on Kubernetes](../../getting_started/kubernetes) to get started creating your first GraphQL endpoint with Sqoop.

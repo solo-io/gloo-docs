@@ -1,10 +1,8 @@
 ---
 weight: 3
-title: Introduction
+title: Concepts
 ---
 
-
-# Introduction
 
 ![Overview](../img/high_level_architecture.png "High Level Architecture")
 
@@ -29,7 +27,7 @@ without writing any code. This is why we call Sqoop the **Codeless GraphQL Serve
 Compared to typical GraphQL implementations, Sqoop's configuration API is quite simple. Configuration takes two steps:
 
 0. Importing GraphQL schemas into Sqoop (done most easily via `sqoopctl`).
-0. Attaching **Gloo functions** to schema fields by defining [resolvers](concepts/resolvers.md) in a [ResolverMap](concepts/api_objects.md). 
+0. Attaching **Gloo functions** to schema fields by defining [resolvers](resolvers) in a [ResolverMap](api_objects). 
 
 Sqoop will execute GraphQL queries (and mutations) via port `:9090` by default.
 

@@ -4,8 +4,6 @@ title: Api Objects
 ---
 
 
-# ResolverMaps
-
 ### Storage-Based API
 
 Sqoop, like [Gloo](https://gloo.solo.io), features a storage-based API. Inspired by Kubernetes, Sqoop's API is accessed 
@@ -18,7 +16,7 @@ for changes. Currently supported storage backends are [Kubernetes CRDs](https://
 
 Sqoop's API Objects take two forms:
 
-0. [Schemas](../../v1/schema.md)
+0. [Schemas](../../../v1/github.com/solo-io/sqoop/api/v1/schema.proto.sk)
     * Schemas are made up of three pieces of information:
       - A name for the schema. This can be anything, but must be uniquee
       - An inline string containing the entire [GraphQL Schema](https://graphql.org/learn/schema/)
@@ -30,9 +28,9 @@ Sqoop's API Objects take two forms:
 
     * GraphQL Schemas can be uploaded to Sqoop using `sqoopctl`
 
-1. [ResolverMaps](../../v1/resolver_map.md)
+1. [ResolverMaps](../../../v1/github.com/solo-io/sqoop/api/v1/resolver_map.proto.sk)
     * ResolverMaps represent a mapping between the fields in a GraphQL schema 
-    and the [Resolvers](resolvers.md) that Sqoop will use to resolve them.
+    and the [Resolvers](../resolvers) that Sqoop will use to resolve them.
     
     * Resolvers define the action Sqoop will perform when executing a GraphQL Query. Sqoop leverages
     [Gloo's function registry](https://gloo.solo.io/introduction/concepts/#Functions) to generate resolvers, 
