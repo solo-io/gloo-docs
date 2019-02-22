@@ -175,8 +175,9 @@ color: var(--MENU-VISITED-color);
   margin-left: 1px;
 }
 
-#body img {
-  margin: 0;
+#body table img {
+  margin: 0 auto;
+  max-width: 200px;
 }
 
 #body #TableOfContents {
