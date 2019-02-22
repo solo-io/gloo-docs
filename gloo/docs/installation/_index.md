@@ -6,7 +6,7 @@ weight: 2
 Gloo can be installed in several different ways. The most common and customization way to deploy Gloo is to 
 install on Kubernetes **[using the published helm chart](install_with_helm)**. For a faster introduction, 
 follow the **[open source quick start guide](quick_start)**. And see below for notes on deploying with 
-**[Google Kubernetes Engine](gke)** and **[Docker](docker-compose)
+**[Google Kubernetes Engine](gke)** and **[Docker](docker-compose)**.
 
 ## Quick Start on Kubernetes
 
