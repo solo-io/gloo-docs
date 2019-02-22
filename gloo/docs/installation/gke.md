@@ -5,6 +5,7 @@ weight: 2
 
 In this document we will review how to install Gloo on Google Kubernetes Engine.
 
+
 ## Configure kubectl
 
 Configure kubectl to use with your cluster:
@@ -18,16 +19,60 @@ Validate that kubectl was successfully configured with:
 kubectl cluster-info
 ```
 
+## Give yourself cluster admin
+
+To be able to install Gloo, it needs to be able to discovery your Kubernetes services. You'll need clusteradmin for that:
+
+```
+kubectl create clusterrolebinding cluster-admin-binding \
+  --clusterrole cluster-admin \
+  --user $(gcloud config get-value account)
+```
+
 ## Install Gloo
 
-Use kubectl to install gloo using its released kubernetes manifest:
+To install Gloo, you can use one of two options: 
+
+1) Install via the CLI 
+2) Install via Kubernetes manifest files
+
+
+### CLI
+To install the CLI, run:
+
+`curl -sL https://run.solo.io/gloo/install | sh`
+
+Alternatively, you can download the CLI directly [via the github releases page](https://github.com/solo-io/gloo/releases). 
+
+Next, add Gloo to your path with:
+
+`export PATH=$HOME/.gloo/bin:$PATH`
+
+Verify the CLI is installed and running correctly with:
+
+`glooctl --version`
+
+Now run:
+
+`glooctl install gateway`
+
+
+### Kubernetes manifest
+
+To 
+
+Use kubectl to install gloo using its released Kubernetes manifest:
 ```
-kubectl apply -f https://github.com/solo-io/gloo/releases/download/v0.6.19/gloo-gateway.yaml
+export LATEST_RELEASE=$(curl -s "https://api.github.com/repos/solo-io/gloo/releases/latest" \
+| grep tag_name \
+| sed -E 's/.*"([^"]+)".*/\1/' )
+
+kubectl apply -f https://github.com/solo-io/gloo/releases/download/$LATEST_RELEASE/gloo-gateway.yaml
 ```
 
-In this example we are installing version 0.6.19. You can install any other released version.
+In this example we are installing the latest version. You can install any other released version.
 
-The installation takes a few minutes to fully complete.
+The installation could take a few moments to fully complete depending on your network speed. 
 
 ## Access from the Internet
 

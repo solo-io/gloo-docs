@@ -5,14 +5,19 @@ weight: -1
 
 ## 1. Install Glooctl
 
-If this is your first time running Gloo, you’ll need to download the command-line interface (CLI) onto your local machine. 
-You’ll use this CLI to interact with Gloo, including installing it onto your Kubernetes cluster.
+To install Gloo, you can use one of two options: 
 
+1) Install via the CLI 
+2) Install via Kubernetes manifest files
+
+We highly recommend using the Gloo CLI as it simplifies a lot of the user experience of using Gloo. For power users, feel free to use the underlying `yaml` configuration files directly. If this is your first time running Gloo, you’ll need to download the command-line interface (CLI) onto your local machine. You’ll use this CLI to interact with Gloo, including installing it onto your Kubernetes cluster.
+
+### CLI
 To install the CLI, run:
 
 `curl -sL https://run.solo.io/gloo/install | sh`
 
-Alternatively, you can download the CLI directly via the github releases page. 
+Alternatively, you can download the CLI directly [via the github releases page](https://github.com/solo-io/gloo/releases). 
 
 Next, add Gloo to your path with:
 
@@ -21,6 +26,25 @@ Next, add Gloo to your path with:
 Verify the CLI is installed and running correctly with:
 
 `glooctl --version`
+
+Now run:
+
+`glooctl install gateway`
+
+
+### Kubernetes manifest
+
+To 
+
+Use kubectl to install gloo using its released Kubernetes manifest:
+```
+export LATEST_RELEASE=$(curl -s "https://api.github.com/repos/solo-io/gloo/releases/latest" \
+| grep tag_name \
+| sed -E 's/.*"([^"]+)".*/\1/' )
+
+kubectl apply -f https://github.com/solo-io/gloo/releases/download/$LATEST_RELEASE/gloo-gateway.yaml
+```
+
 
 ## 2. Choosing a deployment option
 
