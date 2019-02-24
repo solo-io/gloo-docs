@@ -3,8 +3,8 @@ title: Installing Gloo with Helm
 weight: 1
 ---
 
-This document outlines instructions for the setup and configuration of Gloo using Helm. This is the recommended method 
-for installing Gloo to your production environment as it offers rich customization to the Gloo control plane and the 
+This document outlines instructions for the setup and configuration of Gloo using Helm. This is the recommended method
+for installing Gloo to your production environment as it offers rich customization to the Gloo control plane and the
 proxies Gloo manages.
 
 
@@ -18,7 +18,7 @@ helm repo add gloo https://storage.googleapis.com/solo-public-helm
 You can then list all the charts in the repository by running the following command:
 
 ```bash
-helm search gloo/gloo --versions  
+helm search gloo/gloo --versions
 
 NAME         	CHART VERSION	APP VERSION	DESCRIPTION
 gloo/gloo    	0.7.6        	           	Gloo Helm chart for Kubernetes
@@ -42,24 +42,24 @@ As we saw in the [**previous section**](../#2-choosing-a-deployment-option), the
 2. ingress
 3. knative
 
-The option to be installed is determined by the values that are passed to the Gloo Helm chart. 
+The option to be installed is determined by the values that are passed to the Gloo Helm chart.
 
 
 ### Gateway
-By default, the Gloo Helm 
-chart is configured with the values for the `gateway` deployment. Hence, if you run 
+By default, the Gloo Helm
+chart is configured with the values for the `gateway` deployment. Hence, if you run
 
 ```bash
 helm install gloo/gloo --name gloo-0.7.6 --namespace my-namespace
 ```
 
-Helm will install the `gateway` deployment of Gloo to the cluster your _KUBECONFIG_ is pointing to. Remember to specify 
-the two additional options, otherwise Helm will install Gloo to the `default` namespace and generate a funny release 
+Helm will install the `gateway` deployment of Gloo to the cluster your _KUBECONFIG_ is pointing to. Remember to specify
+the two additional options, otherwise Helm will install Gloo to the `default` namespace and generate a funny release
 `name` for it.
 
 
 ### Ingress & Knative
-The Gloo chart archive contains the necessary value files for each of the remaining deployment options. Run the 
+The Gloo chart archive contains the necessary value files for each of the remaining deployment options. Run the
 following command to download and extract the archive to the current directory:
 
 ```bash
@@ -88,22 +88,22 @@ rbac:
   create: false
 settings:
   writeNamespace: my-custom-namespace
-``` 
+```
 
 and use it to override default values in the Gloo Helm chart:
 
 ```bash
-helm install gloo/gloo --name gloo-custom-0.7.6 --namespace my-namespace -f value-overrides.yaml 
+helm install gloo/gloo --name gloo-custom-0.7.6 --namespace my-namespace -f value-overrides.yaml
 ```
 
-The install command accepts multiple value files, so if you want to override the default values for a `knative` 
+The install command accepts multiple value files, so if you want to override the default values for a `knative`
 deployment you can run:
 
 ```bash
 helm install gloo/gloo --name gloo-custom-knative-0.7.6 --namespace my-namespace -f values-knative.yaml -f value-overrides.yaml
 ```
 
-The right-most file specified takes precedence (see the [Helm docs](https://docs.helm.sh/helm/#helm-install) for more 
+The right-most file specified takes precedence (see the [Helm docs](https://docs.helm.sh/helm/#helm-install) for more
 info on the `install` command).
 
 ### List of Gloo chart values
@@ -117,8 +117,8 @@ settings.watchNamespaces | []string | whitelist of namespaces for gloo to watch 
 settings.writeNamespace | string | namespace where intermediary CRDs will be written to, e.g. Upstreams written by Gloo Discovery.
 settings.integrations.knative.enabled | bool | enable Gloo to serve as a cluster ingress controller for Knative Serving
 settings.integrations.knative.proxy.image.repository | string | image name (registry/repository) for the knative proxy container. This proxy is configured automatically by Knative as the Knative Cluster Ingress.
-settings.integrations.knative.proxy.image.tag | string | tag for the knative proxy container 
-settings.integrations.knative.proxy.image.pullPolicy | string | image pull policy for the knative proxy container 
+settings.integrations.knative.proxy.image.tag | string | tag for the knative proxy container
+settings.integrations.knative.proxy.image.pullPolicy | string | image pull policy for the knative proxy container
 settings.integrations.knative.proxy.httpPort | string | HTTP port for the proxy
 settings.integrations.knative.proxy.httpsPort | string | HTTPS port for the proxy
 settings.integrations.knative.proxy.replicas | int | number of proxy instances to deploy
@@ -129,7 +129,7 @@ gloo.deployment.image.pullPolicy | string | image pull policy for gloo container
 gloo.deployment.xdsPort | string | port where gloo serves xDS API to Envoy
 gloo.deployment.replicas | int | number of gloo xds server instances to deploy
 gloo.deployment.stats | bool | expose pod level stats
-discovery.deployment.image.repository | string | image name (registry/repository) for the discovery container. this container adds service discovery and function discovery to Gloo 
+discovery.deployment.image.repository | string | image name (registry/repository) for the discovery container. this container adds service discovery and function discovery to Gloo
 discovery.deployment.image.tag | string | tag for the discovery container
 discovery.deployment.image.pullPolicy | string | image pull policy for discovery container
 discovery.deployment.stats | bool | expose pod level stats
@@ -143,7 +143,12 @@ gatewayProxy.deployment.image.tag | string | tag for the gateway proxy container
 gatewayProxy.deployment.image.pullPolicy | string | image pull policy for the gateway proxy container
 gatewayProxy.deployment.httpPort | string | HTTP port for the proxy
 gatewayProxy.deployment.replicas | int | number of gateway proxy instances to deploy
-ingress.enabled | bool | enable Gloo to function as a standard Kubernetes Ingress Controller (i.e. configure via [Kubernetes Ingress objects](https://kubernetes.io/docs/concepts/services-networking/ingress/)) 
+gatewayProxy.service.type | string | gateway [service type](https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types). default is `LoadBalancer`
+gatewayProxy.service.clusterIP | string | static clusterIP (or `None`) when `gatewayProxy.service.type` is `ClusterIP`
+gatewayProxy.service.httpPort | string | HTTP port for the gateway service
+gatewayProxy.service.httpsPort | string | HTTPS port for the gateway service
+gatewayProxy.service.extraAnnotations | map | annotations for the gateway service
+ingress.enabled | bool | enable Gloo to function as a standard Kubernetes Ingress Controller (i.e. configure via [Kubernetes Ingress objects](https://kubernetes.io/docs/concepts/services-networking/ingress/))
 ingress.deployment.image.repository | string | image name (registry/repository) for the ingress controller container. this container translates [Kubernetes Ingress objects](https://kubernetes.io/docs/concepts/services-networking/ingress/) to the intermediary representation used by the gloo controller
 ingress.deployment.image.tag | string | tag for the ingress controller container
 ingress.deployment.image.pullPolicy | string | image pull policy for the ingress controller container
