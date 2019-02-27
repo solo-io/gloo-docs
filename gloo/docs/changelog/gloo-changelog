@@ -1,0 +1,10 @@
+### v0.8.2
+
+**New Features**
+
+- Ability to specify clusterIP and annotations for gateway service via Helm chart. (#449)
+- Allow editing ssl settings for upstreams using the CLI.
+
+**Fixes**
+
+- Various minor fixes.
