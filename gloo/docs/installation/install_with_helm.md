@@ -7,8 +7,8 @@ This document outlines instructions for the setup and configuration of Gloo usin
 for installing Gloo to your production environment as it offers rich customization to the Gloo control plane and the
 proxies Gloo manages.
 
-
 ## Accessing the Gloo chart repository
+
 As a first step, you have to add the Gloo repository to the list of known chart repositories:
 
 ```bash
@@ -19,7 +19,9 @@ You can then list all the charts in the repository by running the following comm
 
 ```bash
 helm search gloo/gloo --versions
+```
 
+```noop
 NAME         	CHART VERSION	APP VERSION	DESCRIPTION
 gloo/gloo    	0.7.6        	           	Gloo Helm chart for Kubernetes
 gloo/gloo    	0.7.5        	           	Gloo Helm chart for Kubernetes
@@ -34,20 +36,18 @@ gloo/gloo    	0.6.20       	           	Gloo Helm chart for Kubernetes
 ...
 ```
 
-
 ## Choosing a deployment option
-As we saw in the [**previous section**](../#2-choosing-a-deployment-option), there are three deployment options for Gloo:
 
-1. gateway
-2. ingress
-3. knative
+There are three deployment options for Gloo. The option to be installed is determined by the values that are passed
+to the Gloo Helm chart.
 
-The option to be installed is determined by the values that are passed to the Gloo Helm chart.
-
+* `gateway`
+* `ingress`
+* `knative`
 
 ### Gateway
-By default, the Gloo Helm
-chart is configured with the values for the `gateway` deployment. Hence, if you run
+
+By default, the Gloo Helm chart is configured with the values for the `gateway` deployment. Hence, if you run
 
 ```bash
 helm install gloo/gloo --name gloo-0.7.6 --namespace my-namespace
@@ -57,8 +57,8 @@ Helm will install the `gateway` deployment of Gloo to the cluster your _KUBECONF
 the two additional options, otherwise Helm will install Gloo to the `default` namespace and generate a funny release
 `name` for it.
 
+### Ingress and Knative
 
-### Ingress & Knative
 The Gloo chart archive contains the necessary value files for each of the remaining deployment options. Run the
 following command to download and extract the archive to the current directory:
 
@@ -68,8 +68,8 @@ helm fetch --untar=true --untardir=. gloo/gloo
 
 You can then use either
 
-- `values-ingress.yaml` or
-- `values-knative.yaml`
+* `values-ingress.yaml` or
+* `values-knative.yaml`
 
 to install the correspondent flavour of Gloo. For example, to install Gloo as your Knative Ingress you can run:
 
@@ -77,8 +77,8 @@ to install the correspondent flavour of Gloo. For example, to install Gloo as yo
 helm install gloo/gloo --name gloo-knative-0.7.6 --namespace my-namespace -f values-knative.yaml
 ```
 
-
 ## Customizing your installation
+
 You can customize the Gloo installation by providing your own value file.
 
 For example, you can create a file named `value-overrides.yaml` with the following content:
@@ -107,6 +107,7 @@ The right-most file specified takes precedence (see the [Helm docs](https://docs
 info on the `install` command).
 
 ### List of Gloo chart values
+
 The table below describes all the values that you can override in your custom values file.
 
 option | type | description
