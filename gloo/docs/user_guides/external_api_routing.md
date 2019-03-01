@@ -16,7 +16,7 @@ You'll also need access from the Kubernetes cluster to an external API. You can 
 
 To route to an external API, we need to first create a Gloo [upstream](../../v1/github.com/solo-io/gloo/projects/gloo/api/v1/upstream.proto.sk). A quick recap will show that a Gloo upstream is a network entry (think _host:port_) in the Gloo service catalog (or ["cluster" as Envoy proxy calls it](https://www.envoyproxy.io/docs/envoy/latest/intro/arch_overview/cluster_manager)). We'll use [glooctl create upstream](../../cli/glooctl_create_upstream) command to do this:
 
-        glooctl create upstream static jsonplaceholder-80 --static-hosts jsonplaceholder.typicode.com:80
+        glooctl create upstream static jsonplaceholder-80 --static-hosts \ jsonplaceholder.typicode.com:80
                
         +--------------------+--------+---------+---------------------------------+
         |      UPSTREAM      |  TYPE  | STATUS  |             DETAILS             |
