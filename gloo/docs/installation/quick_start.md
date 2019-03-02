@@ -11,9 +11,9 @@ To install Gloo, you can use one of two options:
 * [Install via Kubernetes manifest files](#manifest_install)
 
 We highly recommend using the Gloo CLI as it simplifies a lot of the user experience of using Gloo. For power users,
-feel free to use the underlying `yaml` configuration files directly. If this is your first time running Gloo, you’ll
-need to download the command-line interface (CLI) onto your local machine. You’ll use this CLI to interact with Gloo,
-including installing it onto your Kubernetes cluster.
+feel free to use the underlying `yaml` configuration files directly.
+
+If this is your first time running Gloo, you’ll need to download the command-line interface (CLI) onto your local machine. You’ll use this CLI to interact with Gloo, including installing it onto your Kubernetes cluster.
 
 <a name="cli_install"></a>
 
@@ -21,14 +21,16 @@ including installing it onto your Kubernetes cluster.
 
 ### 1. Install CLI `glooctl`
 
-To install the CLI, run the following. Alternatively, you can download the CLI directly
-[via the github releases page](https://github.com/solo-io/gloo/releases).
+To install the CLI, run the following.
 
 ```bash
 curl -sL https://run.solo.io/gloo/install | sh
 ```
 
-Next, add Gloo to your path with:
+Alternatively, you can download the CLI directly
+[via the github releases page](https://github.com/solo-io/gloo/releases).
+
+Next, add Gloo to your path, for example:
 
 ```bash
 export PATH=$HOME/.gloo/bin:$PATH
@@ -42,11 +44,11 @@ glooctl --version
 
 ### 2. Choosing a deployment option for installing Gloo into your Kubernetes cluster
 
-There currently exist several options for deploying Gloo depending on your use case and deployment platform.
+There are several options for deploying Gloo, depending on your use case and deployment platform.
 
 * [*Gateway*](#gateway): Gloo's full feature set is available via its v1/Gateway API. The Gateway API is modeled on
 Envoy's own API with the use of opinionated defaults to make complex configurations possible, while maintaining
-simplicity where desired.
+simplicity when required.
 
 * [*Ingress*](#ingress): Gloo will support configuration the Kubernetes Ingress resource, acting as a Kubernetes
 Ingress Controller.  
@@ -67,7 +69,7 @@ glooctl install gateway
 ```
 
 ---
-**NOTE:** You can install Gloo to am existing namespace by providing the `-n` option. If the option is not provided,
+**NOTE:** You can install Gloo to an existing namespace by providing the `-n` option. If the option is not provided,
 the namespace defaults to `gloo-system`.
 
 ```bash
@@ -118,7 +120,7 @@ Once your Kubernetes cluster is up and running, run the following command to dep
 glooctl install ingress
 ```
 
-Check that the Gloo pods and services have been created:
+Check that the Gloo Ingress pods and services have been created:
 
 ```bash
 kubectl get all -n gloo-system
@@ -225,13 +227,13 @@ image.caching.internal.knative.dev/fluentd-sidecar   2m
 image.caching.internal.knative.dev/queue-proxy       2m
 ```
 
-See [Getting Started with Gloo and Knative](../../user_guides/gloo_with_knative) to get started using Gloo as your Knative Ingress.
+See [Getting Started with Gloo and Knative](../../user_guides/gloo_with_knative) to use Gloo as your Knative Ingress.
 
 <a name="manifest_install"></a>
 
 ## Install Gloo via Kubernetes manifest
 
-To use `kubectl` to install Gloo using its released Kubernetes manifest:
+To use `kubectl` to install the latest release of Gloo using its Kubernetes manifest:
 
 ```bash
 export LATEST_RELEASE=$(curl -s "https://api.github.com/repos/solo-io/gloo/releases/latest" \
@@ -248,14 +250,15 @@ We are happy to answer questions on our [diligently staffed Slack channel](https
 
 ## Uninstall
 
-To uninstall Gloo and all related components, simply run the following. **Note**: that this will also remove
-Knative-Serving, if it was installed by `glooctl`.
+To uninstall Gloo and all related components, simply run the following.
+
+**NOTE:** This will also remove Knative-Serving, if it was installed by `glooctl`.
 
 ```bash
 glooctl uninstall
 ```
 
-If you installed Gloo to a different namespace, you have to specify that namespace using the `-n` option:
+If you installed Gloo to a different namespace, you will have to specify that namespace using the `-n` option:
 
 ```bash
 glooctl uninstall -n my-namespace
