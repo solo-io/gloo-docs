@@ -37,9 +37,9 @@ There are several other ways to deploy open source Gloo. Gloo can run on multipl
 
 <table>
   <tr>
-    <td width="50%"><img src="gke-logo.png"/></td>
-    <td width="50%"><img src="azure-logo.png"/></td>
-    <td width="50%"><img src="docker.png"/></td>
+    <td width="33%"><img src="gke-logo.png"/></td>
+    <td width="33%"><img src="azure-logo.png"/></td>
+    <td width="33%"><img src="docker.png"/></td>
   </tr>
   <tr>
     <td>
