@@ -33,17 +33,22 @@ by <a href="install_with_helm"><b>deploying using the helm chart.</b></a>
 
 ## Deploying on Other Platforms
 
-There are several other ways to deploy open source Gloo.
+There are several other ways to deploy open source Gloo. Gloo can run on multiple variants of Kubernetes.
 
 <table>
   <tr>
     <td width="50%"><img src="gke-logo.png"/></td>
+    <td width="50%"><img src="azure-logo.png"/></td>
     <td width="50%"><img src="docker.png"/></td>
   </tr>
   <tr>
     <td>
-Gloo can run on multiple variants of Kubernetes. Check out this guide if you are <a href="gke"><b>installing on a Google Kubernetes Engine (GKE) cluster.</b></a>
+Check out this guide if you are <a href="gke"><b>installing on a Google Kubernetes Engine (GKE) cluster.</b></a>
     </td>
+        <td>
+Check out this guide if you are <a href="azure"><b>installing on an Azure Kubernetes Service (AKS) cluster.</b></a>
+    </td>
+
     <td>
 Gloo can be deployed locally for testing purposes using <b><a href="docker-compose">docker compose.</a></b>  
     </td>

@@ -1,32 +1,24 @@
 ---
-title: Google Kubernetes Engine (GKE)
-weight: 2
+title: Azure Kubernetes Service (AKS)
+weight: 3
 ---
 
-In this document we will review how to install Gloo on Google Kubernetes Engine.
+In this document we will review how to install Gloo on Azure Kubernetes Service.
 
 ## Configure kubectl
 
 Configure `kubectl` to use with your cluster:
 
 ```bash
-gcloud container clusters get-credentials YOUR-CLUSTER-NAME --zone ZONE --project YOUR-PROJECT-ID
+az aks get-credentials --resource-group glooResourceGroup --name glooCluster --admin
 ```
+
+Replace the resource group and name with values appropriate for your environment. The `--admin` flag logs you into the cluster as the cluster administrator.
 
 Validate that `kubectl` was successfully configured with:
 
 ```bash
 kubectl cluster-info
-```
-
-## Give yourself cluster admin role
-
-To be able to install Gloo, it needs to be able to discover your Kubernetes services. You'll need `clusteradmin` role for that.
-
-```bash
-kubectl create clusterrolebinding cluster-admin-binding \
-  --clusterrole cluster-admin \
-  --user $(gcloud config get-value account)
 ```
 
 ## Install Gloo
@@ -60,11 +52,14 @@ glooctl --version
 Now run the following to install the default `gateway` flavor of Gloo.
 
 ```bash
-glooctl install gateway
+export LATEST_RELEASE=$(curl -s "https://api.github.com/repos/solo-io/gloo/releases/latest" \
+   grep tag_name \
+   sed -E 's/.*"v([^"]+)".*/\1/' )
+
+glooctl install gateway --release $LATEST_RELEASE
 ```
 
 ### Kubernetes manifest install option
-
 
 ```bash
 export LATEST_RELEASE=$(curl -s "https://api.github.com/repos/solo-io/gloo/releases/latest" \
@@ -81,20 +76,18 @@ The installation could take a few moments to fully complete depending on your ne
 
 ## Access from the Internet
 
-Accessing your Gloo virtual services from the internet is easy with Google Kubernetes Engine.
+Accessing your Gloo virtual services from the internet is easy with Azure Kubernetes Service.
 
 Requests for Gloo's virtual services are routed via the `gateway-proxy` service. As the service type is *LoadBalancer*,
-Google will allocate a global IP address for it, and load balance requests on that IP address across the instances of the service.
+Azure will allocate a global IP address for it, and load balance requests on that IP address across the instances of the service.
 
-To find the address of your Gloo, go to the *Services* tab of your GKE, add `name: gateway-proxy` to the search filters.
-The allocated address will be under the *Endpoints* column.
+To find the address of your Gloo, go to the [Kubernetes Console for your cluster](https://docs.microsoft.com/en-us/azure/aks/kubernetes-dashboard) and search for `gateway-proxy`. The allocated IP address will be listed in the *Services* box.
 
 For Example:
 
-![gke services](../gke.png "GKE Services")
+![AKS Kubernetes Console](../aks-console.png "AKS Kubernetes Console")
 
-**NOTE:** You might not see the address in the endpoint column immediately, as provisioning the cloud load balancer
-can take around 10 minutes. Try waiting a few minutes, and clicking the REFRESH link on the top of the page.
+**NOTE:** You might not see the address in the *External endpoints* column immediately, as provisioning the load balancer can take around 10 minutes.
 
 You can now use the endpoints as your public address for requests.
 
@@ -102,5 +95,5 @@ You can now use the endpoints as your public address for requests.
 
 In addition to Gloo, usually you will also want to:
 
-* Use a tool like *[external-dns](https://github.com/kubernetes-incubator/external-dns)* to setup DNS Record for Gloo.
+* Use a tool like *[external-dns](https://github.com/kubernetes-incubator/external-dns)* to set up DNS records for Gloo.
 * Use a tool like *[cert-manager](https://github.com/jetstack/cert-manager/)* to provision SSL certificates to use with Gloo's VirtualService CRD.
