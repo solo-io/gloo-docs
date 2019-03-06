@@ -102,7 +102,7 @@ This example will show creating route rules in Gloo to a "Lift and Shift" monoli
 
     ![petclinic](../petclinic.png "petclinic")
 
-## Routing Rule to Redirect a Page Request in an Existing Applicaiton
+## Routing Rule to Redirect a Page Request in an Existing Application
 
 In the petclinic application, if you click on the `Veterinarians` tab you will see a table with 2 columns. Let's say
 that our team created a new microservice `petclinic-vet` that returns a new 3 column table with additional information
