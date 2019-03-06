@@ -1,5 +1,5 @@
 ---
-title: Basic Routing in Console (Enterprise)
+title: Basic Routing in Gloo Enterprise Console (Enterprise)
 weight: 1
 ---
 
@@ -60,7 +60,7 @@ This example will show creating route rules in Gloo to a "Lift and Shift" monoli
 
     ![Basic Console](../basic_console.png "Basic Console")
 
-1. Create a Virtual Service.
+1. Create a new Virtual Service.
 
     * Click on the `Create Virtual Service +` link in the upper right corner of the console.
 
@@ -137,3 +137,8 @@ Let's create a new route rule to redirect requests to `/vets` to our new microse
 rule is working correctly, you should now see 3 columns in the Veterinarians table.
 
     ![petclinic Vet New](../petclinic_vet_new.png "Petclinic Vet New")
+
+## Summary
+
+This guide hopefully gave you a taste for how Gloo Enterprise can help you solve some of your challenges. Please
+look at the rest of our documentation for more information on using Gloo.

@@ -8,7 +8,7 @@ Follow these guides to get started using Gloo!
 **API Gateway Routing:**
 
 * [Basic Routing](basic_routing)
-* [Console Basic Routing (Enterprise)](console_basic_routing)
+* [Basic Routing in Gloo Enterprise Console (Enterprise)](basic_routing_console)
 * [Function Routing](function_routing)
 * [External API Routing](external_api_routing)
 * [Rate Limiting (Enterprise)](ratelimit)
