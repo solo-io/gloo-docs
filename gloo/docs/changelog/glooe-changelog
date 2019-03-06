@@ -4,6 +4,17 @@
 
 - Upgrade Gloo-I to v0.1.4. (https://github.com/solo-io/solo-projects/issues/456)
 
+### v0.10.5
+
+**New Features**
+
+- Added `glooctl uninstall` command. (https://github.com/solo-io/solo-projects/issues/454)
+
+**Fixes**
+
+- Add `POD_NAMESPACE` environment variable to deployment manifests. (https://github.com/solo-io/solo-projects/issues/452)
+- Upgrade GlooI to v0.1.3. (https://github.com/solo-io/solo-projects/issues/456)
+
 ### v0.10.4
 
 **Fixes**
