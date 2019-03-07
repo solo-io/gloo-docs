@@ -8,7 +8,7 @@ install on Kubernetes **[using the published helm chart](install_with_helm)**. F
 follow the **[open source quick start guide](quick_start)**. And Gloo can be run standalone using
 **[Docker](docker-compose)**.
 
-## Quick Start on Kubernetes
+## Running on Kubernetes
 
 * [Preparing Kubernetes](setup_kubernetes)
 * [Install using CLI](quick_start)
