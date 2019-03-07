@@ -1,6 +1,6 @@
 ---
-title: Install Gloo using Docker-Compose
-weight: 3
+title: Running using Docker-Compose
+weight: 5
 ---
 
 1. Clone the solo-docs repository, and cd to this example: `git clone https://github.com/solo-io/solo-docs && cd solo-docs/gloo/docs/installation/docker-compose`

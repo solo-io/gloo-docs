@@ -1,6 +1,6 @@
 ---
-title: Open Source Quick Start
-weight: -1
+title: Installing with CLI
+weight: 2
 ---
 
 ## Installing Gloo

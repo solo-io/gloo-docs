@@ -1,18 +1,19 @@
 ---
-title: Gloo Enterprise
-weight: -2
+title: Installing Gloo Enterprise
+weight: 4
 ---
 
 ## Installing Gloo Enterprise
 
 {{% notice note %}}
-To install Gloo Enterprise you need a License Key. If you don't have one, go to **https://solo.io/glooe-trial** and request a trial now.
-{{% /notice %}} 
-
+To install Gloo Enterprise you need a License Key. If you don't have one, go to **https://solo.io/glooe-trial** and
+request a trial now.
+{{% /notice %}}
 
 Once you request a trial, an e-mail will be sent to you with your unique License Key.
 
-If this is your first time running Gloo, you’ll need to download the command-line interface (CLI) onto your local machine. You’ll use this CLI to interact with Gloo, including installing it onto your Kubernetes cluster.
+If this is your first time running Gloo, you’ll need to download the command-line interface (CLI) onto your local
+machine. You’ll use this CLI to interact with Gloo, including installing it onto your Kubernetes cluster.
 
 <a name="cli_install"></a>
 
@@ -20,19 +21,18 @@ If this is your first time running Gloo, you’ll need to download the command-l
 
 ### 1. Install CLI `glooctl`
 
-Download the CLI Command appropriate to your environment: 
+Download the CLI Command appropriate to your environment:
 
-- [MacOs]( {{% siteparam "glooctl-darwin" %}})
-- [Linux]( {{% siteparam "glooctl-linux" %}})
-- [Windows]( {{% siteparam "glooctl-windows" %}})
-
+* [MacOs]( {{% siteparam "glooctl-darwin" %}})
+* [Linux]( {{% siteparam "glooctl-linux" %}})
+* [Windows]( {{% siteparam "glooctl-windows" %}})
 
 {{% notice note %}}
 To facilitate usage we recommend renaming the file to **`glooctl`** and adding the CLI to your PATH.
-{{% /notice %}} 
-
+{{% /notice %}}
 
 If your are running Linux or MacOs, make sure the `glooctl` is an executable file by running:
+
 ```bash
 chmod +x glooctl
 ```
@@ -42,13 +42,17 @@ Verify that you have the Enterprise version of the `glooctl` by running:
 ```bash
 glooctl --version
 ```
-You should have an output similar from the one below: 
+
+You should have an output similar from the one below:
+
 ```bash
 glooctl enterprise edition version 0.10.4
 ```
+
 ### 2. Choosing a deployment option for installing Gloo into your Kubernetes cluster
 
-There are several options for deploying Gloo, depending on your use case and deployment platform. If this is your first time installing Gloo Enterprise, we recommend starting with the **Gateway** Option.
+There are several options for deploying Gloo, depending on your use case and deployment platform. If this is your first
+time installing Gloo Enterprise, we recommend starting with the **Gateway** Option.
 
 * [*Gateway*](#gateway): Gloo's full feature set is available via its v1/Gateway API. The Gateway API is modeled on
 Envoy's own API with the use of opinionated defaults to make complex configurations possible, while maintaining
@@ -56,30 +60,30 @@ simplicity when required.
 
 * [*Ingress*](#ingress): Gloo will configure the Kubernetes Ingress resource, acting as a Kubernetes
 Ingress Controller.  
-*Note:* ingress objects must have the annotation `"kubernetes.io/ingress.class": "gloo"` to be processed by the Gloo Ingress. **Ingress is not yet supported for Gloo enterprise. Refer to the [quick start guide](../quick_start) to see how to install 
-open source Gloo for Ingress.**
+*Note:* ingress objects must have the annotation `"kubernetes.io/ingress.class": "gloo"` to be processed by the Gloo
+Ingress. **Ingress is not yet supported for Gloo enterprise. Refer to the [quick start guide](../quick_start) to see
+how to install open source Gloo for Ingress.**
 
 * [*Knative*](#knative): Gloo will integrate automatically with Knative as a cluster-level ingress for
 [*Knative-Serving*](https://github.com/knative/serving). Gloo can be used in this way as a lightweight replacement
-for Istio when using Knative-Serving.  **Knative is not yet supported for Gloo enterprise. Refer to the [quick start guide](../quick_start) to see how to install 
-open source Gloo for Knative.**
-
+for Istio when using Knative-Serving.  **Knative is not yet supported for Gloo enterprise. Refer to the
+[quick start guide](../quick_start) to see how to install open source Gloo for Knative.**
 
 <a name="gateway"></a>
 {{% notice note %}}
 Your Unique License Key will be required for the next steps.
-{{% /notice %}} 
-
-
+{{% /notice %}}
 
 {{% notice info %}}
 Each Key is valid for **31 days**. You can request a new key if your current key has expired.
-The License Key is required only during the installation process. Once you install, a `secret` will be created to hold your unique key.
-{{% /notice %}} 
+The License Key is required only during the installation process. Once you install, a `secret` will be created to hold
+your unique key.
+{{% /notice %}}
 
 #### 2a. Install the Gloo Gateway to your Kubernetes Cluster using `glooctl`
 
-Once your Kubernetes cluster is up and running, run the following command to deploy the Gloo Gateway to the `gloo-system` namespace:
+Once your Kubernetes cluster is up and running, run the following command to deploy the Gloo Gateway to the
+`gloo-system` namespace:
 
 ```bash
 glooctl install gateway --license-key YOUR_LICENSE_KEY
@@ -177,7 +181,8 @@ open source Gloo for Knative.
 
 ## Next steps
 
-Everything should be up and running. If you have questions about the installation or would like assistance, please reach out to us on our [Slack](https://slack.solo.io/), on the channel [#gloo-enterprise](https://solo-io.slack.com/app_redirect?channel=gloo-enterprise).
+Everything should be up and running. If you have questions about the installation or would like assistance, please
+reach out to us on our [Slack](https://slack.solo.io/), on the channel [#gloo-enterprise](https://solo-io.slack.com/app_redirect?channel=gloo-enterprise).
 
 ## Uninstall
 

@@ -1,6 +1,6 @@
 ---
-title: Installing Gloo with Helm
-weight: 1
+title: Installing with Helm
+weight: 3
 ---
 
 This document outlines instructions for the setup and configuration of Gloo using Helm. This is the recommended method
