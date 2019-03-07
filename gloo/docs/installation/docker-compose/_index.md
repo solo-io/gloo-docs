@@ -6,7 +6,7 @@ weight: 3
 1. Clone the solo-docs repository, and cd to this example: `git clone https://github.com/solo-io/solo-docs && cd solo-docs/gloo/docs/installation/docker-compose`
 1. Run `./prepare-config-directories.sh`
 1. You can optionally set GLOO_VERSION environment variable to the gloo version you want (defaults to "0.6.19").
-1. Run `docker compose up`
+1. Run `docker-compose up`
 
 ## Example
 
