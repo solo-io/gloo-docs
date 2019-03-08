@@ -1,66 +1,92 @@
 ---
-title: Installing with CLI
+title: Kubernetes - Installing Gloo
 weight: 2
 ---
 
-## Installing Gloo
+{{% notice note %}}
+To install Gloo Enterprise you need a License Key. If you don't have one, go to **https://solo.io/glooe-trial** and
+request a trial now. Once you request a trial, an e-mail will be sent to you with your unique License Key that you will
+need as part of installing Gloo.
+{{% /notice %}}
+
+{{% notice info %}}
+Each Key is valid for **31 days**. You can request a new key if your current key has expired.
+The License Key is required only during the installation process. Once you install, a `secret` will be created to hold
+your unique key.
+{{% /notice %}}
+
+If this is your first time running Gloo, you’ll need to download the command-line interface (CLI) called `glooctl` onto
+your local machine. You’ll use this CLI to interact with Gloo, including installing it onto your Kubernetes cluster.
+Directions on installing `glooctl` are **[here](../install_glooctl)**.
+
+### Options to Install Gloo
 
 To install Gloo, you can use one of two options:
 
-* [Install via the Command Line Interface (CLI) `glooctl` (recommended)](#cli_install)
-* [Install via Kubernetes manifest files](#manifest_install)
+* **[Install via the Command Line Interface (CLI) `glooctl` (recommended)](#install_cli)**
+* **[Install via Helm](#install_helm)**
 
-We highly recommend using the Gloo CLI as it simplifies a lot of the user experience of using Gloo. For power users,
-feel free to use the underlying `yaml` configuration files directly.
+### Verify Installation
 
-If this is your first time running Gloo, you’ll need to download the command-line interface (CLI) onto your local machine. You’ll use this CLI to interact with Gloo, including installing it onto your Kubernetes cluster.
+* **[Verify installation](#verify)**
 
-<a name="cli_install"></a>
+### Uninstall Gloo
 
-## Install Gloo via Command Line Interface (CLI)
+* **[Uninstall Gloo](#uninstall)**
 
-### 1. Install CLI `glooctl`
+We highly recommend to install Gloo using the Gloo CLI as it simplifies a lot of the user experience of using Gloo.
+For power users, feel free to use the underlying `yaml` configuration files directly.
 
-To install the CLI, run the following.
-
-```bash
-curl -sL https://run.solo.io/gloo/install | sh
-```
-
-Alternatively, you can download the CLI directly
-[via the github releases page](https://github.com/solo-io/gloo/releases).
-
-Next, add Gloo to your path, for example:
-
-```bash
-export PATH=$HOME/.gloo/bin:$PATH
-```
-
-Verify the CLI is installed and running correctly with:
-
-```bash
-glooctl --version
-```
-
-### 2. Choosing a deployment option for installing Gloo into your Kubernetes cluster
+This directions assume you've prepared your Kubernetes cluster appropriately. Full details on setting up your
+Kubernetes cluster **[here](../setup_kubernetes)**.
 
 There are several options for deploying Gloo, depending on your use case and deployment platform.
 
-* [*Gateway*](#gateway): Gloo's full feature set is available via its v1/Gateway API. The Gateway API is modeled on
-Envoy's own API with the use of opinionated defaults to make complex configurations possible, while maintaining
-simplicity when required.
+* **Gateway**: (**recommended**) Gloo's full feature set is available via its v1/Gateway API. The Gateway API
+is modeled on Envoy's own API with the use of opinionated defaults to make complex configurations possible,
+while maintaining simplicity when required.
 
-* [*Ingress*](#ingress): Gloo will support configuration the Kubernetes Ingress resource, acting as a Kubernetes
+* **Ingress**: Gloo will support configuration the Kubernetes Ingress resource, acting as a Kubernetes
 Ingress Controller.  
-*Note:* ingress objects must have the annotation `"kubernetes.io/ingress.class": "gloo"` to be processed by the Gloo Ingress.
 
-* [*Knative*](#knative): Gloo will integrate automatically with Knative as a cluster-level ingress for
+{{% notice note %}}
+ingress objects must have the annotation `"kubernetes.io/ingress.class": "gloo"` to be processed by the Gloo Ingress.
+{{% /notice %}}
+
+* **Knative**: Gloo will integrate automatically with Knative as a cluster-level ingress for
 [*Knative-Serving*](https://github.com/knative/serving). Gloo can be used in this way as a lightweight replacement
 for Istio when using Knative-Serving.
 
-<a name="gateway"></a>
+{{% notice note %}}
+Gloo Enterprise currently only supports the Gateway deployment option.
+{{% /notice %}}
 
-#### 2a. Install the Gloo Gateway to your Kubernetes Cluster using `glooctl`
+{{% notice info %}}
+If this process does not work, please **[open an issue](https://github.com/solo-io/gloo/issues/new)**.
+We are happy to answer questions on our **[diligently staffed Slack channel](https://slack.solo.io/)** as well.
+{{% /notice %}}
+
+---
+
+## Install Gloo via Command Line Interface (CLI) {#install_cli}
+
+Choosing a deployment option for installing Gloo into your Kubernetes cluster:
+
+* **[Gateway](#gateway)** (**recommended**)
+* **[Ingress](#ingress)**
+* **[Knative](#knative)**
+
+{{% notice note %}}
+Gloo Enterprise installation require you to use an extra `--license-key YOUR_LICENSE_KEY` with your license key you
+received either as part of your subscription or as part of a trial request from **<https://solo.io/glooe-trial>**
+{{% /notice %}}
+
+{{% notice info %}}
+You can install Gloo to an existing namespace by providing the `-n` option, e.g. `glooctl install gateway -n my-namespace`.
+If the option is not provided, the namespace defaults to `gloo-system`.
+{{% /notice %}}
+
+### Install the Gloo Gateway to your Kubernetes Cluster using `glooctl` {#gateway}
 
 Once your Kubernetes cluster is up and running, run the following command to deploy the Gloo Gateway to the `gloo-system` namespace:
 
@@ -68,17 +94,201 @@ Once your Kubernetes cluster is up and running, run the following command to dep
 glooctl install gateway
 ```
 
----
-**NOTE:** You can install Gloo to an existing namespace by providing the `-n` option. If the option is not provided,
-the namespace defaults to `gloo-system`.
+After you **[verify your installation](#verify)**, please see **[Getting Started on Kubernetes](../../user_guides/basic_routing)**
+to get started using the Gloo Gateway.
+
+### Install the Gloo Ingress Controller to your Kubernetes Cluster using `glooctl` {#ingress}
+
+Once your Kubernetes cluster is up and running, run the following command to deploy the Gloo Ingress to the `gloo-system` namespace:
 
 ```bash
-glooctl install gateway -n my-namespace
+glooctl install ingress
 ```
+
+After you **[verify your installation](#verify)**, please see **[Getting Started with Kubernetes Ingress](../../user_guides/basic_ingress)**
+to get started using the Gloo Ingress Controller.
+
+### Install the Gloo Knative Cluster Ingress to your Kubernetes Cluster using `glooctl` {#knative}
+
+Once your Kubernetes cluster is up and running, run the following command to deploy Knative-Serving components to the
+`knative-serving` namespace and Gloo to the `gloo-system` namespace:
+
+```bash
+glooctl install knative
+```
+
+After you **[verify your installation](#verify)**, please see **[Getting Started with Gloo and Knative](../../user_guides/gloo_with_knative)**
+to use Gloo as your Knative Ingress.
 
 ---
 
-Check that the Gloo pods and services have been created:
+## Install Gloo with Helm (*Open Source Only*) {#install_helm}
+
+This is the recommended method for installing Gloo to your production environment as it offers rich customization to
+the Gloo control plane and the proxies Gloo manages.
+
+### Accessing the Gloo chart repository
+
+As a first step, you have to add the Gloo repository to the list of known chart repositories:
+
+```bash
+helm repo add gloo https://storage.googleapis.com/solo-public-helm
+```
+
+You can then list all the charts in the repository by running the following command:
+
+```bash
+helm search gloo/gloo --versions
+```
+
+```noop
+NAME         	CHART VERSION	APP VERSION	DESCRIPTION
+gloo/gloo    	0.7.6        	           	Gloo Helm chart for Kubernetes
+gloo/gloo    	0.7.5        	           	Gloo Helm chart for Kubernetes
+gloo/gloo    	0.7.4        	           	Gloo Helm chart for Kubernetes
+gloo/gloo    	0.7.1        	           	Gloo Helm chart for Kubernetes
+gloo/gloo    	0.7.0        	           	Gloo Helm chart for Kubernetes
+gloo/gloo    	0.6.24       	           	Gloo Helm chart for Kubernetes
+gloo/gloo    	0.6.23       	           	Gloo Helm chart for Kubernetes
+gloo/gloo    	0.6.22       	           	Gloo Helm chart for Kubernetes
+gloo/gloo    	0.6.21       	           	Gloo Helm chart for Kubernetes
+gloo/gloo    	0.6.20       	           	Gloo Helm chart for Kubernetes
+...
+```
+
+### Choosing a deployment option
+
+There are three deployment options for Gloo. The option to be installed is determined by the values that are passed
+to the Gloo Helm chart.
+
+* `gateway`
+* `ingress`
+* `knative`
+
+#### Gateway
+
+By default, the Gloo Helm chart is configured with the values for the `gateway` deployment. Hence, if you run:
+
+```bash
+helm install gloo/gloo --name gloo-0.7.6 --namespace my-namespace
+```
+
+Helm will install the `gateway` deployment of Gloo to the cluster your _KUBECONFIG_ is pointing to. Remember to specify
+the two additional options, otherwise Helm will install Gloo to the `default` namespace and generate a funny release
+`name` for it.
+
+#### Ingress and Knative
+
+The Gloo chart archive contains the necessary value files for each of the remaining deployment options. Run the
+following command to download and extract the archive to the current directory:
+
+```bash
+helm fetch --untar=true --untardir=. gloo/gloo
+```
+
+You can then use either
+
+* `values-ingress.yaml` or
+* `values-knative.yaml`
+
+to install the correspondent flavour of Gloo. For example, to install Gloo as your Knative Ingress you can run:
+
+```bash
+helm install gloo/gloo --name gloo-knative-0.7.6 --namespace my-namespace -f values-knative.yaml
+```
+
+After you've installed Gloo, please check out our **[User Guides](../../user_guides)**.
+
+### Customizing your installation
+
+You can customize the Gloo installation by providing your own value file.
+
+For example, you can create a file named `value-overrides.yaml` with the following content:
+
+```yaml
+rbac:
+  create: false
+settings:
+  writeNamespace: my-custom-namespace
+```
+
+and use it to override default values in the Gloo Helm chart:
+
+```bash
+helm install gloo/gloo --name gloo-custom-0.7.6 --namespace my-namespace -f value-overrides.yaml
+```
+
+The install command accepts multiple value files, so if you want to override the default values for a `knative`
+deployment you can run:
+
+```bash
+helm install gloo/gloo --name gloo-custom-knative-0.7.6 --namespace my-namespace -f values-knative.yaml -f value-overrides.yaml
+```
+
+The right-most file specified takes precedence (see the [Helm docs](https://docs.helm.sh/helm/#helm-install) for more
+info on the `install` command).
+
+#### List of Gloo chart values
+
+The table below describes all the values that you can override in your custom values file.
+
+option | type | description
+--- | --- | ---
+namespace.create | bool | create the installation namespace
+rbac.create | bool | create rbac rules for the gloo-system service account
+settings.watchNamespaces | []string | whitelist of namespaces for gloo to watch for services and CRDs. leave empty to use all namespaces
+settings.writeNamespace | string | namespace where intermediary CRDs will be written to, e.g. Upstreams written by Gloo Discovery.
+settings.integrations.knative.enabled | bool | enable Gloo to serve as a cluster ingress controller for Knative Serving
+settings.integrations.knative.proxy.image.repository | string | image name (registry/repository) for the knative proxy container. This proxy is configured automatically by Knative as the Knative Cluster Ingress.
+settings.integrations.knative.proxy.image.tag | string | tag for the knative proxy container
+settings.integrations.knative.proxy.image.pullPolicy | string | image pull policy for the knative proxy container
+settings.integrations.knative.proxy.httpPort | string | HTTP port for the proxy
+settings.integrations.knative.proxy.httpsPort | string | HTTPS port for the proxy
+settings.integrations.knative.proxy.replicas | int | number of proxy instances to deploy
+settings.create | bool | create a Settings CRD which configures Gloo controllers at boot time
+gloo.deployment.image.repository | string | image name (registry/repository) for the gloo container. this container is the core controller of the system which watches CRDs and serves Envoy configuration over xDS
+gloo.deployment.image.tag | string | tag for the gloo container
+gloo.deployment.image.pullPolicy | string | image pull policy for gloo container
+gloo.deployment.xdsPort | string | port where gloo serves xDS API to Envoy
+gloo.deployment.replicas | int | number of gloo xds server instances to deploy
+gloo.deployment.stats | bool | expose pod level stats
+discovery.deployment.image.repository | string | image name (registry/repository) for the discovery container. this container adds service discovery and function discovery to Gloo
+discovery.deployment.image.tag | string | tag for the discovery container
+discovery.deployment.image.pullPolicy | string | image pull policy for discovery container
+discovery.deployment.stats | bool | expose pod level stats
+gateway.enabled | bool | enable Gloo API Gateway features
+gateway.deployment.image.repository | string | image name (registry/repository) for the gateway controller container. this container translates Gloo's VirtualService CRDs to the intermediary representation used by the gloo controller
+gateway.deployment.image.tag | string | tag for the gateway controller container
+gateway.deployment.image.pullPolicy | string | image pull policy for the gateway controller container
+gateway.deployment.stats | bool | expose pod level stats
+gatewayProxy.deployment.image.repository | string | image name (registry/repository) for the gateway proxy container. this proxy receives configuration created via VirtualService CRDs
+gatewayProxy.deployment.image.tag | string | tag for the gateway proxy container
+gatewayProxy.deployment.image.pullPolicy | string | image pull policy for the gateway proxy container
+gatewayProxy.deployment.httpPort | string | HTTP port for the proxy
+gatewayProxy.deployment.replicas | int | number of gateway proxy instances to deploy
+gatewayProxy.service.type | string | gateway [service type](https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types). default is `LoadBalancer`
+gatewayProxy.service.clusterIP | string | static clusterIP (or `None`) when `gatewayProxy.service.type` is `ClusterIP`
+gatewayProxy.service.httpPort | string | HTTP port for the gateway service
+gatewayProxy.service.httpsPort | string | HTTPS port for the gateway service
+gatewayProxy.service.extraAnnotations | map | annotations for the gateway service
+ingress.enabled | bool | enable Gloo to function as a standard Kubernetes Ingress Controller (i.e. configure via [Kubernetes Ingress objects](https://kubernetes.io/docs/concepts/services-networking/ingress/))
+ingress.deployment.image.repository | string | image name (registry/repository) for the ingress controller container. this container translates [Kubernetes Ingress objects](https://kubernetes.io/docs/concepts/services-networking/ingress/) to the intermediary representation used by the gloo controller
+ingress.deployment.image.tag | string | tag for the ingress controller container
+ingress.deployment.image.pullPolicy | string | image pull policy for the ingress controller container
+ingressProxy.deployment.image.tag | string | tag for the ingress proxy container
+ingressProxy.deployment.image.repository | string | image name (registry/repository) for the ingress proxy container. this proxy receives configuration created via Kubernetes Ingress objects
+ingressProxy.deployment.image.pullPolicy | string | image pull policy for the ingress proxy container
+ingressProxy.deployment.httpPort | string | HTTP port for the proxy
+ingressProxy.deployment.httpsPort | string | HTTPS port for the proxy
+ingressProxy.deployment.replicas | int | number of ingress proxy instances to deploy
+
+---
+
+## Verify your Installation {#verify}
+
+Check that the Gloo pods and services have been created. Depending on your install option, you may see some differences
+from the following example. And if you choose to install Gloo into a different namespace than the default `gloo-system`,
+then you will need to query your chosen namespace instead.
 
 ```bash
 kubectl get all -n gloo-system
@@ -108,90 +318,7 @@ replicaset.apps/gateway-proxy-9d79d48cd   1         1         1         5m
 replicaset.apps/gloo-5b7b748dbf           1         1         1         5m
 ```
 
-See [Getting Started on Kubernetes](../../user_guides/basic_routing) to get started using the Gloo Gateway.
-
-<a name="ingress"></a>
-
-#### 2b. Install the Gloo Ingress Controller to your Kubernetes Cluster using `glooctl`
-
-Once your Kubernetes cluster is up and running, run the following command to deploy the Gloo Ingress to the `gloo-system` namespace:
-
-```bash
-glooctl install ingress
-```
-
-Check that the Gloo Ingress pods and services have been created:
-
-```bash
-kubectl get all -n gloo-system
-```
-
-```noop
-NAME                                READY     STATUS    RESTARTS   AGE
-pod/discovery-f7548d984-lfhsz       1/1       Running   0          3s
-pod/gloo-5b7b748dbf-vtjvx           1/1       Running   0          4s
-pod/ingress-9c59ffc64-ndsj9         1/1       Running   0          4s
-pod/ingress-proxy-7b676c5b7-tqnlq   1/1       Running   0          4s
-
-NAME                    TYPE           CLUSTER-IP       EXTERNAL-IP   PORT(S)                      AGE
-service/gloo            ClusterIP      10.101.127.201   <none>        9977/TCP                     4s
-service/ingress-proxy   LoadBalancer   10.106.91.246    <pending>     80:30999/TCP,443:31628/TCP   4s
-
-NAME                            DESIRED   CURRENT   UP-TO-DATE   AVAILABLE   AGE
-deployment.apps/discovery       1         1         1            1           4s
-deployment.apps/gloo            1         1         1            1           4s
-deployment.apps/ingress         1         1         1            1           4s
-deployment.apps/ingress-proxy   1         1         1            1           4s
-
-NAME                                      DESIRED   CURRENT   READY     AGE
-replicaset.apps/discovery-f7548d984       1         1         1         4s
-replicaset.apps/gloo-5b7b748dbf           1         1         1         4s
-replicaset.apps/ingress-9c59ffc64         1         1         1         4s
-replicaset.apps/ingress-proxy-7b676c5b7   1         1         1         4s
-```
-
-See [Getting Started with Kubernetes Ingress](../../user_guides/basic_ingress) to get started using the Gloo Ingress Controller.
-
-<a name="knative"></a>
-
-#### 2c. Install the Gloo Knative Cluster Ingress to your Kubernetes Cluster using `glooctl`
-
-Once your Kubernetes cluster is up and running, run the following command to deploy Knative-Serving components to the
-`knative-serving` namespace and Gloo to the `gloo-system` namespace:
-
-```bash
-glooctl install knative
-```
-
-Check that the Gloo and Knative pods and services have been created:
-
-```bash
-kubectl get all -n gloo-system
-```
-
-```noop
-NAME                                       READY     STATUS    RESTARTS   AGE
-pod/clusteringress-proxy-cc5c6db57-2jtgd   1/1       Running   0          13s
-pod/discovery-f7548d984-lqj6t              1/1       Running   0          13s
-pod/gloo-5b7b748dbf-g42cg                  1/1       Running   0          13s
-pod/ingress-54fcb854f9-z5bmv               1/1       Running   0          13s
-
-NAME                           TYPE           CLUSTER-IP       EXTERNAL-IP   PORT(S)                      AGE
-service/clusteringress-proxy   LoadBalancer   10.106.92.134    <pending>     80:30602/TCP,443:31006/TCP   14s
-service/gloo                   ClusterIP      10.111.161.176   <none>        9977/TCP                     14s
-
-NAME                                   DESIRED   CURRENT   UP-TO-DATE   AVAILABLE   AGE
-deployment.apps/clusteringress-proxy   1         1         1            1           14s
-deployment.apps/discovery              1         1         1            1           14s
-deployment.apps/gloo                   1         1         1            1           14s
-deployment.apps/ingress                1         1         1            1           14s
-
-NAME                                                DESIRED   CURRENT   READY     AGE
-replicaset.apps/clusteringress-proxy-cc5c6db57   1         1         1         14s
-replicaset.apps/discovery-f7548d984              1         1         1         14s
-replicaset.apps/gloo-5b7b748dbf                  1         1         1         14s
-replicaset.apps/ingress-54fcb854f9               1         1         1         14s
-```
+The Knative install option will also install Knative Serving components into the `knative-service` namespace.
 
 ```bash
 kubectl get all -n knative-serving
@@ -227,32 +354,15 @@ image.caching.internal.knative.dev/fluentd-sidecar   2m
 image.caching.internal.knative.dev/queue-proxy       2m
 ```
 
-See [Getting Started with Gloo and Knative](../../user_guides/gloo_with_knative) to use Gloo as your Knative Ingress.
+---
 
-<a name="manifest_install"></a>
-
-## Install Gloo via Kubernetes manifest
-
-To use `kubectl` to install the latest release of Gloo using its Kubernetes manifest:
-
-```bash
-export LATEST_RELEASE=$(curl -s "https://api.github.com/repos/solo-io/gloo/releases/latest" \
-   grep tag_name \
-   sed -E 's/.*"([^"]+)".*/\1/' )
-
-kubectl apply -f https://github.com/solo-io/gloo/releases/download/$LATEST_RELEASE/gloo-gateway.yaml
-```
-
-## Next steps
-
-Everything should be up and running. If this process does not work, please [open an issue](https://github.com/solo-io/gloo/issues/new).
-We are happy to answer questions on our [diligently staffed Slack channel](https://slack.solo.io/) as well.
-
-## Uninstall
+## Uninstall {#uninstall}
 
 To uninstall Gloo and all related components, simply run the following.
 
-**NOTE:** This will also remove Knative-Serving, if it was installed by `glooctl`.
+{{% notice note %}}
+This will also remove Knative-Serving, if it was installed by `glooctl`.
+{{% /notice %}}
 
 ```bash
 glooctl uninstall
@@ -264,4 +374,6 @@ If you installed Gloo to a different namespace, you will have to specify that na
 glooctl uninstall -n my-namespace
 ```
 
-<!-- end -->
+## Next Steps
+
+After you've installed Gloo, please check out our **[User Guides](../../user_guides)**.

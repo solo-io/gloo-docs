@@ -12,10 +12,12 @@ weight: 5
 
 This configuration comes pre-loaded with an example upstream:
 
-```
+```bash
 # view the upstream definition
 cat data/config/upstreams/gloo-system/petstore.yaml
+```
 
+```yaml
 metadata:
   name: petstore
   namespace: gloo-system
@@ -24,11 +26,15 @@ upstream_spec:
     hosts:
     - addr: petstore
       port: 8080
+```
 
-# gloo will automatically discover functions (may take a few seconds)
+Gloo will automatically discover functions (may take a few seconds)
 
+```bash
 cat data/config/upstreams/gloo-system/petstore.yaml
+```
 
+```yaml
 metadata:
   name: petstore
   namespace: gloo-system
@@ -88,10 +94,14 @@ upstreamSpec:
                 text: "0"
               content-type: {}
               transfer-encoding: {}
+```
 
+```bash
 # see how the route is configured:
 cat data/config/virtualservices/gloo-system/default.yaml
+```
 
+```yaml
 metadata:
   name: default
   namespace: gloo-system
@@ -116,7 +126,9 @@ virtualHost:
         upstream:
           name: petstore
           namespace: gloo-system
+```
 
+```bash
 # try the route
 curl localhost:8080/petstore/findPet
 ```
