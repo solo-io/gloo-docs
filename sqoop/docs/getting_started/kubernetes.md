@@ -28,7 +28,7 @@ This tutorial will install sqoop into the namespace `gloo-system` by default, th
 
 #### OPTIONAL: View the petstore functions using `glooctl`:
 
-        glooctl upstream get
+        glooctl get upstream
         
         +--------------------------------+------------+----------+-------------+
         +--------------------------------+------------+----------+-------------+
@@ -169,26 +169,44 @@ for the new schema.
 Take a look at its structure:
 
 ```bash
-sqoopctl resolvermap get petstore-resolvers -o yaml
+kubectl get resolvermaps -n gloo-system -o yaml
+```
 
+```yaml
+apiVersion: v1
+items:
+- apiVersion: sqoop.solo.io/v1
+  kind: ResolverMap
+  metadata:
+    annotations:
+      created_for: petstore
+    creationTimestamp: 2019-03-08T19:29:18Z
+    generation: 2
+    name: petstore
+    namespace: gloo-system
+    resourceVersion: "5795"
+    selfLink: /apis/sqoop.solo.io/v1/namespaces/gloo-system/resolvermaps/petstore
+    uid: 77826c13-41d8-11e9-b8f6-080027d52f41
+  spec:
+    types:
+      Mutation:
+        fields:
+          addPet: {}
+      Pet:
+        fields:
+          id: {}
+          name: {}
+      Query:
+        fields:
+          pet: {}
+          pets: {}
+  status:
+    reported_by: sqoop
+    state: 1
+kind: List
 metadata:
-  namespace: gloo-system
-  resource_version: "573676"
-name: petstore-resolvers
-status:
-  state: Accepted
-types:
-  Mutation:
-    fields:
-      addPet: {}
-  Pet:
-    fields:
-      id: {}
-      name: {}
-  Query:
-    fields:
-      pet: {}
-      pets: {}
+  resourceVersion: ""
+  selfLink: ""
 ```
 
 The empty `{}`'s are Sqoop [**Resolver**](../../v1/github.com/solo-io/sqoop/api/v1/resolver_map.proto.sk/#sqoop.api.v1.Resolver)
