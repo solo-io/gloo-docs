@@ -56,7 +56,7 @@ gloo-system-sqoop-9090                             1h
 The upstream we are interested in is the petstore, so we run the following to find the functions:
 
 ```bash
-kubectl get upstreams -n gloo-system gloo-system-petstore-8080 -oyaml
+kubectl get upstreams -n gloo-system gloo-system-petstore-8080 -o yaml
 
 apiVersion: gloo.solo.io/v1
 kind: Upstream
@@ -202,12 +202,12 @@ Let's use `sqoopctl` to register some resolvers.
 
 ```bash
 # register findPetById for Query.pets (specifying no arguments)
-sqoopctl resolvermap register -u gloo-system-petstore-8080 -f findPetById Query pets
+sqoopctl resolvermap register -u default-petstore-8080 -s petstore -g findPets Query pets
 # register a resolver for Query.pet
-sqoopctl resolvermap register -u gloo-system-petstore-8080 -f findPetById Query pet
+sqoopctl resolvermap register -u default-petstore-8080 -s petstore -g findPetById Query pet
 # register a resolver for Mutation.addPet
 # the request template tells Sqoop to use the Variable "pet" as an argument 
-sqoopctl resolvermap register -u gloo-system-petstore-8080 -f addPet Mutation addPet --request-template '{{ marshal (index .Args "pet") }}'
+sqoopctl resolvermap register -u default-petstore-8080 -s petstore -g addPet Mutation addPet --request-template '{{ marshal (index .Args "pet") }}'
 ```
 
 That's it! Now we should have a functioning GraphQL frontend for our REST service.
