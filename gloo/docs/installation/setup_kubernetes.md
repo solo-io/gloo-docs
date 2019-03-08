@@ -13,17 +13,17 @@ Details for specific Kubernetes distributions:
 {{% button href="#minikube" %}}Minikube{{% /button %}}
 {{% button href="#minishift" %}}Minishift{{% /button %}}
 {{% button href="#gke" %}}Google Kubernetes Engine (GKE){{% /button %}}
-{{% button href="#aks" icon="fas fa-download"%}}Azure Kubernetes Service (AKS){{% /button %}}
+{{% button href="#aks" %}}Azure Kubernetes Service (AKS){{% /button %}}
 {{% button href="#eks" %}}Amazon Elastic Container Service for Kubernetes (EKS){{% /button %}}
 
 {{% notice note %}}
-This document assumes you have `kubectl` installed. Details on how to install **[here](https://kubernetes.io/docs/tasks/tools/install-kubectl/)**.
+This document assumes you have `kubectl` installed. Details on how to install [here](https://kubernetes.io/docs/tasks/tools/install-kubectl/).
 {{% /notice %}}
 
 ## Minikube {#minikube}
 
 Ensure you're running a standard Minikube cluster, e.g. `minikube start`, and verify that your `kubectl` context is
-correctly pointing to it. More details on Minikube **[here](https://kubernetes.io/docs/setup/minikube/)**.
+correctly pointing to it. More details on Minikube [here](https://kubernetes.io/docs/setup/minikube/).
 
 ```bash
 kubectl config current-context
@@ -31,12 +31,12 @@ kubectl config current-context
 
 Should return `minikube` as the context.
 
-You're all set. Gloo install guide **[here](../quick_start)**
+You're all set. Gloo install guide [here](../quick_start).
 
 ## Minishift {#minishift}
 
 Ensure you're running a standard Minishift cluster, e.g. `minishift start`, and verify that your `kubectl` context is
-correctly pointing to it. More details on Minishift **[here](https://github.com/minishift/minishift)**.
+correctly pointing to it. More details on Minishift [here](https://github.com/minishift/minishift).
 
 ```bash
 kubectl config current-context
@@ -59,7 +59,7 @@ You're all set. Gloo install guide [here](../quick_start)
 ## Google Kubernetes Engine (GKE) {#gke}
 
 Ensure you're running a standard GKE cluster, e.g. `gcloud container clusters create YOUR-CLUSTER-NAME`, and verify
-that your `kubectl` context is correctly pointing to it. More details on GKE **[here](https://cloud.google.com/kubernetes-engine/docs/quickstart)**.
+that your `kubectl` context is correctly pointing to it. More details on GKE [here](https://cloud.google.com/kubernetes-engine/docs/quickstart).
 
 ```bash
 gcloud container clusters get-credentials YOUR-CLUSTER-NAME
@@ -79,12 +79,12 @@ kubectl create clusterrolebinding cluster-admin-binding \
   --user $(gcloud config get-value account)
 ```
 
-You're all set. Gloo install guide **[here](../quick_start)**
+You're all set. Gloo install guide [here](../quick_start).
 
 ## Azure Kubernetes Service (AKS) {#aks}
 
 Ensure you're running a standard AKS cluster. More details on
-AKS **[here](https://docs.microsoft.com/en-us/azure/aks/)**.
+AKS [here](https://docs.microsoft.com/en-us/azure/aks/).
 
 Example AKS cluster create.
 
@@ -105,7 +105,7 @@ Verify that your `kubectl` context is correctly pointing to it.
 
 **NOTE**: the `--admin` option logs you into the cluster as the cluster admin, which is needed to install Gloo. It
 assumes that you have granted "Azure Kubernetes Service Cluster Admin Role" to your current logged in user. More details
-on AKS role access **[here](https://docs.microsoft.com/en-us/azure/role-based-access-control/role-assignments-cli)**.
+on AKS role access [here](https://docs.microsoft.com/en-us/azure/role-based-access-control/role-assignments-cli).
 
 ```bash
 az aks get-credentials --resource-group myResourceGroup --name myAKSCluster --admin
@@ -117,14 +117,14 @@ kubectl config current-context
 
 Should return `myAKSCluster-admin` as the context.
 
-You're all set. Gloo install guide **[here](../quick_start)**
+You're all set. Gloo install guide [here](../quick_start).
 
 ## Amazon Elastic Container Service for Kubernetes (EKS) {#eks}
 
 Ensure you're running a standard EKS cluster. More details on
-AKS **[here](https://docs.aws.amazon.com/eks/latest/userguide/getting-started.html)**.
+AKS [here](https://docs.aws.amazon.com/eks/latest/userguide/getting-started.html).
 
-We suggest using the `eksctl` tool from **<https://eksctl.io/>** as it complements the `aws` command line tool, and makes
+We suggest using the `eksctl` tool from <https://eksctl.io/> as it complements the `aws` command line tool, and makes
 it super simple to create and manage an EKS cluster from the command line. For example, to create an EKS cluster is as
 simple as `eksctl create cluster --name YOUR-CLUSTER-NAME --region=YOUR-REGION`.
 
@@ -146,10 +146,10 @@ You're all set. Gloo install guide [here](../quick_start)
 
 In addition to Gloo, usually you will also want to:
 
-* Use a tool like **[external-dns](https://github.com/kubernetes-incubator/external-dns)** to setup DNS Record for Gloo.
-* Use a tool like **[cert-manager](https://github.com/jetstack/cert-manager/)** to provision SSL certificates to use
+* Use a tool like [external-dns](https://github.com/kubernetes-incubator/external-dns) to setup DNS Record for Gloo.
+* Use a tool like [cert-manager](https://github.com/jetstack/cert-manager/) to provision SSL certificates to use
 with Gloo's VirtualService CRD.
 
 ## Next Steps
 
-**[Install Gloo](../quick_start)**!
+[Install Gloo](../quick_start)!

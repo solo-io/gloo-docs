@@ -1,14 +1,14 @@
 
 :root{
     
-  --MAIN-TEXT-color:#323232; /* Color of text by default */
+  --MAIN-TEXT-color:#2e2e2e; /* Color of text by default */
   --MAIN-TITLES-TEXT-color: #5e5e5e; /* Color of titles h2-h3-h4-h5 */
-  --MAIN-LINK-color:#154678; /* Color of links */
+  --MAIN-LINK-color:#0594cb; /* Color of links */
   --MAIN-LINK-HOVER-color:#003c6a; /* Color of hovered links */
   --MAIN-ANCHOR-color: #154678; /* color of anchors on titles */
 
   --MENU-HEADER-BG-color:#f1f6f8; /* Background color of menu header */
-  --MENU-HEADER-BORDER-color:#64bbe4; /*Color of menu header border */ 
+  --MENU-HEADER-BORDER-color:#64bbe4; /* Color of menu header border */ 
 
   --MENU-SEARCH-BG-color:#167ad0; /* Search field background color (by default borders + icons) */
   --MENU-SEARCH-BOX-color: #33a1ff; /* Override search field border color */
@@ -235,3 +235,8 @@ color: var(--MENU-VISITED-color);
   }
 }
 
+code {
+  border: 0px;
+  color: #5e5e5e;
+  background: rgba(27,31,35,.05);
+}

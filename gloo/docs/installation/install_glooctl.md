@@ -5,8 +5,8 @@ weight: 1
 
 ## Options for installing Gloo command line tool
 
-* **[Install Open Source](#open-source)**
-* **[Install Enterprise](#enterprise)**
+* [Install Open Source](#open-source)
+* [Install Enterprise](#enterprise)
 
 ---
 
@@ -18,7 +18,7 @@ To install the CLI, run the following.
 curl -sL https://run.solo.io/gloo/install | sh
 ```
 
-Alternatively, you can download the CLI directly **[via the github releases page](https://github.com/solo-io/gloo/releases)**.
+Alternatively, you can download the CLI directly [via the github releases page](https://github.com/solo-io/gloo/releases).
 
 Next, add Gloo to your path, for example:
 
