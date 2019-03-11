@@ -1,6 +1,7 @@
 ---
-title: External Auth (Enterprise)
-weight: 9
+title: External Auth
+weight: 2
+description: External Authentication Capabilities
 ---
 
 ## ExtAuth
@@ -9,9 +10,9 @@ Authorization parameters are defined on the virtual service specification as `sp
 
 ### OAuth
 
-- prior to creating an OAuth config, you must create a client secret. This can be done through `glooctl create secret --namespace gloo-system --name google oauth --client-secret $CLIENT_SECRET`
+- Prior to creating an OAuth config, you must create a client secret. This can be done through `glooctl create secret --namespace gloo-system --name google oauth --client-secret $CLIENT_SECRET`
 
-- the values required for configuring OAuth are as follows:
+- The values required for configuring OAuth are as follows:
 
 ```yaml
 extauth:
@@ -30,7 +31,6 @@ extauth:
 ## Create a new virtual service with authorization enabled
 
 The minimum required configuration in order to create a new virtual service with authorization is shown below.
-
 
 ```yaml
 apiVersion: gateway.solo.io/v1
@@ -60,11 +60,14 @@ spec:
 - run `kubectl apply -f <filename>` to create this virtualservice
 
 ## Edit the authorization config on an existing virtual service
+
 Print your virtual service specification with:
 
-`kubectl get virtualservice -n <namespace> <virtual_service_name> -o yaml -f <filename>`
+```shell
+kubectl get virtualservice -n <namespace> <virtual_service_name> -o yaml -f <filename>
+```
 
-in our example above, we expect to see something like:
+In our example above, we expect to see something like:
 
 ```yaml
 apiVersion: gateway.solo.io/v1

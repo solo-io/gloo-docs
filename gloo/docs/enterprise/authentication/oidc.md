@@ -1,24 +1,26 @@
 ---
-title: OIDC (Enterprise)
-weight: 8
+title: OIDC
+weight: 1
+description: How to setup authentication OpenID Connect (OIDC) identity providers. 
 ---
 
 ## Authentication
 Gloo supports authentication with external OpenID Connect (OIDC) identity providers.
 In this document we will show how to setup google account login for your application via gloo.
-This document is here to get you started and doesn't cover everything you need to (like setting up 
+This document is here to get you started and does not cover everything you need to (like setting up 
 a domain and SSL certificates)
 
 ## Setup
 Gloo supports authentication via Envoy's external auth feature. First, make sure that gloo is 
 configured, with the auth add-on:
 
-```
+```shell
 kubectl get settings -n gloo-system default -o yaml
 ```
 
 It should look like this:
-```
+
+```yaml
 apiVersion: gloo.solo.io/v1
 kind: Settings
 metadata:
@@ -41,21 +43,22 @@ spec:
 ```
 
 If it's not configured, add it with this command (this assumes that it was installed with the default settings):
-```
+
+```shell
 glooctl edit settings --namespace gloo-system --name default  externalauth --extauth-server-namespace gloo-system --extauth-server-name extauth
 ```
 
 ## Create google OAuth credentials
 
-Go to https://console.developers.google.com/apis/credentials/consent and write an  Application name.
-Then, go to https://console.developers.google.com/apis/credentials/ and:
+Go to <https://console.developers.google.com/apis/credentials/consent> and write an  Application name.
+Then, go to <https://console.developers.google.com/apis/credentials/> and:
 
 - Click 'Create credentials', and then 'OAuth client ID'. 
 - In this example, we will select 'Other' as the type if the client (as we are only going to use it for demonstration purposes) and click 'Create'.
 
-For convience, set the client id and secret in environment variables:
+For your convenience, set the client id and secret in environment variables:
 
-```
+```noop
 CLIENT_ID=825...imq.apps.googleusercontent.com
 CLIENT_SECRET=CCh...lmT
 ```
@@ -66,19 +69,21 @@ CLIENT_SECRET=CCh...lmT
 Note that since we didn't register any URL with Google, for security reasons, they will only allow authentication with applications running on localhost.
 We can make the gloo gateway available in localhost using `kubectl port-forward`:
 
-```
+```shell
 kubectl port-forward -n gloo-system deploy/gateway-proxy 8080
 ```
+
 ### Configuration
 
 First, let's create a secret with the client secret:
-```
+
+```shell
 glooctl create secret --namespace gloo-system --name google oauth --client-secret $CLIENT_SECRET
 ```
 
 Create a virtual service, and add the open id connect information to it:
 
-```
+```shell
 glooctl create virtualservice --namespace gloo-system --name default --enable-oidc-auth \
 --oidc-auth-client-secret-name google \
 --oidc-auth-client-secret-namespace gloo-system \
@@ -89,6 +94,7 @@ glooctl create virtualservice --namespace gloo-system --name default --enable-oi
 ```
 
 In addition to the Client ID and secret, the following parameters are provided:
+
 - issuer url: The url of the OpenID Connect identity provider. OpenID Connect configuration will be 
   automatically discovered, by going to the '.well-known/open-configuration' endpoint. in our example,
   this gloo will expect to find open id discovery information in `https://accounts.google.com/.well-known/openid-configuration`
@@ -102,4 +108,4 @@ Add the appropriate routes in the virtual service for your application.
 
 Note: you can disable authentication on specific routes (this can be useful for example, for the login page itself)
 
-That's it! Go in to http://localhost:8080 and try it!
+That's it! Go in to <http://localhost:8080> and try it!

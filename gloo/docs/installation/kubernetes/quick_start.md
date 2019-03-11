@@ -1,6 +1,7 @@
 ---
 title: Kubernetes - Installing Gloo
 weight: 2
+description: Installing Gloo into an existing Kubernetes cluster.
 ---
 
 {{% notice note %}}

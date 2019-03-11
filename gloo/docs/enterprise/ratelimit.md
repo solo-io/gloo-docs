@@ -1,12 +1,12 @@
 ---
-title: Rate Limit (Enterprise)
+title: Rate Limit
 weight: 4
+description: Define limits on the number of requests per unit of time.
 ---
 
 ## Rate Limit
 
 Rate limits are defined on the virtual service specification as `spec.virtualHost.virtualHostPlugins.extensions.configs.rate-limit`.
-
 
 ```yaml
 rate-limit:
@@ -21,7 +21,6 @@ rate-limit:
 - Rate limits can be set for anonymous requests, authorized requests, both, or neither.
 - `authorized_requests` represent the rate limits imposed on requests that are associated with a known user id
 - `anonymous_requests` represent the rate limits imposed on requests that are not associated with a known user id. In this case, the limit is applied to the request's remote address.
-
 - `requests_per_unit` takes an integer value
 - `unit` must be one of these strings: `SECOND`, `MINUTE`, `HOUR`, `DAY`
 
@@ -60,9 +59,12 @@ spec:
 
 Print your virtual service specification with:
 
-`kubectl get virtualservice -n <namespace> <virtual_service_name> -o yaml -f <filename>`
+```shell
+kubectl get virtualservice -n <namespace> <virtual_service_name> -o yaml -f <filename>
+```
 
-in our example above, we expect to see something like:
+In our example above, we expect to see something like:
+
 ```yaml
 apiVersion: gateway.solo.io/v1
 kind: VirtualService
@@ -101,7 +103,6 @@ status:
       state: 1
 ```
 
-
 #### Disable all rate limiting
 
 Edit the spec, removing the rate limit block. Your updated spec should look as follows:
@@ -116,6 +117,7 @@ spec:
       extensions:
         configs:
 ```
+
 run `kubectl apply -f <filename>` to update the virtualservice
 
 #### Disable authorized rate limiting
@@ -135,6 +137,7 @@ spec:
               requests_per_unit: 1000
               unit: HOUR
 ```
+
 run `kubectl apply -f <filename>` to update the virtualservice
 
 #### Disable anonymous rate limiting
@@ -154,4 +157,5 @@ spec:
               requests_per_unit: 1000
               unit: HOUR
 ```
+
 run `kubectl apply -f <filename>` to update the virtualservice

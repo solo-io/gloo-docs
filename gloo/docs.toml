@@ -22,7 +22,7 @@ home = [ "HTML", "JSON"]
   # editURL = "https://github.com/solo-io/gloo/tree/master/docs/"
   
   # Author of the site, will be used in meta information
-  author = ""
+  author = "Solo.io"
   # Description of the site, will be used in meta information
   description = ""
   # Shows a checkmark for visited pages on the menu

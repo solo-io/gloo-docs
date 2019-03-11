@@ -1,6 +1,7 @@
 ---
 title: Kubernetes - Prep
 weight: 1
+description: How to prepare a Kubernetes cluster for Gloo installation.
 ---
 
 In this document we will review how to prepare different Kubernetes environments before installing Gloo or Gloo
