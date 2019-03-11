@@ -4,18 +4,6 @@ weight: 2
 description: Installing Gloo into an existing Kubernetes cluster.
 ---
 
-{{% notice note %}}
-To install Gloo Enterprise you need a License Key. If you don't have one, go to **https://solo.io/glooe-trial** and
-request a trial now. Once you request a trial, an e-mail will be sent to you with your unique License Key that you will
-need as part of installing Gloo.
-{{% /notice %}}
-
-{{% notice info %}}
-Each Key is valid for **31 days**. You can request a new key if your current key has expired.
-The License Key is required only during the installation process. Once you install, a `secret` will be created to hold
-your unique key.
-{{% /notice %}}
-
 If this is your first time running Gloo, you’ll need to download the command-line interface (CLI) called `glooctl` onto
 your local machine. You’ll use this CLI to interact with Gloo, including installing it onto your Kubernetes cluster.
 Directions on installing `glooctl` are [here](../install_glooctl).
@@ -58,10 +46,6 @@ ingress objects must have the annotation `"kubernetes.io/ingress.class": "gloo"`
 [*Knative-Serving*](https://github.com/knative/serving). Gloo can be used in this way as a lightweight replacement
 for Istio when using Knative-Serving.
 
-{{% notice note %}}
-Gloo Enterprise currently only supports the Gateway deployment option.
-{{% /notice %}}
-
 {{% notice info %}}
 If this process does not work, please [open an issue](https://github.com/solo-io/gloo/issues/new).
 We are happy to answer questions on our [diligently staffed Slack channel](https://slack.solo.io/) as well.
@@ -76,11 +60,6 @@ Choosing a deployment option for installing Gloo into your Kubernetes cluster:
 * [Gateway](#gateway) (**recommended**)
 * [Ingress](#ingress)
 * [Knative](#knative)
-
-{{% notice note %}}
-Gloo Enterprise installation require you to use an extra `--license-key YOUR_LICENSE_KEY` with your license key you
-received either as part of your subscription or as part of a trial request from **<https://solo.io/glooe-trial>**
-{{% /notice %}}
 
 {{% notice info %}}
 You can install Gloo to an existing namespace by providing the `-n` option, e.g. `glooctl install gateway -n my-namespace`.
@@ -123,7 +102,7 @@ to use Gloo as your Knative Ingress.
 
 ---
 
-## Install Gloo with Helm (*Open Source Only*) {#install_helm}
+## Install Gloo with Helm {#install_helm}
 
 This is the recommended method for installing Gloo to your production environment as it offers rich customization to
 the Gloo control plane and the proxies Gloo manages.
@@ -132,13 +111,13 @@ the Gloo control plane and the proxies Gloo manages.
 
 As a first step, you have to add the Gloo repository to the list of known chart repositories:
 
-```bash
+```shell
 helm repo add gloo https://storage.googleapis.com/solo-public-helm
 ```
 
 You can then list all the charts in the repository by running the following command:
 
-```bash
+```shell
 helm search gloo/gloo --versions
 ```
 
@@ -170,7 +149,7 @@ to the Gloo Helm chart.
 
 By default, the Gloo Helm chart is configured with the values for the `gateway` deployment. Hence, if you run:
 
-```bash
+```shell
 helm install gloo/gloo --name gloo-0.7.6 --namespace my-namespace
 ```
 
@@ -183,7 +162,7 @@ the two additional options, otherwise Helm will install Gloo to the `default` na
 The Gloo chart archive contains the necessary value files for each of the remaining deployment options. Run the
 following command to download and extract the archive to the current directory:
 
-```bash
+```shell
 helm fetch --untar=true --untardir=. gloo/gloo
 ```
 
@@ -194,7 +173,7 @@ You can then use either
 
 to install the correspondent flavour of Gloo. For example, to install Gloo as your Knative Ingress you can run:
 
-```bash
+```shell
 helm install gloo/gloo --name gloo-knative-0.7.6 --namespace my-namespace -f values-knative.yaml
 ```
 
@@ -215,14 +194,14 @@ settings:
 
 and use it to override default values in the Gloo Helm chart:
 
-```bash
+```shell
 helm install gloo/gloo --name gloo-custom-0.7.6 --namespace my-namespace -f value-overrides.yaml
 ```
 
 The install command accepts multiple value files, so if you want to override the default values for a `knative`
 deployment you can run:
 
-```bash
+```shell
 helm install gloo/gloo --name gloo-custom-knative-0.7.6 --namespace my-namespace -f values-knative.yaml -f value-overrides.yaml
 ```
 
@@ -291,7 +270,7 @@ Check that the Gloo pods and services have been created. Depending on your insta
 from the following example. And if you choose to install Gloo into a different namespace than the default `gloo-system`,
 then you will need to query your chosen namespace instead.
 
-```bash
+```shell
 kubectl get all -n gloo-system
 ```
 
@@ -321,7 +300,7 @@ replicaset.apps/gloo-5b7b748dbf           1         1         1         5m
 
 The Knative install option will also install Knative Serving components into the `knative-service` namespace.
 
-```bash
+```shell
 kubectl get all -n knative-serving
 ```
 
@@ -365,13 +344,13 @@ To uninstall Gloo and all related components, simply run the following.
 This will also remove Knative-Serving, if it was installed by `glooctl`.
 {{% /notice %}}
 
-```bash
+```shell
 glooctl uninstall
 ```
 
 If you installed Gloo to a different namespace, you will have to specify that namespace using the `-n` option:
 
-```bash
+```shell
 glooctl uninstall -n my-namespace
 ```
 
