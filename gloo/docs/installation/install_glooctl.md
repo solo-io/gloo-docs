@@ -59,3 +59,7 @@ glooctl --version
 ```
 
 You should see a version statement like `glooctl enterprise edition version 0.10.4`
+
+## Next Steps
+
+**[Install Gloo!](../../installation)**

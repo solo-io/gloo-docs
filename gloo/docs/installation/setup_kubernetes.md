@@ -10,15 +10,17 @@ able to install the CRDs (Custom Resource Definitions) that need to be installed
 
 Details for specific Kubernetes distributions:
 
-{{% button href="#minikube" %}}Minikube{{% /button %}}
-{{% button href="#minishift" %}}Minishift{{% /button %}}
-{{% button href="#gke" %}}Google Kubernetes Engine (GKE){{% /button %}}
-{{% button href="#aks" %}}Azure Kubernetes Service (AKS){{% /button %}}
-{{% button href="#eks" %}}Amazon Elastic Container Service for Kubernetes (EKS){{% /button %}}
+* [Minikube](#minikube)
+* [Minishift](#minishift)
+* [Google Kubernetes Engine (GKE)](#gke)
+* [Azure Kubernetes Service (AKS)](#aks)
+* [Amazon Elastic Container Service for Kubernetes (EKS)](#eks)
 
 {{% notice note %}}
 This document assumes you have `kubectl` installed. Details on how to install [here](https://kubernetes.io/docs/tasks/tools/install-kubectl/).
 {{% /notice %}}
+
+---
 
 ## Minikube {#minikube}
 
@@ -32,6 +34,8 @@ kubectl config current-context
 Should return `minikube` as the context.
 
 You're all set. Gloo install guide [here](../quick_start).
+
+---
 
 ## Minishift {#minishift}
 
@@ -55,6 +59,8 @@ oc login -u system:admin
 ```
 
 You're all set. Gloo install guide [here](../quick_start)
+
+---
 
 ## Google Kubernetes Engine (GKE) {#gke}
 
@@ -80,6 +86,8 @@ kubectl create clusterrolebinding cluster-admin-binding \
 ```
 
 You're all set. Gloo install guide [here](../quick_start).
+
+---
 
 ## Azure Kubernetes Service (AKS) {#aks}
 
@@ -119,6 +127,8 @@ Should return `myAKSCluster-admin` as the context.
 
 You're all set. Gloo install guide [here](../quick_start).
 
+---
+
 ## Amazon Elastic Container Service for Kubernetes (EKS) {#eks}
 
 Ensure you're running a standard EKS cluster. More details on
@@ -141,6 +151,8 @@ kubectl config current-context
 Should return `arn:aws:eks:YOUR-REGION:ACCOUNT_ID:cluster/YOUR-CLUSTER-NAME` as the context.
 
 You're all set. Gloo install guide [here](../quick_start)
+
+---
 
 ## Additional Notes
 
