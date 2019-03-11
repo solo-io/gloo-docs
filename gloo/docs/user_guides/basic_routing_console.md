@@ -20,6 +20,14 @@ This example will show creating route rules in Gloo to a "Lift and Shift" monoli
 
 1. Open the Gloo Enterprise console
 
+  * The most consistent way to access the Gloo Enterprise Console deployed in any Kubernetes cluster is to use the
+  `kubectl port-forward` command. The following command will give you access to the console in your local web browser
+  at <http://localhost:8088>
+  
+        ```bash
+        kubectl port-forward --namespace gloo-system deploy/api-server 8088:8088
+        ```
+
   * If you're running `minikube`, the quick way to open the Gloo Enterprise Console is the following command, which
     will automatically open the console in a browser window.
 
