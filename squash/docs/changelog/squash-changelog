@@ -1,3 +1,41 @@
+### v0.5.3
+
+**Fixes**
+
+- Fix name of Squash image. (https://github.com/solo-io/squash/issues/136)
+
+### v0.5.2
+
+**New Features**
+
+- Allow flags to override default Squash image. (https://github.com/solo-io/squash/issues/132)
+
+**Fixes**
+
+- Use new container repo (quay) for Squash image. (https://github.com/solo-io/squash/issues/130)
+
+### v0.5.1
+
+This release contained no user-facing changes.
+
+### v0.5.0
+
+**Breaking Changes**
+
+- Implement Secure Mode to optionally restrict debug session permissions. (https://github.com/solo-io/squash/issues/122)
+
+### v0.4.7
+
+This release contained no user-facing changes.
+
+### v0.4.6
+
+This release contained no user-facing changes.
+
+### v0.4.5
+
+This release contained no user-facing changes.
+
 ### v0.4.4
 
 This release contained no user-facing changes.

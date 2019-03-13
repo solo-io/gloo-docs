@@ -8,6 +8,7 @@ Follow these guides to get started using Gloo!
 **API Gateway Routing:**
 
 * [Basic Routing](basic_routing)
+* [Basic Routing in Gloo Enterprise Console (Enterprise)](basic_routing_console)
 * [Function Routing](function_routing)
 * [External API Routing](external_api_routing)
 * [Exposing Gloo with NodePort](node_port)
@@ -19,3 +20,7 @@ Follow these guides to get started using Gloo!
 **Knative:**
 
 * [Gloo with Knative](gloo_with_knative)
+
+**Istio:**
+
+* [mTLS with Gloo and Istio](gloo_istio_mtls)

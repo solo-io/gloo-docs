@@ -10,7 +10,7 @@ Gloo builds on top of [Envoy proxy](https://www.envoyproxy.io) by giving it the 
 
 ### What you'll need
 
-If you haven't already deployed Gloo and the example swagger service on kubernetes, [go back to the first tutorial](basic_routing.md)
+If you haven't already deployed Gloo and the example swagger service on kubernetes, [go back to the first tutorial](../basic_routing)
 
 Now that we've seen the traditional routing functionality of Gloo (i.e. API-to-service), let's try doing some function routing.
 
@@ -112,7 +112,7 @@ Let's see how this plugin works by creating some routes to these functions in th
                :method: GET
              path: /api/pets/{{id}}
 
-1. Try the request again, but now add a JSON body which includes the `id` parameter:
+2. Try the request again, but now add a JSON body which includes the `id` parameter:
 
         curl ${GATEWAY_URL}/petstore/findPet -d '{"id": 1}'
     
@@ -124,7 +124,7 @@ Let's see how this plugin works by creating some routes to these functions in th
 
     Great! We just called our first function through Gloo. 
 
-1. Parameters can also come from headers. Let's tell Gloo to look for `id` in a header.
+3. Parameters can also come from headers. Let's tell Gloo to look for `id` in a header.
 
     Let's take a look at the route we created:
         

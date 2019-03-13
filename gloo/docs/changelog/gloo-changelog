@@ -1,3 +1,24 @@
+### v0.10.4
+
+This release contained no user-facing changes.
+
+### v0.10.3
+
+**Dependency Bumps**
+
+- solo-io/go-utils has been upgraded to v0.4.0.
+
+**Fixes**
+
+- fixed the upstream edit command (https://github.com/solo-io/gloo/issues/516)
+
+### v0.10.2
+
+**Fixes**
+
+- Fixes a regression in the release process where release artifacts weren't properly versioned, causing install to not behave as expected. (https://github.com/solo-io/gloo/issues/508)
+- Fix install.sh script (https://github.com/solo-io/gloo/issues/503)
+
 ### v0.10.1
 
 **Fixes**

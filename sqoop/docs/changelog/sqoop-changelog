@@ -1,0 +1,6 @@
+### v0.2.4
+
+**New Features**
+
+- Adding an install.sh script to simplify the installation of the Sqoop CLI (https://github.com/solo-io/sqoop/issues/25)
+

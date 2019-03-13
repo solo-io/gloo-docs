@@ -1,3 +1,63 @@
+### v0.10.15
+
+**Dependency Bumps**
+
+- solo-io/gloo-i has been upgraded to v0.1.11.
+
+### v0.10.14
+
+**Dependency Bumps**
+
+- solo-io/gloo-i has been upgraded to v0.1.10.
+
+**New Features**
+
+- Allow apiserver to query for all secrets at once. (https://github.com/solo-io/solo-projects/issues/507)
+
+### v0.10.13
+
+**Dependency Bumps**
+
+- solo-io/gloo-i has been upgraded to v0.1.9.
+
+### v0.10.12
+
+**Dependency Bumps**
+
+- solo-io/gloo-i has been upgraded to v0.1.8.
+
+### v0.10.11
+
+**Dependency Bumps**
+
+- solo-io/gloo-i has been upgraded to v0.1.7.
+
+### v0.10.10
+
+This release contained no user-facing changes.
+
+### v0.10.9
+
+**Dependency Bumps**
+
+- solo-io/gloo-i has been upgraded to v0.1.6.
+
+**Fixes**
+
+- Check connection to Kubernetes before running any CLI command. (https://github.com/solo-io/solo-projects/issues/463)
+
+### v0.10.8
+
+**Fixes**
+
+- Ignore whitespaces in the license key (https://github.com/solo-io/solo-projects/issues/461)
+
+### v0.10.7
+
+**Fixes**
+
+- Upgrade Gloo-I to v0.1.5. (https://github.com/solo-io/solo-projects/issues/456)
+
 ### v0.10.6
 
 **Fixes**
