@@ -29,7 +29,7 @@ Verify that you have the Enterprise version of the `glooctl` by running:
 glooctl --version
 ```
 
-You should see a version statement like `glooctl enterprise edition version 0.10.4`
+You should see a version statement like `glooctl enterprise edition version 0.10.7`
 
 ## Next Steps
 
