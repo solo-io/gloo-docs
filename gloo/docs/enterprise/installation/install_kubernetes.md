@@ -33,20 +33,20 @@ If for some reason you ever needed to uninstall Gloo, please follow [these instr
 
 There are several options for deploying Gloo, depending on your use case and deployment platform.
 
-* **Gateway**: (**recommended**) Gloo's full feature set is available via its v1/Gateway API. The Gateway API
+* **Gateway**: Gloo's full feature set is available via its v1/Gateway API. The Gateway API
 is modeled on Envoy's own API with the use of opinionated defaults to make complex configurations possible,
 while maintaining simplicity when required.
 
-* **Ingress**: Gloo will support configuration the Kubernetes Ingress resource, acting as a Kubernetes
-Ingress Controller. (**Not currently supported**)
+* **Ingress** (**Not currently supported**): Gloo will support configuration the Kubernetes Ingress resource, acting as a Kubernetes
+Ingress Controller.
 
 {{% notice note %}}
 ingress objects must have the annotation `"kubernetes.io/ingress.class": "gloo"` to be processed by the Gloo Ingress.
 {{% /notice %}}
 
-* **Knative**: Gloo will integrate automatically with Knative as a cluster-level ingress for
+* **Knative** (**Not currently supported**): Gloo will integrate automatically with Knative as a cluster-level ingress for
 [*Knative-Serving*](https://github.com/knative/serving). Gloo can be used in this way as a lightweight replacement
-for Istio when using Knative-Serving. (**Not currently supported**)
+for Istio when using Knative-Serving.
 
 {{% notice info %}}
 If this process does not work, please [open an issue](https://github.com/solo-io/gloo/issues/new).
@@ -120,27 +120,58 @@ kubectl get all -n gloo-system
 ```
 
 ```noop
-NAME                                READY     STATUS    RESTARTS   AGE
-pod/discovery-f7548d984-slddk       1/1       Running   0          5m
-pod/gateway-5689fd59d7-wsg7f        1/1       Running   0          5m
-pod/gateway-proxy-9d79d48cd-wg8b8   1/1       Running   0          5m
-pod/gloo-5b7b748dbf-jdsvg           1/1       Running   0          5m
+NAME                                                       READY   STATUS    RESTARTS   AGE
+pod/api-server-56fcb78878-d9mxt                            2/2     Running   0          5m21s
+pod/discovery-759bd6cf85-sphjb                             1/1     Running   0          5m22s
+pod/extauth-679d587db8-l9k56                               1/1     Running   0          5m21s
+pod/gateway-568bfd477c-487zw                               1/1     Running   0          5m22s
+pod/gateway-proxy-c84cbd647-n9kz2                          1/1     Running   0          5m22s
+pod/gloo-6979c5bd8-2dfrj                                   1/1     Running   0          5m22s
+pod/glooe-grafana-86445b465b-mnn8t                         1/1     Running   0          5m22s
+pod/glooe-prometheus-kube-state-metrics-8587f58df6-954pw   1/1     Running   0          5m22s
+pod/glooe-prometheus-server-6bd6f4667d-zqffp               2/2     Running   0          5m21s
+pod/observability-6db6c659dd-v4bkp                         1/1     Running   0          5m21s
+pod/rate-limit-6b847b95c8-kwcbd                            1/1     Running   1          5m21s
+pod/redis-7f6954b84d-ff4ck                                 1/1     Running   0          5m21s
 
-NAME                    TYPE           CLUSTER-IP      EXTERNAL-IP   PORT(S)          AGE
-service/gateway-proxy   LoadBalancer   10.97.232.107   <pending>     8080:31800/TCP   5m
-service/gloo            ClusterIP      10.100.64.166   <none>        9977/TCP         5m
+NAME                                          TYPE           CLUSTER-IP       EXTERNAL-IP   PORT(S)                      AGE
+service/apiserver-ui                          NodePort       10.107.135.104   <none>        8088:31160/TCP               5m22s
+service/extauth                               ClusterIP      10.109.93.97     <none>        8080/TCP                     5m22s
+service/gateway-proxy                         LoadBalancer   10.106.26.131    <pending>     80:31627/TCP,443:30931/TCP   5m22s
+service/gloo                                  ClusterIP      10.103.56.88     <none>        9977/TCP                     5m22s
+service/glooe-grafana                         ClusterIP      10.103.252.250   <none>        80/TCP                       5m22s
+service/glooe-prometheus-kube-state-metrics   ClusterIP      None             <none>        80/TCP                       5m22s
+service/glooe-prometheus-server               ClusterIP      10.100.244.136   <none>        80/TCP                       5m22s
+service/rate-limit                            ClusterIP      10.100.54.112    <none>        18081/TCP                    5m22s
+service/redis                                 ClusterIP      10.97.72.199     <none>        6379/TCP                     5m22s
 
-NAME                            DESIRED   CURRENT   UP-TO-DATE   AVAILABLE   AGE
-deployment.apps/discovery       1         1         1            1           5m
-deployment.apps/gateway         1         1         1            1           5m
-deployment.apps/gateway-proxy   1         1         1            1           5m
-deployment.apps/gloo            1         1         1            1           5m
+NAME                                                  READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/api-server                            1/1     1            1           5m21s
+deployment.apps/discovery                             1/1     1            1           5m22s
+deployment.apps/extauth                               1/1     1            1           5m21s
+deployment.apps/gateway                               1/1     1            1           5m22s
+deployment.apps/gateway-proxy                         1/1     1            1           5m22s
+deployment.apps/gloo                                  1/1     1            1           5m22s
+deployment.apps/glooe-grafana                         1/1     1            1           5m22s
+deployment.apps/glooe-prometheus-kube-state-metrics   1/1     1            1           5m22s
+deployment.apps/glooe-prometheus-server               1/1     1            1           5m22s
+deployment.apps/observability                         1/1     1            1           5m21s
+deployment.apps/rate-limit                            1/1     1            1           5m21s
+deployment.apps/redis                                 1/1     1            1           5m21s
 
-NAME                                      DESIRED   CURRENT   READY     AGE
-replicaset.apps/discovery-f7548d984       1         1         1         5m
-replicaset.apps/gateway-5689fd59d7        1         1         1         5m
-replicaset.apps/gateway-proxy-9d79d48cd   1         1         1         5m
-replicaset.apps/gloo-5b7b748dbf           1         1         1         5m
+NAME                                                             DESIRED   CURRENT   READY   AGE
+replicaset.apps/api-server-56fcb78878                            1         1         1       5m21s
+replicaset.apps/discovery-759bd6cf85                             1         1         1       5m22s
+replicaset.apps/extauth-679d587db8                               1         1         1       5m21s
+replicaset.apps/gateway-568bfd477c                               1         1         1       5m22s
+replicaset.apps/gateway-proxy-c84cbd647                          1         1         1       5m22s
+replicaset.apps/gloo-6979c5bd8                                   1         1         1       5m22s
+replicaset.apps/glooe-grafana-86445b465b                         1         1         1       5m22s
+replicaset.apps/glooe-prometheus-kube-state-metrics-8587f58df6   1         1         1       5m22s
+replicaset.apps/glooe-prometheus-server-6bd6f4667d               1         1         1       5m21s
+replicaset.apps/observability-6db6c659dd                         1         1         1       5m21s
+replicaset.apps/rate-limit-6b847b95c8                            1         1         1       5m21s
+replicaset.apps/redis-7f6954b84d                                 1         1         1       5m21s
 ```
 
 The Knative install option will also install Knative Serving components into the `knative-service` namespace.
