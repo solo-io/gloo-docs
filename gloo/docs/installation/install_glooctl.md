@@ -4,12 +4,19 @@ weight: 1
 description: A command line tool that all Gloo users should have and use to make their lives easier.
 ---
 
-
-## Installing Open Source `glooctl` {#open-source}
+## Installing Gloo Command Line Tool
 
 To install the CLI, run the following.
 
-```bash
+### [Homebrew](https://brew.sh/) package manager users
+
+```shell
+brew install glooctl
+```
+
+### All systems
+
+```shell
 curl -sL https://run.solo.io/gloo/install | sh
 ```
 
@@ -17,13 +24,15 @@ Alternatively, you can download the CLI directly [via the github releases page](
 
 Next, add Gloo to your path, for example:
 
-```bash
+```shell
 export PATH=$HOME/.gloo/bin:$PATH
 ```
 
+## Verify Installation
+
 Verify the CLI is installed and running correctly with:
 
-```bash
+```shell
 glooctl --version
 ```
 
