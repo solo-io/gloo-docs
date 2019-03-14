@@ -70,8 +70,8 @@ aws:  84 bytes
 
 ### Create AWS Upstream
 
-Then to create an AWS Upstream so that Gloo can both do Lambda service discovery, and to allow you to create
-virtual services with route rules referencing Lambda function.
+This is how you create an AWS Upstream so that Gloo can do both: Lambda service discovery; and allow you to create routing rules
+referencing those Lambda functions.
 
 ```shell
 glooctl create upstream aws --help
