@@ -1,6 +1,6 @@
 ---
 title: "Installing a Mesh"
-weight: 2
+weight: 1
 ---
 
 # Overview
@@ -15,7 +15,7 @@ Currently supported meshes for installation:
 
 First, ensure that SuperGloo has been initialized in your kubernetes cluster via `supergloo init` or the 
 [Supergloo Helm Chart](https://github.com/solo-io/supergloo/tree/master/install/helm/supergloo). See the [installation
-instructions](install) for detailed instructions on installing SuperGloo.
+instructions](../../installation) for detailed instructions on installing SuperGloo.
 
 Once SuperGloo has been installed, we'll create an Install CRD with configuration parameters which will then
 trigger SuperGloo to begin the mesh installation.
@@ -75,37 +75,7 @@ prometheus-76db5fddd5-55r6d               1/1       Running             0       
 
 Test out mTLS
 
-Let's deploy the [Istio Bookinfo](https://istio.io/docs/examples/bookinfo/) example with automatic sidecar injection enabled. 
-
-First, enable autoamtic sidecar injection on the default namespace (or any namespace of your choosing):
-
-```bash
-kubectl label namespace default istio-injection=enabled
-```
-
-Next, create the bookinfo deployments and services:
-
-```bash
-kubectl apply -n default -f \
-  https://raw.githubusercontent.com/istio/istio/1.0.6/samples/bookinfo/platform/kube/bookinfo.yaml
-```
-
-We should be up and running in a few minutes:
-
-```bash
-kubectl get pod -n default --watch
-
-NAME                             READY     STATUS    RESTARTS   AGE
-details-v1-6764bbc7f7-k4rhk      2/2       Running   0          27s
-productpage-v1-54b8b9f55-sxxnw   2/2       Running   0          27s
-ratings-v1-7bc85949-kh4f9        2/2       Running   0          27s
-reviews-v1-fdbf674bb-z467l       2/2       Running   0          27s
-reviews-v2-5bdc5877d6-gvgns      2/2       Running   0          27s
-reviews-v3-dd846cc78-55wr5       2/2       Running   0          27s
-```
-
-We should see `2/2` containers are `READY`, since one of those containers is the sidecar injected by Istio.
-
+First, [deploy the Istio Bookinfo Sample](../bookinfo) if you haven't already. 
 
 Next we'll deploy a `sleep` pod which we can use to execute commands inside
 the cluster. The first time we deploy, we'll run it outside the mesh to see
