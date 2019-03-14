@@ -1,0 +1,14 @@
+### v0.3.2
+
+**New Features**
+
+- Rename `create` to `apply`, allow updating existing routing rules (https://github.com/solo-io/supergloo/issues/244)
+- Enable configuring routing rules in SuperGloo with support for TrafficShifting (https://github.com/solo-io/supergloo/issues/251)
+
+**Fixes**
+
+- Set Target Mesh for routing rule from CLI (https://github.com/solo-io/supergloo/issues/244)
+- Create a basic lock for test-clusters. (https://github.com/solo-io/supergloo/issues/236)
+- Clean up supergloo code base after refactor. (https://github.com/solo-io/supergloo/issues/245)
+- Moves images to quay.io. (https://github.com/solo-io/supergloo/issues/241)
+

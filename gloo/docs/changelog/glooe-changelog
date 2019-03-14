@@ -1,3 +1,15 @@
+### v0.10.17
+
+**Fixes**
+
+- rate limit to work when using multiple listeners (https://github.com/solo-io/solo-projects/issues/514)
+
+### v0.10.16
+
+**Dependency Bumps**
+
+- solo-io/gloo-i has been upgraded to v0.1.12.
+
 ### v0.10.15
 
 **Dependency Bumps**
