@@ -106,6 +106,22 @@ glooctl create upstream aws \
     --aws-secret-namespace 'gloo-system'
 ```
 
+### Usage
+
+To create a route rule for your new AWS upstream, you use the `glooctl add route` command with the `--aws-function-name`
+option. For example,
+
+```shell
+glooctl add route \
+    --name 'default' \
+    --namespace 'gloo-system' \
+    --path-prefix '/helloworld' \
+    --dest-name 'my-aws' \
+    --aws-function-name 'helloworld'
+```
+
+## More Details
+
 For more details, please look at these other sources
 
 * [Gloo Upstreams Concept]({{< ref "introduction/concepts#upstreams" >}})
