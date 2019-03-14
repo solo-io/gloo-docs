@@ -5,14 +5,14 @@ weight: 2
 
 <br/>
 
-* [Overview](#Overview)
+* [Overview](#overview)
 * [Virtual Services](#virtual-services)
-  * [Routes](#Routes)
-  * [Matchers](#Matchers)
-  * [Destinations](#Destinations)
-* [Upstreams](#Upstreams)
-  * [Functions](#Functions)
-* [Secrets](#Secrets)
+  * [Routes](#routes)
+  * [Matchers](#matchers)
+  * [Destinations](#destinations)
+* [Upstreams](#upstreams)
+  * [Functions](#functions)
+* [Secrets](#secrets)
 
 ## Overview
 
@@ -26,9 +26,7 @@ and the name of the destination (or destinations) to route them to.
 [functions](../../v1/github.com/solo-io/gloo/projects/gloo/api/v1/plugins/aws/aws.proto.sk#LambdaFunctionSpec)
 and [service specs](../../v1/github.com/solo-io/gloo/projects/gloo/api/v1/plugins/service_spec.proto.sk) for *function-level routing*.
 
-<a name="Virtual Services"></a>
-
-## Virtual Services
+## Virtual Services {#virtual-services}
 
 **Virtual Services** define a set of route rules, an optional SNI configuration for a given domain or set of domains.
 
@@ -64,9 +62,7 @@ routes:
 Note that `domains` is empty (not specified). That means this virtual service will act as the default virtual service, matching
 all domains.
 
-<a name="Routes"></a>
-
-### Routes
+### Routes {#routes}
 
 **Routes** are the primary building block of the virtual service. A route contains a single **matcher** and one of: a
 **single destination**, or a **list of weighted destinations**.
@@ -78,9 +74,7 @@ Because multiple matchers can match a single request, the order of routes in the
 will select the first route which matches the request when making routing decisions. It is therefore important to place
 fallback routes (e.g. matching any request for path `/` with a custom 404 page) towards the bottom of the route list.
 
-<a name="Matchers"></a>
-
-### Matchers
+### Matchers {#matchers}
 
 Matchers currently support two types of requests:
 
@@ -91,9 +85,7 @@ method (`:method` in HTTP 2.0) headers (their keys and optionally their values),
 *Note: the CloudEvents spec is in version 0.2 and likely to be changed in the future*. The only property **Event Matcher**
 currently matches on is the *event-type* of an event (specified by the `x-event-type` request header).
 
-<a name="Destinations"></a>
-
-### Destinations
+### Destinations {#destinations}
 
 Destinations specify where to route a request once a matching route has been selected. A route can point to a single
 destination, or it can split traffic for that route among a series of weighted destinations.
@@ -110,9 +102,7 @@ can be a serverless function call (e.g. Lambda, Google Cloud Function, OpenFaaS 
 Function-level routing is enabled in Envoy by Gloo's function-level filters. Gloo supports the addition of new upstream
 types as well as new function types through our plugin interface.
 
-<a name="Upstreams"></a>
-
-## Upstreams
+## Upstreams {#upstreams}
 
 **Upstreams** define destinations for routes. Upstreams tell Gloo what to route to and how to route to them. Gloo determines
 how to handle routing for the upstream based on its `spec` field. Upstreams have a type-specific `spec` field which must 
@@ -127,7 +117,6 @@ Let's walk through an example of a kubernetes upstream in order to understand ho
 Gloo reads in a configuration that looks like the following:
 
 ```yaml
----
 metadata:
   labels:
     app: redis
@@ -151,9 +140,7 @@ upstreamSpec:
 * `type: kubernetes` tells Gloo that the kubernetes plugin knows how to route to this upstream
 * `spec: ...` tells the kubernetes plugin the service name and namespace, which is used by Gloo for routing  
 
-<a name="Functions"></a>
-
-### Functions
+### Functions {#functions}
 
 Some upstream types support **functions**. For example, we can add some HTTP functions to this upstream, and
 Gloo will be able to route to those functions, providing request transformation to format incoming requests to the
@@ -191,9 +178,7 @@ Note that it is necessary to specify `parameters` for this function invocation. 
 require extensions to be specified on the route they belong to. Documentation for each plugin can be found in the Plugins
 section.
 
-<a name="Secrets"></a>
-
-## Secrets
+## Secrets {#secrets}
 
 Certain plugins such as the [AWS Lambda Plugin](../../v1/github.com/solo-io/gloo/projects/gloo/api/v1/plugins/aws/aws.proto.sk) require the use of secrets for authentication,
 configuration of SSL Certificates, and other data that should not be stored in plaintext configuration.
