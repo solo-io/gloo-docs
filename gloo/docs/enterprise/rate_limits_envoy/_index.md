@@ -3,21 +3,20 @@ title: Envoy Rate Limits
 weight: 3
 ---
 
-In this document we will show how to use Gloo with Rate limits.
+In this document, we will show how to use Gloo with [Envoy's rate-limit API](https://www.envoyproxy.io/docs/envoy/latest/configuration/http_filters/rate_limit_filter). We make the distinction here that this is "Envoy's" rate-limit API because Gloo [offers a much simpler rate-limit API](../ratelimit) as an alternative. 
 
-Gloo enterprise comes with a rate limit server based off of Lyft's rate-limit server.
-It is already installed when doing `gloo install gateway --license-key=...`
+Gloo enterprise comes with a rate limit server based on [Lyft's Envoy rate-limit server](https://github.com/lyft/ratelimit). It is already installed when doing `gloo install gateway --license-key=...`
 To get your trial license key, go to: https://www.solo.io/glooe-trial
 
 Gloo supports two modes of rate limits:
 
-- A simple mode that allows configuring limits for authenticated (as defined by the gloo auth plugin) and anonymous requests.
-- A custom mode that allows configuring limits with the native envoy configuration language.
+- A [simple mode](../ratelimit) that allows configuring limits for authenticated (as defined by the [Gloo auth plugin](../authentication)) and anonymous requests.
+- A custom mode that allows configuring limits with the [native Envoy configuration language](https://www.envoyproxy.io/docs/envoy/latest/configuration/http_filters/rate_limit_filter).
 
-In this document we will describe the second option (The first option is easily accessible via the UI, and described in [this doc](../ratelimit)).
+In this document, we will describe the second option (The first option is easily accessible via the UI, and described in [this doc](../ratelimit)).
 
-## Setup - Instaling gloo 
-This is covered by other parts of the documented, here is the quick version:
+## Setup - Installing Gloo 
+This is covered by [other parts of the documentation](../installation), here is the quick version:
 
 ```bash
 $ glooctl install gateway --license-key=<YOUR KEY>
@@ -51,7 +50,7 @@ server: envoy
 ## Configuring Envoy Rate Limits
 
 The glooctl command line will open a text editor so you can write your custom configuration directly.
-To use your favorite editor, set the *EDITOR* environment variable.
+To use your favorite editor, set the `EDITOR` environment variable.
 
 For example, when using vscode:
 ```
@@ -64,7 +63,7 @@ Edit the rate limit server settings:
 $ glooctl edit settings --namespace gloo-system --name default ratelimit custom-server-config
 ```
 
-This will open the  rate limit server configuration in your editor. paste this configuration block there:
+This will open the rate limit server configuration in your editor. Paste this configuration block there:
 ```yaml
 descriptors:
   - key: generic_key
@@ -74,7 +73,7 @@ descriptors:
          unit: minute
 ```
 
-For your convience you can download it [here](serverconfig.yaml).
+For your convenience, you can download it [here](serverconfig.yaml).
 
 The structure of the rate limit server configuration is a list of hierarchal limit descriptors. For more information, see [here](https://github.com/lyft/ratelimit).
 
@@ -95,13 +94,16 @@ rate_limits:
       descriptor_value: "some_value"
 ```
 
-For your convience you can download it [here](vsconfig.yaml).
+For your convenience, you can download it [here](vsconfig.yaml).
 
 The structure of the virtual service configuration is as described in the [envoy documentation](https://www.envoyproxy.io/docs/envoy/v1.9.0/api-v2/api/v2/route/route.proto#route-ratelimit-action). This configuration will be passed to envoy as is.
+
 {{% notice note %}}
-You can run the same command for a *route* as well (`glooctl edit route ...`). When provided configuration for a route, you can also specify a boolean `include_vh_rate_limits` to include the rate limit descriptors from the virtual service.
+You can run the same command for a *route* as well (`glooctl edit route ...`). When providing configuration for a `route`, you can also specify a boolean `include_vh_rate_limits` to include the rate limit descriptors from the virtual service.
 {{% /notice %}}
 ### Test
+
+You can use `glooctl proxy url` to get Gloo proxy's external endpoint. 
 
 Run `curl --head $URL` a few times. You will soon see that curl is rate limited:
 
@@ -114,4 +116,4 @@ server: envoy
 transfer-encoding: chunked
 ```
 ## Conclusion
-With the custom rate-limit configuration option, you have the full power of Envoy rate limits to use for your custom use cases.
+With the custom rate-limit configuration option, you have the full power of Envoy rate limits to use for your custom use cases. The downsides to this is the API is a bit more complicated. To leverage a simpler API that can do true per-user (logged-in, authenticated user) rate limits, take a look at [Gloo's simplified ratelimit API](../ratelimit).

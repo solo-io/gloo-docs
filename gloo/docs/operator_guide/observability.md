@@ -35,7 +35,7 @@ Open tracing stats are also available from the admin page in our pods.
 
 ### Enterprise features
 
-The enterprise version of Gloo ships with full obersvability setup from the get go with prometheus and grafana configrued, and watching.
+The enterprise version of Gloo ships with full observability setup from the get go with prometheus and Grafana configured, and watching.
 GlooE also makes all envoy stats readily available via the included deployment, or an existing one
 
 
