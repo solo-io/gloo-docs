@@ -124,7 +124,7 @@ glooctl add route \
 
 For more details, please look at these other sources
 
-* [Gloo Upstreams Concept]({{< ref "introduction/concepts#upstreams" >}})
+* [Gloo Upstreams Concept]({{< ref "/introduction/concepts#upstreams" >}})
 * [Create Secret AWS Command Line]({{< ref "/cli/glooctl_create_secret_aws" >}})
 * [Create Upstream AWS Command Line]({{< ref "/cli/glooctl_create_upstream_aws" >}})
 * [AWS Access Keys](https://docs.aws.amazon.com/general/latest/gr/aws-sec-cred-types.html#access-keys-and-secret-access-keys) 
