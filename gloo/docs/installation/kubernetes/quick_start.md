@@ -4,9 +4,8 @@ weight: 2
 description: Installing Gloo into an existing Kubernetes cluster.
 ---
 
-If this is your first time running Gloo, you’ll need to download the command-line interface (CLI) called `glooctl` onto
-your local machine. You’ll use this CLI to interact with Gloo, including installing it onto your Kubernetes cluster.
-Directions on installing `glooctl` are [here](../install_glooctl).
+If this is your first time running Gloo, you’ll need to download the command-line interface (CLI) called `glooctl` onto your local machine. You’ll use this CLI to interact with Gloo, including installing it onto your Kubernetes cluster.
+
 
 ### Options to Install Gloo
 
@@ -74,7 +73,7 @@ Once your Kubernetes cluster is up and running, run the following command to dep
 glooctl install gateway
 ```
 
-After you [verify your installation](#verify), please see [Getting Started on Kubernetes](../../user_guides/basic_routing)
+After you [verify your installation](#verify), please see [Getting Started on Kubernetes](../../../user_guides/basic_routing)
 to get started using the Gloo Gateway.
 
 ### Install the Gloo Ingress Controller to your Kubernetes Cluster using `glooctl` {#ingress}
@@ -85,7 +84,7 @@ Once your Kubernetes cluster is up and running, run the following command to dep
 glooctl install ingress
 ```
 
-After you [verify your installation](#verify), please see [Getting Started with Kubernetes Ingress](../../user_guides/basic_ingress)
+After you [verify your installation](#verify), please see [Getting Started with Kubernetes Ingress](../../../user_guides/basic_ingress)
 to get started using the Gloo Ingress Controller.
 
 ### Install the Gloo Knative Cluster Ingress to your Kubernetes Cluster using `glooctl` {#knative}
@@ -97,7 +96,7 @@ Once your Kubernetes cluster is up and running, run the following command to dep
 glooctl install knative
 ```
 
-After you [verify your installation](#verify), please see [Getting Started with Gloo and Knative](../../user_guides/gloo_with_knative)
+After you [verify your installation](#verify), please see [Getting Started with Gloo and Knative](../../../user_guides/gloo_with_knative)
 to use Gloo as your Knative Ingress.
 
 ---
@@ -177,7 +176,7 @@ to install the correspondent flavour of Gloo. For example, to install Gloo as yo
 helm install gloo/gloo --name gloo-knative-0.7.6 --namespace my-namespace -f values-knative.yaml
 ```
 
-After you've installed Gloo, please check out our [User Guides](../../user_guides).
+After you've installed Gloo, please check out our [User Guides](../../../user_guides).
 
 ### Customizing your installation
 
@@ -205,7 +204,7 @@ deployment you can run:
 helm install gloo/gloo --name gloo-custom-knative-0.7.6 --namespace my-namespace -f values-knative.yaml -f value-overrides.yaml
 ```
 
-The right-most file specified takes precedence (see the [Helm docs](https://docs.helm.sh/helm/#helm-install) for more
+The right-most file specified takes precedence (see the [Helm docs](https://helm.sh/docs/helm/#helm-install) for more
 info on the `install` command).
 
 #### List of Gloo chart values
@@ -356,4 +355,4 @@ glooctl uninstall -n my-namespace
 
 ## Next Steps
 
-After you've installed Gloo, please check out our [User Guides](../../user_guides).
+After you've installed Gloo, please check out our [User Guides](../../../user_guides).

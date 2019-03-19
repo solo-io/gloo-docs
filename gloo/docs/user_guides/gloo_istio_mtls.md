@@ -30,7 +30,7 @@ kubectl apply -f samples/bookinfo/platform/kube/bookinfo.yaml
 This guide also assumes that you have Gloo installed. Gloo is installed to the gloo-system namespace
 and should *not* be injected with the istio sidecar.
 To quickly install Gloo, download *glooctl* and run `glooctl install gateway`. See the 
-[quick start](/installation/quick_start/) guide for more information.
+[quick start](../../installation/kubernetes/quick_start/) guide for more information.
 
 ## Configure Gloo
 For Gloo to successfully send requests to an Istio upstream with mTLS enabled, we need to add
