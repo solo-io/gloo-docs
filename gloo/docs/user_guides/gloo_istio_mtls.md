@@ -171,50 +171,11 @@ Just like in the previous section, we need Istio installed with SDS enabled, and
 
 ### Configure Gloo
 
-Gloo can easily and automatically plug into the Istio SDS architecture. To configure Gloo to do this, similarly to how we did in the previous section with the older Istio identity architecture, let's update the `productpage` upstream with the appropriate SDS configuration:
+Gloo can easily and automatically plug into the Istio SDS architecture. To configure Gloo to do this, similarly to how we did in the previous section with the older Istio identity architecture, Let's configure the Gloo gateway proxy (Envoy) to communicate with the Istio SDS over Unix Domain Socket: 
 
-{{< highlight yaml "hl_lines=24-32" >}}
-apiVersion: gloo.solo.io/v1
-kind: Upstream
-metadata:
-  creationTimestamp: "2019-03-19T22:27:20Z"
-  generation: 3
-  labels:
-    app: productpage
-    discovered_by: kubernetesplugin
-    service: productpage
-  name: default-productpage-9080
-  namespace: gloo-system
-  resourceVersion: "7643"
-  selfLink: /apis/gloo.solo.io/v1/namespaces/gloo-system/upstreams/default-productpage-9080
-  uid: 28d7d8d5-4a96-11e9-b355-d2c82e77d7fe
-spec:
-  discoveryMetadata: {}
-  upstreamSpec:
-    kube:
-      selector:
-        app: productpage
-      serviceName: productpage
-      serviceNamespace: default
-      servicePort: 9080
-    sslConfig:
-      sds:
-        callCredentials:
-          fileCredentialSource:
-            header: istio_sds_credentail_header-bin
-            tokenFileName: /var/run/secrets/kubernetes.io/serviceaccount/token
-        certificatesSecretName: default
-        targetUri: unix:/var/run/sds/uds_path
-        validationContextName: ROOTCA
-status:
-  reported_by: gloo
-  state: 1
-{{< /highlight >}}  
-
-In the above snippet we configure the location of the Unix Domain Socket where the Istio node agent is listening. Istio's node agent is the one that generates the certificates/keys communicates with Istio Citadel to sign the certificate, and ultimately provides the SDS API for Envoy/Gloo's Gateway proxy. The other various configurations are the location of the JWT token for the service account under which the proxy runs so the node agent can verify what identity is being requested, and finally how the request will be sent (in a header, etc). 
-
-Now that we have updated the upstream, we need to mount in the Unix Domain Socket into the Gloo proxy/Envoy. To do that, mount the volumes like this:
-
+```bash
+kubectl edit deploy/gateway-proxy -n gloo-system
+```
 {{< highlight yaml "hl_lines=51-52 61-64" >}}
 apiVersion: extensions/v1beta1
 kind: Deployment
@@ -284,6 +245,53 @@ spec:
         name: sds-uds-path
 {{< /highlight >}}
 
+Next, we need to update the `productpage` upstream with the appropriate SDS configuration:
+
+```bash
+kubectl edit upstream default-productpage-9080  -n gloo-system
+```
+
+{{< highlight yaml "hl_lines=24-32" >}}
+apiVersion: gloo.solo.io/v1
+kind: Upstream
+metadata:
+  creationTimestamp: "2019-03-19T22:27:20Z"
+  generation: 3
+  labels:
+    app: productpage
+    discovered_by: kubernetesplugin
+    service: productpage
+  name: default-productpage-9080
+  namespace: gloo-system
+  resourceVersion: "7643"
+  selfLink: /apis/gloo.solo.io/v1/namespaces/gloo-system/upstreams/default-productpage-9080
+  uid: 28d7d8d5-4a96-11e9-b355-d2c82e77d7fe
+spec:
+  discoveryMetadata: {}
+  upstreamSpec:
+    kube:
+      selector:
+        app: productpage
+      serviceName: productpage
+      serviceNamespace: default
+      servicePort: 9080
+    sslConfig:
+      sds:
+        callCredentials:
+          fileCredentialSource:
+            header: istio_sds_credentail_header-bin
+            tokenFileName: /var/run/secrets/kubernetes.io/serviceaccount/token
+        certificatesSecretName: default
+        targetUri: unix:/var/run/sds/uds_path
+        validationContextName: ROOTCA
+status:
+  reported_by: gloo
+  state: 1
+{{< /highlight >}}  
+
+In the above snippet we configure the location of the Unix Domain Socket where the Istio node agent is listening. Istio's node agent is the one that generates the certificates/keys communicates with Istio Citadel to sign the certificate, and ultimately provides the SDS API for Envoy/Gloo's Gateway proxy. The other various configurations are the location of the JWT token for the service account under which the proxy runs so the node agent can verify what identity is being requested, and finally how the request will be sent (in a header, etc). 
+
+
 At this point, the Gloo gateway-proxy can communicate with Istio's SDS and consume the correct certificates and keys to participate in mTLS with the rest of the Istio mesh. 
 
 To test this out, we need a route in Gloo:
@@ -297,4 +305,6 @@ And we can curl it:
 ```bash
 curl -v $(glooctl proxy url)/productpage
 ```
+
+
 
