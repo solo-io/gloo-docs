@@ -22,7 +22,7 @@ kubectl apply \
 
 1. Let's create a Kubernetes Ingress object to route requests to the petstore
 
-{{< highlight shell >}}
+```noop
 cat <<EOF | kubectl apply -f -
 apiVersion: extensions/v1beta1
 kind: Ingress
@@ -41,7 +41,7 @@ spec:
 EOF
         
 ingress.extensions "petstore-ingress" created
-{{< /highlight >}}
+```
 
 1. Let's test the route `/api/pets` using `curl`:
 
@@ -54,7 +54,7 @@ curl ${INGRESS_URL}/api/pets
 
 If you want to add server-side TLS to your Ingress, you can add it like this:
 
-{{< highlight yaml "hl_lines=14-15 33-36" >}}
+{{< highlight yaml "hl_lines=8-11" >}}
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
