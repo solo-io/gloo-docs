@@ -1,7 +1,7 @@
 ---
 title: Observability
 weight: 3
-description: How to monitor and trace withing your Gloo setup.
+description: How to monitor and trace within your Gloo setup.
 ---
 
 All Gloo pods ship with optional [Prometheus](https://prometheus.io/) monitoring capabilities.
@@ -14,14 +14,13 @@ options]({{< ref "/installation/kubernetes/quick_start#install_helm" >}}); and t
 The first way is via the helm chart. All deployment objects in the helm templates accept an argument `stats` which
 when set to true, start a stats server on the given pod.
 
-For example, to add stats to the Gloo `gateway`, when installing with Helm add  `--set gateway.deployment.stats=true`.
-The following example shows how to enable stats for both gateway and discovery.
+For example, to add stats to the Gloo `gateway`, when installing with Helm add  `--set discovery.deployment.stats=true`.
 
 ```shell
 helm install gloo/gloo \
   --name gloo \
   --namespace gloo-system \
-  --set gateway.deployment.stats=true,discovery.deployment.stats=true
+  --set discovery.deployment.stats=true
 ```
 
 Here's what the resulting `discovery` manifest would look like. Note the additions of the `prometheus.io` annotations,
@@ -77,12 +76,12 @@ Prometheus has great support for monitoring kubernetes pods. Docs for that can b
 are enabled through the Helm chart than the Prometheus annotations are automatically added to the pod spec. And those
 Prometheus stats are available from the admin page in our pods.
 
-For example, assuming you installed Gloo as previously using Helm, and enabled stats for gateway and discovery, you
+For example, assuming you installed Gloo as previously using Helm, and enabled stats for discovery, you
 could then `kubectl port-forward <pod> 9091:9091` those pods (or deployments/services selecting those pods) to access
 their admin page as follows.
 
 ```shell
-kubectl --namespace gloo-system port-forward deployment/gateway 9091:9091
+kubectl --namespace gloo-system port-forward deployment/discovery 9091:9091
 ```
 
 And then open <http://localhost:9091> for the admin page, including the Prometheus metrics at <http://localhost:9091/metrics>.
