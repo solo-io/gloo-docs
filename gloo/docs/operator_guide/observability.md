@@ -1,41 +1,88 @@
 ---
 title: Observability
 weight: 3
+description: How to monitor and trace withing your Gloo setup.
 ---
 
+All Gloo pods ship with optional [Prometheus](https://prometheus.io/) monitoring capabilities.
 
-All gloo pods ship with optional [prometheus](https://prometheus.io/) monitoring as well as [open tracing](https://opentracing.io/) capability.
+This functionality is turned off by default, and can be turned on a couple of different ways: through [Helm chart install
+options]({{< ref "/installation/kubernetes/quick_start#install_helm" >}}); and through environment variables.
 
-This functionality is turned off by default but can be turned on a couple of different ways.
+### Helm Chart Options
 
 The first way is via the helm chart. All deployment objects in the helm templates accept an argument `stats` which
-when set to true, start a stats server on the given pod. for example: 
-```yaml
-gloo:
-  deployment:
-    image:
-      repository: quay.io/solo-io/gloo
-      pullPolicy: Always
-    xdsPort: 9977
-    replicas: 1
-    stats: true
+when set to true, start a stats server on the given pod.
+
+For example, to add stats to the Gloo `gateway`, when installing with Helm add  `--set gateway.deployment.stats=true`.
+The following example shows how to enable stats for both gateway and discovery.
+
+```shell
+helm install gloo/gloo \
+  --name gloo \
+  --namespace gloo-system \
+  --set gateway.deployment.stats=true,discovery.deployment.stats=true
 ```
-This flag will set the `START_STATS_SERVER` env variable to true in the container which will start the stats server on port 9091.
 
-The other method is to manually set the `START_STATS_SERVER=1` in the pod. 
+Here's what the resulting `discovery` manifest would look like. Note the additions of the `prometheus.io` annotations,
+and the `START_STATS_SERVER` environment variable.
 
-### Monitoring Gloo with Prometheus
+{{< highlight yaml "hl_lines=18-21 32-33" >}}
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  labels:
+    app: gloo
+    gloo: discovery
+  name: discovery
+  namespace: gloo-system
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      gloo: discovery
+  template:
+    metadata:
+      labels:
+        gloo: discovery
+      annotations:
+        prometheus.io/path: /metrics
+        prometheus.io/port: "9091"
+        prometheus.io/scrape: "true"
+    spec:
+      containers:
+      - image: "quay.io/solo-io/discovery:0.11.1"
+        imagePullPolicy: Always
+        name: discovery
+        env:
+          - name: POD_NAMESPACE
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.namespace
+          - name: START_STATS_SERVER
+            value: "true"
+{{< /highlight >}}
 
-Prometheus has great support for monitoring kubermetes pods. Docs for that can be found [here](https://prometheus.io/docs/prometheus/latest/configuration/configuration/#kubernetes_sd_config).
-If the stats are enabled through the helm chart than the prometheus annotations are automatically added to the pod spec.
+This flag will set the `START_STATS_SERVER` environment variable to true in the container which will start the stats
+server on port `9091`.
 
-### Open Tracimg
+### Environment Variables
 
-Open tracing stats are also available from the admin page in our pods.
+The other method is to manually set the `START_STATS_SERVER=1` in the pod.
 
-### Enterprise features
+## Monitoring Gloo with Prometheus
 
-The enterprise version of Gloo ships with full observability setup from the get go with prometheus and Grafana configured, and watching.
-GlooE also makes all envoy stats readily available via the included deployment, or an existing one
+Prometheus has great support for monitoring kubernetes pods. Docs for that can be found
+[here](https://prometheus.io/docs/prometheus/latest/configuration/configuration/#kubernetes_sd_config). If the stats
+are enabled through the Helm chart than the Prometheus annotations are automatically added to the pod spec. And those
+Prometheus stats are available from the admin page in our pods.
 
+For example, assuming you installed Gloo as previously using Helm, and enabled stats for gateway and discovery, you
+could then `kubectl port-forward <pod> 9091:9091` those pods (or deployments/services selecting those pods) to access
+their admin page as follows.
 
+```shell
+kubectl --namespace gloo-system port-forward deployment/gateway 9091:9091
+```
+
+And then open <http://localhost:9091> for the admin page, including the Prometheus metrics at <http://localhost:9091/metrics>.
