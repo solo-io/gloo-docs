@@ -17,38 +17,63 @@ written with the annotation `kubernetes.io/ingress.class: gloo`.
  
 1. Next, deploy the Pet Store app to kubernetes:
 
-        kubectl apply \
-         -f https://raw.githubusercontent.com/solo-io/gloo/master/example/petstore/petstore.yaml
+kubectl apply \
+   -f https://raw.githubusercontent.com/solo-io/gloo/master/example/petstore/petstore.yaml
 
 1. Let's create a Kubernetes Ingress object to route requests to the petstore
 
-        cat <<EOF | kubectl apply -f -
-        apiVersion: extensions/v1beta1
-        kind: Ingress
-        metadata:
-         name: petstore-ingress
-         namespace: default
-         annotations:
-            kubernetes.io/ingress.class: gloo
-        spec:
-         rules:
-         - http:
-             paths:
-             - path: /.*
-               backend:
-                 serviceName: petstore
-                 servicePort: 8080
-        EOF
+{{< highlight shell >}}
+cat <<EOF | kubectl apply -f -
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+ name: petstore-ingress
+ annotations:
+    kubernetes.io/ingress.class: gloo
+spec:
+ rules:
+ - http:
+     paths:
+     - path: /.*
+       backend:
+         serviceName: petstore
+         servicePort: 8080
+EOF
         
-       ingress.extensions "petstore-ingress" created
+ingress.extensions "petstore-ingress" created
+{{< /highlight >}}
 
 1. Let's test the route `/api/pets` using `curl`:
 
-        export INGRESS_URL=$(glooctl proxy url --name ingress-proxy)
-        curl ${INGRESS_URL}/api/pets
-        
-        [{"id":1,"name":"Dog","status":"available"},{"id":2,"name":"Cat","status":"pending"}]
-        
+```shell
+export INGRESS_URL=$(glooctl proxy url --name ingress-proxy)
+curl ${INGRESS_URL}/api/pets
+
+[{"id":1,"name":"Dog","status":"available"},{"id":2,"name":"Cat","status":"pending"}]
+```        
+
+If you want to add server-side TLS to your Ingress, you can add it like this:
+
+{{< highlight yaml "hl_lines=14-15 33-36" >}}
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+ name: petstore-ingress
+ annotations:
+    kubernetes.io/ingress.class: gloo
+spec:
+ tls:
+  - hosts:
+    - foo.bar.com
+    secretName: gateway-tls
+ rules:
+ - http:
+     paths:
+     - path: /.*
+       backend:
+         serviceName: petstore
+         servicePort: 8080
+{{< /highlight >}}
 
 Great! our ingress is up and running. See [https://kubernetes.io/docs/concepts/services-networking/ingress/](https://kubernetes.io/docs/concepts/services-networking/ingress/) for more information 
 on using kubernetes ingress controllers.
