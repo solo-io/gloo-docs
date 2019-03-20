@@ -13,7 +13,12 @@ Follow these guides to get started using Gloo!
 * [External API Routing](external_api_routing)
 * [Exposing Gloo with NodePort](node_port)
 
-**Ingress:**
+**API Gateway Configuration**
+
+* [Setting up TLS](tls_setup)
+
+
+**Kubernetes Ingress:**
 
 * [Basic Ingress](basic_ingress)
 

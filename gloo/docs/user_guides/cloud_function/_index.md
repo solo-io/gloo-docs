@@ -1,6 +1,6 @@
 ---
 title: Cloud Function Routing
-weight: 3
+weight: 40
 description: How to route to cloud function as a service
 ---
 

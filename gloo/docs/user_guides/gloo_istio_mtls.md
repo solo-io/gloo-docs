@@ -1,6 +1,6 @@
 ---
 title: Gloo and Istio mTLS
-weight: 2
+weight: 80
 ---
 
 ## Motivation

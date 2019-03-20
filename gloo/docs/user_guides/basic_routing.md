@@ -1,6 +1,6 @@
 ---
 title: Basic Routing
-weight: 1
+weight: 10
 ---
 
 ## Gateway Routing

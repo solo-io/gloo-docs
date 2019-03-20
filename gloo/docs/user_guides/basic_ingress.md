@@ -1,6 +1,6 @@
 ---
-title: Ingress Routing
-weight: 6
+title: Kubernetes Ingress Routing
+weight: 70
 ---
 
 Kubernetes Ingress Controllers are used for simple traffic routing into a kubernetes cluster. When Gloo is installed with the 
