@@ -149,7 +149,7 @@ to the Gloo Helm chart.
 By default, the Gloo Helm chart is configured with the values for the `gateway` deployment. Hence, if you run:
 
 ```shell
-helm install gloo/gloo --name gloo-0.7.6 --namespace my-namespace
+helm install gloo/gloo --name gloo-0-7-6 --namespace my-namespace
 ```
 
 Helm will install the `gateway` deployment of Gloo to the cluster your _KUBECONFIG_ is pointing to. Remember to specify
@@ -173,7 +173,7 @@ You can then use either
 to install the correspondent flavour of Gloo. For example, to install Gloo as your Knative Ingress you can run:
 
 ```shell
-helm install gloo/gloo --name gloo-knative-0.7.6 --namespace my-namespace -f values-knative.yaml
+helm install gloo/gloo --name gloo-knative-0-7-6 --namespace my-namespace -f values-knative.yaml
 ```
 
 After you've installed Gloo, please check out our [User Guides](../../../user_guides).
@@ -194,14 +194,14 @@ settings:
 and use it to override default values in the Gloo Helm chart:
 
 ```shell
-helm install gloo/gloo --name gloo-custom-0.7.6 --namespace my-namespace -f value-overrides.yaml
+helm install gloo/gloo --name gloo-custom-0-7-6 --namespace my-namespace -f value-overrides.yaml
 ```
 
 The install command accepts multiple value files, so if you want to override the default values for a `knative`
 deployment you can run:
 
 ```shell
-helm install gloo/gloo --name gloo-custom-knative-0.7.6 --namespace my-namespace -f values-knative.yaml -f value-overrides.yaml
+helm install gloo/gloo --name gloo-custom-knative-0-7-6 --namespace my-namespace -f values-knative.yaml -f value-overrides.yaml
 ```
 
 The right-most file specified takes precedence (see the [Helm docs](https://helm.sh/docs/helm/#helm-install) for more
