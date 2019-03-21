@@ -36,9 +36,14 @@ Envoy Proxy is a data-plane component with powerful routing, observability, and 
 * [Web console to manage the control plane]({{< ref "/enterprise/basic_routing_console/_index.md">}}) - enterprise feature
 
 
+
 #### What's the difference between Gloo and Istio
 
+<<<<<<< HEAD
 Gloo is NOT a service mesh but can be deployed complementary to a service mesh like Istio. Istio solves the challenges of service-to-service communication by controlling requests as they flow through the system. Gloo can be deployed at the edge of the service-mesh boundary, between service meshes, or within the mesh to add the following capabilities:
+=======
+Gloo is NOT a service mesh but can be deployed complementary to a service mesh like Istio. Istio solves the challenges of service-to-service communication by controlling requests as they flwo through the system. Gloo can deployed at the edge of the service-mesh boundary, between service meshes, or within the mesh to add the following capabilities:
+>>>>>>> 73dcc409973f395e1946ce5144c826d832d60702
 
 * Oauth flows for end-user authentication
 * GraphQL endpoints for aggregation of multiple services/APIs
@@ -176,7 +181,11 @@ glooctl proxy url
 http://192.168.64.50:30160
 ```
 
+<<<<<<< HEAD
 To get the `hostname:port` for the HTTPS port:
+=======
+To get the hostname:port for the HTTPS port:
+>>>>>>> 73dcc409973f395e1946ce5144c826d832d60702
 
 ```shell
 glooctl proxy url --port https
