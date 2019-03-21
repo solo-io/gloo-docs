@@ -24,21 +24,21 @@ Other use cases Gloo can solve:
 
 Envoy Proxy is a data-plane component with powerful routing, observability, and resilience capabilities. Envoy can be difficult to operationalize and complex to configure. Gloo adds the following:
 
-* A flexible control plane
-* More ergonomic, domain-specific APIs to drive Envoy configuration
-* Function-level routing; Envoy understands routing to clusters (`host:port`) while Gloo understands routing to a Swagger/OAS endpoint, gRPC function, Cloud Function like Lambda, etc. 
-* Transformation of request/response via a super-fast C++ templating filter [built on Inja](https://github.com/pantor/inja)
-* Envoy filters to call AWS Lambda directly, handling the complex security handshaking
-* Discovery of services running in a hybrid platform (like VMs, containers, infrastructure as code, function as a service, etc)
+* A [flexible control plane]({{< ref "/dev/_index.md" >}}) with extensibility in mind
+* More ergonomic, [domain-specific APIs]({{< ref "/introduction/concepts.md" >}}) to drive Envoy configuration
+* [Function-level routing]({{< ref "/user_guides/function_routing.md" >}}); Envoy understands routing to clusters (`host:port`) while Gloo understands routing to a Swagger/OAS endpoint, gRPC function, Cloud Function like Lambda, etc. 
+* [Transformation of request/response](https://github.com/solo-io/envoy-gloo/tree/master/source/extensions/filters/http/transformation) via a super-fast C++ templating filter [built on Inja](https://github.com/pantor/inja)
+* Envoy filters to call [AWS Lambda directly](https://github.com/solo-io/envoy-gloo/tree/master/source/extensions/filters/http/aws_lambda), handling the complex security handshaking
+* [Discovery of services running in a hybrid platform]({{< ref "/introduction/architecture.md#discovery-architecture" >}}) (like VMs, containers, infrastructure as code, function as a service, etc)
 * Out of the box caching filters - enterprise feature
-* Rate-limiting service with pluggable storage, multiple options for API (simplified, or more flexible, depending on what you need) - enterprise feature
-* OIDC integration, pluggable external-auth service - enterprise feature
-* Web console to manage the control plane - enterprise feature
+* [Rate-limiting service]({{< ref "/enterprise/ratelimit.md">}}) with pluggable storage, multiple options for API (simplified, [or more flexible]({{< ref "/enterprise/rate_limits_envoy/_index.md">}}), depending on what you need) - enterprise feature
+* [OIDC integration]({{< ref "/enterprise/authentication/oidc.md" >}}), pluggable [external-auth service]({{< ref "/enterprise/authentication/auth.md" >}}) - enterprise feature
+* [Web console to manage the control plane]({{< ref "/enterprise/basic_routing_console/_index.md">}}) - enterprise feature
 
 
 #### What's the difference between Gloo and Istio
 
-Gloo is NOT a service mesh but can be deployed complementary to a service mesh like Istio. Istio solves the challenges of service-to-service communication by controlling requests as they flwo through the system. Gloo can deployed at the edge of the service-mesh boundary, between service meshes, or within the mesh to add the following capabilities:
+Gloo is NOT a service mesh but can be deployed complementary to a service mesh like Istio. Istio solves the challenges of service-to-service communication by controlling requests as they flow through the system. Gloo can be deployed at the edge of the service-mesh boundary, between service meshes, or within the mesh to add the following capabilities:
 
 * Oauth flows for end-user authentication
 * GraphQL endpoints for aggregation of multiple services/APIs
@@ -176,7 +176,7 @@ glooctl proxy url
 http://192.168.64.50:30160
 ```
 
-To get the hostname:port for the HTTPS port:
+To get the `hostname:port` for the HTTPS port:
 
 ```shell
 glooctl proxy url --port https
