@@ -25,6 +25,7 @@ Follow these guides to get started using Gloo!
 
 * [Gloo with Knative](gloo_with_knative)
 
-**Istio:**
+**Service Mesh:**
 
 * [mTLS with Gloo and Istio](gloo_istio_mtls)
+* [Ingress for AWS App Mesh]({{< relref "gloo_app_mesh.md">}})
