@@ -26,7 +26,7 @@ Envoy Proxy is a data-plane component with powerful routing, observability, and 
 
 * A [flexible control plane]({{< ref "/dev/_index.md" >}}) with extensibility in mind
 * More ergonomic, [domain-specific APIs]({{< ref "/introduction/concepts.md" >}}) to drive Envoy configuration
-* [Function-level routing]({{< ref "/user_guides/function_routing.md" >}}); Envoy understands routing to clusters (`host:port`) while Gloo understands routing to a Swagger/OAS endpoint, gRPC function, Cloud Function like Lambda, etc. 
+* [Function-level routing]({{< ref "/user_guides/function_routing" >}}); Envoy understands routing to clusters (`host:port`) while Gloo understands routing to a Swagger/OAS endpoint, gRPC function, Cloud Function like Lambda, etc. 
 * [Transformation of request/response](https://github.com/solo-io/envoy-gloo/tree/master/source/extensions/filters/http/transformation) via a super-fast C++ templating filter [built on Inja](https://github.com/pantor/inja)
 * Envoy filters to call [AWS Lambda directly](https://github.com/solo-io/envoy-gloo/tree/master/source/extensions/filters/http/aws_lambda), handling the complex security handshaking
 * [Discovery of services running in a hybrid platform]({{< ref "/introduction/architecture.md#discovery-architecture" >}}) (like VMs, containers, infrastructure as code, function as a service, etc)
