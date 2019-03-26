@@ -8,7 +8,7 @@ routes for every existing kubernetes service,
 
 ## Writing the Code
 
-You can view the complete code written in this section here: [example-proxy-controller.go](example-proxy-controller.go).
+You can view the complete code written in this section here: [example-proxy-controller.go](../example-proxy-controller.go).
 
 ### Initial code
 
@@ -504,7 +504,7 @@ go get -v ./..
 ```
 
 While it's possible to package this application in a Docker container and deploy it as a pod inside of Kubernetes, let's 
-just try running it locally. [Make sure you have Gloo installed](../installation/_index.md) in your cluster so 
+just try running it locally. [Make sure you have Gloo installed]({{< ref "/installation/_index.md" >}}) in your cluster so 
 that Discovery will create some Upstreams for us.
 
 Once that's done, to see our code in action, simply run `go run main.go` !
@@ -891,6 +891,6 @@ kube-system-tiller-deploy-44134   54m
 
 Sweet! You're an official Gloo developer! You've just seen how easy it is to extend Gloo to service one of many 
 potential use cases. Take a look at our 
-[API Reference Documentation](../v1/github.com/solo-io/gloo/projects/gloo/api/v1/proxy.proto.sk.md) to learn about the 
+[API Reference Documentation]({{< ref "/v1/github.com/solo-io/gloo/projects/gloo/api/v1/proxy.proto.sk.md">}}) to learn about the 
 wide range of configuration options Proxies expose such as request transformation, SSL termination, serverless computing, 
 and much more.
