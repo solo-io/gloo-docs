@@ -29,10 +29,15 @@ great way to get a cluster up quickly.
       --filename https://raw.githubusercontent.com/solo-io/gloo/master/example/petstore/petstore.yaml
     ```
 
-1. Let's create a Kubernetes Ingress object to route requests to the petstore. Notice the `kubernetes.io/ingress.class: gloo`
-annotation that we've added. This indicates to Gloo that it should handle this Ingress Object.
+1. Let's create a Kubernetes Ingress object to route requests to the petstore following the [Default Backend](https://kubernetes.io/docs/concepts/services-networking/ingress/#default-backend)
+convention of not specifying host or path. Mode details can be found at [Kuberbetes Ingress Concepts](https://kubernetes.io/docs/concepts/services-networking/ingress/).
 
-    {{< highlight noop "hl_lines=6-7" >}}
+    Notice the `kubernetes.io/ingress.class: gloo` annotation that we've added.
+    This indicates to Gloo that it should handle this Ingress Object.
+
+    Also notice that the Kubernetes Ingress objects wants you to do special wildcarding of paths, `/.*`.
+
+    {{< highlight noop "hl_lines=6-7 12" >}}
 cat <<EOF | kubectl apply --filename -
 apiVersion: extensions/v1beta1
 kind: Ingress
@@ -41,17 +46,30 @@ metadata:
  annotations:
     kubernetes.io/ingress.class: gloo
 spec:
- rules:
- - http:
-     paths:
-     - path: /.*
-       backend:
-         serviceName: petstore
-         servicePort: 8080
+  rules:
+  - http:
+      paths:
+      - path: /.*
+        backend:
+          serviceName: petstore
+          servicePort: 8080
 EOF
-
-ingress.extensions "petstore-ingress" created
     {{< /highlight >}}
+
+    ```noop
+    ingress.extensions "petstore-ingress" created
+    ```
+
+1. Validate Ingress routing looks to be set up, and running.
+
+    ```shell
+    kubectl get ingress petstore-ingress
+    ```
+
+    ```noop
+    NAME               HOSTS   ADDRESS   PORTS   AGE
+    petstore-ingress   *                 80      18m
+    ```
 
 1. Let's test the route `/api/pets` using `curl`:
 
@@ -64,28 +82,32 @@ ingress.extensions "petstore-ingress" created
     [{"id":1,"name":"Dog","status":"available"},{"id":2,"name":"Cat","status":"pending"}]
     ```
 
-    If you want to add server-side TLS to your Ingress, you can add it like this:
+1. If you want to add server-side TLS to your Ingress, you can add it like the following. This assumes you've created
+a TLS secret called `gateway-tls`, for example `kubectl create secret tls gateway-tls --cert=path/to/tls.cert --key=path/to/tls.key`
 
     {{< highlight yaml "hl_lines=8-11" >}}
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
- name: petstore-ingress
- annotations:
+  name: petstore-ingress
+  annotations:
     kubernetes.io/ingress.class: gloo
 spec:
- tls:
+  tls:
   - hosts:
     - foo.bar.com
     secretName: gateway-tls
- rules:
- - http:
-     paths:
-     - path: /.*
-       backend:
-         serviceName: petstore
-         servicePort: 8080
+  rules:
+  - http:
+      paths:
+      - path: /.*
+        backend:
+          serviceName: petstore
+          servicePort: 8080
     {{< /highlight >}}
 
-Great! our ingress is up and running. See <https://kubernetes.io/docs/concepts/services-networking/ingress/>
-for more information on using kubernetes ingress controllers.
+Great! our ingress is up and running. See <https://kubernetes.io/docs/concepts/services-networking/ingress>
+for more information on using Kubernetes Ingress Controllers.
+
+Also recommend you look at [Gloo in gateway mode]({{% ref "http://localhost:1313/user_guides/basic_routing" %}}) for more advanced function routing options not available with Ingress
+Object without adding lots of custom annotations.
