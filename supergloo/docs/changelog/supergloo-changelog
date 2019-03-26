@@ -1,3 +1,15 @@
+### v0.3.5
+
+**New Features**
+
+- Added `supergloo create secret aws` command to CLI. We need this in order for supergloo to be able to manage AWS App Mesh resources. (https://github.com/solo-io/supergloo/issues/281)
+- Automatically add MTLS between gloo and istio. (https://github.com/solo-io/supergloo/issues/225)
+
+**Fixes**
+
+- Ensures that generated Citadel secrets are removed from all namespaces when rotating certs (https://github.com/solo-io/supergloo/issues/292)
+- remove the need to use resource_kind annotation on prometheus configmaps (https://github.com/solo-io/supergloo/issues/287)
+
 ### v0.3.4
 
 **New Features**

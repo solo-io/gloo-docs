@@ -1,3 +1,9 @@
+### v0.13.0
+
+**Breaking Changes**
+
+- Glooctl install library has been refactored. (https://github.com/solo-io/gloo/pull/597)
+
 ### v0.12.0
 
 **Dependency Bumps**
