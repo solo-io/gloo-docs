@@ -8,6 +8,13 @@ Gloo uses a `VirtualService` CRD to allow users to specify one or more route rul
 This guide will discuss how to configure Gloo to handle various routing scenarios. These are examples of how
 to use the [Route Matcher]({{% ref "/v1/github.com/solo-io/gloo/projects/gloo/api/v1/proxy.proto.sk#matcher" %}}).
 
+To give you some context, Gloo [Virtual Services]({{% ref "/v1/github.com/solo-io/gloo/projects/gateway/api/v1/virtual_service.proto.sk#VirtualService" %}}) contain zero or more [Route]({{% ref "/v1/github.com/solo-io/gloo/projects/gloo/api/v1/proxy.proto.sk#route" %}}) objects.
+Each [Route]({{% ref "/v1/github.com/solo-io/gloo/projects/gloo/api/v1/proxy.proto.sk#route" %}}) contains a
+[Matcher]({{% ref "/v1/github.com/solo-io/gloo/projects/gloo/api/v1/proxy.proto.sk#matcher" %}}), which is the main
+way that Gloo uses to determine (or match) if a request coming into the Gloo gateway proxy should be acted on, i.e.,
+forwarded to an upstream. This guide will primarily focus on the details of configuring a
+[Matcher]({{% ref "/v1/github.com/solo-io/gloo/projects/gloo/api/v1/proxy.proto.sk#matcher" %}}).
+
 In most cases, you can use the `glooctl create virtualservice --name <your service name>` command ([doc here]({{% ref "/cli/glooctl_create_virtualservice" %}}))
 to create this resource initially. For example,
 
