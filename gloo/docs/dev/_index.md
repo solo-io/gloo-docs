@@ -13,8 +13,8 @@ Gloo is designed to be highly pluggable and easily extendable in each of the fol
 
 The reason Gloo is extendable in so many directions is due in part to its Kubernetes Operator-style design. By interacting with two CRDs, it is possible to customize Gloo to virtually any environment and use case:
 
-* [`v1.Proxies`](../../v1/github.com/solo-io/gloo/projects/gloo/api/v1/upstream.proto.sk) provide the routing configuration which Gloo will translate and apply to Envoy.
-* [`v1.Upstreams`](../../v1/github.com/solo-io/gloo/projects/gloo/api/v1/upstream.proto.sk) describe routable destinations for Gloo.
+* [v1.Proxies]({{< ref "/v1/github.com/solo-io/gloo/projects/gloo/api/v1/proxy.proto.sk.md">}}) provide the routing configuration which Gloo will translate and apply to Envoy.
+* [v1.Upstreams]({{< ref "/v1/github.com/solo-io/gloo/projects/gloo/api/v1/upstream.proto.sk.md">}}) describe routable destinations for Gloo.
 
 * **Proxies** represent a unified configuration to be applied to one or more instances of a proxy. You can think of the proxy of as tree like such:
 
@@ -42,9 +42,9 @@ The reason Gloo is extendable in so many directions is due in part to its Kubern
               ├── /route
               └── tls-config
 
-  A single proxy CRD contains all the configuration necessary to be applied to an instance of Envoy. In the Gloo system, Proxies are treated as an intermediary representation of config, while user-facing config is imported from simpler, more opinionated resources such as the [`gateway.VirtualService`](../../v1/github.com/solo-io/gloo/projects/gateway/api/v1/virtual_service.proto.sk) or [Kubernetes Ingress objects](https://kubernetes.io/docs/concepts/services-networking/ingress/).
+  A single proxy CRD contains all the configuration necessary to be applied to an instance of Envoy. In the Gloo system, Proxies are treated as an intermediary representation of config, while user-facing config is imported from simpler, more opinionated resources such as the [gateway.VirtualService]({{< ref "/v1/github.com/solo-io/gloo/projects/gateway/api/v1/virtual_service.proto.sk.md">}}) or [Kubernetes Ingress objects](https://kubernetes.io/docs/concepts/services-networking/ingress/).
   
-  For this reason, a standard Gloo deployment contains one or more controllers which programatically generate and write these CRDs to provide simpler, use-case specific APIs such as API Gateway and Ingress. [Sqoop](https://sqoop.solo.io/) is an advanced controller which creates routing configuration for Gloo from [**GraphQL Schemas**](https://graphql.org/). 
+  For this reason, a standard Gloo deployment contains one or more controllers which programmatically generate and write these CRDs to provide simpler, use-case specific APIs such as API Gateway and Ingress. [Sqoop](https://sqoop.solo.io/) is an advanced controller which creates routing configuration for Gloo from [**GraphQL Schemas**](https://graphql.org/). 
   
   [Click here for a tutorial providing a simple example utilizing this lower-level Proxy API](example-proxy-controller). This tutorial will walk you through building a Kubernetes controller to automatically configure Gloo without any user interaction](example-proxy-controller.go).
 

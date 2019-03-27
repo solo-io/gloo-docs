@@ -1,3 +1,36 @@
+### v0.13.3
+
+**New Features**
+
+- Allow fine tuning ssl settings and circuit breakers (https://github.com/solo-io/gloo/issues/609)
+- Allow providing a `--kubeyaml` flag to glooctl commands to dump the associated kubernetes yaml objects (https://github.com/solo-io/gloo/issues/616)
+
+**Fixes**
+
+- The output for gloo install and uninstall has been cleaned up, and detailed output has moved to HOME/.gloo/debug.log. (https://github.com/solo-io/gloo/issues/619)
+
+### v0.13.2
+
+**New Features**
+
+- Add ability to declare multiple proxies in helm chart. (https://github.com/solo-io/gloo/issues/573)
+
+**Fixes**
+
+- Propagate resource exclusion logic from the install spec to the installer. Needed for enterprise Gloo. (https://github.com/solo-io/gloo/issues/611)
+
+### v0.13.1
+
+**New Features**
+
+- Allow providing parameters to fine tune the http connection manager. (https://github.com/solo-io/gloo/issues/596)
+
+**Fixes**
+
+- Enable CORS in runtime, add e2e. (https://github.com/solo-io/gloo/issues/589)
+- Use latest envoy with a fix to SIGSEGV that happens under heavy load. (https://github.com/solo-io/gloo/issues/590)
+- Namespace needs to be set up during pre-install, so that other namespaced pre-install resources (i.e. Settings) can be created. (https://github.com/solo-io/gloo/issues/604)
+
 ### v0.13.0
 
 **Breaking Changes**

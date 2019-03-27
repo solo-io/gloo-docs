@@ -36,7 +36,7 @@ providing advanced configuration for Envoy (including Gloo's custom Envoy filter
 
 ![Component Architecture](../component_architecture.png "Component Architecture")
 
-* The **Config Watcher** watches the storage layer for updates to user configuration objects ([Upstreams](../concepts#Upstreams) and [Virtual Services](../concepts#Virtual Services)).
+* The **Config Watcher** watches the storage layer for updates to user configuration objects ([Upstreams](../concepts#upstreams) and [Virtual Services](../concepts#virtual-services)).
 * The **Secret Watcher** watches a secret store for updates to secrets (which are required for certain plugins such as the [AWS Lambda Plugin](../../v1/github.com/solo-io/gloo/projects/gloo/api/v1/plugins/aws/aws.proto.sk)).
 * **Endpoint Discovery** watches service registries such as Kubernetes, Cloud Foundry, and Consul for IPs associated with services.
 Endpoint Discovery is plugin-specific. For example, the [Kubernetes Plugin](../../v1/github.com/solo-io/gloo/projects/gloo/api/v1/plugins/kubernetes/kubernetes.proto.sk) runs its own Endpoint Discovery goroutine.
@@ -50,11 +50,11 @@ and initiates a new *translation loop*, creating a new Envoy xDS Snapshot.
   function-specific Envoy filters.
   1. The next step generates all of the **[Envoy routes](https://www.envoyproxy.io/docs/envoy/latest/api-v2/api/v2/route/route.proto.html?highlight=route)**
   via the route plugins . Routes are generated for each route rule defined on the [virtual service objects](../../v1/github.com/solo-io/gloo/projects/gateway/api/v1/virtual_service.proto.sk). When all of the routes are created, the translator aggregates them into
-  [Envoy virtual services](https://www.envoyproxy.io/docs/envoy/latest/api-v1/route_config/vService.html?highlight=virtual%20host)
-  and adds them to a new [Envoy HTTP Connection Manager](https://www.envoyproxy.io/docs/envoy/latest/api-v1/route_config/vService.html?highlight=virtual%20host)
+  [Envoy virtual hosts](https://www.envoyproxy.io/docs/envoy/latest/api-v2/api/v2/route/route.proto#route-virtualhost)
+  and adds them to a new [Envoy HTTP Connection Manager](https://www.envoyproxy.io/docs/envoy/latest/intro/arch_overview/http_connection_management)
   configuration.
   1. Filter plugins are queried for their filter configurations, generating the list of HTTP Filters that will go on the
-  [Envoy listeners](https://www.envoyproxy.io/docs/envoy/latest/api-v1/listeners/listeners).
+  [Envoy listeners](https://www.envoyproxy.io/docs/envoy/latest/configuration/listeners/listeners).
   1. Finally, a snapshot is composed of the all the valid endpoints, clusters, rds configs, and listeners
 * The **Reporter** receives a validation report for every upstream and virtual service processed by the translator. Any invalid
 config objects are reported back to the user through the storage layer. Invalid objects are marked as "Rejected" with

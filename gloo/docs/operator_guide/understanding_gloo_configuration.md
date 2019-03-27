@@ -14,7 +14,7 @@ To be notified of the most recent updates, follow us on [Twitter](https://twitte
 ## Configuration storage
 
 By default, Gloo leverages Kubernetes to implement its
-[declarative infrastructure model](../gloo_declarative_model#gloo-as-declarative-infrastructure).
+[declarative infrastructure model](../gloo_declarative_model).
 The Gloo configuration consists of a set of YAML documents that are stored in Kubernetes as
 [custom resources](https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources).
 Each of the Gloo configuration objects (virtual services, upstreams, etc.) is an instance of a
