@@ -10,7 +10,7 @@ Ingress objects written with the annotation `kubernetes.io/ingress.class: gloo`.
 
 If you need more advanced routing capabilities, we'd encourage you to use Gloo `VirtualServices` by installing as
 `glooctl install gateway`. See the remaining routing documentation for more details on the extended capabilities Gloo
-provides **without** needing to add lots of additional custom annotations to you Ingress Objects.
+provides **without** needing to add lots of additional custom annotations to your Ingress Objects.
 
 ### What you'll need
 
@@ -106,7 +106,7 @@ spec:
           servicePort: 8080
     {{< /highlight >}}
 
-Great! our ingress is up and running. See <https://kubernetes.io/docs/concepts/services-networking/ingress>
+Great! Our ingress is up and running. See <https://kubernetes.io/docs/concepts/services-networking/ingress>
 for more information on using Kubernetes Ingress Controllers.
 
 Also recommend you look at [Gloo in gateway mode]({{% ref "http://localhost:1313/user_guides/basic_routing" %}}) for more advanced function routing options not available with Ingress

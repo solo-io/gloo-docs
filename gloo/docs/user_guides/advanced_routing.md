@@ -4,7 +4,7 @@ weight: 35
 description: Advanced routing matching rules for Gloo.
 ---
 
-Gloo uses a `virtualservice` CRD to allow users to specify one or more route rules to handle as a group (Virtual Service).
+Gloo uses a `VirtualService` CRD to allow users to specify one or more route rules to handle as a group (Virtual Service).
 This guide will discuss how to configure Gloo to handle various routing scenarios. These are examples of how
 to use the [Route Matcher]({{% ref "/v1/github.com/solo-io/gloo/projects/gloo/api/v1/proxy.proto.sk#matcher" %}}).
 
