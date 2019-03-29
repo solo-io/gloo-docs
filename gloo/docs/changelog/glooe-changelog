@@ -1,3 +1,67 @@
+### v0.13.2
+
+**Dependency Bumps**
+
+- solo-io/gloo-i has been upgraded to v0.1.18.
+
+**Fixes**
+
+- Fixed the description of the `--enable-oidc-auth` flag for `glooctl` virtual service commands. (https://github.com/solo-io/solo-projects/issues/561)
+
+### v0.13.1
+
+**New Features**
+
+- `glooctl create virtualservice` and `glooctl create secret oauth` now also support `--dry-run`. This was already supported for other commands inherited from open source `glooctl`. (https://github.com/solo-io/solo-projects/issues/558)
+
+**Fixes**
+
+- `glooctl create virtualservice` now sets the display name if the flag is provided, or defaults to the name. (https://github.com/solo-io/solo-projects/issues/557)
+
+### v0.13.0
+
+**Dependency Bumps**
+
+- solo-io/gloo has been upgraded to v0.13.0.
+- solo-io/solo-kit has been upgraded to v0.4.1.
+- solo-io/go-utils has been upgraded to v0.6.1.
+
+**Breaking Changes**
+
+- The upgrade to Gloo 0.13.3 refactored the install and uninstall commands. (https://github.com/solo-io/solo-projects/issues/504)
+
+### v0.12.3
+
+This release contained no user-facing changes.
+
+### v0.12.2
+
+**Fixes**
+
+- Use latest envoy with an upstream fix to SIGSEGV that happens under heavy load (https://github.com/solo-io/gloo/issues/590)
+
+### v0.12.1
+
+**Dependency Bumps**
+
+- solo-io/gloo-i has been upgraded to v0.1.16.
+
+### v0.12.0
+
+**Dependency Bumps**
+
+- solo-io/gloo-i has been upgraded to v0.1.15.
+- solo-io/gloo has been upgraded to v0.12.0.
+- solo-io/solo-kit has been upgraded to v0.3.10.
+
+**Breaking Changes**
+
+- Incremental changed to Delta in ratelimit and extauth protos. (https://github.com/solo-io/solo-projects/issues/540)
+
+**Fixes**
+
+- Fixes generation of rate limit XDS service. (https://github.com/solo-io/solo-projects/issues/293)
+
 ### v0.11.3
 
 **New Features**

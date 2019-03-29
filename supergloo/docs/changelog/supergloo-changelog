@@ -1,3 +1,38 @@
+### v0.3.6
+
+**Dependency Bumps**
+
+- solo-io/gloo has been upgraded to v0.13.6.
+- solo-io/gloo has been upgraded to v0.13.5.
+- solo-io/solo-kit has been upgraded to v0.4.1.
+- solo-io/go-utils has been upgraded to v0.6.1.
+
+**New Features**
+
+- Added `supergloo set mesh stats` command to CLI. Enables configuring an existing mesh CRD. (https://github.com/solo-io/supergloo/issues/281)
+- Create CLI for connecting gloo with active meshes. (https://github.com/solo-io/supergloo/issues/225)
+- SuperGloo now propagates metrics from Istio Meshes to targeted Prometheus instances. Connecting
+prometheus instances to the meshes they should scrape can be done with the `supergloo set mesh stats` command,
+as well as by setting `spec.monitoringConfig.prometheusConfigmaps` in the `supergloo.solo.io/v1.Mesh` crd (https://github.com/solo-io/supergloo/issues/210)
+- Added a `MutationAdmissionWebhook` server that injects to-be-created-pods with AWS App Mesh sidecar proxies. (https://github.com/solo-io/supergloo/issues/299)
+
+**Fixes**
+
+- Bounce Prometheus pods when their configmap gets updated (https://github.com/solo-io/supergloo/issues/296)
+- Fix the panic that happens after initial istio install (https://github.com/solo-io/supergloo/issues/303)
+
+### v0.3.5
+
+**New Features**
+
+- Added `supergloo create secret aws` command to CLI. We need this in order for supergloo to be able to manage AWS App Mesh resources. (https://github.com/solo-io/supergloo/issues/281)
+- Automatically add MTLS between gloo and istio. (https://github.com/solo-io/supergloo/issues/225)
+
+**Fixes**
+
+- Ensures that generated Citadel secrets are removed from all namespaces when rotating certs (https://github.com/solo-io/supergloo/issues/292)
+- remove the need to use resource_kind annotation on prometheus configmaps (https://github.com/solo-io/supergloo/issues/287)
+
 ### v0.3.4
 
 **New Features**

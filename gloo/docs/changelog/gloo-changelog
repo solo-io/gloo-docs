@@ -1,3 +1,87 @@
+### v0.13.7
+
+**New Features**
+
+- Add glooctl proxy address option to return proxy address (host:port). (https://github.com/solo-io/gloo/issues/643)
+- Allow enabled http 1.0 support in Envoy. (https://github.com/solo-io/gloo/issues/635)
+
+**Fixes**
+
+- `glooctl` prints more informative error messages in a variety of cases where insufficient args or commands were provided. (https://github.com/solo-io/solo-projects/issues/404)
+- Add upstream groups to ingress and knative roles. (https://github.com/solo-io/gloo/issues/645)
+
+### v0.13.6
+
+**New Features**
+
+- Allow configuring upstream groups for routes. (https://github.com/solo-io/gloo/pull/601)
+- Allow doing user-defined subset load balancing. (https://github.com/solo-io/gloo/pull/601)
+
+**Fixes**
+
+- fix uds race with multiple starts (https://github.com/solo-io/gloo/issues/631)
+
+### v0.13.5
+
+**Dependency Bumps**
+
+- solo-io/go-utils has been upgraded to v0.6.1.
+
+**Fixes**
+
+- fix semantics of header match (https://github.com/solo-io/gloo/issues/624)
+- Update --kubeyaml flag to --dry-run to be consistent with kubernetes conventions. (https://github.com/solo-io/gloo/issues/626)
+
+### v0.13.4
+
+**Dependency Bumps**
+
+- solo-io/solo-kit has been upgraded to v0.4.1.
+
+**Fixes**
+
+- Pull in new solo-kit to get a fix for concurrent write on map. (https://github.com/solo-io/gloo/issues/622)
+- Fix incorrect link to Envoy clusters in the glooctl create upstream doc (https://github.com/solo-io/solo-docs/issues/170)
+
+### v0.13.3
+
+**New Features**
+
+- Allow fine tuning ssl settings and circuit breakers (https://github.com/solo-io/gloo/issues/609)
+- Allow providing a `--kubeyaml` flag to glooctl commands to dump the associated kubernetes yaml objects (https://github.com/solo-io/gloo/issues/616)
+
+**Fixes**
+
+- The output for gloo install and uninstall has been cleaned up, and detailed output has moved to HOME/.gloo/debug.log. (https://github.com/solo-io/gloo/issues/619)
+
+### v0.13.2
+
+**New Features**
+
+- Add ability to declare multiple proxies in helm chart. (https://github.com/solo-io/gloo/issues/573)
+
+**Fixes**
+
+- Propagate resource exclusion logic from the install spec to the installer. Needed for enterprise Gloo. (https://github.com/solo-io/gloo/issues/611)
+
+### v0.13.1
+
+**New Features**
+
+- Allow providing parameters to fine tune the http connection manager. (https://github.com/solo-io/gloo/issues/596)
+
+**Fixes**
+
+- Enable CORS in runtime, add e2e. (https://github.com/solo-io/gloo/issues/589)
+- Use latest envoy with a fix to SIGSEGV that happens under heavy load. (https://github.com/solo-io/gloo/issues/590)
+- Namespace needs to be set up during pre-install, so that other namespaced pre-install resources (i.e. Settings) can be created. (https://github.com/solo-io/gloo/issues/604)
+
+### v0.13.0
+
+**Breaking Changes**
+
+- Glooctl install library has been refactored. (https://github.com/solo-io/gloo/pull/597)
+
 ### v0.12.0
 
 **Dependency Bumps**

@@ -8,10 +8,10 @@ weight: 5
 
 
 ### Package: `config.prometheus.io` 
-##### Types:
+#### Types:
 
 
-- [PrometheusConfig](#PrometheusConfig) **Top-Level Resource**
+- [PrometheusConfig](#prometheusconfig) **Top-Level Resource**
   
 
 
@@ -23,24 +23,28 @@ weight: 5
 
 
 ---
-### <a name="PrometheusConfig">PrometheusConfig</a>
+### PrometheusConfig
 
  
 PrometheusConfig represents a Kubernetes ConfigMap containing a
-Prometheus config yaml stored with the key `prometheus.yaml`.
+Prometheus config yaml stored with the key `prometheus.yml`.
 SuperGloo uses conversion functions to convert from a configmap
 to a typed Prometheus config.
 
 ```yaml
 "metadata": .core.solo.io.Metadata
 "prometheus": string
+"alerts": string
+"rules": string
 
 ```
 
 | Field | Type | Description | Default |
 | ----- | ---- | ----------- |----------- | 
-| `metadata` | [.core.solo.io.Metadata](../../../../../../solo-kit/api/v1/metadata.proto.sk#Metadata) | Metadata contains the object metadata for this resource |  |
+| `metadata` | [.core.solo.io.Metadata](../../../../../../solo-kit/api/v1/metadata.proto.sk#metadata) | Metadata contains the object metadata for this resource |  |
 | `prometheus` | `string` | inline string containing the prometheus config json_name must refer to the data key in the configmap we expect |  |
+| `alerts` | `string` | inline string containing the alerts config. currently unused by supergloo |  |
+| `rules` | `string` | inline string containing the rules config. currently unused by supergloo |  |
 
 
 

@@ -215,6 +215,7 @@ option | type | description
 --- | --- | ---
 namespace.create | bool | create the installation namespace
 rbac.create | bool | create rbac rules for the gloo-system service account
+crds.create | bool | create CRDs for Gloo (turn off if installing with Helm to a cluster that already has Gloo CRDs)
 settings.watchNamespaces | []string | whitelist of namespaces for gloo to watch for services and CRDs. leave empty to use all namespaces
 settings.writeNamespace | string | namespace where intermediary CRDs will be written to, e.g. Upstreams written by Gloo Discovery.
 settings.integrations.knative.enabled | bool | enable Gloo to serve as a cluster ingress controller for Knative Serving

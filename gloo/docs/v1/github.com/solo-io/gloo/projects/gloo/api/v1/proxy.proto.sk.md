@@ -21,11 +21,13 @@ weight: 5
 - [QueryParameterMatcher](#queryparametermatcher)
 - [RouteAction](#routeaction)
 - [Destination](#destination)
+- [UpstreamGroup](#upstreamgroup) **Top-Level Resource**
 - [MultiDestination](#multidestination)
 - [WeightedDestination](#weighteddestination)
 - [RedirectAction](#redirectaction)
 - [RedirectResponseCode](#redirectresponsecode)
 - [DirectResponseAction](#directresponseaction)
+- [CorsPolicy](#corspolicy)
   
 
 
@@ -133,6 +135,7 @@ If a request is not matched to any virtual host or a route therein, the target p
 "domains": []string
 "routes": []gloo.solo.io.Route
 "virtualHostPlugins": .gloo.solo.io.VirtualHostPlugins
+"corsPolicy": .gloo.solo.io.CorsPolicy
 
 ```
 
@@ -142,6 +145,7 @@ If a request is not matched to any virtual host or a route therein, the target p
 | `domains` | `[]string` | The list of domains (i.e.: matching the `Host` header of a request) that belong to this virtual host. Note that the wildcard will not match the empty string. e.g. “*-bar.foo.com” will match “baz-bar.foo.com” but not “-bar.foo.com”. Additionally, a special entry “*” is allowed which will match any host/authority header. Only a single virtual host in the entire route configuration can match on “*”. A domain must be unique across all virtual hosts or the config will be invalidated by Gloo Domains on virtual hosts obey the same rules as [Envoy Virtual Hosts](https://github.com/envoyproxy/envoy/blob/master/api/envoy/api/v2/route/route.proto) |  |
 | `routes` | [[]gloo.solo.io.Route](../proxy.proto.sk#route) | The list of HTTP routes define routing actions to be taken for incoming HTTP requests whose host header matches this virtual host. If the request matches more than one route in the list, the first route matched will be selected. If the list of routes is empty, the virtual host will be ignored by Gloo. |  |
 | `virtualHostPlugins` | [.gloo.solo.io.VirtualHostPlugins](../plugins.proto.sk#virtualhostplugins) | Plugins contains top-level plugin configuration to be applied to a listener Listener config is applied to all HTTP traffic that connects to this listener. Some configuration here can be overridden in Virtual Host Plugin configuration or Route Plugin configuration Plugins should be specified here in the form of `"plugin_name": {..//plugin_config...}` to allow specifying multiple plugins. |  |
+| `corsPolicy` | [.gloo.solo.io.CorsPolicy](../proxy.proto.sk#corspolicy) | CorsPolicy defines Cross-Origin Resource Sharing for a virtual service. |  |
 
 
 
@@ -260,6 +264,7 @@ RouteActions are used to route matched requests to upstreams.
 ```yaml
 "single": .gloo.solo.io.Destination
 "multi": .gloo.solo.io.MultiDestination
+"upstreamGroup": .core.solo.io.ResourceRef
 
 ```
 
@@ -267,6 +272,7 @@ RouteActions are used to route matched requests to upstreams.
 | ----- | ---- | ----------- |----------- | 
 | `single` | [.gloo.solo.io.Destination](../proxy.proto.sk#destination) | Use SingleDestination to route to a single upstream |  |
 | `multi` | [.gloo.solo.io.MultiDestination](../proxy.proto.sk#multidestination) | Use MultiDestination to load balance requests between multiple upstreams (by weight) |  |
+| `upstreamGroup` | [.core.solo.io.ResourceRef](../../../../../../solo-kit/api/v1/ref.proto.sk#resourceref) | Use a reference to an upstream group for routing. |  |
 
 
 
@@ -280,6 +286,7 @@ Destinations define routable destinations for proxied requests
 ```yaml
 "upstream": .core.solo.io.ResourceRef
 "destinationSpec": .gloo.solo.io.DestinationSpec
+"subset": .gloo.solo.io.Subset
 
 ```
 
@@ -287,6 +294,29 @@ Destinations define routable destinations for proxied requests
 | ----- | ---- | ----------- |----------- | 
 | `upstream` | [.core.solo.io.ResourceRef](../../../../../../solo-kit/api/v1/ref.proto.sk#resourceref) | The upstream to route requests to |  |
 | `destinationSpec` | [.gloo.solo.io.DestinationSpec](../plugins.proto.sk#destinationspec) | Some upstreams utilize plugins which require or permit additional configuration on routes targeting them. gRPC upstreams, for example, allow specifying REST-style parameters for JSON-to-gRPC transcoding in the destination config. If the destination config is required for the upstream and not provided by the user, Gloo will invalidate the destination and its parent resources. |  |
+| `subset` | [.gloo.solo.io.Subset](../subset.proto.sk#subset) | If specified, traffic will only be routed to a subset of the upstream. If upstream doesn't contain the specified subset, we will fallback to normal upstream routing. |  |
+
+
+
+
+---
+### UpstreamGroup
+
+ 
+
+
+```yaml
+"destinations": []gloo.solo.io.WeightedDestination
+"status": .core.solo.io.Status
+"metadata": .core.solo.io.Metadata
+
+```
+
+| Field | Type | Description | Default |
+| ----- | ---- | ----------- |----------- | 
+| `destinations` | [[]gloo.solo.io.WeightedDestination](../proxy.proto.sk#weighteddestination) | The destinations that are part of this upstream group. |  |
+| `status` | [.core.solo.io.Status](../../../../../../solo-kit/api/v1/status.proto.sk#status) | Status indicates the validation status of this resource. Status is read-only by clients, and set by gloo during validation |  |
+| `metadata` | [.core.solo.io.Metadata](../../../../../../solo-kit/api/v1/metadata.proto.sk#metadata) | Metadata contains the object metadata for this resource |  |
 
 
 
@@ -392,6 +422,36 @@ DirectResponseAction is copied directly from https://github.com/envoyproxy/envoy
 | ----- | ---- | ----------- |----------- | 
 | `status` | `int` | Specifies the HTTP response status to be returned. |  |
 | `body` | `string` | Specifies the content of the response body. If this setting is omitted, no body is included in the generated response. Note: Headers can be specified using the Header Modification plugin in the enclosing Route, Virtual Host, or Listener. |  |
+
+
+
+
+---
+### CorsPolicy
+
+ 
+CorsPolicy defines Cross-Origin Resource Sharing for a virtual service.
+
+```yaml
+"allowOrigin": []string
+"allowOriginRegex": []string
+"allowMethods": []string
+"allowHeaders": []string
+"exposeHeaders": []string
+"maxAge": string
+"allowCredentials": bool
+
+```
+
+| Field | Type | Description | Default |
+| ----- | ---- | ----------- |----------- | 
+| `allowOrigin` | `[]string` | Specifies the origins that will be allowed to make CORS requests. An origin is allowed if either allow_origin or allow_origin_regex match. |  |
+| `allowOriginRegex` | `[]string` | Specifies regex patterns that match origins that will be allowed to make CORS requests. An origin is allowed if either allow_origin or allow_origin_regex match. |  |
+| `allowMethods` | `[]string` | Specifies the content for the *access-control-allow-methods* header. |  |
+| `allowHeaders` | `[]string` | Specifies the content for the *access-control-allow-headers* header. |  |
+| `exposeHeaders` | `[]string` | Specifies the content for the *access-control-expose-headers* header. |  |
+| `maxAge` | `string` | Specifies the content for the *access-control-max-age* header. |  |
+| `allowCredentials` | `bool` | Specifies whether the resource allows credentials. |  |
 
 
 

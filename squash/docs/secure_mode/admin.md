@@ -17,12 +17,14 @@ weight: 3
   - Prevent malicious exploitation of the Squash pod's `Privileged` security context.
 
 ## Deploy Squash
+
 ### Quick Start
 - To "kick the tires" on Squash's Secure Mode, you can install it with a single command: `squashctl deploy squash`.
 - This creates all the resources needed to start using Secure Mode:
   - Creates `squash-debugger` namespace.
   - Creates a Service Account with the minimal required permissions.
   - Deploys Squash.
+
 ### Formal Deployment
 - For shared cluster Squash usage, you should manage your squash deployment through your conventional workflow.
 - Resources required by Squash include:
@@ -34,6 +36,7 @@ weight: 3
 
 ## Configuration requirements for preventing undesired debug activities
 - Suggestion: **do not** authorize your users to `kubectl exec` into the namespace that stores the `squash` and `plank` pods.
+
 ```yaml
 # Reference: pod exec Policy Rule
 # DO NOT enable this permission for the squash-debugger namespace
@@ -46,7 +49,7 @@ rules:
 - apiGroups: [""]
   resources: ["pods/exec"] # DO NOT enable this permission for the squash-debugger namespace
   verbs: ["create"]
-  ```
+```
 
 ## Reference configuration
 

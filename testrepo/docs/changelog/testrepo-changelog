@@ -1,3 +1,16 @@
+### v0.1.11
+
+**Fixes**
+
+- This is a long string. This is a long string. This is a long string. This is a long string. This is a long string.  This is a long string. This is a long string. This is a long string. This is a long string. This is a long string.  This is a long string. This is a long string. This is a long string. This is a long string. This is a long string. (https://github.com/solo-io/go-utils/issues/79)
+- This is another long string. This is another long string. This is another long string. This is another long string.  This is another long string. This is another long string. This is another long string. This is another long string.  This is another long string. This is another long string. This is another long string. This is another long string. This is another long string. This is another long string. This is another long string. This is another long string. (https://github.com/solo-io/go-utils/issues/79)
+- This is a string rendered with "|" instead of ">". This string is going to render line breaks causing the markdown
+release notes to look weird in github. Use "|" instead of ">" so multiline comments render correctly. (https://github.com/solo-io/go-utils/issues/79)
+
+### v0.1.10
+
+This release contained no user-facing changes.
+
 ### v0.1.9
 
 This release contained no user-facing changes.
