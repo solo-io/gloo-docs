@@ -1,3 +1,21 @@
+
+### v0.13.9
+
+**Fixes**
+
+- Use updated envoy for upstream bug fix. (https://github.com/solo-io/gloo/issues/635)
+
+### v0.13.8
+
+**New Features**
+
+- Ability to re-try on a virtual host level. (https://github.com/solo-io/gloo/issues/641)
+
+**Fixes**
+
+- Export proxy url function for other projects. (https://github.com/solo-io/supergloo/issues/316)
+
+
 ### v0.13.7
 
 **New Features**
