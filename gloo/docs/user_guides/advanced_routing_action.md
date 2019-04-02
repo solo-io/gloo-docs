@@ -116,7 +116,84 @@ glooctl add route \
   --rest-parameters ':path=/petstore/findPetById/{id}'
 ```
 
-<!-- TODO: add doc on Subset -->
+#### Subset
+
+[Subset]({{% ref "/v1/github.com/solo-io/gloo/projects/gloo/api/v1/subset.proto.sk#subset" %}}) currently lets you
+provide a Kubernetes selector to allow request forwarding to a subset of Kubernetes Pods within the upstream associated
+Kubernetes Service. There are currently two steps required to get subsetting to work for Kubernetes upstreams, which are
+the only upstream type currently supported. First, you need to edit the upstream manifest and add a
+[`subsetSpec`]({{% ref "/v1/github.com/solo-io/gloo/projects/gloo/api/v1/plugins/subset_spec.proto.sk#subsetspec" %}})
+within the [Kubernetes Upstream Spec]({{% ref "/v1/github.com/solo-io/gloo/projects/gloo/api/v1/plugins/kubernetes/kubernetes.proto.sk" %}}).
+Second, you need to add a [`subset`]({{% ref "/v1/github.com/solo-io/gloo/projects/gloo/api/v1/subset.proto.sk#subset" %}})
+within the [`Destination` spec]({{% ref "/v1/github.com/solo-io/gloo/projects/gloo/api/v1/proxy.proto.sk#destination" %}})
+of the Route Action.
+
+Following is an example of using a label, e.g., `color: blue`, to subset pods handling requests.
+
+Upstream changes that allow you to use the label `color` as a subset selector
+
+{{< highlight yaml "hl_lines=15-18" >}}
+apiVersion: gloo.solo.io/v1
+  kind: Upstream
+    labels:
+      discovered_by: kubernetesplugin
+      service: petstore
+    name: default-petstore-8080
+    namespace: gloo-system
+  spec:
+    upstreamSpec:
+      kube:
+        selector:
+          app: petstore
+        serviceName: petstore
+        serviceNamespace: default
+        subsetSpec:
+          selectors:
+          - keys:
+            - color
+        servicePort: 8080
+        serviceSpec:
+          rest:
+...
+{{< /highlight >}}
+
+And then you need to configure the subset within the Virtual Service route action, e.g., the following will only forward
+requests to a subset of the Petstore Service pods that have a label, `color: blue`.
+
+{{% notice note %}}
+If no pods match the selector, i.e., empty set, then the route action will fall back to forwarding the request to all
+pods served by that upstream.
+{{% /notice %}}
+
+{{< highlight yaml "hl_lines=22-24" >}}
+apiVersion: gateway.solo.io/v1
+  kind: VirtualService
+  metadata:
+    name: default
+    namespace: gloo-system
+  spec:
+    virtualHost:
+      domains:
+      - '*'
+      name: gloo-system.default
+      routes:
+      - matcher:
+          prefix: /petstore/findPetById
+        routeAction:
+          single:
+            destinationSpec:
+              rest:
+                functionName: findPetById
+                parameters:
+                  headers:
+                    :path: /petstore/findPetById/{id}
+            subset:
+              values:
+              - color: blue
+            upstream:
+              name: default-petstore-8080
+              namespace: gloo-system
+{{< /highlight >}}
 
 ### Multiple Destination {#multi}
 
@@ -196,16 +273,14 @@ routes:
     prefix: /myservice
   routeAction:
     upstreamGroup:
-      upstream:
-        name: my-service-group
-        namespace: gloo-system
+      name: my-service-group
+      namespace: gloo-system
 - matcher:
     prefix: /some/other/path
   routeAction:
     upstreamGroup:
-      upstream:
-        name: my-service-group
-        namespace: gloo-system
+      name: my-service-group
+      namespace: gloo-system
 {{< /highlight >}}
 
 Once deployed, you can update the weights in your shared Upstream Group and those changes will be picked up by all routes
