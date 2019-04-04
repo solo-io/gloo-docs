@@ -1,3 +1,15 @@
+
+### v0.13.6
+
+This release contained no user-facing changes.
+
+### v0.13.5
+
+**Fixes**
+
+- Add default values for ext auth in http mode. (https://github.com/solo-io/solo-projects/pull/571)
+
+
 ### v0.13.4
 
 **New Features**

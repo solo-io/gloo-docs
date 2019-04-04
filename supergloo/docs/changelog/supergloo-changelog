@@ -1,3 +1,19 @@
+### v0.3.7
+
+**New Features**
+
+- Added AWS App Mesh syncer to registration event loop. (https://github.com/solo-io/supergloo/issues/214)
+- Create e2e test for appmesh, as well as method of using different clusters in CI (https://github.com/solo-io/supergloo/issues/327)
+- Create CLI command for creating Security Rules (https://github.com/solo-io/supergloo/issues/315)
+- Create cli for fault-injection with supergloo. (https://github.com/solo-io/supergloo/issues/228)
+- Write e2e test for fault injection. (https://github.com/solo-io/supergloo/issues/228)
+- Create api for fault-injection with supergloo. (https://github.com/solo-io/supergloo/issues/228)
+- Add proxy url feature from gloo into supergloo. (https://github.com/solo-io/supergloo/issues/316)
+
+**Fixes**
+
+- Fix issue with istio networking fault injection percentage api. (https://github.com/solo-io/supergloo/issues/228)
+
 ### v0.3.6
 
 **Dependency Bumps**

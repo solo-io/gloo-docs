@@ -122,9 +122,9 @@ This configuration also sets other configuraiton parameters:
 - requestBody - When set to, the request body will also be sent to the auth service. with this configuration, a body up to 10KB will be buffered and sent to the auth-service. This is useful in use cases where the auth service needs to compute an HMAC on the body.
 - requestTimeout - A timeout for the auth service response. If the service takes longer to response, the request will be denied.
 
-### Configure the virtual service
+### Configure the VirtualService
 
-Edit the virtual service (`kubectl edit virtualservice -n gloo-system default`), and mark it with custom auth to turn authentication on. virtual service should look like this:
+Edit the VirtualService (`kubectl edit virtualservice -n gloo-system default`), and mark it with custom auth to turn authentication on. The VirtualService should look like this:
 
 {{< highlight yaml "hl_lines=10-14" >}}
 apiVersion: gateway.solo.io/v1
@@ -151,7 +151,7 @@ spec:
             namespace: gloo-system
 {{< /highlight >}}
 
-To make it easy, if you have followed this guide verbatim, you can just download and apply [this](gloo-vs.yaml) manifest to update both settings and virtual service.
+To make it easy, if you have followed this guide verbatim, you can just download and apply [this](gloo-vs.yaml) manifest to update both Settings and VirtualService.
 
 ## Test
 
