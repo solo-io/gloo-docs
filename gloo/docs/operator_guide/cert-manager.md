@@ -1,5 +1,6 @@
 ---
 title: "Integrating Gloo and Let's Encrypt with cert-manager"
+menuTitle: Let's Encrypt with cert-manager
 weight: 2
 ---
 

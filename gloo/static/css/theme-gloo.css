@@ -1,6 +1,6 @@
 
 :root{
-    
+
   --MAIN-TEXT-color:#2e2e2e; /* Color of text by default */
   --MAIN-TITLES-TEXT-color: #5e5e5e; /* Color of titles h2-h3-h4-h5 */
   --MAIN-LINK-color:#0594cb; /* Color of links */
@@ -27,7 +27,7 @@
 
   --MENU-VISITED-color: #33a1ff; /* Color of 'page visited' icons in menu */
   --MENU-SECTION-HR-color: #20272b; /* Color of <hr> separator in menu */
-  
+
 }
 
 body {
@@ -39,7 +39,13 @@ textarea:focus, input[type="email"]:focus, input[type="number"]:focus, input[typ
   box-shadow: none;
 }
 
-h2, h3, h4, h5 {
+h1 {
+  font-family: "Work Sans", "Helvetica", "Tahoma", "Geneva", "Arial", sans-serif;
+  text-align: start;
+  text-transform: none;
+}
+
+h1, h2, h3, h4, h5 {
   color: var(--MAIN-TITLES-TEXT-color);
 }
 
@@ -60,7 +66,6 @@ color: var(--MENU-VISITED-color);
 }
 #sidebar {
   background-color: var(--MENU-SECTIONS-BG-color);
-  width: 225px;
 }
 #sidebar #header-wrapper {
   background: var(--MENU-HEADER-BG-color);
@@ -100,17 +105,9 @@ color: var(--MENU-VISITED-color);
   padding: 4px 1rem;
 }
 
-#sidebar ul.topics li.parent > ul ul {
-  display: none;
-}
-#sidebar ul.topics li.parent > ul > li.parent ul {
+/* #sidebar ul.topics li.parent > ul > li.parent ul {
   display: block;
-}
-/*#sidebar ul.topics > li.active > ul,
-#sidebar ul.topics > li.visited > ul {
-  max-height: 400px;
-  overflow-y: auto;
-}*/
+} */
 
 #sidebar a {
   color: var(--MENU-SECTIONS-LINK-color);
@@ -132,10 +129,6 @@ color: var(--MENU-VISITED-color);
   border-color: var(--MENU-SECTION-HR-color);
 }
 
-
-#body {
-  margin-left: 225px;
-}
 #body a.highlight:after {
   display: block;
   content: "";
