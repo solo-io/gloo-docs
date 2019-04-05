@@ -123,8 +123,10 @@ spec:
 
 ##### Header Body Transform {#header_body_transform}
 
-Specific to AWS Lambda Proxy Integration. Expects a message who's body is a json object which includes a `headers` and
-a `body`, and it will transform this to a typical HTTP message with headers and body where you'd expect.
+Specific to AWS Lambda Proxy Integration. AWS Lambda only permits functions to return JSON responses and this
+transformation can be used to unwrap that JSON body to provide a typical HTTP response that you're more likely expecting.
+This transform expects a message who's body is a JSON object that includes `headers` and `body` keys, and this transform
+will transform this to a typical HTTP message with headers and body where you'd expect.
 
 {{< highlight yaml "hl_lines=21" >}}
 apiVersion: gateway.solo.io/v1
