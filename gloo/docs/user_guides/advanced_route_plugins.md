@@ -1,7 +1,8 @@
 ---
 title: Advanced Route Plugins
+menuTitle: Advanced Route Plugins
 weight: 38
-description: Advanced routing Plugins for Gloo.
+description: Advanced routing Plugins for Transformation, retries, timeouts, and other fine grained controls.
 ---
 
 Gloo uses a [Virtual Service]({{< ref "/v1/github.com/solo-io/gloo/projects/gateway/api/v1/virtual_service.proto.sk" >}})
@@ -66,12 +67,12 @@ Be aware that adding plugins can have a negative impact on the request latency s
 validate latency impacts.
 {{% /notice %}}
 
-* [`transformations`](#route_transformations)
-* [`faults`](#faults)
-* [`prefixRewrite`](#prefixrewrite)
-* [`timeout`](#timeout)
-* [`retries`](#retries)
-* [`extensions`](#extensions)
+* [transformations](#route_transformations)
+* [faults](#faults)
+* [prefixRewrite](#prefixrewrite)
+* [timeout](#timeout)
+* [retries](#retries)
+* [extensions](#extensions)
 
 ### Route Transformations {#route_transformations}
 
