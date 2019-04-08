@@ -182,26 +182,63 @@ routePlugins:
 
 * `headers` : `map<string, `[`InjaTemplate`]({{< ref "/v1/github.com/solo-io/gloo/projects/gloo/api/v1/plugins/transformation/transformation.proto.sk#injatemplate" >}})`>`
 for each header you want to add/replace, provide a specification as follows where `my-header` is the header name, and
-`value-to-be` is an [Inja Templates](https://github.com/pantor/inja/tree/74ad4281edd4ceca658888602af74bf2050107f0).
-More details on using Inja Templates shortly.
+`text: 'inja_template'` is an [Inja Templates](https://github.com/pantor/inja/tree/74ad4281edd4ceca658888602af74bf2050107f0).
+The following example will replace/add response headers: `my-header: 'literal value'`, and `my-other-header: 'value from json key in response body'`.
 
-    {{< highlight yaml "hl_lines=2-5" >}}
-headers:
-  my-header:
-    text: 'value-to-be'
-  my-other-header:
-    text: 'other-value-to-be'
+    More details on using Inja Templates shortly.
+
+    {{< highlight yaml "hl_lines=5-9" >}}
+routePlugins:
+  transformations:
+    responseTransformation:
+      transformation_template:
+        headers:
+          my-header:
+            text: 'literal value'
+          my-other-header:
+            text: '{{ json_key_from_message_body_json }}'
 {{< /highlight >}}
 
-And the Transformation Template can have only one of the following.
+{{% notice note %}}
+And the Transformation Template can have only **ONE** of the following three options: `body`, `passthrough`, or `mergeExtractoresToBody`.
+{{% /notice %}}
 
 * `body` : an [`InjaTemplate`]({{< ref "/v1/github.com/solo-io/gloo/projects/gloo/api/v1/plugins/transformation/transformation.proto.sk#injatemplate" >}})
-used to process the body of the messages. Assumes the body is a JSON object.
+used to process the body of the messages. Assumes the body is a JSON object. The rendered template value will replace the
+message body. Content between `{{ json_key }}` will be treated as a JSON key into the original message body and will be
+replaced by that JSON key's value.
 
-    {{< highlight yaml "hl_lines=2" >}}
-body:
-  text: 'value-to-be'
+    {{< highlight yaml "hl_lines=5-6" >}}
+routePlugins:
+  transformations:
+    responseTransformation:
+      transformation_template:
+        body:
+          text: '{ "new_key": "{{ key_from_message_body }}" }'
 {{< /highlight >}}
+
+    For example, if the message body is the following JSON
+
+    ```json
+    { "name": "Gloo", "city": "Cambridge" }
+    ```
+
+    The following response transformation template will replace the response body
+
+    {{< highlight yaml "hl_lines=5-6" >}}
+routePlugins:
+  transformations:
+    responseTransformation:
+      transformation_template:
+        body:
+          text: '{ "user": "{{ name }} from {{ city }}" }'
+{{< /highlight >}}
+
+    with the following JSON.
+
+    ```json
+    { "user": "Gloo from Cambridge" }
+    ```
 
 * `passthrough` : the presence of this attribute, e.g., `passthrough: {}`, tells Gloo to transform the headers only and
 skip any transformations on the body, which can be helpful for large body messages that you do not want to buffer.
@@ -216,6 +253,11 @@ replaces the message body contents.
 to process JSON formatted data. For example, if you had a message body that contained the JSON `{ "name": "world" }`
 then the Inja template `Hello {{ name }}` would become `Hello world`. The template variables, e.g., `{{ name }}`, is
 used as the key into a JSON object and is replaced with the key's associated value.
+
+{{% notice note %}}
+Inja Templates default to using `.` notation for JSON keys, i.e., `address.street` => `{ "address": { "street": "value" } }`.
+If `advancedTemplates` is `true`, Inja Templates use `/` notation, i.e., `address/street` => `{ "address": { "street": "value" } }`
+{{% /notice %}}
 
 Gloo adds two additional functions that can be used within templates.
 
@@ -310,7 +352,7 @@ the matched request path.
 The maximum [Duration](https://developers.google.com/protocol-buffers/docs/reference/csharp/class/google/protobuf/well-known-types/duration)
 to try to handle the request, inclusive of error retries.
 
-{{< highlight yaml "hl_lines=20" >}}
+{{< highlight yaml "hl_lines=19" >}}
 apiVersion: gateway.solo.io/v1
 kind: VirtualService
 metadata:
