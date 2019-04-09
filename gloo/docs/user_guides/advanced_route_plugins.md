@@ -200,7 +200,7 @@ routePlugins:
 {{< /highlight >}}
 
 {{% notice note %}}
-And the Transformation Template can have only **ONE** of the following three options: `body`, `passthrough`, or `mergeExtractoresToBody`.
+And the Transformation Template can have only **ONE** of the following three options: `body`, `passthrough`, or `mergeExtractorsToBody`.
 {{% /notice %}}
 
 * `body` : an [`InjaTemplate`]({{< ref "/v1/github.com/solo-io/gloo/projects/gloo/api/v1/plugins/transformation/transformation.proto.sk#injatemplate" >}})
