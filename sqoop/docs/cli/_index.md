@@ -1,4 +1,4 @@
 ---
 title: "Command Line Reference"
-weight: 6
+weight: 50
 ---

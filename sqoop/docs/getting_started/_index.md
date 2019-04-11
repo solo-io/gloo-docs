@@ -1,11 +1,12 @@
 ---
-weight: 1
+weight: 20
 title: Getting Started
 ---
 
 ## Getting Started on Kubernetes
 
 ### What you'll need
+
 - [`kubectl`](https://kubernetes.io/docs/tasks/tools/install-kubectl/)
 - [`sqoopctl`](https://github.com/solo-io/sqoop)
 - [`glooctl`](https://github.com/solo-io/gloo): (OPTIONAL) to see how Sqoop is interacting with the underlying system
@@ -13,37 +14,42 @@ title: Getting Started
 
 This tutorial will install sqoop into the namespace `gloo-system` by default, this is configurable from the `sqoopctl` cli.
 
-
 ### Steps
 
 #### Deploy Sqoop and Gloo
 
-        sqoopctl install kube
-
+```shell
+sqoopctl install kube
+```
 
 ####  Deploy the Pet Store
 
-        kubectl apply \
-          -f https://raw.githubusercontent.com/solo-io/gloo/master/example/petstore/petstore.yaml
+```shell
+kubectl apply \
+  -f https://raw.githubusercontent.com/solo-io/gloo/master/example/petstore/petstore.yaml
+```
 
 #### OPTIONAL: View the petstore functions using `glooctl`:
 
-        glooctl get upstream
-        
-        +--------------------------------+------------+----------+-------------+
-        +--------------------------------+------------+----------+-------------+
-        |              NAME              |    TYPE    |  STATUS  |  FUNCTION   |
-        +--------------------------------+------------+----------+-------------+
-        | gloo-system-petstore-8080	     | kubernetes | Accepted | addPet      |
-        |                                |            |          | deletePet   |
-        |                                |            |          | findPetById |
-        |                                |            |          | findPets    |
-        +--------------------------------+------------+----------+-------------+
+```shell
+glooctl get upstream
+
++--------------------------------+------------+----------+-------------+
++--------------------------------+------------+----------+-------------+
+|              NAME              |    TYPE    |  STATUS  |  FUNCTION   |
++--------------------------------+------------+----------+-------------+
+| gloo-system-petstore-8080	     | kubernetes | Accepted | addPet      |
+|                                |            |          | deletePet   |
+|                                |            |          | findPetById |
+|                                |            |          | findPets    |
++--------------------------------+------------+----------+-------------+
+```
 
 The upstream we want to see is `gloo-system-petstore-8080`. The functions `addPet`, `deletePet`, `findPetById`, and `findPets`
 will become the resolvers for our GraphQL schema.  
 
 ##### Alternatively: find the upstreams using `kubectl`
+
 ```bash
 kubectl get upstreams -n gloo-system
 
@@ -121,9 +127,7 @@ spec:
                   text: "0"
                 content-type: {}
                 transfer-encoding: {}
-
 ```
-
 
 #### Create a GraphQL Schema
 
@@ -150,7 +154,7 @@ input InputPet{
     name: String!
     tag: String
 }
-```   
+```
 
 #### Upload the Schema
 
@@ -160,10 +164,9 @@ Upload the schema to Sqoop using `sqoopctl`:
 sqoopctl schema create petstore -f petstore.graphql
 ```
 
-
 #### OPTIONAL: View the Generated Resolvers
 
-A Sqoop [**ResolverMap**](../../v1/github.com/solo-io/sqoop/api/v1/resolver_map.proto.sk) will have been generated
+A Sqoop [**ResolverMap**](/v1/github.com/solo-io/sqoop/api/v1/resolver_map.proto.sk) will have been generated
 for the new schema.
 
 Take a look at its structure:
@@ -209,11 +212,11 @@ metadata:
   selfLink: ""
 ```
 
-The empty `{}`'s are Sqoop [**Resolver**](../../v1/github.com/solo-io/sqoop/api/v1/resolver_map.proto.sk/#sqoop.api.v1.Resolver)
+The empty `{}`'s are Sqoop [**Resolver**](/v1/github.com/solo-io/sqoop/api/v1/resolver_map.proto.sk/#sqoop.api.v1.Resolver)
 objects, waiting to be filled in. Sqoop supports a variety of Resolver types (and supports extension to its
 resolution system). In this tutorial, we will create Gloo resolvers, which allow you to connect schema fields
-to REST APIs, serverless functions and other Gloo functions. 
- 
+to REST APIs, serverless functions and other Gloo functions.
+
 #### Register some Resolvers
 
 Let's use `sqoopctl` to register some resolvers.
@@ -291,6 +294,7 @@ examples:
   }
 }
 ```
+
 ```graphql
 mutation($pet: InputPet!) {
   addPet(pet: $pet) {
@@ -299,15 +303,17 @@ mutation($pet: InputPet!) {
   }
 }
 ```
+
 with input variable
-````json
+
+```json
 {
   "pet":{
     "id":3,
     "name": "monkey"
   }
 }
-````
+```
 
 &darr;
 

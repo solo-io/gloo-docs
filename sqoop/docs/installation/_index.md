@@ -1,5 +1,5 @@
 ---
-weight: -1
+weight: 10
 title: Installation
 ---
 
@@ -18,7 +18,6 @@ kubectl apply -f \
     https://raw.githubusercontent.com/solo-io/sqoop/master/install/manifest/sqoop.yaml
 ```
 
-
 ## Installing with `sqoopctl`
 
 #### What you'll need
@@ -30,7 +29,7 @@ kubectl apply -f \
 Once your Kubernetes cluster is up and running, run the following command to deploy Sqoop and Gloo to the `gloo-system` namespace:
 
 ```bash
-sqoopctl install kube 
+sqoopctl install kube
 ```
 
 ## Confirming the installation
@@ -70,4 +69,4 @@ replicaset.apps/sqoop-855dc98dfd           1         1         1       2m5s
 Everything should be up and running. If this process does not work, please [open an issue](https://github.com/solo-io/sqoop/issues/new). We are happy to answer
 questions on our [diligently staffed Slack channel](https://slack.solo.io/).
 
-See [Getting Started on Kubernetes](../../getting_started/kubernetes) to get started creating your first GraphQL endpoint with Sqoop.
+See [Getting Started on Kubernetes]({{< ref "/getting_started" >}}) to get started creating your first GraphQL endpoint with Sqoop.

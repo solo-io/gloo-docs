@@ -17,4 +17,3 @@ Additionally, name of the application ("node") often needs to be provided to squ
 * From command line - use `"-p node"`.
 * When using VSCode set `"vs-squash.process-name"` to `"node"` in the workspace settings file (*select "Preferences", "Settings" and click on 
 the "Workspace Settings" tab*)
-

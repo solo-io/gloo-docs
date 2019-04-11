@@ -1,6 +1,6 @@
 ---
 title: Secure Mode
-weight: 3
+weight: 30
 ---
 
 ## Secure Mode

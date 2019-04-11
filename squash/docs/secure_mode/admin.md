@@ -5,11 +5,13 @@ weight: 3
 ## Secure Mode Administration
 
 ## Introduction
+
 - Secure Mode is designed to allow you to apply regular Kubernetes RBAC configurations to Squash debugging activities.
 - **Proper configuration is required for Secure Mode to be secure**.
 - Fortunately, configuration is easy. This guide outlines the best practices for configuring Secure Mode. Ultimately, you are responsible for your cluster's security, so please apply these recommendations as is appropriate to your use case.
 
 ## Motivation
+
 - Secure Mode is recommended for multi-user clusters.
 - Reasons to use Secure Mode:
   - Prevent users from unexpectedly halting your process in a debug state.
@@ -19,6 +21,7 @@ weight: 3
 ## Deploy Squash
 
 ### Quick Start
+
 - To "kick the tires" on Squash's Secure Mode, you can install it with a single command: `squashctl deploy squash`.
 - This creates all the resources needed to start using Secure Mode:
   - Creates `squash-debugger` namespace.
@@ -26,6 +29,7 @@ weight: 3
   - Deploys Squash.
 
 ### Formal Deployment
+
 - For shared cluster Squash usage, you should manage your squash deployment through your conventional workflow.
 - Resources required by Squash include:
   - Deployments - Squash
@@ -35,6 +39,7 @@ weight: 3
 - For details, see a reference configuration for these resources below.
 
 ## Configuration requirements for preventing undesired debug activities
+
 - Suggestion: **do not** authorize your users to `kubectl exec` into the namespace that stores the `squash` and `plank` pods.
 
 ```yaml
@@ -61,6 +66,7 @@ rules:
 - These are the resources you need to configure and manage yourself.
 
 #### Deployment - Squash
+
 ```yaml
 apiVersion: extensions/v1beta1
 kind: Deployment
@@ -139,6 +145,7 @@ spec:
 ```
 
 #### Service Account - Squash
+
 ```yaml
 apiVersion: v1
 kind: ServiceAccount
@@ -148,6 +155,7 @@ metadata:
 ```
 
 #### Cluster Role Binding - Squash
+
 ```yaml
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
@@ -164,6 +172,7 @@ subjects:
 ```
 
 #### Cluster Role - Squash
+
 ```yaml
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
@@ -233,6 +242,7 @@ rules:
 ```
 
 #### Service Account - Plank
+
 ```yaml
 apiVersion: v1
 kind: ServiceAccount
@@ -242,6 +252,7 @@ metadata:
 ```
 
 #### Cluster Role Binding - Plank
+
 ```yaml
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
@@ -258,6 +269,7 @@ subjects:
 ```
 
 #### Cluster Role - Plank
+
 ```yaml
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
@@ -306,11 +318,15 @@ rules:
 ```
 
 ### Implicit Resources
+
 - These resources are managed by Squash itself.
 - Note: Squash currently has the ability to create the Service Account, Cluster Role, and Cluster Role Bindings needed by Plank pods. As noted above, this capability will be revoked in the near-term and Squash will expect them to have already been created.
+
 #### Pod - Plank
+
 - Note: Plank pods are created by Squash, you will not need to manage this resource but it is useful to know what it looks like.
 - In this example, the is debugging a pod named "example-service1-8499d97885" in namespace "my-namespace"
+
 ```yaml
 apiVersion: v1
 kind: Pod

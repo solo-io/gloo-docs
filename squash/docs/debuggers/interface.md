@@ -13,8 +13,6 @@ Interface documentation will be updated to reflect latest version.
 Legacy Squash notes are shown below.
 </aside>
 
-
-
 **Debuggers** conform to the interface:
 
 ```go

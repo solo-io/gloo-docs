@@ -3,7 +3,6 @@ title: Python
 weight: 4
 ---
 
-
 <aside class="notice" style="background: pink">
 Enhanced support for Python will be added in early 2019.
 Legacy Squash notes are shown below.
@@ -15,6 +14,7 @@ Please refer to the following [document](https://code.visualstudio.com/docs/pyth
 for instructions on setting up remote debugging.
 
 Specifically, 
+
 - Install [ptvsd library](https://pypi.org/project/ptvsd/) 
 - Add code below to the startup .py file, replacing the *passphrase* and *port number* as desired.<br>
 
@@ -23,4 +23,3 @@ Specifically,
 
 - In VSCode, set `"vs-squash.pythonSecret"` to the correct passphrase (`"my_secret"` in this case) in the workspace settings 
 file (*select "Preferences", "Settings" and click on the "Workspace Settings" tab*)
-

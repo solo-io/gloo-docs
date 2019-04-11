@@ -8,4 +8,5 @@ weight: 100
 - [Squash](#squash)
 
 ## Squash
+
 {{< readfile file="changelog/squash-changelog" markdown="true" >}}

@@ -16,13 +16,10 @@ In order to Install Squash for Visual Studio Code, open the Extensions panel on 
 You should see a screen similar to the one below.
 
 <img src="/images/vscode-squash.png"/>
- 
- 
+
 Future plans:
 
  - [Eclipse](https://eclipse.org/ide/)
  - [IntelliJ](https://www.jetbrains.com/idea/)
-
-
 
 We welcome community contributions to add support for more IDEs.

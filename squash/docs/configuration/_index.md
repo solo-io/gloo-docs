@@ -1,18 +1,15 @@
 ---
 title: Configuration
-weight: 2
+weight: 20
 ---
 
 Squash can be used without any configuration. For convenience, or to take advantage of certain IDE and debugger features, you can configure various parameters.
-
 
 ### Source code mapping
 
 Source code mapping tells your debugger how to translate filepaths from your local environment to filepaths on the process that you are trying to debug. If you compiled and deployed the process that you are debugging, source path mapping should not be required. However, if you are debugging a process that was compiled by a teammate or an automated release process, you need to tell your debugger how a breakpoint set on your local source file should be applied to the process you are debugging.
 
-
 For example, let's say I am trying to debug a service that my teammate Yuval compiled and deployed.
-
 
 - The service:
   - The service is hosted in our code repo at `github.com/solo-io/squash/contrib/example/service1`.
@@ -41,8 +38,7 @@ For example, let's say I am trying to debug a service that my teammate Yuval com
 go/src/github.com/solo-io/squash/contrib/example/service1/main.go
 ```
 
-
-Depending on the IDE and debugger you are using, you can specify source code maping one of these two ways:
+Depending on the IDE and debugger you are using, you can specify source code mapping one of these two ways:
 
 - **Method 1:** Specify the "from" and "to" paths [this is how `dlv` path substitution in `squashctl` works]
   - In this case, you can choose the minimum unique path identifiers
@@ -61,7 +57,6 @@ To: /home/yuval/go/src/github.com/solo-io/squash/
   - In this case, you must specify a substitution that replaces your "workspace" path with the equivalent target path.
   - For example:
 
-
 ```
 # workspace: /Users/mitch/go/src/github.com/solo-io/squash/contrib/example/service1/
  substitute: /home/yuval/go/src/github.com/solo-io/squash/contrib/example/service1/
@@ -76,6 +71,7 @@ Remember to include the trailing `/` (or `\` on Windows) in your path substituti
 {{% /notice %}}
 
 #### Visual Studio Code
+
 - Visual studio code handles path substitution in terms of its workspace (as described above).
 - Just set the `squash.remotePath` to the corresponding path for the target process.
 
@@ -84,5 +80,6 @@ Remember to include the trailing `/` (or `\` on Windows) in your path substituti
 - We make frequent updates to Squash, `squashctl`, the Plank pods, and the IDE extensions. You can download the latest version from our [releases page](https://github.com/solo-io/squash/releases).
 
 #### Visual Studio Code
+
 - The Squash extension for Visual studio code can download updates to `squashclt` for you. When updates are available, a prompt will offer to download the latest release.
 - If you prefer to use a particular version of `squashctl`, you can specify its path with `squash.path`.`

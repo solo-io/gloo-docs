@@ -1,6 +1,8 @@
 baseURL = "https://squash.solo.io/"
 languageCode = "en-us"
+
 title = "Squash Docs"
+
 # Change the default theme to be use when building the site with Hugo
 theme = "hugo-theme-learn" # https://learn.netlify.com
 
@@ -10,6 +12,19 @@ publishDir = "site"
 
 googleAnalytics = "UA-101654320-1"
 ignoreFiles = [ "README.md$"]
+
+# Highlighting config (Pygments)
+# It is (currently) not in use, but you can do ```go in a content file if you want to.
+pygmentsCodeFences = true
+
+pygmentsOptions = "nowrap=true"
+
+# Use the Chroma stylesheet
+pygmentsUseClasses = true
+pygmentsUseClassic = false
+
+# See https://help.farbox.com/pygments.html
+pygmentsStyle = "manni"
 
 # For search functionality
 [outputs]
@@ -22,9 +37,9 @@ home = [ "HTML", "JSON"]
   # editURL = "https://github.com/solo-io/squash/tree/master/docs/"
   
   # Author of the site, will be used in meta information
-  author = ""
+  author = "Solo.io"
   # Description of the site, will be used in meta information
-  description = ""
+  description = "Documentation for Solo.io Squash"
   # Shows a checkmark for visited pages on the menu
   showVisitedLinks = false
   # Disable search function. It will hide search bar
@@ -33,7 +48,7 @@ home = [ "HTML", "JSON"]
   # Set this to true to disable this behavior (some proxies don't handle well this optimization)
   disableAssetsBusting = false
   # Set this to true to disable copy-to-clipboard button for inline code.
-  disableInlineCopyToClipBoard = false
+  disableInlineCopyToClipBoard = true
   # A title for shortcuts in menu is set by default. Set this to true to disable it. 
   disableShortcutsTitle = false
   # When using mulitlingual website, disable the switch language button.
@@ -55,11 +70,11 @@ identifier = "ds"
 url = "https://github.com/solo-io/squash"
 weight = 10
 
- [[menu.shortcuts]]
- name = "<i class='fas fa-bookmark'></i> Solo.io Homepage"
- identifier = "soloio"
- url = "https://solo.io/"
- weight = 20
+[[menu.shortcuts]]
+name = "<i class='fas fa-bookmark'></i> Solo.io Homepage"
+identifier = "soloio"
+url = "https://solo.io/"
+weight = 20
 
 # [[menu.shortcuts]]
 # name = "<i class='fas fa-bullhorn'></i> Credits"

@@ -1,9 +1,9 @@
 ---
-weight: 3
+weight: 20
 title: Resolvers
 ---
 
-Gloo resolvers are the primary means of resolving schema fields using Sqoop. This 
+Gloo resolvers are the primary means of resolving schema fields using Sqoop. This
 document explains the structure of a Gloo resolver and how to write one.
 
 ## Request Templates
@@ -25,8 +25,8 @@ to construct the request body sent to the resolver function.
 
 Request templates follow the conventions of [Go templates](https://golang.org/pkg/text/template/).
 
-Available parameters for use in Request Templates come from the 
-[`Params`](https://github.com/solo-io/sqoop/blob/master/pkg/exec/executable_resolvers.go) object.
+Available parameters for use in Request Templates come from the
+[`Params`](https://github.com/solo-io/sqoop/blob/master/pkg/engine/exec/executable_resolvers.go) object.
 
 The Params Object has the following structure (defined in Go):
 
@@ -39,10 +39,10 @@ type Params struct {
 
 `Args` represent arguments that were passed to Sqoop as part of the Client Query.
 
-`Parent` represents the root object the field under query belongs to. `Parent` 
+`Parent` represents the root object the field under query belongs to. `Parent`
 is `nil` for root types (`Query` and `Mutation` type).
 
-The `marshal` function is available for use in Sqoop templates. 
+The `marshal` function is available for use in Sqoop templates.
 `marshal` will encode any value into JSON.
 
 Here's an example of a Gloo Resolver using multiple destinations, with load balancing:
@@ -64,5 +64,6 @@ gloo_resolver:
 ```
 
 ## Response Templates
-Response templates also use Go template syntax. Response templates can refer to 
+
+Response templates also use Go template syntax. Response templates can refer to
 (sub)fields of the response body, provided that it is JSON-encoded.
