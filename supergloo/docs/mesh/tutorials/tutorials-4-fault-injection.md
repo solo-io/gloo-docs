@@ -1,5 +1,7 @@
 ---
 title: "Tutorial: Configuring Fault Injection"
+menuTitle: Fault Injection
+description: Tutorial on how to configure SuperGloo for Fault Injection.
 weight: 6
 ---
 
@@ -11,11 +13,10 @@ Fault Injection refers to the ability to inject multiple forms of errors and/or 
 
 Prerequisites for this tutorial:
 
-- [SuperGloo Installed](../../installation)
-- [Istio Installed](../install)
-- [Bookinfo Sample Deployed](../bookinfo)
+- [SuperGloo Installed]({{< ref "/installation" >}})
+- [Istio Installed]({{< ref "/mesh/install" >}})
+- [Bookinfo Sample Deployed]({{< ref "/mesh/bookinfo" >}})
 - [Routing Rules](../tutorials-1-trafficshifting) Note: it is not necessary to complete this tutorial, but rather to understand how routing rules work
-
 
 ### Concepts
 
@@ -31,9 +32,9 @@ Now we'll demonstrate the fault injection routing rule using the Bookinfo app as
 
 First, ensure you've:
 
-- [installed SuperGloo](../../installation)
-- [installed Istio using supergloo](../install)
-- [Deployed the Bookinfo sample app](../bookinfo)
+- [installed SuperGloo]({{< ref "/installation" >}})
+- [installed Istio using supergloo]({{< ref "/mesh/install" >}})
+- [Deployed the Bookinfo sample app]({{< ref "/mesh/bookinfo" >}})
 
 Now let's open our view of the Product Page UI In our browser with the help of `kubectl port-forward`. Run the following command in another terminal window or the background:
 
@@ -42,8 +43,8 @@ kubectl port-forward -n default deployment/productpage-v1 9080
 ```
 
 Open your browser to http://localhost:9080/productpage. When you refresh the page,
-The reviews should always show up on the right side of the page. The color of the 
-stars will continously shift, that is expected behavior.
+The reviews should always show up on the right side of the page. The color of the
+stars will continuously shift, that is expected behavior.
 
 Once that's done, we'll use the `supergloo` CLI to create a routing rule.
 Let's run the command in *interactive mode* as it will help us better understand the structure of the routing rule.
@@ -69,12 +70,11 @@ supergloo apply routingrule trafficshifting -i
 ```
 
 There are currently two types of rules enabled: abort and delay. Abort rules are the category of rules which
-intercept traffic and return specific reponses. For example; the http abort rule changes the status code of the
+intercept traffic and return specific responses. For example; the http abort rule changes the status code of the
 response to the one specified by the rule. The other rule type, delay, adds timeout to requests which forces them
 to take a specified amount of time before responding.
 
 > Note that the reference to the upstream crd must be provided in the form of `NAMESPACE.NAME` where NAMESPACE refers to the namespace where the Upstream CRD has been written. Upstreams created by Discovery can be found in the namespace where SuperGloo is installed, which is `supergloo-system` by default.
- 
 
 The equivalent non-interactive command:
 
@@ -84,7 +84,6 @@ supergloo apply routingrule faultinjection abort http \
      -p 50 -s 404  --name rule1 \
     --dest-upstreams supergloo-system.default-reviews-9080
 ```
-
 
 We can view the routing rule this created with `kubectl get routingrule -n supergloo-system reviews-v3 -o yaml`:
 
@@ -123,7 +122,6 @@ the http response code 404. In practice this means that ~50% of all traffic to t
 Now that our rule is created, we should be able to see the results. Open your browser back to http://localhost:9080/productpage and refresh. Now, ~50% of the time the right half of the screen should display an error saying that there was an error fetching the reviews. This means that the fault has been injected correctly
 
 Let's update our rule to cause a delay instead.
-
 
 ```bash
 supergloo apply routingrule faultinjection delay fixed \

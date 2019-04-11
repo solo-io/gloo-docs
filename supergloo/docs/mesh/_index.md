@@ -1,16 +1,15 @@
 ---
-title: Mesh Management with SuperGloo
-weight: -1
+title: User Guides
+menuTitle: User Guides
+description: Guides on how to use SuperGloo.
+weight: 20
 ---
 
-Once you've [installed SuperGloo](../installation), you'll want to get started 
+Once you've [installed SuperGloo]({{< ref "/installation" >}}), you'll want to get started
 by installing and configuring a supported mesh.
 
-Note that this documentation is still under heavy development.
+{{% notice info %}}
+This documentation is still under heavy development.
+{{% /notice %}}
 
-Mesh Management Tutorials:
-
-- [Installing Istio with SuperGloo](install)
-- [Deploying the Bookinfo Example](bookinfo)
-- [Traffic Shifting Routing Rules](tutorials-1-trafficshifting)
-- AWS AppMesh (coming soon)
+{{< children description="true" depth="2" >}}

@@ -4,15 +4,15 @@ title: Supergloo
 ---
 
 <h1 align="center">
-    <img src="img/SuperGloo.png" alt="SuperGloo" width="372" height="242">
+  <img src="/img/SuperGloo.png" alt="SuperGloo" width="372" height="242">
   <br>
   The Service Mesh Orchestration Platform
 </h1>
 
-SuperGloo, an open-source project to manage and orchestrate service meshes at scale. SuperGloo is an opinionated abstraction layer that will simplify the installation, management, and operation of your service mesh, whether you use (or plan to use) a single mesh or multiple mesh technologies, on-site, in the cloud, or on any topology that best fits you. 
+SuperGloo, an open-source project to manage and orchestrate service meshes at scale. SuperGloo is an opinionated abstraction layer that will simplify the installation, management, and operation of your service mesh, whether you use (or plan to use) a single mesh or multiple mesh technologies, on-site, in the cloud, or on any topology that best fits you.
 
 [**Installation**](installation) &nbsp; |
-&nbsp; [**Developers**](https://github.com/solo-io/supergloo/blob/master/docs/developers.md) &nbsp; |
+&nbsp; [**Developers**](https://github.com/solo-io/supergloo/blob/master/docs/developer.md) &nbsp; |
 &nbsp; [**Documentation**](https://supergloo.solo.io) &nbsp; |
 &nbsp; [**Blog**](https://medium.com/solo-io/https-medium-com-solo-io-supergloo-ff2aae1fb96f) &nbsp; |
 &nbsp; [**Slack**](https://slack.solo.io) &nbsp; |
@@ -25,15 +25,14 @@ SuperGloo, an open-source project to manage and orchestrate service meshes at sc
 - [**Why SuperGloo?**](#why-supergloo)
 - [**Features**](#features)
 - [**Features Snapshot**](#features-snapshot)
-- [**Roadmap**](#Roadmap)
+- [**Roadmap**](#roadmap)
 - [**Vision**](#vision)
 
-  
-## Why SuperGloo?
+## Why SuperGloo? {#why-supergloo}
 
-**SuperGloo helps users kick off their service mesh experience.** Users who contemplate working with service mesh can be deterred by the many configuration choices they have to make. SuperGloo solves this problem by providing an opinionated API that automates the installation process, obviating the need for writing and deploying complicated yaml files. 
+**SuperGloo helps users kick off their service mesh experience.** Users who contemplate working with service mesh can be deterred by the many configuration choices they have to make. SuperGloo solves this problem by providing an opinionated API that automates the installation process, obviating the need for writing and deploying complicated yaml files.
 
-**SuperGloo takes charge of key functionalities associated with the mesh, including encryption, telemetry, and tracing.** Launching any of these with SuperGloo is as simple as flipping a switch, completely bypassing the need for complicated configuration steps. 
+**SuperGloo takes charge of key functionalities associated with the mesh, including encryption, telemetry, and tracing.** Launching any of these with SuperGloo is as simple as flipping a switch, completely bypassing the need for complicated configuration steps.
 
 **SuperGloo unifies management of ingress traffic (“north/south”) and mesh traffic (“east/west”).** Every service mesh relies on ingress controllers to manage traffic across clusters and from the internet. SuperGloo provides a fully-automated opinionated workflow for configuring your mesh to work with your ingress, offering a unified management experience for all traffic.
 
@@ -42,12 +41,11 @@ SuperGloo, an open-source project to manage and orchestrate service meshes at sc
 **SuperGloo makes it easy to explore different meshes and migrate between them.** The unified interface, as well as the automated installation, makes the transition from one mesh to another fast and painless.
 
 **SuperGloo allows using the same tools with different meshes.** The abstraction we seek to provide will allow developers to build a single product that runs on any mesh, or across meshes.
-For users, this will provide the ability to migrate between service mesh providers without changing the tooling they are work with. 
+For users, this will provide the ability to migrate between service mesh providers without changing the tooling they are work with.
 
 **SuperGloo will ‘glue’ meshes of any type into a multi-mesh.** For companies that run multiple service mesh instances, SuperGloo will connect all the different meshes together, across namespaces, across clusters, across clouds. All with flat-networking and policy applied at the level, rather than repeated at each individual level, without any effort of synchronizing config across meshes. 
 
-
-## Features
+## Features {#features}
 
 **Dead Simple API** - Most service meshes are built with a complex API intended to support a vast number of use cases. SuperGloo boils down service mesh config to the basics, while being expressive about the features that are most important to users. 
 
@@ -69,7 +67,7 @@ For users, this will provide the ability to migrate between service mesh provide
 
 **Plugability** - Highly extensible open-source Go architecture with development SDKs making it easy to extend SuperGloo with new features and meshes.
 
-## Features Snapshot
+## Features Snapshot {#features-snapshot}
 
 <table>
     <thead>
@@ -77,7 +75,7 @@ For users, this will provide the ability to migrate between service mesh provide
             <th colspan=2></th>
             <th>Istio</th>
             <th>Consul Connect</th>
-            <th>Linkerd 2</th>            
+            <th>Linkerd 2</th>
         </tr>
     </thead>
     <tbody>
@@ -143,7 +141,7 @@ For users, this will provide the ability to migrate between service mesh provide
             <td align=center>🚧</td>
             <td align=center>N/A</td>
             <td align=center>🚧</td>
-        </tr>        
+        </tr>
         <tr>
             <td rowspan=2><B>Ingress</B></td>
             <td><B>Installation</B></td>
@@ -160,12 +158,12 @@ For users, this will provide the ability to migrate between service mesh provide
     </tbody>
 </table>
 
-## Roadmap
+## Roadmap {#roadmap}
 
 <table>
   <thead>
         <tr>
-            <th colspan=2></th>           
+            <th colspan=2></th>
         </tr>
     </thead>
     <tbody>
@@ -180,31 +178,28 @@ For users, this will provide the ability to migrate between service mesh provide
         <tr>
             <td align=center>⬜</td>
             <td>Ingress install </td>
-        </tr>        
+        </tr>
         <tr>
             <td align=center>⬜</td>
             <td>Ingress discovery</td>
-        </tr>        
+        </tr>
         <tr>
             <td align=center>⬜</td>
             <td>Metrics via Grafana</td>
-        </tr>        
+        </tr>
         <tr>
             <td align=center>⬜</td>
             <td>OpenTracing</td>
-        </tr>        
+        </tr>
     </tbody>
 </table>
 
-
-## Vision
+## Vision {#vision}
 
 At Solo, we believe that companies at any stage of adoption will gain from experiencing multiple service meshes. At the early stages of adoption, users will benefit from the ability to experiment with multiple technologies. Groups within the same organization may favor different options, making multi-mesh a lasting reality. Whether multi-mesh is a transition-phase or the end-game, keeping your options open without compromising on ease-of-use, functionality or flexibility will give early adopters a competitive edge.
 
 Our vision is to enable multi-mesh, the ability to connect meshes of any type together, across namespaces, across clusters, across clouds. All with flat-networking and policy applied at the super-mesh level, rather than repeated at each individual level, without any effort of synchronizing config across meshes. The abstraction we seek to provide will allow developers to build a single product that runs on any mesh, or across meshes.
 
-
 ## Thanks
 
 SuperGloo would not be possible without the valuable open-source work of projects in the service mesh community. We would like to extend a special thank-you to [Istio](https://istio.io), [Hashicorp Consul](https://www.hashicorp.com/products/consul) and [Linkerd](https://linkerd.io), as well as the vibrant [Kubernetes](https://kubernetes.io) community.
-

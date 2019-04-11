@@ -1,5 +1,7 @@
 ---
 title: "Tutorial: Configuring Traffic Shifting"
+menuTitle: Traffic Shifting
+description: Tutorial on how to configure SuperGloo for Traffic Shifting.
 weight: 3
 ---
 
@@ -7,15 +9,14 @@ weight: 3
 
 In this tutorial we'll take a look at how to shift traffic within our mesh using SuperGloo.
 
-Traffic shifting refers to the ability to divert traffic from its original destination to an alternate destination or 
+Traffic shifting refers to the ability to divert traffic from its original destination to an alternate destination or
 set of destinations, with load balancing across destinations.
 
 Prerequisites for this tutorial:
 
-- [SuperGloo Installed](../../installation)
-- [Istio Installed](../install)
-- [Bookinfo Sample Deployed](../bookinfo)
-
+- [SuperGloo Installed]({{% ref "/installation" %}})
+- [Istio Installed]({{% ref "/mesh/install" %}})
+- [Bookinfo Sample Deployed]({{% ref "/mesh/bookinfo" %}})
 
 ### Concepts
 
@@ -23,62 +24,62 @@ Prerequisites for this tutorial:
 
 By default, when traffic leaves pods destined for a service in the mesh, it is routed to one of the pods backing that service.
 Using SuperGloo, we can change how these requests are routed, for example by choosing a subset of destination pods to which all
-traffic should be directed, or splitting traffic by percentage across a number of subsets. Traffic can even be 
+traffic should be directed, or splitting traffic by percentage across a number of subsets. Traffic can even be
 shifted to other services regardless of their hostname. This can be useful, for example, if you want to route traffic to a default backend.
 
+**RoutingRules**:
 
-**RoutingRules**: 
+Traffic Shifting is achieved in SuperGloo via the use of **RoutingRules**. A RoutingRule is a
+[Kubernetes Custom Resource](https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/)
+which applies some routing configuration to the underlying mesh(es) which SuperGloo is managing.
 
-Traffic Shifting is achieved in SuperGloo via the use of **RoutingRules**. A RoutingRule is a [Kubernetes 
-Custom Resource](https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/) which applies 
-some routing configuration to the underlying mesh(es) which SuperGloo is managing.
-
-SuperGloo resources can be easily created using the CLI, but can also be created, updated, and deleted using 
-`.yaml` files and `kubectl`. It is our recommendation that you begin with the CLI in interactive mode to become familiar 
+SuperGloo resources can be easily created using the CLI, but can also be created, updated, and deleted using
+`.yaml` files and `kubectl`. It is our recommendation that you begin with the CLI in interactive mode to become familiar
 with our APIs, but use version-controlled YAML files to persist and manage production configuration.
 
 RoutingRules can be used to apply HTTP features to all traffic within a mesh, or a subset of that traffic. RoutingRules allow
 the following parameters for restricting the types of traffic the feature will apply to:
+
 - Sources: only apply this rule to requests originating from these client pods.
 - Destinations: only apply this rule to requests sent to these destination pods.
-- Request Matchers: only apply this rule to requests matching these HTTP paths/methods/headers. 
+- Request Matchers: only apply this rule to requests matching these HTTP paths/methods/headers.
 
 For a clearer understanding of how a routing rule works, take a look at the following diagram:
 
- ![Routing Rule Architecture](../../img/supergloo-arch-1-routingrule.png "Routing Rule Architecture")
+![Routing Rule Architecture](/img/supergloo-arch-1-routingrule.png "Routing Rule Architecture")
 
- Routing rule on the right tells SuperGloo to inject faults on 50% of any `POST` requests sent from `site` to `apiserver` on `/users`. 
- 
- The rule on the left instructs SuperGloo to retry all failed requests in the mesh up to 3 times, regardless of origin, destination, or the content of request.
-  
+Routing rule on the right tells SuperGloo to inject faults on 50% of any `POST` requests sent from `site` to `apiserver` on `/users`.
+
+The rule on the left instructs SuperGloo to retry all failed requests in the mesh up to 3 times, regardless of origin, destination, or the content of request.
+
 ### Tutorial
 
 Now we'll demonstrate the traffic shifting routing rule using the Bookinfo app as our test subject.
 
 First, ensure you've:
 
-- [installed SuperGloo](../../installation)
-- [installed Istio using supergloo](../install)
-- [Deployed the Bookinfo sample app](../bookinfo)
+- [installed SuperGloo]({{< ref "/installation" >}})
+- [installed Istio using supergloo]({{< ref "/mesh/install" >}})
+- [Deployed the Bookinfo sample app]({{< ref "/mesh/bookinfo" >}})
 
-Now let's open our view of the Product Page UI In our browser with the help of `kubectl port-forward`. Run the following command in another terminal window or the background:
+Now let's open our view of the Product Page UI In our browser with the help of `kubectl port-forward`. Run the following
+command in another terminal window or the background:
 
-```bash
+```shell
 kubectl port-forward -n default deployment/productpage-v1 9080
 ```
 
 Open your browser to http://localhost:9080/productpage. When you refresh the page,
-you should see that the representation of stars below the Book Reviews alternates between 
-being black, red, and not showing at all. This is because, by default, traffic is 
+you should see that the representation of stars below the Book Reviews alternates between
+being black, red, and not showing at all. This is because, by default, traffic is
 being shifted between `v1/v2/v3` of the `reviews` service.
-
 
 Once that's done, we'll use the `supergloo` CLI to create a routing rule.
 Let's run the command in *interactive mode* as it will help us better understand the structure of the routing rule.
 
 Run the following command, providing the  answers as specified:
 
-```bash
+```shell
 supergloo apply routingrule trafficshifting -i
 
 ? name for the Routing Rule:  reviews-v3
@@ -97,22 +98,20 @@ select the upstreams to which you wish to direct traffic
 ```
 
 The weight we selected for our destination is a *relative weight*. Weights are relative
-across the set of destinations chosen for traffic shifting. If only one is 
+across the set of destinations chosen for traffic shifting. If only one is
 selected, any non-zero weight will equate to 100% of traffic.
 
 > Note that the reference to the upstream crd must be provided in the form of `NAMESPACE.NAME` where NAMESPACE refers to the namespace where the Upstream CRD has been written. Upstreams created by Discovery can be found in the namespace where SuperGloo is installed, which is `supergloo-system` by default.
- 
 
 The equivalent non-interactive command:
 
-```bash
+```shell
 supergloo apply routingrule trafficshifting \
     --name reviews-v3 \
     --dest-upstreams supergloo-system.default-reviews-9080 \
     --target-mesh supergloo-system.istio \
     --destination supergloo-system.default-reviews-v3-9080:1
 ```
-
 
 We can view the routing rule this created with `kubectl get routingrule -n supergloo-system reviews-v3 -o yaml`:
 
@@ -148,7 +147,7 @@ status:
 
 > Note: RoutingRules can be managed entirely using YAML files and `kubectl`. The CLI provides commands for generating SuperGloo CRD YAML, understanding the state of the system, and debugging.
 
-This rule tells SuperGloo to take all traffic bound for the upstream `default-reviews-9080` and route 100% of it to `default-reviews-v3-9080`. The `default-reviews-9080` upstream represents the whole set of pods for the `default.reviews` service, while `default-reviews-v3-9080` represents the subset of those pods with the label `app: v3`. 
+This rule tells SuperGloo to take all traffic bound for the upstream `default-reviews-9080` and route 100% of it to `default-reviews-v3-9080`. The `default-reviews-9080` upstream represents the whole set of pods for the `default.reviews` service, while `default-reviews-v3-9080` represents the subset of those pods with the label `app: v3`.
 
 > See [Understanding Upstreams & Discovery](#understanding-upstreams-discovery) for an explanation of how discovery creates upstreams for each subset of a service.
 
@@ -156,8 +155,7 @@ Now that our rule is created, we should be able to see the results. Open your br
 
 Lets update our rule to split traffic between the `v2` and `v3` versions of reviews:
 
-
-```bash
+```shell
 supergloo apply routingrule trafficshifting \
     --name reviews-v3 \
     --dest-upstreams supergloo-system.default-reviews-9080 \
@@ -166,14 +164,14 @@ supergloo apply routingrule trafficshifting \
     --destination supergloo-system.default-reviews-v3-9080:1
 ```
 
-The `:1` for each destination represents the relative weight, i.e. traffic will be split 
-1-1 or 50%-50% between `v2` and `v3`. Try refreshing your browser page again, 
+The `:1` for each destination represents the relative weight, i.e. traffic will be split
+1-1 or 50%-50% between `v2` and `v3`. Try refreshing your browser page again.
 
 ### Understanding Upstreams & Discovery
 
 The difference between the `reviews` and `reviews-v3` upstreams can be seen using `kubectl` with `jq`:
 
-```json
+```noop
 # all pods with app: reviews
 kubectl get upstream -n supergloo-system default-reviews-9080 -o json | jq .spec.upstreamSpec
 
@@ -202,12 +200,11 @@ kubectl get upstream -n supergloo-system default-reviews-v3-9080 -o json | jq .s
     "servicePort": 9080
   }
 }
-
 ```
 
 This is because the Discovery service installed along with SuperGloo has created Upstreams for each unique permutation of labels for a given service:
 
-```bash
+```shell
 kubectl get upstream -n supergloo-system
 NAME                                                    AGE
 default-details-9080                                    10m
@@ -266,8 +263,8 @@ kube-system-kubernetes-dashboard-reconcile-v1-10-1-80   10m
 Discovery creates upstreams from Kubernetes Services in the following way:
 
 - for each kubernetes service
-    - for each port on the service
-    - for each unique subset of labels found on pods backing that service
-       create an upstream named **`<service-namespace>-<service-name>-<label-values>-<service-port>`**
+  - for each port on the service
+  - for each unique subset of labels found on pods backing that service
+    create an upstream named **`<service-namespace>-<service-name>-<label-values>-<service-port>`**
 
-This makes selection of a destination in SuperGloo simply a matter of selecting the correcct upstream. Upstreams can also be created manually via YAML files + `kubectl apply`.
+This makes selection of a destination in SuperGloo simply a matter of selecting the correct upstream. Upstreams can also be created manually via YAML files + `kubectl apply`.

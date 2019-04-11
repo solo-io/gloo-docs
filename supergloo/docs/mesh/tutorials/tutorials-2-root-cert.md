@@ -1,5 +1,6 @@
 ---
 title: "Tutorial: Configuring a Custom Certificate Authority"
+menuTitle: Custom Certificate Authority
 weight: 4
 ---
 
@@ -22,9 +23,9 @@ verify that the pods in our mesh were updated by directly inspecting the certifi
 
 First, ensure you've:
 
-- [installed SuperGloo](../../installation)
-- [installed Istio  with mTLS enabled using supergloo](../install)
-- [Deployed the Bookinfo sample app](../bookinfo)
+- [installed SuperGloo]({{< ref "/installation" >}})
+- [installed Istio  with mTLS enabled using supergloo]({{< ref "/mesh/install" >}})
+- [Deployed the Bookinfo sample app]({{< ref "/mesh/bookinfo" >}})
 
 Now we'll start by creating the set of files we'll need to replace the generated certs used by Istio:
 
@@ -141,8 +142,7 @@ EOF
 ls *.pem
 
 ca-cert.pem  ca-key.pem  cert-chain.pem  root-cert.pem
-
-``` 
+```
 
 Now let's create a SuperGloo TLS secret from these certs:
 
@@ -152,7 +152,7 @@ supergloo create secret tls --name my-root-ca \
     --cakey ca-key.pem \
     --rootcert root-cert.pem \
     --certchain cert-chain.pem 
-    
+
 +------------+
 | TLSSECRET  |
 +------------+
@@ -199,7 +199,6 @@ supergloo set rootcert --target-mesh supergloo-system.istio \
 
 > Note: `target-mesh` should be set to the `NAMESPACE.NAME` of the managed mesh you'd like to configure. To
 > view the list of available meshes, run `kubectl get mesh.supergloo.solo.io --all-namespaces`
- 
 
 Once that's done, we'll use some `kubectl` commands to inspect the certificates Istio has distributed to the 
 Bookinfo app. Note that it may take several minutes for the custom certificates to be swapped in place of the old.

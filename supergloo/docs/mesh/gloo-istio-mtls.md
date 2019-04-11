@@ -2,20 +2,22 @@
 title: "Gloo and Istio mTLS"
 weight: 4
 ---
+
 ## Motivation
 
-Serving as the Ingress for an Istio cluster -- without compromising on security -- means supporting 
-mutual TLS communication between Gloo and the rest of the cluster. Mutual TLS means that the client 
-proves its identity to the server (in addition to the server proving its identity to the client, which happens in regular TLS). This process requires quite a bit of setup which supergloo abstracts away.
+Serving as the Ingress for an Istio cluster -- without compromising on security -- means supporting
+mutual TLS communication between Gloo and the rest of the cluster. Mutual TLS means that the client
+proves its identity to the server (in addition to the server proving its identity to the client, which happens in regular TLS). This process requires quite a bit of setup which SuperGloo abstracts away.
 
+**Prerequisites**:
 
-**Prerequisites**: 
-1) Istio must already be installed and running in your cluster. See [installing a mesh](../install) for instructions 
+1. Istio must already be installed and running in your cluster. See [installing a mesh]({{< ref "/mesh/install" >}}) for instructions
 setting up Istio.
-2) The istio book info example must be installed and running in cluster. 
-See [deploying the book info example](../bookinfo.md) for instruction on how to install it with auto-injecttion.
+1. The istio book info example must be installed and running in cluster.
+See [deploying the book info example]({{< ref "/mesh/bookinfo.md" >}}) for instruction on how to install it with auto-injection.
 
-After completing the prerequitite steps run:
+After completing the prerequisite steps run:
+
 ```
 $ kubectl get pods --all-namespaces
 
@@ -37,37 +39,41 @@ istio-system       istio-telemetry-586ccd6d57-kdjnt          2/2     Running    
 supergloo-system   discovery-7bbbf86b66-vw2g5                1/1     Running     0          29m
 supergloo-system   supergloo-975bfbfb7-26m2f                 1/1     Running     0          29m
 ```
+
 If the list includes the following pods then everything should be good to go.
 
 ## Installing Gloo with supergloo
 
-Once the mandatory prerequisites have been completed, the installation of gloo using supergloo is a single step process. Assuming that the exact names of the earlier tutorials were used, the command will look as follows. 
+Once the mandatory prerequisites have been completed, the installation of gloo using supergloo is a single step process. Assuming that the exact names of the earlier tutorials were used, the command will look as follows.
 
 #### Option 1: CLI
+
 ```bash
 supergloo install gloo --name gloo --target-meshes supergloo-system.istio
 ```
 
 #### Option 2: yaml
+
 ```yaml
 cat << EOF | kubectl apply -f -
 apiVersion: supergloo.solo.io/v1
 kind: Install
 metadata:
-    name: gloo
-    namespace: supergloo-system
+  name: gloo
+  namespace: supergloo-system
 spec:
-    ingress:
-        gloo:
-        glooVersion: 0.13.13
-        meshes:
-        - name: istio
-            namespace: supergloo-system
-    installationNamespace: gloo-system
+  ingress:
+    gloo:
+    glooVersion: 0.13.13
+    meshes:
+    - name: istio
+      namespace: supergloo-system
+  installationNamespace: gloo-system
 EOF
 ```
 
 This command should add the following pods
+
 ```bash
 gloo-system        gateway-9b648f4d-4bnlv                    1/1     Running     0          16s
 gloo-system        gateway-proxy-ddf675bc9-sw756             1/1     Running     0          15s
@@ -76,7 +82,7 @@ gloo-system        gloo-8576cf6786-t455l                     1/1     Running    
 
 The next step to routing mtls enabled traffic through gloo, is to decide on an upstream to route the traffic to.
 In this example we will be using the `details` pod. Using `kubectl` get all available upstreams, and the list should
-include the following. This is a list of the istio injected upstreams. 
+include the following. This is a list of the istio injected upstreams.
 
 ```bash
 $ kubectl get upstreams -n supergloo-system
@@ -95,8 +101,6 @@ default-reviews-v3-9080                                 13m
 ```
 
 Once those pods are up and running, you are ready to add an mtls enabled route.
-
-
 
 ```yaml
 cat << EOF | kubectl apply -f -
@@ -124,11 +128,13 @@ EOF
 A quick intermediate step before we move on to actually attempting to communicate with these services will be
 grabbing the public facing url of the gloo envoy proxy. In order to do this a utility has been added to quickly retrieve
 the url for any mesh-ingess. The command is as follows
+
 ```bash
 PROXY_URL=$(supergloo get mesh-ingress url --target-mesh supergloo-system.gloo)
 ```
 
 If we attempt to communicate with these pods now via `curl` we will not be able to because `mtls` will fail.
+
 ```bash
 $ curl -v $PROXY_URL
 * Rebuilt URL to: http://192.168.99.101:31823/
@@ -156,7 +162,8 @@ order to tell gloo to enable ssl with the istio certs. supergloo has a command t
 ```bash
 supergloo set upstream mtls --name  default-details-9080 --target-mesh supergloo-system.istio
 ```
-After this command compeltes successfully the upstream should contain the following. Notice the certificates in 
+
+After this command completes successfully the upstream should contain the following. Notice the certificates in
 the sslConfig section of the upstream.
 
 ```bash
