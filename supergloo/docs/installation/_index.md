@@ -37,16 +37,21 @@ Once your Kubernetes cluster is up and running, run the following command to dep
 ```bash
 supergloo init
 
-installing supergloo version 0.3.0
-using chart uri https://storage.googleapis.com/supergloo-helm/charts/supergloo-0.3.0.tgz
-serviceaccount "supergloo" created
-serviceaccount "discovery" created
-clusterrole.rbac.authorization.k8s.io "supergloo" created
-clusterrole.rbac.authorization.k8s.io "discovery" created
-clusterrolebinding.rbac.authorization.k8s.io "supergloo-role-binding" created
-clusterrolebinding.rbac.authorization.k8s.io "discovery-role-binding" created
-deployment.extensions "supergloo" created
-deployment.extensions "discovery" created
+installing supergloo version 0.3.14
+using chart uri https://storage.googleapis.com/supergloo-helm/charts/supergloo-0.3.14.
+tgz
+configmap/sidecar-injection-resources created
+serviceaccount/supergloo created
+serviceaccount/discovery created
+serviceaccount/mesh-discovery created
+clusterrole.rbac.authorization.k8s.io/discovery created
+clusterrole.rbac.authorization.k8s.io/mesh-discovery created
+clusterrolebinding.rbac.authorization.k8s.io/supergloo-role-binding created
+clusterrolebinding.rbac.authorization.k8s.io/discovery-role-binding created
+clusterrolebinding.rbac.authorization.k8s.io/mesh-discovery-role-binding created
+deployment.extensions/supergloo created
+deployment.extensions/discovery created
+deployment.extensions/mesh-discovery created
 install successful!
 ```
 
@@ -69,17 +74,20 @@ kubectl get all -n supergloo-system
 ```
 
 ```noop
-NAME                             READY     STATUS    RESTARTS   AGE
-pod/discovery-6cd7d88846-mjlhp   1/1       Running   0          23s
-pod/supergloo-6bb758969f-frsrz   1/1       Running   0          23s
+NAME                                 READY   STATUS    RESTARTS   AGE
+pod/discovery-68df78f9c-rk2w4        1/1     Running   0          2m49s
+pod/mesh-discovery-bc9fbcb7f-z84r9   1/1     Running   0          2m49s
+pod/supergloo-59445698c5-p2fvm       1/1     Running   0          2m49s
 
-NAME                        DESIRED   CURRENT   UP-TO-DATE   AVAILABLE   AGE
-deployment.apps/discovery   1         1         1            1           23s
-deployment.apps/supergloo   1         1         1            1           23s
+NAME                             DESIRED   CURRENT   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/discovery        1         1         1            1           2m49s
+deployment.apps/mesh-discovery   1         1         1            1           2m49s
+deployment.apps/supergloo        1         1         1            1           2m49s
 
-NAME                                   DESIRED   CURRENT   READY     AGE
-replicaset.apps/discovery-6cd7d88846   1         1         1         23s
-replicaset.apps/supergloo-6bb758969f   1         1         1         23s
+NAME                                       DESIRED   CURRENT   READY   AGE
+replicaset.apps/discovery-68df78f9c        1         1         1       2m49s
+replicaset.apps/mesh-discovery-bc9fbcb7f   1         1         1       2m49s
+replicaset.apps/supergloo-59445698c5       1         1         1       2m49s
 ```
 
 ## Next steps
