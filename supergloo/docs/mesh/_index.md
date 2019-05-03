@@ -5,7 +5,7 @@ description: Guides on how to use SuperGloo.
 weight: 20
 ---
 
-Once you've [installed SuperGloo]({{< ref "/installation" >}}), you'll want to get started
+Once you've [installed SuperGloo](../installation), you'll want to get started
 by installing and configuring a supported mesh.
 
 {{% notice info %}}

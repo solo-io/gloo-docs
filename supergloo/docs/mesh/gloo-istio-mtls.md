@@ -7,18 +7,19 @@ weight: 4
 
 Serving as the Ingress for an Istio cluster -- without compromising on security -- means supporting
 mutual TLS communication between Gloo and the rest of the cluster. Mutual TLS means that the client
-proves its identity to the server (in addition to the server proving its identity to the client, which happens in regular TLS). This process requires quite a bit of setup which SuperGloo abstracts away.
+proves its identity to the server (in addition to the server proving its identity to the client, which happens in
+regular TLS). This process requires quite a bit of setup which SuperGloo abstracts away.
 
-**Prerequisites**:
+### Prerequisites
 
-1. Istio must already be installed and running in your cluster. See [installing a mesh]({{< ref "/mesh/install-istio" >}}) for instructions
+1. Istio must already be installed and running in your cluster. See [installing a mesh](../install-istio) for instructions
 setting up Istio.
 1. The istio book info example must be installed and running in cluster.
-See [deploying the book info example]({{< ref "/mesh/bookinfo.md" >}}) for instruction on how to install it with auto-injection.
+See [deploying the book info example](../../tutorials/bookinfo) for instruction on how to install it with auto-injection.
 
 After completing the prerequisite steps run:
 
-```
+```noop
 $ kubectl get pods --all-namespaces
 
 NAMESPACE          NAME                                      READY   STATUS      RESTARTS   AGE
@@ -42,9 +43,10 @@ supergloo-system   supergloo-975bfbfb7-26m2f                 1/1     Running    
 
 If the list includes the following pods then everything should be good to go.
 
-## Installing Gloo with supergloo
+## Installing Gloo with SuperGloo
 
-Once the mandatory prerequisites have been completed, the installation of gloo using supergloo is a single step process. Assuming that the exact names of the earlier tutorials were used, the command will look as follows.
+Once the mandatory prerequisites have been completed, the installation of Gloo using SuperGloo is a single step process.
+Assuming that the exact names of the earlier tutorials were used, the command will look as follows.
 
 #### Option 1: CLI
 

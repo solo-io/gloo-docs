@@ -1,21 +1,24 @@
 ---
 title: Kubernetes - Prep
+menuTitle: Prerequisites
 weight: 1
 description: How to prepare a Kubernetes cluster for Gloo installation.
 ---
 
 In this document we will review how to prepare different Kubernetes environments before installing Gloo or Gloo
-Enterprise. In general, Gloo and Gloo Enterprise does not require much special in your Kubernetes cluster other than
-in some environments you need to ensure that, at least for installation, the installer has cluster admin rights to be
-able to install the CRDs (Custom Resource Definitions) that need to be installed.
+Enterprise. In general, Gloo and Gloo Enterprise does not require much special in your Kubernetes cluster other than in
+some environments you need to ensure that, at least for installation, the installer has cluster admin rights to be able
+to install the CRDs (Custom Resource Definitions) that need to be installed.
 
 Details for specific Kubernetes distributions:
 
-* [Minikube](#minikube)
-* [Minishift](#minishift)
-* [Google Kubernetes Engine (GKE)](#gke)
-* [Azure Kubernetes Service (AKS)](#aks)
-* [Amazon Elastic Container Service for Kubernetes (EKS)](#eks)
+- [Minikube](#minikube)
+- [Minishift](#minishift)
+- [Google Kubernetes Engine (GKE)](#google-kubernetes-engine-gke)
+- [Azure Kubernetes Service (AKS)](#azure-kubernetes-service-aks)
+- [Amazon Elastic Container Service for Kubernetes (EKS)](#amazon-elastic-container-service-for-kubernetes-eks)
+- [Additional Notes](#additional-notes)
+- [Next Steps](#next-steps)
 
 {{% notice note %}}
 This document assumes you have `kubectl` installed. Details on how to install [here](https://kubernetes.io/docs/tasks/tools/install-kubectl/).
@@ -23,7 +26,7 @@ This document assumes you have `kubectl` installed. Details on how to install [h
 
 ---
 
-## Minikube {#minikube}
+## Minikube
 
 Ensure you're running a standard Minikube cluster, e.g. `minikube start`, and verify that your `kubectl` context is
 correctly pointing to it. More details on Minikube [here](https://kubernetes.io/docs/setup/minikube/).
@@ -38,7 +41,7 @@ You're all set. Gloo install guide [here](../quick_start).
 
 ---
 
-## Minishift {#minishift}
+## Minishift
 
 Ensure you're running a standard Minishift cluster, e.g. `minishift start`, and verify that your `kubectl` context is
 correctly pointing to it. More details on Minishift [here](https://github.com/minishift/minishift).
@@ -63,7 +66,7 @@ You're all set. Gloo install guide [here](../quick_start)
 
 ---
 
-## Google Kubernetes Engine (GKE) {#gke}
+## Google Kubernetes Engine (GKE)
 
 Ensure you're running a standard GKE cluster, e.g. `gcloud container clusters create YOUR-CLUSTER-NAME`, and verify
 that your `kubectl` context is correctly pointing to it. More details on GKE [here](https://cloud.google.com/kubernetes-engine/docs/quickstart).
@@ -82,15 +85,15 @@ For installation, you need to be an admin-user, so use the following commands:
 
 ```bash
 kubectl create clusterrolebinding cluster-admin-binding \
-  --clusterrole cluster-admin \
-  --user $(gcloud config get-value account)
+    --clusterrole cluster-admin \
+    --user $(gcloud config get-value account)
 ```
 
 You're all set. Gloo install guide [here](../quick_start).
 
 ---
 
-## Azure Kubernetes Service (AKS) {#aks}
+## Azure Kubernetes Service (AKS)
 
 Ensure you're running a standard AKS cluster. More details on
 AKS [here](https://docs.microsoft.com/en-us/azure/aks/).
@@ -130,7 +133,7 @@ You're all set. Gloo install guide [here](../quick_start).
 
 ---
 
-## Amazon Elastic Container Service for Kubernetes (EKS) {#eks}
+## Amazon Elastic Container Service for Kubernetes (EKS)
 
 Ensure you're running a standard EKS cluster. More details on
 AKS [here](https://docs.aws.amazon.com/eks/latest/userguide/getting-started.html).
@@ -159,8 +162,8 @@ You're all set. Gloo install guide [here](../quick_start)
 
 In addition to Gloo, usually you will also want to:
 
-* Use a tool like [external-dns](https://github.com/kubernetes-incubator/external-dns) to setup DNS Record for Gloo.
-* Use a tool like [cert-manager](https://github.com/jetstack/cert-manager/) to provision SSL certificates to use
+- Use a tool like [external-dns](https://github.com/kubernetes-incubator/external-dns) to setup DNS Record for Gloo.
+- Use a tool like [cert-manager](https://github.com/jetstack/cert-manager/) to provision SSL certificates to use
 with Gloo's VirtualService CRD.
 
 ## Next Steps

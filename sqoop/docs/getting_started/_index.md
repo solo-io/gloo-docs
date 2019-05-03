@@ -8,8 +8,8 @@ title: Getting Started
 ### What you'll need
 
 - [`kubectl`](https://kubernetes.io/docs/tasks/tools/install-kubectl/)
-- [`sqoopctl`](https://github.com/solo-io/sqoop)
-- [`glooctl`](https://github.com/solo-io/gloo): (OPTIONAL) to see how Sqoop is interacting with the underlying system
+- [`sqoopctl`](https://sqoop.solo.io)
+- [`glooctl`](https://gloo.solo.io): (OPTIONAL) to see how Sqoop is interacting with the underlying system
 - Kubernetes v1.8+ deployed somewhere. [Minikube](https://kubernetes.io/docs/tasks/tools/install-minikube/) is a great way to get a cluster up quickly.
 
 This tutorial will install sqoop into the namespace `gloo-system` by default, this is configurable from the `sqoopctl` cli.
@@ -22,18 +22,20 @@ This tutorial will install sqoop into the namespace `gloo-system` by default, th
 sqoopctl install kube
 ```
 
-####  Deploy the Pet Store
+#### Deploy the Pet Store
 
 ```shell
 kubectl apply \
-  -f https://raw.githubusercontent.com/solo-io/gloo/master/example/petstore/petstore.yaml
+    -f https://raw.githubusercontent.com/solo-io/gloo/master/example/petstore/petstore.yaml
 ```
 
 #### OPTIONAL: View the petstore functions using `glooctl`:
 
 ```shell
 glooctl get upstream
+```
 
+```noop
 +--------------------------------+------------+----------+-------------+
 +--------------------------------+------------+----------+-------------+
 |              NAME              |    TYPE    |  STATUS  |  FUNCTION   |
@@ -46,13 +48,15 @@ glooctl get upstream
 ```
 
 The upstream we want to see is `gloo-system-petstore-8080`. The functions `addPet`, `deletePet`, `findPetById`, and `findPets`
-will become the resolvers for our GraphQL schema.  
+will become the resolvers for our GraphQL schema.
 
 ##### Alternatively: find the upstreams using `kubectl`
 
 ```bash
 kubectl get upstreams -n gloo-system
+```
 
+```noop
 NAME                                                    AGE
 gloo-system-gloo-9977                              1h
 gloo-system-petstore-8080                          1h
@@ -63,7 +67,9 @@ The upstream we are interested in is the petstore, so we run the following to fi
 
 ```bash
 kubectl get upstreams -n gloo-system gloo-system-petstore-8080 -o yaml
+```
 
+```yaml
 apiVersion: gloo.solo.io/v1
 kind: Upstream
 metadata:
@@ -166,7 +172,7 @@ sqoopctl schema create petstore -f petstore.graphql
 
 #### OPTIONAL: View the Generated Resolvers
 
-A Sqoop [**ResolverMap**](/v1/github.com/solo-io/sqoop/api/v1/resolver_map.proto.sk) will have been generated
+A Sqoop [**ResolverMap**](../v1/github.com/solo-io/sqoop/api/v1/resolver_map.proto.sk) will have been generated
 for the new schema.
 
 Take a look at its structure:
@@ -212,7 +218,7 @@ metadata:
   selfLink: ""
 ```
 
-The empty `{}`'s are Sqoop [**Resolver**](/v1/github.com/solo-io/sqoop/api/v1/resolver_map.proto.sk/#sqoop.api.v1.Resolver)
+The empty `{}`'s are Sqoop [**Resolver**](../v1/github.com/solo-io/sqoop/api/v1/resolver_map.proto.sk)
 objects, waiting to be filled in. Sqoop supports a variety of Resolver types (and supports extension to its
 resolution system). In this tutorial, we will create Gloo resolvers, which allow you to connect schema fields
 to REST APIs, serverless functions and other Gloo functions.
@@ -227,7 +233,7 @@ sqoopctl resolvermap register -u default-petstore-8080 -s petstore -g findPets Q
 # register a resolver for Query.pet
 sqoopctl resolvermap register -u default-petstore-8080 -s petstore -g findPetById Query pet
 # register a resolver for Mutation.addPet
-# the request template tells Sqoop to use the Variable "pet" as an argument 
+# the request template tells Sqoop to use the Variable "pet" as an argument
 sqoopctl resolvermap register -u default-petstore-8080 -s petstore -g addPet Mutation addPet --request-template '{{ marshal (index .Args "pet") }}'
 ```
 

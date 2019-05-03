@@ -5,28 +5,28 @@ weight: 2
 
 <br/>
 
-* [Overview](#overview)
-* [Virtual Services](#virtual-services)
-  * [Routes](#routes)
-  * [Matchers](#matchers)
-  * [Destinations](#destinations)
-* [Upstreams](#upstreams)
-  * [Functions](#functions)
-* [Secrets](#secrets)
+- [Overview](#overview)
+- [Virtual Services](#virtual-services)
+  - [Routes](#routes)
+  - [Matchers](#matchers)
+  - [Destinations](#destinations)
+- [Upstreams](#upstreams)
+  - [Functions](#functions)
+- [Secrets](#secrets)
 
 ## Overview
 
 The two top-level concepts in Gloo are **Virtual Services** and **Upstreams**.
 
-* **Virtual Services** define a set of route rules that live under a domain or set of domains. Route rules consist
+- **Virtual Services** define a set of route rules that live under a domain or set of domains. Route rules consist
 of a *matcher*, which specifies the kind of function calls to match (requests and events,  are currently supported),
 and the name of the destination (or destinations) to route them to.
 
-* **Upstreams** define destinations for routes. Upstreams tell Gloo what to route to. Upstreams may also define
+- **Upstreams** define destinations for routes. Upstreams tell Gloo what to route to. Upstreams may also define
 [functions](../../v1/github.com/solo-io/gloo/projects/gloo/api/v1/plugins/aws/aws.proto.sk#LambdaFunctionSpec)
 and [service specs](../../v1/github.com/solo-io/gloo/projects/gloo/api/v1/plugins/service_spec.proto.sk) for *function-level routing*.
 
-## Virtual Services {#virtual-services}
+## Virtual Services
 
 **Virtual Services** define a set of route rules, an optional SNI configuration for a given domain or set of domains.
 
@@ -62,7 +62,7 @@ routes:
 Note that `domains` is empty (not specified). That means this virtual service will act as the default virtual service, matching
 all domains.
 
-### Routes {#routes}
+### Routes
 
 **Routes** are the primary building block of the virtual service. A route contains a single **matcher** and one of: a
 **single destination**, or a **list of weighted destinations**.
@@ -74,25 +74,25 @@ Because multiple matchers can match a single request, the order of routes in the
 will select the first route which matches the request when making routing decisions. It is therefore important to place
 fallback routes (e.g. matching any request for path `/` with a custom 404 page) towards the bottom of the route list.
 
-### Matchers {#matchers}
+### Matchers
 
 Matchers currently support two types of requests:
 
-* **Request Matchers** match on properties of HTTP requests. This includes the request path (`:path` header in HTTP 2.0),
+- **Request Matchers** match on properties of HTTP requests. This includes the request path (`:path` header in HTTP 2.0),
 method (`:method` in HTTP 2.0) headers (their keys and optionally their values), and query parameters.
 
-* **Event Matchers** match properties of HTTP events, as per the [CloudEvents specification](https://github.com/cloudevents/spec/blob/master/spec.md).
+- **Event Matchers** match properties of HTTP events, as per the [CloudEvents specification](https://github.com/cloudevents/spec/blob/master/spec.md).
 *Note: the CloudEvents spec is in version 0.2 and likely to be changed in the future*. The only property **Event Matcher**
 currently matches on is the *event-type* of an event (specified by the `x-event-type` request header).
 
-### Destinations {#destinations}
+### Destinations
 
 Destinations specify where to route a request once a matching route has been selected. A route can point to a single
 destination, or it can split traffic for that route among a series of weighted destinations.
 
 A destination can be either an *upstream destination* or a *function destination*.
 
-**Upstream Destinations** are analogous to [Envoy clusters](https://www.envoyproxy.io/docs/envoy/latest/api-v1/cluster_manager/cluster.html?highlight=cluster).
+**Upstream Destinations** are analogous to [Envoy clusters](https://www.envoyproxy.io/docs/envoy/v1.8.0/api-v1/cluster_manager/cluster).
 Requests routed to upstream destinations will be routed to a server which is expected to handle the request once it
 has been admitted (and possibly transformed) by Gloo.
 
@@ -102,10 +102,10 @@ can be a serverless function call (e.g. Lambda, Google Cloud Function, OpenFaaS 
 Function-level routing is enabled in Envoy by Gloo's function-level filters. Gloo supports the addition of new upstream
 types as well as new function types through our plugin interface.
 
-## Upstreams {#upstreams}
+## Upstreams
 
 **Upstreams** define destinations for routes. Upstreams tell Gloo what to route to and how to route to them. Gloo determines
-how to handle routing for the upstream based on its `spec` field. Upstreams have a type-specific `spec` field which must 
+how to handle routing for the upstream based on its `spec` field. Upstreams have a type-specific `spec` field which must
 be used to provide routing information to Gloo.
 
 The most basic upstream type is the [`static` upstream type](../../v1/github.com/solo-io/gloo/projects/gloo/api/v1/plugins/static/static.proto.sk), which tells Gloo
@@ -136,11 +136,11 @@ upstreamSpec:
     servicePort: 6379
 ```
 
-* `name` tells Gloo what the identifier for this upstream will be (for routes that point to it).
-* `type: kubernetes` tells Gloo that the kubernetes plugin knows how to route to this upstream
-* `spec: ...` tells the kubernetes plugin the service name and namespace, which is used by Gloo for routing  
+- `name` tells Gloo what the identifier for this upstream will be (for routes that point to it).
+- `type: kubernetes` tells Gloo that the kubernetes plugin knows how to route to this upstream
+- `spec: ...` tells the kubernetes plugin the service name and namespace, which is used by Gloo for routing
 
-### Functions {#functions}
+### Functions
 
 Some upstream types support **functions**. For example, we can add some HTTP functions to this upstream, and
 Gloo will be able to route to those functions, providing request transformation to format incoming requests to the
@@ -178,16 +178,17 @@ Note that it is necessary to specify `parameters` for this function invocation. 
 require extensions to be specified on the route they belong to. Documentation for each plugin can be found in the Plugins
 section.
 
-## Secrets {#secrets}
+## Secrets
 
-Certain plugins such as the [AWS Lambda Plugin](../../v1/github.com/solo-io/gloo/projects/gloo/api/v1/plugins/aws/aws.proto.sk) require the use of secrets for authentication,
-configuration of SSL Certificates, and other data that should not be stored in plaintext configuration.
+Certain plugins such as the [AWS Lambda Plugin](../../v1/github.com/solo-io/gloo/projects/gloo/api/v1/plugins/aws/aws.proto.sk)
+require the use of secrets for authentication, configuration of SSL Certificates, and other data that should not be
+stored in plaintext configuration.
 
 Gloo runs an independent (goroutine) controller to monitor secrets. Secrets are stored in their own secret storage layer.
 Gloo can monitor secrets stored in the following secret storage services:
 
-* [Kubernetes Secrets](https://kubernetes.io/docs/concepts/configuration/secret/)
-* [Hashicorp Vault](https://www.vaultproject.io)
-* Plaintext files (recommended only for testing)
+- [Kubernetes Secrets](https://kubernetes.io/docs/concepts/configuration/secret/)
+- [Hashicorp Vault](https://www.vaultproject.io)
+- Plaintext files (recommended only for testing)
 
 Secrets must adhere to a structure, specified by the plugin that requires them.

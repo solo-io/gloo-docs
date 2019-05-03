@@ -3,7 +3,7 @@ title: "Installing Linkerd"
 weight: 1
 ---
 
-# Overview
+## Overview
 
 SuperGloo can be used to install, upgrade, and uninstall a supported mesh.
 
@@ -14,9 +14,9 @@ Currently supported meshes for installation:
 
 ## Installing Linkerd with SuperGloo
 
-First, ensure that SuperGloo has been initialized in your kubernetes cluster via `supergloo init` or the 
-[Supergloo Helm Chart](https://github.com/solo-io/supergloo/tree/master/install/helm/supergloo). See the [installation
-instructions](../../installation) for detailed instructions on installing SuperGloo.
+First, ensure that SuperGloo has been initialized in your kubernetes cluster via `supergloo init` or the
+[Supergloo Helm Chart](https://github.com/solo-io/supergloo/tree/master/install/helm/supergloo). See the
+[installation instructions](../../installation) for detailed instructions on installing SuperGloo.
 
 Once SuperGloo has been installed, we'll create an Install CRD with configuration parameters which will then
 trigger SuperGloo to begin the mesh installation.
@@ -56,7 +56,7 @@ Once you've created the Install CRD, you can track the progress of the Linkerd i
 kubectl get pod -n linkerd --watch
 ```
 
-```
+```noop
 NAME                                      READY   STATUS    RESTARTS   AGE
 linkerd-ca-585f97b595-l96mj               1/1     Running   0          46s
 linkerd-controller-6954987c97-mjj8l       3/3     Running   0          45s
@@ -83,7 +83,6 @@ If the `disabled` field is set to `true` on the install CRD. Doing so, again we 
 supergloo uninstall --name linkerd
 ```
 
-
 #### Option 2: Using `kubectl edit` and set `spec.disabled: true`:
 
 ```bash
@@ -101,8 +100,8 @@ metadata:
   name: linkerd
   namespace: supergloo-system
 spec:
-   ## add the following line 
-   disabled: true            
+   ## add the following line
+   disabled: true
    ##
    installationNamespace: linkerd
    mesh:
@@ -115,13 +114,13 @@ spec:
        linkerdVersion: stable-2.2.1
 {{< /highlight >}}
 
-
-Verify uninstallation has begun: 
+Verify uninstallation has begun:
 
 ```bash
 kubectl get pod -n linkerd --watch
 ```
-```bash
+
+```noop
 NAME                                      READY   STATUS    RESTARTS   AGE
 linkerd-ca-585f97b595-l96mj               1/1     Running   1          48m
 linkerd-controller-6954987c97-mjj8l       3/3     Running   3          48m
@@ -157,5 +156,5 @@ linkerd-grafana-7c6bbd8d-6vnqp            0/1     Terminating   1          48m
 linkerd-grafana-7c6bbd8d-6vnqp            0/1     Terminating   1          48m
 ```
 
-Note that the `linkerd` namespace will be left intact by this process, but can be safely removed using 
-`kubectl delete ns linkerd`. 
+Note that the `linkerd` namespace will be left intact by this process, but can be safely removed using
+`kubectl delete ns linkerd`.

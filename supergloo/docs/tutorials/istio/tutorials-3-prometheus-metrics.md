@@ -1,27 +1,27 @@
 ---
 title: "Tutorial: Configuring Prometheus to Collect Istio Metrics"
 menuTitle: Prometheus to Collect Istio Metrics
-weight: 5
+weight: 3
 ---
 
-### Summary
+# Overview
 
 In this tutorial we'll take a look at how to configure [the Prometheus monitoring system](https://prometheus.io/) to scrape our meshes for metrics using SuperGloo.
 
 Monitoring the traffic being sent between a system of microservices is one of the primary features provided by service meshes. Service meshes make it easy to collect
 metrics from a large, distributed system in a centralized metrics store such as Prometheus. Typically, when installing a mesh, the mesh and metrics store must be manually configured in order to produce readable metrics.
 
-SuperGloo provides features to automatically propagate metrics from a managed mesh with one or more instances of a metrics store. 
+SuperGloo provides features to automatically propagate metrics from a managed mesh with one or more instances of a metrics store.
 
 Let's dive right in.
 
-### Tutorial
+# Tutorial
 
 First, ensure you've:
 
-- [installed SuperGloo]({{< ref "/installation" >}})
-- [installed Istio using supergloo]({{< ref "/mesh/install-istio" >}})
-- [Deployed the Bookinfo sample app]({{< ref "/mesh/bookinfo" >}})
+- [installed SuperGloo](../../../../installation)
+- [installed Istio using SuperGloo](../../../mesh/install-istio)
+- [Deployed the Bookinfo sample app](../../bookinfo)
 
 Next, we'll need an instance of Prometheus running in our cluster. If you've already got Prometheus installed, you can skip this step.
 
@@ -31,10 +31,10 @@ Next, we'll need an instance of Prometheus running in our cluster. If you've alr
 
 To install a simple Prometheus instance for the purpose of this tutorial, run the following:
 
-```yaml
+```shell
 kubectl create ns prometheus-test
 kubectl apply -n prometheus-test -f \
-  https://raw.githubusercontent.com/solo-io/solo-docs/master/supergloo/examples/prometheus/prometheus-demo.yaml
+    https://raw.githubusercontent.com/solo-io/solo-docs/master/supergloo/examples/prometheus/prometheus-demo.yaml
 ```
 
 > Note: We can watch the pods get created for Prometheus with `kubectl get pod -n prometheus-test -w`
@@ -57,8 +57,8 @@ when it is connected to that instance's configmap. Run the following command to 
 
 ```bash
 supergloo set mesh stats \
-  --target-mesh supergloo-system.istio \
-  --prometheus-configmap prometheus-test.prometheus-server
+    --target-mesh supergloo-system.istio \
+    --prometheus-configmap prometheus-test.prometheus-server
 ```
 
 After a few seconds, we should be able to see that SuperGloo updated the Prometheus config with jobs telling it
@@ -124,7 +124,7 @@ Let's take a look at the metrics that our Prometheus instance should have starte
 
 Open up a port-forward to reach the Prometheus UI from our local machine:
 
-```yaml
+```shell
 kubectl port-forward -n prometheus-test deployment/prometheus-server 9090
 ```
 
@@ -132,13 +132,13 @@ Now direct your browser to <http://localhost:9090/>
 
 You should see the Prometheus Graph page show up:
 
-![Prometheus Landing Page](/img/prometheus-landing-page.png "Prometheus Landing Page")
+![Prometheus Landing Page](../../../img/prometheus-landing-page.png "Prometheus Landing Page")
 
 Let's enter a query to see some stats from Istio. We'll try `istio_requests_total`:
 
-![Prometheus Initial Query](/img/prometheus-initial-query.png "Prometheus Initial Query")
+![Prometheus Initial Query](../../../img/prometheus-initial-query.png "Prometheus Initial Query")
 
-Let's try creating some metrics by sending traffic to some of our Bookinfo pods. Open the port-forward to 
+Let's try creating some metrics by sending traffic to some of our Bookinfo pods. Open the port-forward to
 reach the productpage:
 
 ```bash
@@ -151,7 +151,7 @@ this will cause the product page to send requests to the reviews and ratings ser
 Now let's check back in Prometheus and try the query `istio_requests_total{destination_app="reviews"}`
 (note that it might take up to 30 seconds before new metrics are scraped by Prometheus):
 
-![Prometheus Updated Query](/img/prometheus-updated-query.png "Prometheus Updated Query")
+![Prometheus Updated Query](../../../img/prometheus-updated-query.png "Prometheus Updated Query")
 
 We can see that the number of requests sent to the reviews service (triggered by us refreshing the page)
 correlates to the rise in the graph.

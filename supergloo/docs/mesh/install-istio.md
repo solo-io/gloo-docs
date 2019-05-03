@@ -3,7 +3,7 @@ title: "Installing Istio"
 weight: 1
 ---
 
-# Overview
+## Overview
 
 SuperGloo can be used to install, upgrade, and uninstall a supported mesh.
 
@@ -14,9 +14,9 @@ Currently supported meshes for installation:
 
 ## Installing Istio with SuperGloo
 
-First, ensure that SuperGloo has been initialized in your kubernetes cluster via `supergloo init` or the 
-[Supergloo Helm Chart](https://github.com/solo-io/supergloo/tree/master/install/helm/supergloo). See the [installation
-instructions](../../installation#) for detailed instructions on installing SuperGloo.
+First, ensure that SuperGloo has been initialized in your kubernetes cluster via `supergloo init` or the
+[Supergloo Helm Chart](https://github.com/solo-io/supergloo/tree/master/install/helm/supergloo). See the
+[installationn instructions](../../installation) for detailed instructions on installing SuperGloo.
 
 Once SuperGloo has been installed, we'll create an Install CRD with configuration parameters which will then
 trigger SuperGloo to begin the mesh installation.
@@ -75,12 +75,11 @@ prometheus-76db5fddd5-55r6d               1/1       Running             0       
 
 ```
 
-
 ## Testing the Install
 
 Test out mTLS
 
-First, [deploy the Istio Bookinfo Sample](../bookinfo) if you haven't already. 
+First, [deploy the Istio Bookinfo Sample](../../tutorials/bookinfo) if you haven't already.
 
 Next we'll deploy a `sleep` pod which we can use to execute commands inside
 the cluster. The first time we deploy, we'll run it outside the mesh to see
@@ -91,7 +90,7 @@ what happens when we try to connect to mtls-enabled services.
 kubectl create ns not-injected
 kubectl apply -n not-injected -f \
   https://raw.githubusercontent.com/istio/istio/1.0.6/samples/sleep/sleep.yaml
-``` 
+```
 
 We can now run a `curl` command via `kubectl exec` to simulate communication
 within our cluster:
@@ -114,22 +113,33 @@ curl: (35) error:1401E410:SSL routines:CONNECT_CR_FINISHED:sslv3 alert handshake
 command terminated with exit code 35
 ```
 
-we'll see that the client cannot complete the SSL handshake. 
+we'll see that the client cannot complete the SSL handshake.
 
 Now let's try with a pod that's been injected with the Istio sidecar. This time, deploy `sleep` to the default namespace where it'll get automatically injected with the sidecar:
 
 ```bash
 kubectl apply -n default -f https://raw.githubusercontent.com/istio/istio/1.0.6/samples/sleep/sleep.yaml
-``` 
+```
 
-Execute the same `kubectl exec` command as before, but this time using the pod 
+Execute the same `kubectl exec` command as before, but this time using the pod
 in the default namespace:
 
 ```bash
 INJECTED_PODNAME=`kubectl get pod -n default -l app=sleep -o=jsonpath="{.items[0].metadata.name}"`
 kubectl exec -n default $INJECTED_PODNAME curl reviews.default.svc.cluster.local:9080/reviews/1
+```
 
-{"id": "1","reviews": [{  "reviewer": "Reviewer1",  "text": "An extremely entertaining play by Shakespeare. The slapstick humour is r100   295  100   295    0     0    215      0  0:00:01  0:00:01 --:--:--   215ning. The play lacks thematic depth when compared to other plays by Shakespeare."}]}
+```json
+{
+  "id": "1",
+  "reviews":
+  [
+    {
+      "reviewer": "Reviewer1",
+      "text": "An extremely entertaining play by Shakespeare. The slapstick humour is r100   295  100   295    0     0    215      0  0:00:01  0:00:01 --:--:--   215ning. The play lacks thematic depth when compared to other plays by Shakespeare."
+    }
+  ]
+}
 ```
 
 Cool! We got a JSON response. We've now demonstrated that only pods inside the mesh are able to communicate when mTLS is enabled.
@@ -150,7 +160,6 @@ If the `disabled` field is set to `true` on the install CRD. Doing so, again we 
 ```bash
 supergloo uninstall --name istio
 ```
-
 
 #### Option 2: Using `kubectl edit` and set `spec.disabled: true`:
 
@@ -173,8 +182,8 @@ metadata:
   uid: 104e79ee-4112-11e9-b67e-bcb07306190b
 spec:
 
-   ## add the following line 
-   disabled: true            
+   ## add the following line
+   disabled: true
    ##
 
   installedManifest: ... # long gzipped string, should not be modified
@@ -191,7 +200,7 @@ spec:
       istioVersion: 1.0.6
 ```
 
-Verify uninstallation has begun: 
+Verify uninstallation has begun:
 
 ```bash
 kubectl get pod -n istio-system --watch
@@ -240,5 +249,5 @@ istio-system   istio-pilot-c5dddb4b9-nb6fd   0/2       Terminating   0         2
 istio-system   istio-pilot-c5dddb4b9-nb6fd   0/2       Terminating   0         23m
 ```
 
-Note that the `istio-system` namespace will be left intact by this process, but can be safely removed using 
-`kubectl delete ns istio-system`. 
+Note that the `istio-system` namespace will be left intact by this process, but can be safely removed using
+`kubectl delete ns istio-system`.

@@ -2,10 +2,10 @@
 title: "Tutorial: Configuring Traffic Shifting"
 menuTitle: Traffic Shifting
 description: Tutorial on how to configure SuperGloo for Traffic Shifting.
-weight: 3
+weight: 1
 ---
 
-### Summary
+# Overview
 
 In this tutorial we'll take a look at how to shift traffic within our mesh using SuperGloo.
 
@@ -14,20 +14,20 @@ set of destinations, with load balancing across destinations.
 
 Prerequisites for this tutorial:
 
-- [SuperGloo Installed]({{% ref "/installation" %}})
-- [Istio Installed]({{% ref "/mesh/install-istio" %}})
-- [Bookinfo Sample Deployed]({{% ref "/mesh/bookinfo" %}})
+- [SuperGloo Installed](../../../../installation)
+- [Istio Installed](../../../mesh/install-istio)
+- [Bookinfo Sample Deployed](../../bookinfo)
 
-### Concepts
+# Concepts
 
-**Traffic Shifting**:
+## Traffic Shifting
 
 By default, when traffic leaves pods destined for a service in the mesh, it is routed to one of the pods backing that service.
 Using SuperGloo, we can change how these requests are routed, for example by choosing a subset of destination pods to which all
 traffic should be directed, or splitting traffic by percentage across a number of subsets. Traffic can even be
 shifted to other services regardless of their hostname. This can be useful, for example, if you want to route traffic to a default backend.
 
-**RoutingRules**:
+## RoutingRules
 
 Traffic Shifting is achieved in SuperGloo via the use of **RoutingRules**. A RoutingRule is a
 [Kubernetes Custom Resource](https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/)
@@ -46,21 +46,21 @@ the following parameters for restricting the types of traffic the feature will a
 
 For a clearer understanding of how a routing rule works, take a look at the following diagram:
 
-![Routing Rule Architecture](/img/supergloo-arch-1-routingrule.png "Routing Rule Architecture")
+![Routing Rule Architecture](../../../img/supergloo-arch-1-routingrule.png "Routing Rule Architecture")
 
 Routing rule on the right tells SuperGloo to inject faults on 50% of any `POST` requests sent from `site` to `apiserver` on `/users`.
 
 The rule on the left instructs SuperGloo to retry all failed requests in the mesh up to 3 times, regardless of origin, destination, or the content of request.
 
-### Tutorial
+# Tutorial
 
 Now we'll demonstrate the traffic shifting routing rule using the Bookinfo app as our test subject.
 
 First, ensure you've:
 
-- [installed SuperGloo]({{< ref "/installation" >}})
-- [installed Istio using supergloo]({{< ref "/mesh/install-istio" >}})
-- [Deployed the Bookinfo sample app]({{< ref "/mesh/bookinfo" >}})
+- [installed SuperGloo](../../../../installation)
+- [installed Istio using supergloo](../../../mesh/install-istio)
+- [Deployed the Bookinfo sample app](../../bookinfo)
 
 Now let's open our view of the Product Page UI In our browser with the help of `kubectl port-forward`. Run the following
 command in another terminal window or the background:
@@ -69,7 +69,7 @@ command in another terminal window or the background:
 kubectl port-forward -n default deployment/productpage-v1 9080
 ```
 
-Open your browser to http://localhost:9080/productpage. When you refresh the page,
+Open your browser to <http://localhost:9080/productpage>. When you refresh the page,
 you should see that the representation of stars below the Book Reviews alternates between
 being black, red, and not showing at all. This is because, by default, traffic is
 being shifted between `v1/v2/v3` of the `reviews` service.
@@ -80,7 +80,7 @@ Let's run the command in *interactive mode* as it will help us better understand
 Run the following command, providing the  answers as specified:
 
 ```shell
-supergloo apply routingrule trafficshifting -i
+supergloo apply routingrule trafficshifting --interactive
 
 ? name for the Routing Rule:  reviews-v3
 ? namespace for the Routing Rule:  supergloo-system
@@ -101,7 +101,9 @@ The weight we selected for our destination is a *relative weight*. Weights are r
 across the set of destinations chosen for traffic shifting. If only one is
 selected, any non-zero weight will equate to 100% of traffic.
 
-> Note that the reference to the upstream crd must be provided in the form of `NAMESPACE.NAME` where NAMESPACE refers to the namespace where the Upstream CRD has been written. Upstreams created by Discovery can be found in the namespace where SuperGloo is installed, which is `supergloo-system` by default.
+> Note that the reference to the upstream crd must be provided in the form of `NAMESPACE.NAME` where NAMESPACE refers
+> to the namespace where the Upstream CRD has been written. Upstreams created by Discovery can be found in the namespace
+> where SuperGloo is installed, which is `supergloo-system` by default.
 
 The equivalent non-interactive command:
 
@@ -113,7 +115,7 @@ supergloo apply routingrule trafficshifting \
     --destination supergloo-system.default-reviews-v3-9080:1
 ```
 
-We can view the routing rule this created with `kubectl get routingrule -n supergloo-system reviews-v3 -o yaml`:
+We can view the routing rule this created with `kubectl get routingrule --namespace supergloo-system reviews-v3 --output yaml`:
 
 ```yaml
 apiVersion: supergloo.solo.io/v1
@@ -151,7 +153,7 @@ This rule tells SuperGloo to take all traffic bound for the upstream `default-re
 
 > See [Understanding Upstreams & Discovery](#understanding-upstreams-discovery) for an explanation of how discovery creates upstreams for each subset of a service.
 
-Now that our rule is created, we should be able to see the results. Open your browser back to http://localhost:9080/productpage and refresh. Now you'll see that red stars appear every time.
+Now that our rule is created, we should be able to see the results. Open your browser back to <http://localhost:9080/productpage> and refresh. Now you'll see that red stars appear every time.
 
 Lets update our rule to split traffic between the `v2` and `v3` versions of reviews:
 
@@ -167,14 +169,16 @@ supergloo apply routingrule trafficshifting \
 The `:1` for each destination represents the relative weight, i.e. traffic will be split
 1-1 or 50%-50% between `v2` and `v3`. Try refreshing your browser page again.
 
-### Understanding Upstreams & Discovery
+## Understanding Upstreams & Discovery
 
 The difference between the `reviews` and `reviews-v3` upstreams can be seen using `kubectl` with `jq`:
 
-```noop
+```shell
 # all pods with app: reviews
 kubectl get upstream -n supergloo-system default-reviews-9080 -o json | jq .spec.upstreamSpec
+```
 
+```json
 {
   "kube": {
     "selector": {
@@ -185,10 +189,14 @@ kubectl get upstream -n supergloo-system default-reviews-9080 -o json | jq .spec
     "servicePort": 9080
   }
 }
+```
 
+```shell
 # all pods with app: reviews && version: v3
 kubectl get upstream -n supergloo-system default-reviews-v3-9080 -o json | jq .spec.upstreamSpec
+```
 
+```json
 {
   "kube": {
     "selector": {
@@ -206,6 +214,7 @@ This is because the Discovery service installed along with SuperGloo has created
 
 ```shell
 kubectl get upstream -n supergloo-system
+
 NAME                                                    AGE
 default-details-9080                                    10m
 default-details-v1-9080                                 10m

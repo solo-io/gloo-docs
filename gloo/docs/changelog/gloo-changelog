@@ -29,7 +29,7 @@
 
 **Fixes**
 
-- Fix knative test flake (https://github.com/solo-io/gloo/685)
+- Fix knative test flake (https://github.com/solo-io/gloo/issues/685)
 - Allow upstream discovery discovery grpc services correctly. (https://github.com/solo-io/gloo/issues/688)
 
 ### v0.13.15

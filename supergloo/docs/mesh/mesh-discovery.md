@@ -15,26 +15,26 @@ Currently supported meshes for Discovery:
 
 # Architecture
 
-Mesh discovery, similar to other solo.io projects, uses an event loop based architecure to watch Kubernetes 
+Mesh discovery, similar to other solo.io projects, uses an event loop based architecure to watch Kubernetes
 resources to create/update those resources. In this case we are interested in three resources:
 
-* [Mesh](../../v1/github.com/solo-io/supergloo/api/v1/mesh.proto.sk)
-* [Install](../../v1/github.com/solo-io/supergloo/api/v1/install.proto.sk)
-* [Pod](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.11/#pod-v1-core) (Kubernetes resource)
+- [Mesh](../../v1/github.com/solo-io/supergloo/api/v1/mesh.proto.sk)
+- [Install](../../v1/github.com/solo-io/supergloo/api/v1/install.proto.sk)
+- [Pod](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.11/#pod-v1-core) (Kubernetes resource)
 
-More information about these resources can be found by clicking the links above. 
+More information about these resources can be found by clicking the links above.
 
-At its core mesh discovery monitors these resources and takes actions based on certain heuristics. These heuristics 
-vary slightly by the type of mesh we are trying to discover, but the concept is similar. For example, in the case of Istio: 
-mesh discovery watches for the existence of a deployment named istio-pilot and discovers the deployed Istio version based 
+At its core mesh discovery monitors these resources and takes actions based on certain heuristics. These heuristics
+vary slightly by the type of mesh we are trying to discover, but the concept is similar. For example, in the case of Istio:
+mesh discovery watches for the existence of a deployment named istio-pilot and discovers the deployed Istio version based
 on Pilot's image tag.
 
 #### Discovering Mesh Configuration
 
 In order to observe/discover the existing mesh configuration, mesh discovery requires the ability to monitor custom resources (CRDs)
-on a per mesh basis. In order to accomplish this mesh discovery creates new watches for mesh specific resources when/if a mesh 
-CRD for a given mesh is found. For instance, if an Istio mesh is discovered, and an Istio mesh CRD is created, then mesh 
-discovery will begin to monitor Istio specific resources in order to gather more fine grained details about the particular 
+on a per mesh basis. In order to accomplish this mesh discovery creates new watches for mesh specific resources when/if a mesh
+CRD for a given mesh is found. For instance, if an Istio mesh is discovered, and an Istio mesh CRD is created, then mesh
+discovery will begin to monitor Istio specific resources in order to gather more fine grained details about the particular
 Istio deployment.
 
 {{<mermaid>}}
@@ -62,13 +62,13 @@ graph TB;
     end
 {{< /mermaid >}}
 
-The above diagram is an approximation of this system working in practice. The lines do not represent order exactly as all of the parts 
+The above diagram is an approximation of this system working in practice. The lines do not represent order exactly as all of the parts
 of the system are running concurrently, but it still gives an idea of how the different pieces are created and consumed.
 
 ## Mesh Discovery In Practice
 
 As stated above mesh discovery currently requires SuperGloo to run, so in order to test out mesh discovery we must first install SuperGloo.
-To install superloo refer to the previous tutorial on [installation](../install). Once the SuperGloo cli is installed and SuperGloo is 
+To install SuperGloo refer to the previous tutorial on [installation](../../installation). Once the SuperGloo cli is installed and SuperGloo is
 running we are ready to begin.
 
 If Istio is already installed on your system feel free to skip this next step.
@@ -91,6 +91,9 @@ To check that Istio is running:
 
 ```bash
 $ kubectl get pods --all-namespaces
+```
+
+```noop
 NAMESPACE          NAME                                      READY   STATUS      RESTARTS   AGE
 istio-system       istio-citadel-6559b9697b-wgcqm            1/1     Running     0          88s
 istio-system       istio-cleanup-secrets-lw9xm               0/1     Completed   0          89s
@@ -120,14 +123,18 @@ supergloo-system   supergloo-84f85b459c-sfvdg                1/1     Running    
 #### Discovered Mesh CRD
 
 Once Istio and SuperGloo are running in the cluster we can check for the mesh CRD:
-```bash 
-➜ kubectl get mesh -n supergloo-system -oyaml
+
+```bash
+kubectl get mesh --namespace supergloo-system --output yaml
+```
+
+```yaml
 apiVersion: supergloo.solo.io/v1
 kind: Mesh
 metadata:
   generation: 2
   name: istio-istio-system
-  namespace: supergloo-systeme
+  namespace: supergloo-system
 spec:
   discoveryMetadata:
     injectedNamespaceLabel: istio-injection
@@ -141,6 +148,6 @@ status:
   state: 1
 ```
 
-As you can see SuperGloo figured out the localtion and version of Istio, and now we can go ahead and apply SuperGloo rules to our mesh.
-For further tutorials using SuperGloo with our mesh, check the [tutorials](../tutorials) section fo in depth tutorials on configuring the
+As you can see SuperGloo figured out the location and version of Istio, and now we can go ahead and apply SuperGloo rules to our mesh.
+For further tutorials using SuperGloo with our mesh, check the [tutorials](../tutorials) section for in depth tutorials on configuring the
 mesh using SuperGloo.

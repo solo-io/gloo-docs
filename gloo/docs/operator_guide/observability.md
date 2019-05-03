@@ -7,7 +7,7 @@ description: How to monitor and trace within your Gloo setup.
 All Gloo pods ship with optional [Prometheus](https://prometheus.io/) monitoring capabilities.
 
 This functionality is turned off by default, and can be turned on a couple of different ways: through [Helm chart install
-options]({{< ref "/installation/kubernetes/quick_start#install_helm" >}}); and through environment variables.
+options](../../installation/kubernetes/quick_start/#install-gloo-with-helm); and through environment variables.
 
 ### Helm Chart Options
 

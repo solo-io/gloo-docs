@@ -2,10 +2,10 @@
 title: "Tutorial: Configuring Fault Injection"
 menuTitle: Fault Injection
 description: Tutorial on how to configure SuperGloo for Fault Injection.
-weight: 6
+weight: 4
 ---
 
-### Summary
+# Overview
 
 In this tutorial we'll take a look at how to inject faults within our mesh using SuperGloo.
 
@@ -13,28 +13,28 @@ Fault Injection refers to the ability to inject multiple forms of errors and/or 
 
 Prerequisites for this tutorial:
 
-- [SuperGloo Installed]({{< ref "/installation" >}})
-- [Istio Installed]({{< ref "/mesh/install-istio" >}})
-- [Bookinfo Sample Deployed]({{< ref "/mesh/bookinfo" >}})
+- [SuperGloo Installed](../../../../installation)
+- [Istio Installed](../../../mesh/install-istio)
+- [Bookinfo Sample Deployed](../../bookinfo)
 - [Routing Rules](../tutorials-1-trafficshifting) Note: it is not necessary to complete this tutorial, but rather to understand how routing rules work
 
-### Concepts
+# Concepts
 
-**Fault Injection**:
+## Fault Injection
 
 By default, when traffic leaves pods destined for a service in the mesh, it is routed to one of the pods backing that service.
 Using SuperGloo, we can inject faults directly into this traffic to test the resilience of the system as a whole. These faults can take the form of
 delays and direct aborts of the requests.
 
-### Tutorial
+# Tutorial
 
 Now we'll demonstrate the fault injection routing rule using the Bookinfo app as our test subject.
 
 First, ensure you've:
 
-- [installed SuperGloo]({{< ref "/installation" >}})
-- [installed Istio using supergloo]({{< ref "/mesh/install-istio" >}})
-- [Deployed the Bookinfo sample app]({{< ref "/mesh/bookinfo" >}})
+- [installed SuperGloo](../../../../installation)
+- [installed Istio using SuperGloo](../../../mesh/install-istio)
+- [Deployed the Bookinfo sample app](../../bookinfo)
 
 Now let's open our view of the Product Page UI In our browser with the help of `kubectl port-forward`. Run the following command in another terminal window or the background:
 
@@ -42,7 +42,7 @@ Now let's open our view of the Product Page UI In our browser with the help of `
 kubectl port-forward -n default deployment/productpage-v1 9080
 ```
 
-Open your browser to http://localhost:9080/productpage. When you refresh the page,
+Open your browser to <http://localhost:9080/productpage>. When you refresh the page,
 The reviews should always show up on the right side of the page. The color of the
 stars will continuously shift, that is expected behavior.
 
@@ -52,7 +52,7 @@ Let's run the command in *interactive mode* as it will help us better understand
 Run the following command, providing the answers as specified:
 
 ```bash
-supergloo apply routingrule faultinjection -i
+supergloo apply routingrule faultinjection --interactive
 
 ? name for the Routing Rule:  rule1
 ? namespace for the Routing Rule:  supergloo-system
@@ -74,7 +74,9 @@ intercept traffic and return specific responses. For example; the http abort rul
 response to the one specified by the rule. The other rule type, delay, adds timeout to requests which forces them
 to take a specified amount of time before responding.
 
-> Note that the reference to the upstream crd must be provided in the form of `NAMESPACE.NAME` where NAMESPACE refers to the namespace where the Upstream CRD has been written. Upstreams created by Discovery can be found in the namespace where SuperGloo is installed, which is `supergloo-system` by default.
+> Note that the reference to the upstream crd must be provided in the form of `NAMESPACE.NAME` where NAMESPACE refers to
+> the namespace where the Upstream CRD has been written. Upstreams created by Discovery can be found in the namespace
+> where SuperGloo is installed, which is `supergloo-system` by default.
 
 The equivalent non-interactive command:
 
@@ -119,7 +121,9 @@ the http response code 404. In practice this means that ~50% of all traffic to t
 
 > See [Understanding Upstreams & Discovery](../tutorials-1-trafficshifting#understanding-upstreams-discovery) for an explanation of how discovery creates upstreams for each subset of a service.
 
-Now that our rule is created, we should be able to see the results. Open your browser back to http://localhost:9080/productpage and refresh. Now, ~50% of the time the right half of the screen should display an error saying that there was an error fetching the reviews. This means that the fault has been injected correctly
+Now that our rule is created, we should be able to see the results. Open your browser back to <http://localhost:9080/productpage>
+and refresh. Now, ~50% of the time the right half of the screen should display an error saying that there was an error
+fetching the reviews. This means that the fault has been injected correctly
 
 Let's update our rule to cause a delay instead.
 
