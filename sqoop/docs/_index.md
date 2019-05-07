@@ -62,7 +62,7 @@ of data sources Sqoop can connect to.
 
 ### Getting Started:
 
-* [Getting Started on Kubernetes](.//getting_started): Getting started with Kubernetes (recommended for first time users)
+* [Getting Started on Kubernetes](./getting_started): Getting started with Kubernetes (recommended for first time users)
 
 ### v1 API reference:
 
