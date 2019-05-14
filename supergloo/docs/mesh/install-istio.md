@@ -31,7 +31,6 @@ supergloo install istio --name istio --installation-namespace istio-system --mtl
 
 See `supergloo install istio --help` for the full list of installation options for istio.
 
-
 #### Option 2: Using `kubectl apply` on a yaml file:
 
 ```yaml
@@ -40,19 +39,17 @@ apiVersion: supergloo.solo.io/v1
 kind: Install
 metadata:
   name: my-istio
+  namespace: supergloo-system
 spec:
   installationNamespace: istio-system
   mesh:
-    installedMesh:
-      name: istio
-      namespace: supergloo-system
-    istioMesh:
+    istio:
       enableAutoInject: true
       enableMtls: true
       installGrafana: true
       installJaeger: true
       installPrometheus: true
-      istioVersion: 1.0.6
+      version: 1.0.6
 EOF
 ```
 
@@ -60,7 +57,9 @@ Once you've created the Install CRD, you can track the progress of the Istio ins
 
 ```bash
 kubectl --namespace istio-system get pod --watch
+```
 
+```noop
 NAME                                      READY     STATUS              RESTARTS   AGE
 grafana-7f6cd4bf56-xst2n                  1/1       Running             0          27s
 istio-citadel-796c94878b-59gw6            1/1       Running             0          26s
