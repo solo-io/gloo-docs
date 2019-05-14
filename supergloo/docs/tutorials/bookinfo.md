@@ -15,13 +15,13 @@ To deploy the bookinfo sample, first enable automatic sidecar injection on the d
 #### Istio Injection Label
 
 ```bash
-kubectl --namespace default label istio-injection=enabled
+kubectl label namespace default istio-injection=enabled
 ```
 
 #### Linkerd Injection Annotation
 
 ```bash
-kubectl --namespace default annotate linkerd.io/inject=enabled
+kubectl annotate namespace default linkerd.io/inject=enabled
 ```
 
 Next, create the bookinfo deployments and services:
