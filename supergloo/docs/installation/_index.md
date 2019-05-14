@@ -64,10 +64,10 @@ You can see the kubernetes YAML `supergloo` is installing to your cluster withou
 by running `supergloo init --dry-run`.
 
 ---
-**NOTE:** You can install SuperGloo to an existing namespace by providing the `-n` option. If the option is not provided, the namespace defaults to `supergloo-system`.
+**NOTE:** You can install SuperGloo to an existing namespace by providing the `--namespace` option. If the option is not provided, the namespace defaults to `supergloo-system`.
 
 ```bash
-supergloo init -n my-namespace
+supergloo init --namespace my-namespace
 ```
 
 ---
@@ -75,7 +75,7 @@ supergloo init -n my-namespace
 Check that the SuperGloo and Discovery pods have been created:
 
 ```bash
-kubectl get all -n supergloo-system
+kubectl --namespace supergloo-system get all
 ```
 
 ```noop
@@ -134,18 +134,18 @@ supergloo/supergloo	0.0.0        	           	The official Helm Chart for SuperG
 
 ## Next steps
 
-Now that you've successfully installed SuperGloo, let's put it to work in our tutorial, [installing a mesh with SuperGloo](../mesh/install-istio)
+Now that you've successfully installed SuperGloo, let's put it to work in our tutorial, [installing a mesh with SuperGloo]({{% ref "/mesh/install-istio" %}})
 
 ## Uninstall
 
 To uninstall SuperGloo and all related components, simply run the following:
 
 ```bash
-supergloo init --dry-run | kubectl delete -f -
+supergloo init --dry-run | kubectl delete --filename -
 ```
 
-If you installed SuperGloo to a different namespace, you will have to specify that namespace using the `-n` option:
+If you installed SuperGloo to a different namespace, you will have to specify that namespace using the `--namespace` option:
 
 ```bash
-supergloo init --dry-run -n my-namespace | kubectl delete -f -
+supergloo init --dry-run --namespace my-namespace | kubectl delete --filename -
 ```

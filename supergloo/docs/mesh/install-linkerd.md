@@ -16,7 +16,7 @@ Currently supported meshes for installation:
 
 First, ensure that SuperGloo has been initialized in your kubernetes cluster via `supergloo init` or the
 [Supergloo Helm Chart](https://github.com/solo-io/supergloo/tree/master/install/helm/supergloo). See the
-[installation instructions](../../installation) for detailed instructions on installing SuperGloo.
+[installation instructions]({{% ref "/installation" %}}) for detailed instructions on installing SuperGloo.
 
 Once SuperGloo has been installed, we'll create an Install CRD with configuration parameters which will then
 trigger SuperGloo to begin the mesh installation.
@@ -35,7 +35,7 @@ See `supergloo install linkerd --help` for the full list of installation options
 #### Option 2: Using `kubectl apply` on a yaml file:
 
 ```yaml
-cat << EOF | kubectl apply -f -
+cat <<EOF | kubectl apply --filename -
 apiVersion: supergloo.solo.io/v1
 kind: Install
 metadata:
@@ -53,7 +53,7 @@ EOF
 Once you've created the Install CRD, you can track the progress of the Linkerd installation:
 
 ```bash
-kubectl get pod -n linkerd --watch
+kubectl --namespace linkerd get pod --watch
 ```
 
 ```noop
@@ -69,8 +69,8 @@ linkerd-web-546b557f56-xsjqf              1/1     Running   0          5s
 To tear everything down from this demo:
 
 ```bash
-kubectl delete -n default -f https://raw.githubusercontent.com/istio/istio/1.0.6/samples/bookinfo/platform/kube/bookinfo.yaml
-kubectl delete ns not-injected
+kubectl --namespace default delete --filename https://raw.githubusercontent.com/istio/istio/1.0.6/samples/bookinfo/platform/kube/bookinfo.yaml
+kubectl delete namespace not-injected
 ```
 
 ## Uninstalling Linkerd
@@ -114,10 +114,10 @@ spec:
        linkerdVersion: stable-2.3.0
 {{< /highlight >}}
 
-Verify uninstallation has begun:
+Verify un-installation has begun:
 
 ```bash
-kubectl get pod -n linkerd --watch
+kubectl --namespace linkerd get pod --watch
 ```
 
 ```noop
@@ -157,4 +157,4 @@ linkerd-grafana-7c6bbd8d-6vnqp            0/1     Terminating   1          48m
 ```
 
 Note that the `linkerd` namespace will be left intact by this process, but can be safely removed using
-`kubectl delete ns linkerd`.
+`kubectl delete namespace linkerd`.

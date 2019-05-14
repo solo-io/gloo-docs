@@ -18,8 +18,8 @@ Currently supported meshes for Discovery:
 Mesh discovery, similar to other solo.io projects, uses an event loop based architecure to watch Kubernetes
 resources to create/update those resources. In this case we are interested in three resources:
 
-- [Mesh](../../v1/github.com/solo-io/supergloo/api/v1/mesh.proto.sk)
-- [Install](../../v1/github.com/solo-io/supergloo/api/v1/install.proto.sk)
+- [Mesh]({{% ref "/v1/github.com/solo-io/supergloo/api/v1/mesh.proto.sk" %}})
+- [Install]({{% ref "/v1/github.com/solo-io/supergloo/api/v1/install.proto.sk" %}})
 - [Pod](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.11/#pod-v1-core) (Kubernetes resource)
 
 More information about these resources can be found by clicking the links above.
@@ -37,7 +37,7 @@ CRD for a given mesh is found. For instance, if an Istio mesh is discovered, and
 discovery will begin to monitor Istio specific resources in order to gather more fine grained details about the particular
 Istio deployment.
 
-{{<mermaid>}}
+{{< mermaid >}}
 graph TB;
     cli1 ---|writes| crd2
     subgraph cli/kubectl
@@ -68,7 +68,7 @@ of the system are running concurrently, but it still gives an idea of how the di
 ## Mesh Discovery In Practice
 
 As stated above mesh discovery currently requires SuperGloo to run, so in order to test out mesh discovery we must first install SuperGloo.
-To install SuperGloo refer to the previous tutorial on [installation](../../installation). Once the SuperGloo cli is installed and SuperGloo is
+To install SuperGloo refer to the previous tutorial on [installation]({{% ref "/installation" %}}). Once the SuperGloo cli is installed and SuperGloo is
 running we are ready to begin.
 
 If Istio is already installed on your system feel free to skip this next step.
@@ -90,7 +90,7 @@ helm template install/kubernetes/helm/istio --name istio --namespace istio-syste
 To check that Istio is running:
 
 ```bash
-$ kubectl get pods --all-namespaces
+kubectl get pods --all-namespaces
 ```
 
 ```noop
@@ -125,7 +125,7 @@ supergloo-system   supergloo-84f85b459c-sfvdg                1/1     Running    
 Once Istio and SuperGloo are running in the cluster we can check for the mesh CRD:
 
 ```bash
-kubectl get mesh --namespace supergloo-system --output yaml
+kubectl --namespace supergloo-system get mesh --output yaml
 ```
 
 ```yaml
@@ -149,5 +149,5 @@ status:
 ```
 
 As you can see SuperGloo figured out the location and version of Istio, and now we can go ahead and apply SuperGloo rules to our mesh.
-For further tutorials using SuperGloo with our mesh, check the [tutorials](../tutorials) section for in depth tutorials on configuring the
+For further tutorials using SuperGloo with our mesh, check the [tutorials]({{% ref "/tutorials" %}}) section for in depth tutorials on configuring the
 mesh using SuperGloo.

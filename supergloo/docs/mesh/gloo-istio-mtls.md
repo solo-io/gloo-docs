@@ -12,10 +12,10 @@ regular TLS). This process requires quite a bit of setup which SuperGloo abstrac
 
 ### Prerequisites
 
-1. Istio must already be installed and running in your cluster. See [installing a mesh](../install-istio) for instructions
+1. Istio must already be installed and running in your cluster. See [installing a mesh]({{% ref "/mesh/install-istio" %}}) for instructions
 setting up Istio.
 1. The istio book info example must be installed and running in cluster.
-See [deploying the book info example](../../tutorials/bookinfo) for instruction on how to install it with auto-injection.
+See [deploying the book info example]({{% ref "/tutorials/bookinfo" %}}) for instruction on how to install it with auto-injection.
 
 After completing the prerequisite steps run:
 
@@ -57,7 +57,7 @@ supergloo install gloo --name gloo --target-meshes supergloo-system.istio
 #### Option 2: yaml
 
 ```yaml
-cat << EOF | kubectl apply -f -
+cat <<EOF | kubectl apply --filename -
 apiVersion: supergloo.solo.io/v1
 kind: Install
 metadata:
@@ -76,7 +76,7 @@ EOF
 
 This command should add the following pods
 
-```bash
+```noop
 gloo-system        gateway-9b648f4d-4bnlv                    1/1     Running     0          16s
 gloo-system        gateway-proxy-ddf675bc9-sw756             1/1     Running     0          15s
 gloo-system        gloo-8576cf6786-t455l                     1/1     Running     0          16s
@@ -87,7 +87,7 @@ In this example we will be using the `details` pod. Using `kubectl` get all avai
 include the following. This is a list of the istio injected upstreams.
 
 ```bash
-$ kubectl get upstreams -n supergloo-system
+$ kubectl --namespace supergloo-system get upstreams
 
 default-details-9080                                    13m
 default-details-v1-9080                                 13m
@@ -105,7 +105,7 @@ default-reviews-v3-9080                                 13m
 Once those pods are up and running, you are ready to add an mtls enabled route.
 
 ```yaml
-cat << EOF | kubectl apply -f -
+cat <<EOF | kubectl apply --filename -
 apiVersion: gateway.solo.io/v1
 kind: VirtualService
 metadata:
@@ -168,7 +168,7 @@ supergloo set upstream mtls --name  default-details-9080 --target-mesh supergloo
 After this command completes successfully the upstream should contain the following. Notice the certificates in
 the sslConfig section of the upstream.
 
-```bash
+```yaml
 apiVersion: gloo.solo.io/v1
 kind: Upstream
 metadata:

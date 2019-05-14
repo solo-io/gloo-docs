@@ -19,9 +19,9 @@ Let's dive right in.
 
 First, ensure you've:
 
-- [installed SuperGloo](../../../../installation)
-- [installed Istio using SuperGloo](../../../mesh/install-istio)
-- [Deployed the Bookinfo sample app](../../bookinfo)
+- [installed SuperGloo]({{% ref "/installation" %}})
+- [installed Istio using SuperGloo]({{% ref "/mesh/install-istio" %}})
+- [Deployed the Bookinfo sample app]({{% ref "/tutorials/bookinfo" %}})
 
 Next, we'll need an instance of Prometheus running in our cluster. If you've already got Prometheus installed, you can skip this step.
 
@@ -32,17 +32,17 @@ Next, we'll need an instance of Prometheus running in our cluster. If you've alr
 To install a simple Prometheus instance for the purpose of this tutorial, run the following:
 
 ```shell
-kubectl create ns prometheus-test
-kubectl apply -n prometheus-test -f \
+kubectl create namespace prometheus-test
+kubectl --namespace prometheus-test apply --filename \
     https://raw.githubusercontent.com/solo-io/solo-docs/master/supergloo/examples/prometheus/prometheus-demo.yaml
 ```
 
-> Note: We can watch the pods get created for Prometheus with `kubectl get pod -n prometheus-test -w`
+> Note: We can watch the pods get created for Prometheus with `kubectl --namespace prometheus-test get pod -w`
 
 Let's take a look at the configmap that was created by this install for us:
 
 ```bash
-kubectl get configmap -n prometheus-test
+kubectl --namespace prometheus-test get configmap
 ```
 
 ```noop
@@ -65,7 +65,7 @@ After a few seconds, we should be able to see that SuperGloo updated the Prometh
 to scrape Istio:
 
 ```bash
-kubectl get configmap -n prometheus-test -o yaml | grep istio
+kubectl --namespace prometheus-test get configmap --output yaml | grep istio
 ```
 
 ```yaml
@@ -90,7 +90,7 @@ kubectl get configmap -n prometheus-test -o yaml | grep istio
 We can see the configuration that this applied to our Mesh CRD by running:
 
 ```bash
-kubectl get mesh -n supergloo-system istio -o yaml
+kubectl --namespace supergloo-system get mesh istio --output yaml
 ```
 
 {{< highlight yaml "hl_lines=14-17" >}}
@@ -125,24 +125,24 @@ Let's take a look at the metrics that our Prometheus instance should have starte
 Open up a port-forward to reach the Prometheus UI from our local machine:
 
 ```shell
-kubectl port-forward -n prometheus-test deployment/prometheus-server 9090
+kubectl --namespace prometheus-test port-forward deployment/prometheus-server 9090
 ```
 
 Now direct your browser to <http://localhost:9090/>
 
 You should see the Prometheus Graph page show up:
 
-![Prometheus Landing Page](../../../img/prometheus-landing-page.png "Prometheus Landing Page")
+![Prometheus Landing Page](/img/prometheus-landing-page.png "Prometheus Landing Page")
 
 Let's enter a query to see some stats from Istio. We'll try `istio_requests_total`:
 
-![Prometheus Initial Query](../../../img/prometheus-initial-query.png "Prometheus Initial Query")
+![Prometheus Initial Query](/img/prometheus-initial-query.png "Prometheus Initial Query")
 
 Let's try creating some metrics by sending traffic to some of our Bookinfo pods. Open the port-forward to
 reach the productpage:
 
 ```bash
-kubectl port-forward -n default deployment/productpage-v1 9080
+kubectl --namespace default port-forward deployment/productpage-v1 9080
 ```
 
 Open your browser to <http://localhost:9080/productpage>. Refresh the page a few times -
@@ -151,7 +151,7 @@ this will cause the product page to send requests to the reviews and ratings ser
 Now let's check back in Prometheus and try the query `istio_requests_total{destination_app="reviews"}`
 (note that it might take up to 30 seconds before new metrics are scraped by Prometheus):
 
-![Prometheus Updated Query](../../../img/prometheus-updated-query.png "Prometheus Updated Query")
+![Prometheus Updated Query](/img/prometheus-updated-query.png "Prometheus Updated Query")
 
 We can see that the number of requests sent to the reviews service (triggered by us refreshing the page)
 correlates to the rise in the graph.

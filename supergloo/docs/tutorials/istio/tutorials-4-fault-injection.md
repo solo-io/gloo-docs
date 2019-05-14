@@ -13,10 +13,10 @@ Fault Injection refers to the ability to inject multiple forms of errors and/or 
 
 Prerequisites for this tutorial:
 
-- [SuperGloo Installed](../../../../installation)
-- [Istio Installed](../../../mesh/install-istio)
-- [Bookinfo Sample Deployed](../../bookinfo)
-- [Routing Rules](../tutorials-1-trafficshifting) Note: it is not necessary to complete this tutorial, but rather to understand how routing rules work
+- [SuperGloo Installed]({{% ref "/installation" %}})
+- [Istio Installed]({{% ref "/mesh/install-istio" %}})
+- [Bookinfo Sample Deployed]({{% ref "/tutorials/bookinfo" %}})
+- [Routing Rules]({{% ref "/tutorials/istio/tutorials-1-trafficshifting" %}}) Note: it is not necessary to complete this tutorial, but rather to understand how routing rules work
 
 # Concepts
 
@@ -32,14 +32,14 @@ Now we'll demonstrate the fault injection routing rule using the Bookinfo app as
 
 First, ensure you've:
 
-- [installed SuperGloo](../../../../installation)
-- [installed Istio using SuperGloo](../../../mesh/install-istio)
-- [Deployed the Bookinfo sample app](../../bookinfo)
+- [installed SuperGloo]({{% ref "/installation" %}})
+- [installed Istio using SuperGloo]({{% ref "/mesh/install-istio" %}})
+- [Deployed the Bookinfo sample app]({{% ref "/tutorials/bookinfo" %}})
 
 Now let's open our view of the Product Page UI In our browser with the help of `kubectl port-forward`. Run the following command in another terminal window or the background:
 
 ```bash
-kubectl port-forward -n default deployment/productpage-v1 9080
+kubectl --namespace default port-forward deployment/productpage-v1 9080
 ```
 
 Open your browser to <http://localhost:9080/productpage>. When you refresh the page,
@@ -83,11 +83,11 @@ The equivalent non-interactive command:
 ```bash
 supergloo apply routingrule faultinjection abort http \
     --target-mesh supergloo-system.istio \
-     -p 50 -s 404  --name rule1 \
+    -p 50 -s 404 --name rule1 \
     --dest-upstreams supergloo-system.default-reviews-9080
 ```
 
-We can view the routing rule this created with `kubectl get routingrule -n supergloo-system reviews-v3 -o yaml`:
+We can view the routing rule this created with `kubectl --namespace supergloo-system get routingrule reviews-v3 --output yaml`:
 
 ```yaml
 apiVersion: supergloo.solo.io/v1
@@ -119,7 +119,7 @@ status:
 This rule tells SuperGloo to take all traffic bound for the upstream `default-reviews-9080` and change the response code of 50% of responses with
 the http response code 404. In practice this means that ~50% of all traffic to that endpoint should fail.
 
-> See [Understanding Upstreams & Discovery](../tutorials-1-trafficshifting#understanding-upstreams-discovery) for an explanation of how discovery creates upstreams for each subset of a service.
+> See [Understanding Upstreams & Discovery]({{% ref "/tutorials/istio/tutorials-1-trafficshifting#understanding-upstreams-discovery" %}}) for an explanation of how discovery creates upstreams for each subset of a service.
 
 Now that our rule is created, we should be able to see the results. Open your browser back to <http://localhost:9080/productpage>
 and refresh. Now, ~50% of the time the right half of the screen should display an error saying that there was an error
@@ -130,7 +130,7 @@ Let's update our rule to cause a delay instead.
 ```bash
 supergloo apply routingrule faultinjection delay fixed \
     --target-mesh supergloo-system.istio \
-     -p 50 -d 5s  --name rule1 \
+    -p 50 -d 5s --name rule1 \
     --dest-upstreams supergloo-system.default-reviews-9080
 ```
 

@@ -16,7 +16,7 @@ Currently supported meshes for installation:
 
 First, ensure that SuperGloo has been initialized in your kubernetes cluster via `supergloo init` or the
 [Supergloo Helm Chart](https://github.com/solo-io/supergloo/tree/master/install/helm/supergloo). See the
-[installationn instructions](../../installation) for detailed instructions on installing SuperGloo.
+[installationn instructions]({{% ref "/installation" %}}) for detailed instructions on installing SuperGloo.
 
 Once SuperGloo has been installed, we'll create an Install CRD with configuration parameters which will then
 trigger SuperGloo to begin the mesh installation.
@@ -35,7 +35,7 @@ See `supergloo install istio --help` for the full list of installation options f
 #### Option 2: Using `kubectl apply` on a yaml file:
 
 ```yaml
-cat << EOF | kubectl apply -f -
+cat <<EOF | kubectl apply --filename -
 apiVersion: supergloo.solo.io/v1
 kind: Install
 metadata:
@@ -59,7 +59,7 @@ EOF
 Once you've created the Install CRD, you can track the progress of the Istio installation:
 
 ```bash
-kubectl get pod -n istio-system --watch
+kubectl --namespace istio-system get pod --watch
 
 NAME                                      READY     STATUS              RESTARTS   AGE
 grafana-7f6cd4bf56-xst2n                  1/1       Running             0          27s
@@ -72,14 +72,13 @@ istio-sidecar-injector-6d8f88c98f-5f58t   1/1       Running             0       
 istio-telemetry-5f79796bf6-fl4sn          2/2       Running             0          27s
 istio-tracing-7596597bd7-lc92t            1/1       Running             0          26s
 prometheus-76db5fddd5-55r6d               1/1       Running             0          26s
-
 ```
 
 ## Testing the Install
 
 Test out mTLS
 
-First, [deploy the Istio Bookinfo Sample](../../tutorials/bookinfo) if you haven't already.
+First, [deploy the Istio Bookinfo Sample]({{% ref "/tutorials/bookinfo" %}}) if you haven't already.
 
 Next we'll deploy a `sleep` pod which we can use to execute commands inside
 the cluster. The first time we deploy, we'll run it outside the mesh to see
@@ -87,16 +86,16 @@ what happens when we try to connect to mtls-enabled services.
 
 ```bash
 # create a new namespace without injection enabled
-kubectl create ns not-injected
-kubectl apply -n not-injected -f \
-  https://raw.githubusercontent.com/istio/istio/1.0.6/samples/sleep/sleep.yaml
+kubectl create namespace not-injected
+kubectl --namespace not-injected apply --filename \
+    https://raw.githubusercontent.com/istio/istio/1.0.6/samples/sleep/sleep.yaml
 ```
 
 We can now run a `curl` command via `kubectl exec` to simulate communication
 within our cluster:
 
 ```bash
-NOT_INJECTED_PODNAME=`kubectl get pod -n not-injected -l app=sleep -o=jsonpath="{.items[0].metadata.name}"`
+NOT_INJECTED_PODNAME=`kubectl --namespace not-injected get pod -l app=sleep -o=jsonpath="{.items[0].metadata.name}"`
 kubectl exec -n not-injected $NOT_INJECTED_PODNAME -- curl reviews.default.svc.cluster.local:9080/reviews/1
 
 curl: (56) Recv failure: Connection reset by peer
@@ -106,7 +105,7 @@ command terminated with exit code 56
 We won't be able to connect to `reviews` over normal http. Even if we try with HTTPS enabled, skipping server certificate verification...
 
 ```bash
-NOT_INJECTED_PODNAME=`kubectl get pod -n not-injected -l app=sleep -o=jsonpath="{.items[0].metadata.name}"`
+NOT_INJECTED_PODNAME=`kubectl --namespace not-injected get pod -l app=sleep -o=jsonpath="{.items[0].metadata.name}"`
 kubectl exec -n not-injected $NOT_INJECTED_PODNAME -- curl https://reviews.default.svc.cluster.local:9080/reviews/1 --insecure
 
 curl: (35) error:1401E410:SSL routines:CONNECT_CR_FINISHED:sslv3 alert handshake failure
@@ -118,14 +117,14 @@ we'll see that the client cannot complete the SSL handshake.
 Now let's try with a pod that's been injected with the Istio sidecar. This time, deploy `sleep` to the default namespace where it'll get automatically injected with the sidecar:
 
 ```bash
-kubectl apply -n default -f https://raw.githubusercontent.com/istio/istio/1.0.6/samples/sleep/sleep.yaml
+kubectl --namespace default apply --filename https://raw.githubusercontent.com/istio/istio/1.0.6/samples/sleep/sleep.yaml
 ```
 
 Execute the same `kubectl exec` command as before, but this time using the pod
 in the default namespace:
 
 ```bash
-INJECTED_PODNAME=`kubectl get pod -n default -l app=sleep -o=jsonpath="{.items[0].metadata.name}"`
+INJECTED_PODNAME=`kubectl --namespace default get pod -l app=sleep -o=jsonpath="{.items[0].metadata.name}"`
 kubectl exec -n default $INJECTED_PODNAME curl reviews.default.svc.cluster.local:9080/reviews/1
 ```
 
@@ -147,8 +146,8 @@ Cool! We got a JSON response. We've now demonstrated that only pods inside the m
 To tear everything down from this demo:
 
 ```bash
-kubectl delete -n default -f https://raw.githubusercontent.com/istio/istio/1.0.6/samples/bookinfo/platform/kube/bookinfo.yaml
-kubectl delete ns not-injected
+kubectl --namespace default delete --filename https://raw.githubusercontent.com/istio/istio/1.0.6/samples/bookinfo/platform/kube/bookinfo.yaml
+kubectl delete namespace not-injected
 ```
 
 ## Uninstalling Istio
@@ -200,10 +199,10 @@ spec:
       istioVersion: 1.0.6
 ```
 
-Verify uninstallation has begun:
+Verify un-installation has begun:
 
 ```bash
-kubectl get pod -n istio-system --watch
+kubectl --namespace istio-system get pod --watch
 
 istio-system   istio-cleanup-secrets-xd6f8   0/1       Terminating   0         23m
 istio-system   istio-cleanup-secrets-xd6f8   0/1       Terminating   0         23m
@@ -250,4 +249,4 @@ istio-system   istio-pilot-c5dddb4b9-nb6fd   0/2       Terminating   0         2
 ```
 
 Note that the `istio-system` namespace will be left intact by this process, but can be safely removed using
-`kubectl delete ns istio-system`.
+`kubectl delete namespace istio-system`.

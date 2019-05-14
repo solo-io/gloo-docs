@@ -1,6 +1,7 @@
 ---
 title: "Tutorial: Configuring Security via Service-to-Service Communication"
 menuTitle: Security
+description: Tutorial on how to configure SuperGloo SecurityRules to restrict service-to-service communication.
 weight: 5
 ---
 
@@ -10,9 +11,9 @@ In this tutorial we'll take a look at how to restrict HTTP traffic within our me
 
 Prerequisites for this tutorial:
 
-- [SuperGloo Installed](../../../../installation)
-- [Istio Installed](../../../mesh/install-istio)
-- [Bookinfo Sample Deployed](../../bookinfo)
+- [SuperGloo Installed]({{% ref "/installation" %}})
+- [Istio Installed]({{% ref "/mesh/install-istio" %}})
+- [Bookinfo Sample Deployed]({{% ref "/tutorials/bookinfo" %}})
 
 # Concepts
 
@@ -25,7 +26,7 @@ use of SuperGloo **SecurityRules**.
 ## SecurityRules
 
 A SecurityRule is a [Kubernetes Custom Resource](https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/)
-that sets restrictions on HTTP traffic between pods in your meshes. Each SecurtiyRule provides [**selectors**](../../../../v1/github.com/solo-io/supergloo/api/v1/selector.proto.sk)
+that sets restrictions on HTTP traffic between pods in your meshes. Each SecurtiyRule provides [**selectors**]({{% ref "/v1/github.com/solo-io/supergloo/api/v1/selector.proto.sk" %}})
 to indicate the source pods which are allowed to send HTTP requests and the destination pods to which they can be
 sent.
 
@@ -34,7 +35,7 @@ To enable fine-grained policies with Istio, ensure that all of your pods have in
 [service accounts](https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/).
 
 When no SecurityRules are present in your cluster, all traffic will be whitelisted between services. However, when one
-or more SecurityRules are created, all communication that is not explicitly whitelisted within a SecurtiyRule will be met
+or more SecurityRules are created, all communication that is not explicitly whitelisted within a SecurityRule will be met
 with a `403 Forbidden` response from the sidecar.
 
 > SuperGloo resources can be easily created using the CLI, but can also be created, updated, and deleted using
@@ -78,7 +79,7 @@ The above routing rule says to only permit those requests:
 - With Path prefixed by `/default/` (note that `*` can be used as a simple wildcard anywhere in the path string)
 
 > Note: Upstreams will be automatically created in Supergloo's installation namespace by the `discovery` pod,
-which is why the `namespace` on the [Upstream refs](../../../../v1/github.com/solo-io/solo-kit/api/v1/ref.proto.sk) above says
+which is why the `namespace` on the [Upstream refs]({{% ref "/v1/github.com/solo-io/solo-kit/api/v1/ref.proto.sk" %}}) above says
 `supergloo-system`. The namespace in which the service represents can be different than that where the Upstream lives.
 For more information, see the [Kubernetes Upstream Spec](https://gloo.solo.io/v1/github.com/solo-io/gloo/projects/gloo/api/v1/plugins/kubernetes/kubernetes.proto.sk/#upstreamspec).
 
@@ -90,19 +91,19 @@ Now we'll demonstrate SecurityRules using the Bookinfo app.
 
 First, ensure you've:
 
-- [installed SuperGloo](../../../../installation)
-- [installed Istio using SuperGloo](../../../mesh/install-istio)
-- [Deployed the Bookinfo sample app](../../bookinfo)
+- [installed SuperGloo]({{% ref "/installation" %}})
+- [installed Istio using SuperGloo]({{% ref "/mesh/install-istio" %}})
+- [Deployed the Bookinfo sample app]({{% ref "/tutorials/bookinfo" %}})
 
 Now let's open our view of the Product Page UI In our browser with the help of `kubectl port-forward`. Run the following command in another terminal window or the background:
 
 ```bash
-kubectl port-forward -n default deployment/productpage-v1 9080
+kubectl --namespace default port-forward deployment/productpage-v1 9080
 ```
 
 Open your browser to <http://localhost:9080/productpage>:
 
-![Bookinfo Product Page](../../../../img/bookinfo-default.png "Bookinfo Product Page")
+![Bookinfo Product Page](/img/bookinfo-default.png "Bookinfo Product Page")
 
 You'll see the `Book Details` and `Book Reviews` subsections of our landing page are
 working correctly. The `productpage` service which we are connected to queries
@@ -154,7 +155,7 @@ supergloo apply securityrule \
 - Or, using `kubectl`:
 
 ```yaml
-cat <<EOF | kubectl apply -f -
+cat <<EOF | kubectl apply --filename -
 apiVersion: supergloo.solo.io/v1
 kind: SecurityRule
 metadata:
@@ -184,7 +185,7 @@ Now try refreshing the Product Page.
 
 We should see that the details and reviews sections of the UI have turned into error messages:
 
-![Bookinfo Product Page](../../../../img/bookinfo-all-error.png "Bookinfo Product Page")
+![Bookinfo Product Page](/img/bookinfo-all-error.png "Bookinfo Product Page")
 
 This confirms that the `productpage` service can no longer send requests to `details` or `reviews`.
 
@@ -204,7 +205,7 @@ supergloo apply securityrule \
 - Or with `kubectl`:
 
 ```yaml
-cat  <<EOF | kubectl apply -f -
+cat <<EOF | kubectl apply --filename -
 apiVersion: supergloo.solo.io/v1
 kind: SecurityRule
 metadata:
@@ -229,7 +230,7 @@ EOF
 
 Refresh the Product Page again. We should see a page like this:
 
-![Bookinfo Product Page](../../../../img/bookinfo-details-enabled.png "Bookinfo Product Page")
+![Bookinfo Product Page](/img/bookinfo-details-enabled.png "Bookinfo Product Page")
 
 Communication has been enabled between `productpage` and `details`. Let's amend our rules to permit
 `productpage` to reach any service in the `default` namespace:
@@ -248,7 +249,7 @@ supergloo apply securityrule \
 - Or with `kubectl`:
 
 ```yaml
-cat  <<EOF | kubectl apply -f -
+cat <<EOF | kubectl apply --filename -
 apiVersion: supergloo.solo.io/v1
 kind: SecurityRule
 metadata:
@@ -273,15 +274,15 @@ EOF
 Finally, refresh the Product Page a few more times. We should see everything working: the reviews, the details,
 and the color-changing ratings stars under the reviews:
 
-![Bookinfo Product Page](../../../../img/bookinfo-all-enabled.png "Bookinfo Product Page")
+![Bookinfo Product Page](/img/bookinfo-all-enabled.png "Bookinfo Product Page")
 
 > Note: Istio can take several minutes to update the caches on each sidecar proxy, which means that
 it may take time for each of the SecurityRules to go into effect.
 
-To reenable all traffic without applying security policies, simply delete the security rules we created:
+To re-enable all traffic without applying security policies, simply delete the security rules we created:
 
 ```bash
-kubectl delete securityrule -n default --all
+kubectl --namespace default delete securityrule --all
 ```
 
 Try refreshing the page again. We should soon see that the `productpage` is able to communicate with the backend

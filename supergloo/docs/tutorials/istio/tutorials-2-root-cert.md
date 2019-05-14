@@ -4,7 +4,7 @@ menuTitle: Custom Certificate Authority
 weight: 2
 ---
 
-### Overview
+# Overview
 
 In this tutorial we'll take a look at how to set a custom certificate authority (CA) which will issue the
 certificates used for mutual TLS using SuperGloo.
@@ -16,16 +16,16 @@ the mesh, which acts as certificate authority for the services in the mesh.
 Using SuperGloo, we can generate certs for use in our mesh using root certificates created by an external CA. This tutorial
 will walk through the steps required to set the root certs used for mTLS in Istio.
 
-### Tutorial
+# Tutorial
 
 Let's demonstrate the ability to rotate the root certificates used by Istio. First we'll rotate the certs, then we'll
 verify that the pods in our mesh were updated by directly inspecting the certificates loaded by one of our sidecar proxies.
 
 First, ensure you've:
 
-- [installed SuperGloo](../../../../installation)
-- [installed Istio  with mTLS enabled using SuperGloo](../../../mesh/install-istio)
-- [Deployed the Bookinfo sample app](../../bookinfo)
+- [installed SuperGloo]({{% ref "/installation" %}})
+- [installed Istio  with mTLS enabled using SuperGloo]({{% ref "/mesh/install-istio" %}})
+- [Deployed the Bookinfo sample app]({{% ref "/tutorials/bookinfo" %}})
 
 Now we'll start by creating the set of files we'll need to replace the generated certs used by Istio:
 
@@ -165,7 +165,7 @@ supergloo create secret tls --name my-root-ca \
 Confirm the secret was created:
 
 ```bash
-kubectl get secret -n supergloo-system my-root-ca -o yaml
+kubectl --namespace supergloo-system get secret my-root-ca --output yaml
 ```
 
 ```yaml
@@ -212,7 +212,7 @@ Bookinfo app. Note that it may take several minutes for the custom certificates 
 Let's download the root certificate was loaded to the sidecar for one of the bookinfo pods:
 
 ```bash
-RATINGSPOD=`kubectl get pods -n default -l app=ratings -o jsonpath='{.items[0].metadata.name}'`
+RATINGSPOD=`kubectl --namespace default get pods -l app=ratings -o jsonpath='{.items[0].metadata.name}'`
 kubectl exec -n default -it $RATINGSPOD -c istio-proxy -- /bin/cat /etc/certs/root-cert.pem > pod-root-cert.pem
 ```
 

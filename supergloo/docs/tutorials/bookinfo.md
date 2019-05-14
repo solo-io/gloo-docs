@@ -8,33 +8,33 @@ description: Istio Bookinfo example used by a number of the tutorials.
 A number of tutorials make use of the [Istio Bookinfo](https://istio.io/docs/examples/bookinfo/) sample application.
 This guide explains how to deploy the Bookinfo Application with automatic sidecar injection enabled.
 
-**Prerequisites**: Istio or Linkerd must already be installed and running in your cluster. See [installing Istio](../../mesh/install-istio) or [installing Linkerd](../../mesh/install-linkerd) for instructions.
+**Prerequisites**: Istio or Linkerd must already be installed and running in your cluster. See [installing Istio]({{% ref "/mesh/install-istio" %}}) or [installing Linkerd]({{% ref "/mesh/install-linkerd" %}}) for instructions.
 
 To deploy the bookinfo sample, first enable automatic sidecar injection on the default namespace (or any namespace of your choosing):
 
 #### Istio Injection Label
 
 ```bash
-kubectl label namespace default istio-injection=enabled
+kubectl --namespace default label istio-injection=enabled
 ```
 
 #### Linkerd Injection Annotation
 
 ```bash
-kubectl annotate namespace default linkerd.io/inject=enabled
+kubectl --namespace default annotate linkerd.io/inject=enabled
 ```
 
 Next, create the bookinfo deployments and services:
 
 ```bash
-kubectl apply --namespace default --filename \
+kubectl --namespace default apply --filename \
     https://raw.githubusercontent.com/solo-io/supergloo/master/test/e2e/files/bookinfo.yaml
 ```
 
 We should be up and running in a few minutes:
 
 ```bash
-kubectl get pod --namespace default --watch
+kubectl --namespace default get pod --watch
 ```
 
 ```noop

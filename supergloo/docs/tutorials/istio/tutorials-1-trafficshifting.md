@@ -14,9 +14,9 @@ set of destinations, with load balancing across destinations.
 
 Prerequisites for this tutorial:
 
-- [SuperGloo Installed](../../../../installation)
-- [Istio Installed](../../../mesh/install-istio)
-- [Bookinfo Sample Deployed](../../bookinfo)
+- [SuperGloo Installed]({{% ref "/installation" %}})
+- [Istio Installed]({{% ref "/mesh/install-istio" %}})
+- [Bookinfo Sample Deployed]({{% ref "/tutorials/bookinfo" %}})
 
 # Concepts
 
@@ -46,7 +46,7 @@ the following parameters for restricting the types of traffic the feature will a
 
 For a clearer understanding of how a routing rule works, take a look at the following diagram:
 
-![Routing Rule Architecture](../../../img/supergloo-arch-1-routingrule.png "Routing Rule Architecture")
+![Routing Rule Architecture](/img/supergloo-arch-1-routingrule.png "Routing Rule Architecture")
 
 Routing rule on the right tells SuperGloo to inject faults on 50% of any `POST` requests sent from `site` to `apiserver` on `/users`.
 
@@ -58,9 +58,9 @@ Now we'll demonstrate the traffic shifting routing rule using the Bookinfo app a
 
 First, ensure you've:
 
-- [installed SuperGloo](../../../../installation)
-- [installed Istio using supergloo](../../../mesh/install-istio)
-- [Deployed the Bookinfo sample app](../../bookinfo)
+- [installed SuperGloo]({{% ref "/installation" %}})
+- [installed Istio using supergloo]({{% ref "/mesh/install-istio" %}})
+- [Deployed the Bookinfo sample app]({{% ref "/tutorials/bookinfo" %}})
 
 Now let's open our view of the Product Page UI In our browser with the help of `kubectl port-forward`. Run the following
 command in another terminal window or the background:
