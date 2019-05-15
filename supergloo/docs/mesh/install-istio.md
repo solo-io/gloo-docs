@@ -1,16 +1,12 @@
 ---
 title: "Installing Istio"
-weight: 1
+weight: 10
+description: "Installing Istio follows a familiar path to any other mesh when using SuperGloo. In this section, we take a look at installing Istio and understanding the supporting SuperGloo API objects that get created when doing a mesh installation."
 ---
 
 ## Overview
 
-SuperGloo can be used to install, upgrade, and uninstall a supported mesh.
-
-Currently supported meshes for installation:
-
-- Istio
-- Linkerd
+Istio is a fairly comprehensive service-mesh implementation with various ways to get started using the official documentation. This section of the user guide shows how SuperGloo can be used to simplify and improve the experience of getting started with an Istio service mesh. 
 
 ## Installing Istio with SuperGloo
 

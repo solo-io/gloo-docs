@@ -1,6 +1,7 @@
 ---
-title: "Gloo and Istio mTLS"
-weight: 4
+title: "Gloo API Gateway with Istio mTLS"
+weight: 50
+description: "Gloo API Gateway can be paired with any service mesh to demonstrate complex ingress and API routing/decoupling use cases. In this section, we take a look at automatically configuring Gloo as the Ingress for an Istio service mesh."
 ---
 
 ## Motivation

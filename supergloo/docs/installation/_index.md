@@ -1,6 +1,6 @@
 ---
 title: Installing SuperGloo
-menuTitle: Installation
+menuTitle: Installing SuperGloo
 description: How to install SuperGloo.
 weight: 10
 ---

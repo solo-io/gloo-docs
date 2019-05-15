@@ -1,6 +1,7 @@
 ---
 title: "Mesh Discovery"
-weight: 2
+weight: 40
+description: "SuperGloo can be used to install a new mesh, but it can also discover and compliment the management of existing meshes. In this section we look at how that works."
 ---
 
 # Overview

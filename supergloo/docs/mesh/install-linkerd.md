@@ -1,16 +1,13 @@
 ---
 title: "Installing Linkerd"
-weight: 1
+weight: 20
+description: "Installing Linkerd follows a familiar path to any other mesh when using SuperGloo. In this section, we take a look at installing Linkerd and understanding the supporting SuperGloo API objects that get created when doing a mesh installation."
 ---
 
 ## Overview
 
-SuperGloo can be used to install, upgrade, and uninstall a supported mesh.
+Linkerd has a simple, focused user experience. As they continue to expand their feature set, users will want a consistent API to install and manage a Linkerd mesh. In this section we see how SuperGloo can unify the installation and management of a Linkerd service mesh similar to the other supported meshes.
 
-Currently supported meshes for installation:
-
-- Istio
-- Linkerd
 
 ## Installing Linkerd with SuperGloo
 
