@@ -20,13 +20,14 @@ If this is your first time running Gloo, you’ll need to download the command-l
 your local machine. You’ll use this CLI to interact with Gloo, including installing it onto your Kubernetes cluster.
 Directions on installing `glooctl` are [here](../install_glooctl).
 
-Before starting installation, please ensure that you've prepared your Kubernetes cluster per the community [Prep Kubernetes](../../../installation/kubernetes/setup_kubernetes)
-instructions.
+Before starting installation, please ensure that you've prepared your Kubernetes cluster per the community
+[Prep Kubernetes]({{< ref "/installation/kubernetes/setup_kubernetes" >}}) instructions.
 
 ## Overall flow for installing
 
-1. [Prepare Kubernetes Cluster](../../../installation/kubernetes/setup_kubernetes)
-1. [Install Gloo Enterprise using CLI](#install_cli)
+1. [Prepare Kubernetes Cluster]({{< ref "/installation/kubernetes/setup_kubernetes" >}})
+1. [Install using CLI](#install_cli)
+1. [Install using Helm](#install_helm)
 1. [Verify installation](#verify)
 
 If for some reason you ever needed to uninstall Gloo, please follow [these instructions](#uninstall)
@@ -69,7 +70,7 @@ received either as part of your subscription or as part of a trial request from 
 {{% /notice %}}
 
 {{% notice info %}}
-You can install Gloo to an existing namespace by providing the `-n` option, e.g. `glooctl install gateway -n my-namespace`.
+You can install Gloo to an existing namespace by providing the `--namespace` option, e.g. `glooctl install gateway --namespace my-namespace`.
 If the option is not provided, the namespace defaults to `gloo-system`.
 {{% /notice %}}
 
@@ -81,7 +82,7 @@ Once your Kubernetes cluster is up and running, run the following command to dep
 glooctl install gateway --license-key YOUR_LICENSE_KEY
 ```
 
-After you [verify your installation](#verify), please see [Getting Started on Kubernetes](../../../user_guides/basic_routing)
+After you [verify your installation](#verify), please see [Getting Started on Kubernetes]({{< ref "/user_guides/basic_routing" >}})
 to get started using the Gloo Gateway.
 
 ### Install the Gloo Ingress Controller {#ingress}
@@ -92,7 +93,7 @@ Once your Kubernetes cluster is up and running, run the following command to dep
 glooctl install ingress --license-key YOUR_LICENSE_KEY
 ```
 
-After you [verify your installation](#verify), please see [Getting Started with Kubernetes Ingress](../../../user_guides/basic_ingress)
+After you [verify your installation](#verify), please see [Getting Started with Kubernetes Ingress]({{< ref "/user_guides/basic_ingress" >}})
 to get started using the Gloo Ingress Controller.
 
 ### Install the Gloo Knative Cluster Ingress {#knative}
@@ -104,8 +105,147 @@ Once your Kubernetes cluster is up and running, run the following command to dep
 glooctl install knative --license-key YOUR_LICENSE_KEY
 ```
 
-After you [verify your installation](#verify), please see [Getting Started with Gloo and Knative](../../../user_guides/gloo_with_knative)
+After you [verify your installation](#verify), please see [Getting Started with Gloo and Knative]({{< ref "/user_guides/gloo_with_knative" >}})
 to use Gloo as your Knative Ingress.
+
+---
+
+## Install Gloo with Helm {#install_helm}
+
+This is the recommended method for installing Gloo to your production environment as it offers rich customization to
+the Gloo control plane and the proxies Gloo manages.
+
+### Accessing the Gloo chart repository
+
+As a first step, you have to add the Gloo repository to the list of known chart repositories:
+
+```shell
+helm repo add glooe http://storage.googleapis.com/gloo-ee-helm
+```
+
+You can then list all the charts in the repository by running the following command:
+
+```shell
+helm search glooe/gloo-ee --versions
+```
+
+```noop
+NAME         	CHART VERSION	APP VERSION	DESCRIPTION
+glooe/gloo-ee	0.13.13      	           	A Helm chart for Kubernetes
+glooe/gloo-ee	0.13.12      	           	A Helm chart for Kubernetes
+glooe/gloo-ee	0.13.11      	           	A Helm chart for Kubernetes
+glooe/gloo-ee	0.13.10      	           	A Helm chart for Kubernetes
+glooe/gloo-ee	0.13.9       	           	A Helm chart for Kubernetes
+glooe/gloo-ee	0.13.8       	           	A Helm chart for Kubernetes
+glooe/gloo-ee	0.13.6       	           	A Helm chart for Kubernetes
+glooe/gloo-ee	0.13.5       	           	A Helm chart for Kubernetes
+glooe/gloo-ee	0.13.4       	           	A Helm chart for Kubernetes
+glooe/gloo-ee	0.13.2       	           	A Helm chart for Kubernetes
+glooe/gloo-ee	0.13.1       	           	A Helm chart for Kubernetes
+glooe/gloo-ee	0.13.0       	           	A Helm chart for Kubernetes
+glooe/gloo-ee	0.12.3       	           	A Helm chart for Kubernetes
+glooe/gloo-ee	0.12.2       	           	A Helm chart for Kubernetes
+glooe/gloo-ee	0.12.1       	           	A Helm chart for Kubernetes
+glooe/gloo-ee	0.12.0       	           	A Helm chart for Kubernetes
+glooe/gloo-ee	0.11.3       	           	A Helm chart for Kubernetes
+glooe/gloo-ee	0.11.2       	           	A Helm chart for Kubernetes
+glooe/gloo-ee	0.11.1       	           	A Helm chart for Kubernetes
+glooe/gloo-ee	0.11.0       	           	A Helm chart for Kubernetes
+glooe/gloo-ee	0.10.19      	           	A Helm chart for Kubernetes
+glooe/gloo-ee	0.10.18      	           	A Helm chart for Kubernetes
+glooe/gloo-ee	0.10.17      	           	A Helm chart for Kubernetes
+glooe/gloo-ee	0.10.16      	           	A Helm chart for Kubernetes
+glooe/gloo-ee	0.10.15      	           	A Helm chart for Kubernetes
+glooe/gloo-ee	0.10.13      	           	A Helm chart for Kubernetes
+glooe/gloo-ee	0.10.12      	           	A Helm chart for Kubernetes
+glooe/gloo-ee	0.10.11      	           	A Helm chart for Kubernetes
+glooe/gloo-ee	0.10.10      	           	A Helm chart for Kubernetes
+glooe/gloo-ee	0.10.9       	           	A Helm chart for Kubernetes
+glooe/gloo-ee	0.10.8       	           	A Helm chart for Kubernetes
+...
+```
+
+The Gloo Enterprise Helm chart only supports `gateway` deployment.
+
+```shell
+helm install glooe/gloo-ee --name glooe --namespace gloo-system \
+  --set-string license_key=YOUR_LICENSE_KEY
+```
+
+Helm will install the `gateway` deployment of Gloo to the cluster your _KUBECONFIG_ is pointing to. Remember to specify
+the two additional options, otherwise Helm will install Gloo to the `default` namespace and generate a funny release
+`name` for it.
+
+After you've installed Gloo, please check out our [User Guides]({{< ref "/user_guides" >}}).
+
+### Customizing your installation
+
+You can customize the Gloo installation by providing your own value file.
+
+For example, you can create a file named `value-overrides.yaml` with the following content:
+
+```yaml
+rbac:
+  create: false
+settings:
+  writeNamespace: my-custom-namespace
+```
+
+and use it to override default values in the Gloo Helm chart:
+
+```shell
+helm install glooe/gloo-ee --name glooe --namespace gloo-system \
+  --filename value-overrides.yaml \
+  --set-string license_key=YOUR_LICENSE_KEY
+```
+
+The right-most file specified takes precedence (see the [Helm docs](https://helm.sh/docs/helm/#helm-install) for more
+info on the `install` command).
+
+#### List of Gloo chart values
+
+The table below describes all the values that you can override in your custom values file.
+
+| option                                                    | type     | description                                                                                                                                                                                |
+| --------------------------------------------------------- | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| namespace.create                                          | bool     | create the installation namespace                                                                                                                                                          |
+| rbac.create                                               | bool     | create rbac rules for the gloo-system service account                                                                                                                                      |
+| crds.create                                               | bool     | create CRDs for Gloo (turn off if installing with Helm to a cluster that already has Gloo CRDs)                                                                                            |
+| settings.watchNamespaces                                  | []string | whitelist of namespaces for gloo to watch for services and CRDs. leave empty to use all namespaces                                                                                         |
+| settings.writeNamespace                                   | string   | namespace where intermediary CRDs will be written to, e.g. Upstreams written by Gloo Discovery.                                                                                            |
+| settings.create                                           | bool     | create a Settings CRD which configures Gloo controllers at boot time                                                                                                                       |
+| gloo.deployment.image.repository                          | string   | image name (registry/repository) for the gloo container. this container is the core controller of the system which watches CRDs and serves Envoy configuration over xDS                    |
+| gloo.deployment.image.tag                                 | string   | tag for the gloo container                                                                                                                                                                 |
+| gloo.deployment.image.pullPolicy                          | string   | image pull policy for gloo container                                                                                                                                                       |
+| gloo.deployment.xdsPort                                   | string   | port where gloo serves xDS API to Envoy                                                                                                                                                    |
+| gloo.deployment.replicas                                  | int      | number of gloo xds server instances to deploy                                                                                                                                              |
+| gloo.deployment.stats                                     | bool     | expose pod level stats                                                                                                                                                                     |
+| discovery.deployment.image.repository                     | string   | image name (registry/repository) for the discovery container. this container adds service discovery and function discovery to Gloo                                                         |
+| discovery.deployment.image.tag                            | string   | tag for the discovery container                                                                                                                                                            |
+| discovery.deployment.image.pullPolicy                     | string   | image pull policy for discovery container                                                                                                                                                  |
+| discovery.deployment.stats                                | bool     | expose pod level stats                                                                                                                                                                     |
+| gateway.enabled                                           | bool     | enable Gloo API Gateway features                                                                                                                                                           |
+| gateway.deployment.image.repository                       | string   | image name (registry/repository) for the gateway controller container. this container translates Gloo's VirtualService CRDs to the intermediary representation used by the gloo controller |
+| gateway.deployment.image.tag                              | string   | tag for the gateway controller container                                                                                                                                                   |
+| gateway.deployment.image.pullPolicy                       | string   | image pull policy for the gateway controller container                                                                                                                                     |
+| gateway.deployment.stats                                  | bool     | expose pod level stats                                                                                                                                                                     |
+| gatewayProxies[].gatewayProxy.deployment.image.repository | string   | image name (registry/repository) for the gateway proxy container. this proxy receives configuration created via VirtualService CRDs                                                        |
+| gatewayProxies[].gatewayProxy.deployment.image.tag        | string   | tag for the gateway proxy container                                                                                                                                                        |
+| gatewayProxies[].gatewayProxy.deployment.image.pullPolicy | string   | image pull policy for the gateway proxy container                                                                                                                                          |
+| gatewayProxies[].gatewayProxy.deployment.httpPort         | string   | HTTP port for the proxy                                                                                                                                                                    |
+| gatewayProxies[].gatewayProxy.deployment.replicas         | int      | number of gateway proxy instances to deploy                                                                                                                                                |
+| gatewayProxies[].gatewayProxy.service.type                | string   | gateway [service type](https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types). default is `LoadBalancer`                                      |
+| gatewayProxies[].gatewayProxy.service.clusterIP           | string   | static clusterIP (or `None`) when `gatewayProxies[].gatewayProxy.service.type` is `ClusterIP`                                                                                              |
+| gatewayProxies[].gatewayProxy.service.httpPort            | string   | HTTP port for the gateway service                                                                                                                                                          |
+| gatewayProxies[].gatewayProxy.service.httpsPort           | string   | HTTPS port for the gateway service                                                                                                                                                         |
+| gatewayProxies[].gatewayProxy.service.extraAnnotations    | map      | annotations for the gateway service                                                                                                                                                        |
+| ingress.deployment.image.pullPolicy                       | string   | image pull policy for the ingress controller container                                                                                                                                     |
+| ingressProxy.deployment.image.tag                         | string   | tag for the ingress proxy container                                                                                                                                                        |
+| ingressProxy.deployment.image.repository                  | string   | image name (registry/repository) for the ingress proxy container. this proxy receives configuration created via Kubernetes Ingress objects                                                 |
+| ingressProxy.deployment.image.pullPolicy                  | string   | image pull policy for the ingress proxy container                                                                                                                                          |
+| ingressProxy.deployment.httpPort                          | string   | HTTP port for the proxy                                                                                                                                                                    |
+| ingressProxy.deployment.httpsPort                         | string   | HTTPS port for the proxy                                                                                                                                                                   |
+| ingressProxy.deployment.replicas                          | int      | number of ingress proxy instances to deploy                                                                                                                                                |
 
 ---
 
@@ -116,7 +256,7 @@ from the following example. And if you choose to install Gloo into a different n
 then you will need to query your chosen namespace instead.
 
 ```shell
-kubectl get all -n gloo-system
+kubectl --namespace gloo-system get all
 ```
 
 ```noop
@@ -177,7 +317,7 @@ replicaset.apps/redis-7f6954b84d                                 1         1    
 The Knative install option will also install Knative Serving components into the `knative-service` namespace.
 
 ```shell
-kubectl get all -n knative-serving
+kubectl --namespace knative-serving get all
 ```
 
 ```noop
@@ -224,13 +364,13 @@ This will also remove Knative-Serving, if it was installed by `glooctl`.
 glooctl uninstall
 ```
 
-If you installed Gloo to a different namespace, you will have to specify that namespace using the `-n` option:
+If you installed Gloo to a different namespace, you will have to specify that namespace using the `--namespace` option:
 
 ```shell
-glooctl uninstall -n my-namespace
+glooctl uninstall --namespace my-namespace
 ```
 
 ## Next Steps
 
-After you've installed Gloo, please check out our [Basic Routing Guide with Gloo Enterprise Console](../../basic_routing_console)
-and our [User Guides](../../../user_guides).
+After you've installed Gloo, please check out our [Basic Routing Guide with Gloo Enterprise Console]({{< ref "/enterprise/basic_routing_console" >}})
+and our [User Guides]({{< ref "/user_guides" >}}).
