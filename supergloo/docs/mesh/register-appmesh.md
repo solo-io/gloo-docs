@@ -76,7 +76,7 @@ This will walk you through a few prompts that can be used to configure your serv
 At this point, you can check the `supergloo-system` namespace to verify that the `sidecar-injector` pod has been started correctly:
 
 ```bash
-$  kubectl get pod -n supergloo-system 
+kubectl get pod -n supergloo-system 
 
 NAME                              READY   STATUS    RESTARTS   AGE
 discovery-7b5c758ff9-gc52p        1/1     Running   0          7d
@@ -88,7 +88,7 @@ supergloo-6c4c7db574-zvkq4        1/1     Running   0          7d
 We should also see the `Mesh` CRD has been created:
 
 ```bash
-$  kubectl get mesh -n supergloo-system 
+kubectl get mesh -n supergloo-system 
 
 NAME           AGE
 demo-appmesh   1m
@@ -97,7 +97,7 @@ demo-appmesh   1m
 Lastly, we should see our mesh created in AWS App Mesh:
 
 ```bash
-$  aws appmesh list-meshes
+aws appmesh list-meshes
 
 {
     "meshes": [
@@ -156,7 +156,7 @@ EOF
 Once you've created the `Mesh` CRD, you can track the progress of the App Mesh registration by watching the logs of the `mesh-discovery` component:
 
 ```bash
-$  kubectl logs -n supergloo-system -f mesh-discovery-7689cc84fd-9f29q  
+kubectl logs -n supergloo-system -f mesh-discovery-7689cc84fd-9f29q  
 ```
 
 ## Uninstalling AWS App Mesh
@@ -177,7 +177,7 @@ These commands will not currently delete the resources on the AWS side. It's imp
 In the `src` for `SuperGloo` is a `hack` directory that will allow you to clean up ALL App Mesh resources (including `VirtualNode`, `VirtualRouter`, etc):
 
 ```bash
-$  ./supergloo/hack/eks/appmesh/cleanup.sh demo-appmesh
+./supergloo/hack/eks/appmesh/cleanup.sh demo-appmesh
 ```
 
 
