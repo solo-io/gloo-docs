@@ -8,7 +8,7 @@ weight: 10
 If you are using [Homebrew](https://brew.sh) package manager you can install `squashctl` with the following command.
 
 ```shell
-brew install solo-io/tap/squash
+brew install solo-io/tap/squashctl
 ```
 
 You can also download by going to our releases page <https://github.com/solo-io/squash/releases>. Once you download, you
@@ -51,7 +51,7 @@ Forwarding from [::1]:8080 -> 8080
 Handling connection for 8080
 ```
 
-Access <http://localost:8080> on your preferred browser to see the demo calculator application.
+Access <http://localhost:8080> on your preferred browser to see the demo calculator application.
 
 ![Calc](../images/calc-app.png "Calculator")
 
@@ -212,11 +212,19 @@ You should see a screen similar to the one below.
 
 The Next step is to tell the Squash extension the location of the `squashctl` CLI.
 
-Open **Settings** (File > Preferences > Settings) on Visual Studio Code, and then search for Squash. Once you find Squash, change the value of Path to point to the location of the CLI.
+Open **Settings** (Code > Preferences > Settings) on Visual Studio Code, and then search for Squash. Once you find Squash, change the value of Path to point to the location of the CLI.
 
 ![config](../images/vs-code-config-squash.png)
 
 If the target process was compiled from a different sourcepath, you should also [specify the remote path](/configuration/#source-code-mapping).
+In this quick start, if you choose go example2 app, you have to set “Squash: Remote Path” in VSCode User Settings.
+Please set "/home/yuval/go/src/github.com/solo-io/squash/contrib/example/" to “Squash: Remote Path”.
+
+![vscode-remotepath](../images/vs-code-config-remote-path.png)
+
+If there is an error such as "Error on CreateBreakpoint: could not find /Users/<YourName>/squash/contrib/example/service1/main.go", 
+please correct its remote path in order to match "/home/yuval/go/src/github.com/solo-io/squash/contrib/example/service1/main.go".
+
 
 After installing the extension on VS Code, use the shortcut CTRL + SHIFT + P to show all commands and select Squash.
 
