@@ -242,7 +242,7 @@ An authenticated GET request to that doesn't start with /api/pets should fail (w
 kubectl exec test-pod --  bash -c 'curl -s http://gateway-proxy.gloo-system/foo/ -H"Authorization: Bearer $(cat /var/run/secrets/kubernetes.io/serviceaccount/token)"'
 ```
 
-# Conclusion
+## Conclusion
 
 We have used Gloo to verify service account identity, and provide access control. In this guide we demonstrated using gloo as an internal API gateway, and performing access control using kubernetes service accounts.
 
