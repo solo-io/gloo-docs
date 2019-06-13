@@ -67,7 +67,10 @@ key to perform JWT verification for kubernetes service accounts in Gloo.
 Let's see the claims for `svc-a` - the service account we just created:
 
 ```shell
-kubectl exec test-pod cat /var/run/secrets/kubernetes.io/serviceaccount/token | cut -d. -f2 | base64 --decode 2>/dev/null|jq .
+CLAIMS=$(kubectl exec test-pod cat /var/run/secrets/kubernetes.io/serviceaccount/token | cut -d. -f2)
+PADDING=$(head -c $((${#CLAIMS} % 3)) /dev/zero |tr '\0' =)
+PADDED_CLAIMS="${CLAIMS}${PADDING}"
+echo $PADDED_CLAIMS | base64 --decode |jq .
 ```
 The output should look like so:
 ```json
