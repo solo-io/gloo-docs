@@ -9,8 +9,9 @@ description: JWT verification and Access Control (without an external auth serve
 We will use the following utilities
 
 - minikube
-- jq
-- gloo enterprise version v0.13.16 or later.
+- jq (optional)
+- tr, python (for text transformations)
+- glooctl enterprise version v0.13.16 or later.
 
 ## Initial setup
 
@@ -24,7 +25,7 @@ Install gloo-enterprise and create a virtual service and an example app:
 glooctl install gateway --license-key <YOUR KEY>
 ```
 
-Wait for the deployment to finish:
+Wait for the deployments to finish:
 ```shell
 kubectl -n gloo-system rollout status deployment/discovery
 kubectl -n gloo-system rollout status deployment/gateway
@@ -59,7 +60,7 @@ kubectl run --generator=run-pod/v1 test-pod --image=fedora:30 --serviceaccount=s
 
 When kuberentes starts a pod, it automatically attaches to it a JWT (JSON Web Token), that allows 
 for authentication with the credentials of the pod's service account.
-Inside the JWT are *claims* that provide idtentity information, and a signature to verification.
+Inside the JWT are *claims* that provide identity information, and a signature for verification.
 
 To verify these JWT, the kubernetes api server is provided with a public key. We can use this public 
 key to perform JWT verification for kubernetes service accounts in Gloo.
@@ -68,7 +69,8 @@ Let's see the claims for `svc-a` - the service account we just created:
 
 ```shell
 CLAIMS=$(kubectl exec test-pod cat /var/run/secrets/kubernetes.io/serviceaccount/token | cut -d. -f2)
-PADDING=$(head -c $((${#CLAIMS} % 3)) /dev/zero |tr '\0' =)
+PADDING_LEN=$(( (  4 - ( ${#CLAIMS} % 4 )  ) % 4 ))
+PADDING=$(head -c $PADDING_LEN /dev/zero |tr '\0' =)
 PADDED_CLAIMS="${CLAIMS}${PADDING}"
 echo $PADDED_CLAIMS | base64 --decode |jq .
 ```
@@ -98,7 +100,7 @@ To get the public key for verify service accounts, use this command:
 minikube ssh sudo cat /var/lib/minikube/certs/sa.pub | tee public-key.pem
 ```
 This command will output the public key, and will save it to a file called `public-key.pem`.
-```
+```text
 -----BEGIN PUBLIC KEY-----
 MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA4XbzUpqbgKbDLngsLp4b
 pjf04WkMzXx8QsZAorkuGprIc2BYVwAmWD2tZvez4769QfXsohu85NRviYsrqbyC
@@ -157,7 +159,8 @@ spec:
                   PUBLIC KEY-----\r\n"
 ```
 
-The update virtual service now contains JWT configuration with the public key, and the issuer for the JWT.
+The updated virtual service now contains JWT configuration with the public key, and the issuer for the JWT.
+JWTs will be auhtorized if they can be verified with this public key, and have 'kubernetes/serviceaccount' in their 'iss' claim.
 
 ## Configuring Gloo to perform access control for the service account
 
@@ -176,8 +179,8 @@ POLICIES='{
     }
 }
 }'
-# remove spaces
-POLICIES=$(echo $POLICIES|jq -c .)
+# remove spaces, we can use `tr` as there are no spaces in the values.
+POLICIES=$(echo $POLICIES|tr -d '[:space:]')
 kubectl patch virtualservice --namespace gloo-system default --type=merge -p '{"spec":{"virtualHost":{"virtualHostPlugins":{"extensions":{"configs":{"rbac":{"config":'$POLICIES'}}}}}}}' -o yaml
 ```
 
@@ -230,22 +233,22 @@ Let's verify that everything is working properly:
 
 An un-authenticated request should fail (will output *Jwt is missing*):
 ```shell
-kubectl exec test-pod --  bash -c 'curl -s http://gateway-proxy.gloo-system/api/pets/1'
+kubectl exec test-pod -- bash -c 'curl -s http://gateway-proxy.gloo-system/api/pets/1'
 ```
 
 An authenticated GET request to that start with /api/pets should succeed:
 ```shell
-kubectl exec test-pod --  bash -c 'curl -s http://gateway-proxy.gloo-system/api/pets/1 -H"Authorization: Bearer $(cat /var/run/secrets/kubernetes.io/serviceaccount/token)"'
+kubectl exec test-pod -- bash -c 'curl -s http://gateway-proxy.gloo-system/api/pets/1 -H"Authorization: Bearer $(cat /var/run/secrets/kubernetes.io/serviceaccount/token)"'
 ```
 
 An authenticated POST request to that start with /api/pets should fail (will output *RBAC: access denied*):
 ```shell
-kubectl exec test-pod --  bash -c 'curl -s -XPOST http://gateway-proxy.gloo-system/api/pets/1 -H"Authorization: Bearer $(cat /var/run/secrets/kubernetes.io/serviceaccount/token)"'
+kubectl exec test-pod -- bash -c 'curl -s -XPOST http://gateway-proxy.gloo-system/api/pets/1 -H"Authorization: Bearer $(cat /var/run/secrets/kubernetes.io/serviceaccount/token)"'
 ```
 
 An authenticated GET request to that doesn't start with /api/pets should fail (will output *RBAC: access denied*):
 ```shell
-kubectl exec test-pod --  bash -c 'curl -s http://gateway-proxy.gloo-system/foo/ -H"Authorization: Bearer $(cat /var/run/secrets/kubernetes.io/serviceaccount/token)"'
+kubectl exec test-pod -- bash -c 'curl -s http://gateway-proxy.gloo-system/foo/ -H"Authorization: Bearer $(cat /var/run/secrets/kubernetes.io/serviceaccount/token)"'
 ```
 
 ## Conclusion
@@ -254,11 +257,15 @@ We have used Gloo to verify service account identity, and provide access control
 
 ## Cleanup
 
-To clean up:
+To clean up individual resources created:
 ```shell
 kubectl delete pod test-pod
 kubectl delete -f https://raw.githubusercontent.com/solo-io/gloo/master/example/petstore/petstore.yaml
 glooctl uninstall
 rm public-key.pem
+```
+
+Alternativly, you can just tear down minikube:
+```
 minikube delete
 ```
