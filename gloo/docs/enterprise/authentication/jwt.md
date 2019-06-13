@@ -68,6 +68,9 @@ Let's see the claims for `svc-a` - the service account we just created:
 
 ```shell
 kubectl exec test-pod cat /var/run/secrets/kubernetes.io/serviceaccount/token | cut -d. -f2 | base64 --decode 2>/dev/null|jq .
+```
+The output should look like so:
+```json
 {
   "iss": "kubernetes/serviceaccount",
   "kubernetes.io/serviceaccount/namespace": "default",
