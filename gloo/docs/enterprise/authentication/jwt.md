@@ -270,3 +270,81 @@ Alternativly, you can just tear down minikube:
 ```
 minikube delete
 ```
+
+## Appendix - Use a remote JWKS server.
+
+### Setup
+
+We can use the `pem-jwk` utility to convert our public key to json form:
+```shell
+npm install -g pem-jwk
+openssl genrsa 2048 | tee private-key.pem 
+openssl rsa -in private-key.pem -pubout | pem-jwk  | jq .
+```
+
+Output should look like so:
+```json
+{
+  "kty": "RSA",
+  "n": "4XbzUpqbgKbDLngsLp4bpjf04WkMzXx8QsZAorkuGprIc2BYVwAmWD2tZvez4769QfXsohu85NRviYsrqbyCw_NTs3fMlcgld-ayfb_1X3-6u4f1Q8JsDm4fkSWoBUlTkWO7Mcts2hF8OJ8LlGSwzUDj3TJLQXwtfM0Ty1VzGJQMJELeBuOYHl_jaTdGogI8zbhDZ986CaIfO-q_UM5ukDA3NJ7oBQEH78N6BTsFpjDUKeTae883CCsRDbsytWgfKT8oA7C4BFkvRqVMSek7FYkg7AesknSyCIVMObSaf6ZO3T2jVGrWc0iKfrR3Oo7WpiMH84SdBYXPaS1VdLC17Q",
+  "e": "AQAB"
+}
+```
+
+To that, we need to add the signing algorithm, and for extra security the usage:
+```json
+{
+    "kty": "RSA",
+    "n": "4XbzUpqbgKbDLngsLp4bpjf04WkMzXx8QsZAorkuGprIc2BYVwAmWD2tZvez4769QfXsohu85NRviYsrqbyCw_NTs3fMlcgld-ayfb_1X3-6u4f1Q8JsDm4fkSWoBUlTkWO7Mcts2hF8OJ8LlGSwzUDj3TJLQXwtfM0Ty1VzGJQMJELeBuOYHl_jaTdGogI8zbhDZ986CaIfO-q_UM5ukDA3NJ7oBQEH78N6BTsFpjDUKeTae883CCsRDbsytWgfKT8oA7C4BFkvRqVMSek7FYkg7AesknSyCIVMObSaf6ZO3T2jVGrWc0iKfrR3Oo7WpiMH84SdBYXPaS1VdLC17Q",
+    "e": "AQAB",
+    "alg": "RS256",
+    "use": "sig"
+}
+```
+
+One last modification, is to turn the single key into a key set:
+```json
+{
+    "keys": [
+        {
+            "kty": "RSA",
+            "n": "4XbzUpqbgKbDLngsLp4bpjf04WkMzXx8QsZAorkuGprIc2BYVwAmWD2tZvez4769QfXsohu85NRviYsrqbyCw_NTs3fMlcgld-ayfb_1X3-6u4f1Q8JsDm4fkSWoBUlTkWO7Mcts2hF8OJ8LlGSwzUDj3TJLQXwtfM0Ty1VzGJQMJELeBuOYHl_jaTdGogI8zbhDZ986CaIfO-q_UM5ukDA3NJ7oBQEH78N6BTsFpjDUKeTae883CCsRDbsytWgfKT8oA7C4BFkvRqVMSek7FYkg7AesknSyCIVMObSaf6ZO3T2jVGrWc0iKfrR3Oo7WpiMH84SdBYXPaS1VdLC17Q",
+            "e": "AQAB",
+            "alg": "RS256",
+            "use": "sig"
+        }
+    ]
+}
+```
+Save this into a file called `jwks.json`.
+
+Create your own JWT! go to jwt.io, change the algorithm combo-box to "RS256".
+
+We will demonstrate the use of custom claims in the JWT by adding a custom claim.
+change the payload data so it looks like so:
+```json
+{
+  "iss": "solo.io",
+  "sub": "1234567890",
+  "solo.io/company":"solo"
+}
+```
+
+Under the "VERIFY SIGNATURE" section, paste the contents of the file `private-key.pem` to the 
+box labeled "Private Key".
+
+You now should have an encoded JWT token in the "Encoded" box. Copy it and save to to a file called 
+`token.jwt`
+
+
+## Create JWKS server:
+
+Let's create out JWKS server:
+```shell
+kubectl create configmap jwks --from-file=index.html=jwks.json
+kubectl create deployment jwks-server --image=nginx 
+kubectl patch deployment jwks-server --type=merge -p '{"spec":{"template":{"spec":{"volumes":[{"name":"jwks-vol","configMap":{"name":"jwks"}}],"containers":[{"name":"nginx","image":"nginx","volumeMounts":[{"name":"jwks-vol","mountPath":"/usr/share/nginx/html"}]}]}}}}' -o yaml
+
+
+
+```
