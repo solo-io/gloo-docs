@@ -274,8 +274,8 @@ minikube delete
 ## Appendix - Use a remote JWKS server.
 
 Let's demonstrate how to use an external JWKS server. We will demonstrate creating a private key
-and signing a custom JWT that we will create. We wil use `npm` to install a utility to convert a 
-the to a json format.
+and signing a custom JWT that we will create. We will use `openssl` to create a key to sign with and
+use `npm` to install a utility to convert the key to a json format.
 
 ### Setup
 #### Create the Json Web Key Set (JWKS)
