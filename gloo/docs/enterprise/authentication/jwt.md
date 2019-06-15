@@ -273,12 +273,22 @@ minikube delete
 
 ## Appendix - Use a remote JWKS server.
 
-### Setup
+Let's demonstrate how to use an external JWKS server. We will demonstrate creating a private key
+and signing a custom JWT that we will create. We wil use `npm` to install a utility to convert a 
+the to a json format.
 
-We can use the `pem-jwk` utility to convert our public key to json form:
+### Setup
+#### Create the Json Web Key Set (JWKS)
+Let's create a private key that we will used to sign our JWT:
 ```shell
+openssl genrsa 2048 > private-key.pem
+```
+
+We can use the openssl command to extract from the private key a PEM encoded public key. We can 
+then use the `pem-jwk` utility to convert our public key to json form.
+```shell
+# install pem-jwk utility
 npm install -g pem-jwk
-openssl genrsa 2048 | tee private-key.pem 
 openssl rsa -in private-key.pem -pubout | pem-jwk  | jq .
 ```
 
@@ -318,33 +328,67 @@ One last modification, is to turn the single key into a key set:
 ```
 Save this into a file called `jwks.json`.
 
-Create your own JWT! go to jwt.io, change the algorithm combo-box to "RS256".
+#### Create the Json Web Token (JWT))
 
-We will demonstrate the use of custom claims in the JWT by adding a custom claim.
-change the payload data so it looks like so:
-```json
-{
-  "iss": "solo.io",
-  "sub": "1234567890",
-  "solo.io/company":"solo"
-}
-```
+Now we can create and sign our JWT:
 
-Under the "VERIFY SIGNATURE" section, paste the contents of the file `private-key.pem` to the 
+- Go to https://jwt.io.
+- Under the "Debugger" section, change the algorithm combo-box to "RS256".
+- Under the "VERIFY SIGNATURE" section, paste the contents of the file `private-key.pem` to the 
 box labeled "Private Key".
+- We will demonstrate the use of custom claims in the JWT by adding a custom claim.
+  change the payload data so it looks like so:
+  ```json
+  {
+    "iss": "solo.io",
+    "sub": "1234567890",
+    "solo.io/company":"solo"
+  }
+  ```
+
+
 
 You now should have an encoded JWT token in the "Encoded" box. Copy it and save to to a file called 
 `token.jwt`
 
 
-## Create JWKS server:
+### Create JWKS server:
 
 Let's create out JWKS server:
 ```shell
-kubectl create configmap jwks --from-file=index.html=jwks.json
+kubectl create configmap jwks --from-file=jwks.json=jwks.json
 kubectl create deployment jwks-server --image=nginx 
 kubectl patch deployment jwks-server --type=merge -p '{"spec":{"template":{"spec":{"volumes":[{"name":"jwks-vol","configMap":{"name":"jwks"}}],"containers":[{"name":"nginx","image":"nginx","volumeMounts":[{"name":"jwks-vol","mountPath":"/usr/share/nginx/html"}]}]}}}}' -o yaml
-
-
-
+kubectl patch deployment jwks-server
+kubectl expose deployment jwks-server --port 80
+glooctl create upstream kube --kube-service jwks-server --kube-service-namespace default jwks-server 
 ```
+
+Create an upstream for the gloo for the server
+
+```shell
+glooctl create upstream kube --kube-service jwks-server --kube-service-namespace default --kube-service-port 80 jwks-server
+```
+
+Configure gloo to use the JWKS server
+```shell
+kubectl patch virtualservice --namespace gloo-system default --type=merge -p '{"spec":{"virtualHost":{"virtualHostPlugins":{"extensions":{"configs":{"jwt":{"jwks":{"remote":{"url":"http://jwks-server/jwks.json","upstream_ref":{"name":"jwks-server","namespace":"gloo-system"}}},"issuer":"solo.io"}}}}}}}' -o yaml
+```
+
+That's it! time to test...
+### Test
+
+Start a proxy to the kubernetes API server:
+```shell
+kubectl proxy &
+```
+
+A request with out a token should be rejected:
+```shell
+curl localhost:8001/api/v1/namespaces/gloo-system/services/gateway-proxy:80/proxy/api/pets
+
+A request with a token should be accepted:
+```
+curl localhost:8001/api/v1/namespaces/gloo-system/services/gateway-proxy:80/proxy/api/pets?access_token=$(cat token.jwt)
+```
+
