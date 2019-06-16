@@ -273,10 +273,14 @@ minikube delete
 
 ## Appendix - Use a Remote JWKS Server
 
-Let's demonstrate how to use an external JWKS server with Gloo. 
-For extra fun, we will demonstrate this by creating a private key and using it to sign a custom JWT
-that we will create. We will use `openssl` to create a key to sign with and use `npm` to install a
-utility to convert the key to a json format.
+Let's demonstrate how to use an external JWKS server with Gloo. Here's the plan:
+
+1. Create a private key (we will use it to sign and verify a custom JWT that we will create). 
+1. Use `openssl` to create the key used to sign the JWT.
+1. We will use `npm` to install a conversion utility to convert the key from PEM to Json Web Key format.
+1. Deploy a JWKS server to serve the key.
+1. Configure Gloo to verify JWTs using the key stored in the server.
+1. Create and sign a custom JWT and use it to authenticate with Gloo.
 
 ### Create the Private Key
 
@@ -284,6 +288,11 @@ Let's create a private key that we will used to sign our JWT:
 ```shell
 openssl genrsa 2048 > private-key.pem
 ```
+
+{{% notice warning %}}
+Storing a key on your laptop as done here is not considered secure! Do not use this workflow
+for production workloads. Use appropriate secret management tools to store sensitive information.
+{{% /notice %}}
 
 ### Create the Json Web Key Set (JWKS)
 
@@ -336,7 +345,7 @@ We now have a valid Json Web Key Set (JWKS). Save this into a file called `jwks.
 ### Create JWKS Server
 
 Let's create out JWKS server. We will copy our jwks file to a ConfigMap and mount it to an nginx 
-container that will server as our JWKS server:
+container that will serve as our JWKS server:
 
 ```shell
 # create a config map
@@ -379,23 +388,30 @@ We will use the [jwt.io](https://jwt.io) debugger to do so easily.
 }
 ```
 
-You now should have an encoded JWT token in the "Encoded" box. Copy it and save to to a file called 
+You should now have an encoded JWT token in the "Encoded" box. Copy it and save to to a file called 
 `token.jwt`
 
 That's it! time to test...
+
 ### Test
 
-Start a proxy to the kubernetes API server:
+Start a proxy to the kubernetes API server.
 ```shell
 kubectl proxy &
 ```
 
-A request without a token should be rejected:
+We will use kubernetes api server service proxy capabilities to reach Gloo's gateway-proxy service.
+The kubernets api server will proxy traffic going to `/api/v1/namespaces/gloo-system/services/gateway-proxy:80/proxy/` to port 80 on the `gateway-proxy` service, in the `gloo-system` namespace.
+
+A request without a token should be rejected (will output *Jwt is missing*):
 ```shell
 curl localhost:8001/api/v1/namespaces/gloo-system/services/gateway-proxy:80/proxy/api/pets
 ```
+
 A request with a token should be accepted:
 ```shell
 curl localhost:8001/api/v1/namespaces/gloo-system/services/gateway-proxy:80/proxy/api/pets?access_token=$(cat token.jwt)
 ```
-
+### Conclusion
+We have created a JWKS server, signed a custom JWT and used Gloo to verify that JWT
+and authroize our request.
