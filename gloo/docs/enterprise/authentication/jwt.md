@@ -271,9 +271,15 @@ Alternativly, you can just tear down minikube:
 minikube delete
 ```
 
-## Appendix - Use a Remote JWKS Server
+## Appendix - Use a Remote Json Web Key Set (JWKS) Server
 
-Let's demonstrate how to use an external JWKS server with Gloo. Here's the plan:
+In the previous part of the guide we saw how to configure gloo with a public key to verify JWTs.
+In this appendix we will demonstrate how to use an external Json Web Key Set (JWKS) server with Gloo. 
+
+Using a Json Web Key Set (JWKS) server allows us to manage the verification keys independently and 
+centrally. This, for exampl,e can allow for easy key rotation.
+
+Here's the plan:
 
 1. Create a private key (we will use it to sign and verify a custom JWT that we will create). 
 1. Use `openssl` to create the key used to sign the JWT.
@@ -344,7 +350,10 @@ We now have a valid Json Web Key Set (JWKS). Save this into a file called `jwks.
 
 ### Create JWKS Server
 
-Let's create out JWKS server. We will copy our jwks file to a ConfigMap and mount it to an nginx 
+Let's create our JWKS server. All that the server needs to do is to serve a Json Web Key Set file. 
+We will configure Gloo later to grab the the Json Web Key Set from that server.
+
+To deploy the server, we will copy our jwks file to a ConfigMap and mount it to an nginx 
 container that will serve as our JWKS server:
 
 ```shell
@@ -390,6 +399,10 @@ We will use the [jwt.io](https://jwt.io) debugger to do so easily.
 
 You should now have an encoded JWT token in the "Encoded" box. Copy it and save to to a file called 
 `token.jwt`
+
+This is how it should look like (click to enlarge):
+
+<img src="../jwt.io.png" alt="jwt.io debugger" style="border: dashed 2px;" width="500px"/>
 
 That's it! time to test...
 
