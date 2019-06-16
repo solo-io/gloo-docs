@@ -340,15 +340,15 @@ container that will server as our JWKS server:
 
 ```shell
 # create a config map
-kubectl create configmap jwks --from-file=jwks.json=jwks.json
+kubectl -n gloo-system create configmap jwks --from-file=jwks.json=jwks.json
 # deploy nginx
-kubectl create deployment jwks-server --image=nginx 
+kubectl -n gloo-system create deployment jwks-server --image=nginx 
 # mount the config map to nginx
-kubectl patch deployment jwks-server --type=merge -p '{"spec":{"template":{"spec":{"volumes":[{"name":"jwks-vol","configMap":{"name":"jwks"}}],"containers":[{"name":"nginx","image":"nginx","volumeMounts":[{"name":"jwks-vol","mountPath":"/usr/share/nginx/html"}]}]}}}}' -o yaml
+kubectl -n gloo-system patch deployment jwks-server --type=merge -p '{"spec":{"template":{"spec":{"volumes":[{"name":"jwks-vol","configMap":{"name":"jwks"}}],"containers":[{"name":"nginx","image":"nginx","volumeMounts":[{"name":"jwks-vol","mountPath":"/usr/share/nginx/html"}]}]}}}}' -o yaml
 # create a service for the nginx deployment
-kubectl expose deployment jwks-server --port 80
+kubectl -n gloo-system expose deployment jwks-server --port 80
 # create an upstream for gloo
-glooctl create upstream kube --kube-service jwks-server --kube-service-namespace default --kube-service-port 80 jwks-server
+glooctl create upstream kube --kube-service jwks-server --kube-service-namespace gloo-system --kube-service-port 80 -n gloo-system jwks-server
 ```
 
 Configure gloo to use the JWKS server:
