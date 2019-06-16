@@ -273,11 +273,11 @@ minikube delete
 
 ## Appendix - Use a Remote Json Web Key Set (JWKS) Server
 
-In the previous part of the guide we saw how to configure gloo with a public key to verify JWTs.
+In the previous part of the guide we saw how to configure Gloo with a public key to verify JWTs.
 In this appendix we will demonstrate how to use an external Json Web Key Set (JWKS) server with Gloo. 
 
 Using a Json Web Key Set (JWKS) server allows us to manage the verification keys independently and 
-centrally. This, for exampl,e can allow for easy key rotation.
+centrally. This, for example, can allow for easy key rotation.
 
 Here's the plan:
 
