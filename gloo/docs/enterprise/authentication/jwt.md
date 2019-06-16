@@ -369,13 +369,15 @@ We will use the [jwt.io](https://jwt.io) debugger to do so easily.
 - Under the "VERIFY SIGNATURE" section, paste the contents of the file `private-key.pem` to the 
   bottom box (labeled "Private Key").
 - Paste the following to the payload data (replaceing what is already there):
-  ```json
-  {
-    "iss": "solo.io",
-    "sub": "1234567890",
-    "solo.io/company":"solo"
-  }
-  ```
+
+
+```json
+{
+  "iss": "solo.io",
+  "sub": "1234567890",
+  "solo.io/company":"solo"
+}
+```
 
 You now should have an encoded JWT token in the "Encoded" box. Copy it and save to to a file called 
 `token.jwt`
