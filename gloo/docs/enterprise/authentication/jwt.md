@@ -353,6 +353,9 @@ glooctl create upstream kube --kube-service jwks-server --kube-service-namespace
 
 Configure gloo to use the JWKS server:
 ```shell
+# remove the settings from the previous part of the guide
+kubectl patch virtualservice --namespace gloo-system default --type=json -p '[{"op":"remove","path":"/spec/virtualHost/virtualHostPlugins/extensions"}]' -o yaml
+# add the remote jwks
 kubectl patch virtualservice --namespace gloo-system default --type=merge -p '{"spec":{"virtualHost":{"virtualHostPlugins":{"extensions":{"configs":{"jwt":{"jwks":{"remote":{"url":"http://jwks-server/jwks.json","upstream_ref":{"name":"jwks-server","namespace":"gloo-system"}}},"issuer":"solo.io"}}}}}}}' -o yaml
 ```
 
