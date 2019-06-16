@@ -271,7 +271,7 @@ Alternativly, you can just tear down minikube:
 minikube delete
 ```
 
-## Appendix - Use a remote JWKS server.
+## Appendix - Use a Remote JWKS Server
 
 Let's demonstrate how to use an external JWKS server. We will demonstrate creating a private key
 and signing a custom JWT that we will create. We will use `openssl` to create a key to sign with and
@@ -287,8 +287,9 @@ openssl genrsa 2048 > private-key.pem
 We can use the openssl command to extract from the private key a PEM encoded public key. We can 
 then use the `pem-jwk` utility to convert our public key to json form.
 ```shell
-# install pem-jwk utility
+# install pem-jwk utility.
 npm install -g pem-jwk
+# extract public key and convert it to JWK.
 openssl rsa -in private-key.pem -pubout | pem-jwk  | jq .
 ```
 
@@ -301,8 +302,8 @@ Output should look like so:
 }
 ```
 
-To that, we need to add the signing algorithm, and for extra security the usage:
-```json
+To that, we'll add the signing algorithm and usage:
+{{< highlight json "hl_lines=5-6" >}}
 {
     "kty": "RSA",
     "n": "4XbzUpqbgKbDLngsLp4bpjf04WkMzXx8QsZAorkuGprIc2BYVwAmWD2tZvez4769QfXsohu85NRviYsrqbyCw_NTs3fMlcgld-ayfb_1X3-6u4f1Q8JsDm4fkSWoBUlTkWO7Mcts2hF8OJ8LlGSwzUDj3TJLQXwtfM0Ty1VzGJQMJELeBuOYHl_jaTdGogI8zbhDZ986CaIfO-q_UM5ukDA3NJ7oBQEH78N6BTsFpjDUKeTae883CCsRDbsytWgfKT8oA7C4BFkvRqVMSek7FYkg7AesknSyCIVMObSaf6ZO3T2jVGrWc0iKfrR3Oo7WpiMH84SdBYXPaS1VdLC17Q",
@@ -310,10 +311,10 @@ To that, we need to add the signing algorithm, and for extra security the usage:
     "alg": "RS256",
     "use": "sig"
 }
-```
+{{< /highlight >}}
 
 One last modification, is to turn the single key into a key set:
-```json
+{{< highlight json "hl_lines=1-2 10-11" >}}
 {
     "keys": [
         {
@@ -325,19 +326,20 @@ One last modification, is to turn the single key into a key set:
         }
     ]
 }
-```
-Save this into a file called `jwks.json`.
+{{< /highlight >}}
 
-#### Create the Json Web Token (JWT))
+We now have a valid Json Web Key Set (JWKS). Save this into a file called `jwks.json`.
 
-Now we can create and sign our JWT:
+#### Create the Json Web Token (JWT)
+
+We need have everything we need to sign and verify a custom JWT with our custom claims.
+We will use the [jwt.io](https://jwt.io) debugger to do so easily.
 
 - Go to https://jwt.io.
 - Under the "Debugger" section, change the algorithm combo-box to "RS256".
 - Under the "VERIFY SIGNATURE" section, paste the contents of the file `private-key.pem` to the 
-box labeled "Private Key".
-- We will demonstrate the use of custom claims in the JWT by adding a custom claim.
-  change the payload data so it looks like so:
+  bottom box (labeled "Private Key").
+- Paste the following to the payload data (replaceing what is already there):
   ```json
   {
     "iss": "solo.io",
@@ -346,13 +348,10 @@ box labeled "Private Key".
   }
   ```
 
-
-
 You now should have an encoded JWT token in the "Encoded" box. Copy it and save to to a file called 
 `token.jwt`
 
-
-### Create JWKS server:
+### Create JWKS Server
 
 Let's create out JWKS server:
 ```shell
@@ -383,12 +382,12 @@ Start a proxy to the kubernetes API server:
 kubectl proxy &
 ```
 
-A request with out a token should be rejected:
+A request without a token should be rejected:
 ```shell
 curl localhost:8001/api/v1/namespaces/gloo-system/services/gateway-proxy:80/proxy/api/pets
-
-A request with a token should be accepted:
 ```
+A request with a token should be accepted:
+```shell
 curl localhost:8001/api/v1/namespaces/gloo-system/services/gateway-proxy:80/proxy/api/pets?access_token=$(cat token.jwt)
 ```
 
