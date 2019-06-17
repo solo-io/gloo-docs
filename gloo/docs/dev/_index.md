@@ -1,6 +1,6 @@
 ---
 title: Developer Guide
-weight: 6
+weight: 5
 ---
 
 Developing on Gloo can be a fun and rewarding experience. 

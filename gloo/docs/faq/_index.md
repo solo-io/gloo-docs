@@ -1,6 +1,6 @@
 ---
 title: FAQ
-weight: 4
+weight: 8
 description: Frequently Asked Questions
 ---
 
