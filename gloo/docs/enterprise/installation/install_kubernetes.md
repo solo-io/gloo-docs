@@ -21,11 +21,11 @@ your local machine. You’ll use this CLI to interact with Gloo, including insta
 Directions on installing `glooctl` are [here](../install_glooctl).
 
 Before starting installation, please ensure that you've prepared your Kubernetes cluster per the community
-[Prep Kubernetes]({{< ref "/installation/kubernetes/setup_kubernetes" >}}) instructions.
+[Prep Kubernetes]({{< ref "/installation/cluster_setup" >}}) instructions.
 
 ## Overall flow for installing
 
-1. [Prepare Kubernetes Cluster]({{< ref "/installation/kubernetes/setup_kubernetes" >}})
+1. [Prepare Kubernetes Cluster]({{< ref "/installation/cluster_setup" >}})
 1. [Install using CLI](#install_cli)
 1. [Install using Helm](#install_helm)
 1. [Verify installation](#verify)

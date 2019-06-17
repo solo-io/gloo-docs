@@ -1,14 +1,10 @@
 ---
-title: Kubernetes - Prep
-menuTitle: Prerequisites
+title: Kubernetes Cluster Setup
 weight: 1
 description: How to prepare a Kubernetes cluster for Gloo installation.
 ---
 
-In this document we will review how to prepare different Kubernetes environments before installing Gloo or Gloo
-Enterprise. In general, Gloo and Gloo Enterprise does not require much special in your Kubernetes cluster other than in
-some environments you need to ensure that, at least for installation, the installer has cluster admin rights to be able
-to install the CRDs (Custom Resource Definitions) that need to be installed.
+In this document we will review how to prepare different Kubernetes environments before installing Gloo. 
 
 Details for specific Kubernetes distributions:
 
