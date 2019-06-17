@@ -39,15 +39,11 @@ Gloo runs in 3 different modes to enable different use cases:
     <td width="10%">
       <a href="enterprise"><img src="../img/gloo-ee.png" width="60"/></a>
     </td>
-    <td>Run Gloo in `ingress` mode to act as a standard Kubernetes Ingress controller. In this mode, Gloo will import 
-        its configuration from the `extensions/v1beta1.Ingress` Kubernetes resource. This can be used to achieve compatibility with the standard Kubernetes ingress API. Note that Gloo's Ingress API does not support customization via annotations. If you wish to extend Gloo beyond the functions of basic ingress, it is recommended to run Gloo in `gateway` mode.
+    <td>
+    Gloo Enterprise is based on the open-source Gloo Gateway with additional (closed sourceZ) UI and plugins. See [the Gloo Enterprise documentation](../enterprise) for more details on the additional benefits of the Enterprise version of Gloo.
     </td>
   </tr>
 </table>
 </div>
 
 > Note: Each mode is not exclusive to the, e.g. if you wish to run `gateway` in conjunction with `ingress`, it can be done by installing both options to the same (or different) namespaces.
-
-# Gloo Enterprise
-
-* [Enterprise](enterprise) - Gloo Enterprise is based on the open-source Gloo Gateway with additional (closed sourceZ) UI and plugins. See [the Gloo Enterprise documentation](../enterprise) for more details on the additional benefits of the Enterprise version of Gloo.
