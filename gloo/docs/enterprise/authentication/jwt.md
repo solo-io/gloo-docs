@@ -427,4 +427,4 @@ curl localhost:8001/api/v1/namespaces/gloo-system/services/gateway-proxy:80/prox
 ```
 ### Conclusion
 We have created a JWKS server, signed a custom JWT and used Gloo to verify that JWT
-and authroize our request.
+and authorize our request.
