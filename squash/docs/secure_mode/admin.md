@@ -316,7 +316,6 @@ rules:
   - create
   - update
   - delete
-  - register # This will not be needed in future versions
 ```
 
 ### Implicit Resources
