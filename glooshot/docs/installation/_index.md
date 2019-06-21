@@ -29,6 +29,7 @@ KUBECONFIG setting to connect to Kubernetes cluster.
   - `register` will register the `experiments.glooshot.solo.io` and `reports.glooshot.solo.io` CRDs
 - Then deploy the Gloo Shot resources.
   - `init` will create and populate the `glooshot` namespace.
+
 ```bash
 glooshot register
 glooshot init
