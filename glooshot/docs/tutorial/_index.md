@@ -353,7 +353,7 @@ EOF
 kubectl get exp -n bookinfo abort-ratings-metric-repeat -o yaml
 ```
 
-- You should see that the experiment exceeded, after having run for the entire time limit.
+- You should see that the experiment succeeded after having run for the entire time limit.
 
 ```bash
   result:
