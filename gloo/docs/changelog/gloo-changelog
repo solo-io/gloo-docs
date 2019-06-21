@@ -1,3 +1,17 @@
+### v0.14.0
+
+**Breaking Changes**
+
+- Bumping minor version after the breaking API change from release 0.13.34 (which erroneously did not bump it). (https://github.com/solo-io/gloo/issues/760)
+- Fixing misspelled `ssl_configuations` field in `Listener` protobuf message. (https://github.com/solo-io/gloo/issues/762)
+- Extend the route params for the plugins to have the vhost included. (https://github.com/solo-io/gloo/pull/766)
+
+**New Features**
+
+- Updated `Route` API to allow Kubernetes services as direct routing destinations. This means that, in addition to
+  `Upstream`s, `Route`s on `VirtualService` and `Proxy` resources can now directly point to a Kubernetes service. (https://github.com/solo-io/gloo/issues/746)
+- Add [Virtual Clusters](https://www.envoyproxy.io/docs/envoy/v1.5.0/api-v2/rds.proto#envoy-api-msg-virtualcluster) to the Gloo API. (https://github.com/solo-io/gloo/issues/764)
+
 ### v0.13.34
 
 **New Features**
