@@ -1,5 +1,5 @@
 ---
-title: Gloo with Knative
+title: Knative 
 weight: 90
 ---
 

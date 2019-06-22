@@ -1,5 +1,5 @@
 ---
-title: Kubernetes Ingress Object
+title: Kubernetes Ingress 
 weight: 5
 description: Setting up Gloo to handle Kubernetes Ingress Objects.
 ---
@@ -190,7 +190,7 @@ Great! Our ingress is up and running. See <https://kubernetes.io/docs/concepts/s
 for more information on using Kubernetes Ingress Controllers.
 
 If you want to take advantage of greater routing capabilities of Gloo, you should look at
-[Gloo in gateway mode]({{% ref "http://localhost:1313/user_guides/basic_routing" %}}), which complements Gloo's Ingress
+[Gloo in gateway mode]({{% ref "http://localhost:1313/user_guides/gateway/basic_routing" %}}), which complements Gloo's Ingress
 support, i.e., you can use both modes together in a single cluster. Gloo Gateway uses
 [Kubernetes Custom Resources](https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/)
 instead of Ingress Objects as the only way to configure Ingress' beyond their basic routing spec is to use lots of

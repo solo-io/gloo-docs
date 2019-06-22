@@ -7,7 +7,7 @@ description: Advanced routing action rules for Gloo.
 Gloo uses a [`VirtualService`]({{% ref "/v1/github.com/solo-io/gloo/projects/gateway/api/v1/virtual_service.proto.sk" %}})
 Custom Resource (CRD) to allow users to specify one or more [Route]({{% ref "/v1/github.com/solo-io/gloo/projects/gloo/api/v1/proxy.proto.sk#route" %}})
 rules to handle as a group. This guide will discuss how to matched routes act upon requests. Please refer to the
-[Advanced Route Matching]({{% ref "/user_guides/advanced_routing" %}}) guide for more information on how to pattern match
+[Advanced Route Matching]({{% ref "/user_guides/gateway/advanced_routing" %}}) guide for more information on how to pattern match
 requests in routes. These are examples of how to use the [Route Action]({{% ref "/v1/github.com/solo-io/gloo/projects/gloo/api/v1/proxy.proto.sk#routeaction" %}}).
 
 To give you some context, Gloo [Virtual Services]({{% ref "/v1/github.com/solo-io/gloo/projects/gateway/api/v1/virtual_service.proto.sk#VirtualService" %}}) contain zero or more [Route]({{% ref "/v1/github.com/solo-io/gloo/projects/gloo/api/v1/proxy.proto.sk#route" %}}) objects.

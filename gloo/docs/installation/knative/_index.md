@@ -137,4 +137,4 @@ glooctl uninstall -n my-namespace
 
 ## Next Steps
 
-To begin using Gloo with Knative, check out the [Knative User Guide](../../../user_guides/gloo_with_knative).
+To begin using Gloo with Knative, check out the [Knative User Guide]({{< ref "/user_guides/knative" >}}).

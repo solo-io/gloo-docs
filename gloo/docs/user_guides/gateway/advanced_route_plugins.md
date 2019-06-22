@@ -8,7 +8,7 @@ description: Advanced routing Plugins for Transformation, retries, timeouts, and
 Gloo uses a [Virtual Service]({{< ref "/v1/github.com/solo-io/gloo/projects/gateway/api/v1/virtual_service.proto.sk" >}})
 Custom Resource (CRD) to allow users to specify one or more [Route]({{< ref "/v1/github.com/solo-io/gloo/projects/gloo/api/v1/proxy.proto.sk#route" >}})
 rules to handle as a group. This guide will discuss plugins that can affect how matched routes act upon requests. Please
-refer to the [Advanced Route Matching]({{< ref "/user_guides/advanced_routing" >}}) guide for more information on how to
+refer to the [Advanced Route Matching]({{< ref "/user_guides/gateway/advanced_routing" >}}) guide for more information on how to
 pattern match requests in routes and [Route Action]({{< ref "/v1/github.com/solo-io/gloo/projects/gloo/api/v1/proxy.proto.sk#routeaction" >}})
 for more information on how to forward requests to upstream providers. This guide will discuss
 [Route Plugins]({{< ref "/v1/github.com/solo-io/gloo/projects/gloo/api/v1/plugins.proto.sk#routeplugins" >}}) which
@@ -413,3 +413,30 @@ spec:
 {{< /highlight >}}
 
 ### Extensions {#extensions}
+
+Extensions are arbitrary key-value pairs that can be stored on
+Gloo routes for the purposes of extending Gloo. This is used to support external plugins, as well as Gloo-Enterprise plugins.
+
+{{< highlight yaml "hl_lines=19-21" >}}
+apiVersion: gateway.solo.io/v1
+kind: VirtualService
+metadata:
+  name: 'default'
+  namespace: 'gloo-system'
+spec:
+  virtualHost:
+    domains:
+    - '*'
+    routes:
+    - matcher:
+        prefix: '/petstore'
+      routeAction:
+        single:
+          upstream:
+            name: 'default-petstore-8080'
+            namespace: 'gloo-system'
+      routePlugins:
+        extensions:
+          configs:
+            my-custom-key: my-custom-value\
+{{< /highlight >}}

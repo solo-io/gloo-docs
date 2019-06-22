@@ -13,7 +13,7 @@ Gloo complements service-mesh technology by bringing a powerful "API Gateway" to
 * API Aggregation with GraphQL
 * Function routing
 
-And more. Please see our [FAQ]({{< ref "/user_guides/faq/_index.md#what-s-the-difference-between-gloo-and-istio" >}}) for more on how Gloo can complement a service mesh.
+And more. Please see our [FAQ]({{< ref "/faq/_index.md#what-s-the-difference-between-gloo-and-istio" >}}) for more on how Gloo can complement a service mesh.
 
 ## Getting started with AWS App Mesh
 

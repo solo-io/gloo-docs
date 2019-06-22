@@ -1,7 +1,7 @@
 ---
-title: Function Routing
+title: REST Endpoint Routing
 weight: 20
-description: Creating routing rules to web functions
+description: Create function routes to REST API endpoints discovered from a Swagger (OpenAPI) specification.
 ---
 
 ## Function Routing

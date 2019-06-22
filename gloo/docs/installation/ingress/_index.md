@@ -94,4 +94,4 @@ glooctl uninstall -n my-namespace
 
 ## Next Steps
 
-To begin using Gloo with the Kubernetes Ingress API, check out the [Ingress Controller guide](../../../user_guides/basic_ingress).
+To begin using Gloo with the Kubernetes Ingress API, check out the [Ingress Controller guide]({{< ref "/user_guides/ingress" >}}).

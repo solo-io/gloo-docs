@@ -38,7 +38,7 @@ Let's look at some concrete examples that illustrate the relationship between Gl
 
 ### List Gloo resources with `kubectl`
 
-In the [Basic Routing chapter of the Getting Started guide](../../user_guides/basic_routing)
+In the [Basic Routing chapter of the Getting Started guide]({{< ref "/user_guides/gateway/basic_routing" >}})
 we created a _Virtual Service_ containing one route to the `default-petstore-8080` _Upstream_ by submitting the following
 command:
 

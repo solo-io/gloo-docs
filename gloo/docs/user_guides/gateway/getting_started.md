@@ -1,7 +1,7 @@
 ---
-title: Basic Path Routing
-weight: 10
-description: Basic routing example for using Gloo to route requests based on query path.
+title: Getting Started
+weight: 1
+description: Basic example of using Gloo to route to a service, including a path-rewrite.
 ---
 
 ## Path Routing

@@ -1,5 +1,5 @@
 ---
-title: AWS Upstream
+title: AWS Lambda Routing
 weight: 1
 description: AWS Upstream configuration guide.
 ---
