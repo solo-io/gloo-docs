@@ -4,7 +4,6 @@ weight: 4
 description: How to operate Gloo guides
 ---
 
-As an operator of Gloo, it's important to understand how Gloo manages its configuration, and how this can fit into
-the processes for managing production environments at your enterprise.
+The Gloo Operator guides describe different ways of setting up the environment in which Gloo is running as well as connecting Gloo to external resources such as CI/CD systems, `cert-manager`, and Prometheus.
 
 {{% children description="true" %}}
