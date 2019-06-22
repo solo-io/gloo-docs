@@ -8,7 +8,7 @@ description: Advanced routing Plugins for Transformation, retries, timeouts, and
 Gloo uses a [Virtual Service]({{< ref "/v1/github.com/solo-io/gloo/projects/gateway/api/v1/virtual_service.proto.sk" >}})
 Custom Resource (CRD) to allow users to specify one or more [Route]({{< ref "/v1/github.com/solo-io/gloo/projects/gloo/api/v1/proxy.proto.sk#route" >}})
 rules to handle as a group. This guide will discuss plugins that can affect how matched routes act upon requests. Please
-refer to the [Advanced Route Matching]({{< ref "/user_guides/gateway/advanced_routing" >}}) guide for more information on how to
+refer to the [Advanced Route Matching]({{< ref "/user_guides/gateway/configuring_route_options/advanced_routing" >}}) guide for more information on how to
 pattern match requests in routes and [Route Action]({{< ref "/v1/github.com/solo-io/gloo/projects/gloo/api/v1/proxy.proto.sk#routeaction" >}})
 for more information on how to forward requests to upstream providers. This guide will discuss
 [Route Plugins]({{< ref "/v1/github.com/solo-io/gloo/projects/gloo/api/v1/plugins.proto.sk#routeplugins" >}}) which

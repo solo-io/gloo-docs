@@ -166,7 +166,7 @@ status:
 
 #### How do I configure TLS for Gloo
 
-Gloo can be configured with TLS and SNI for multiple virtual hosts. Please [see the documentation for how to do that]({{< ref "/user_guides/gateway/tls_setup.md">}})
+Gloo can be configured with TLS and SNI for multiple virtual hosts. Please [see the documentation for how to do that]({{< ref "/user_guides/gateway/security/tls_setup">}})
 
 
 #### I want to call my HTTP/HTTPS services; what URL do I use?
@@ -395,7 +395,7 @@ This is by design with the intention of not over-exposing your cluster by accide
 
 #### Why am I getting error: multiple "filter chains with the same matching rules are defined"
 
-When you create multiple VirtualServices that have TLS/SSL configuration, Gloo will use SNI to try and route to the correct VirtualService. For this to work, you need to specify the `domain` explicitly in your VirtualService as well as the SNI domains. [See the TLS documentation for more]({{< ref "/user_guides/gateway/tls_setup.md">}}). If you don't do this, then you'll have multiple VirtualServices with different certificate information and Envoy will not know which one to use since the hosts are the same. 
+When you create multiple VirtualServices that have TLS/SSL configuration, Gloo will use SNI to try and route to the correct VirtualService. For this to work, you need to specify the `domain` explicitly in your VirtualService as well as the SNI domains. [See the TLS documentation for more]({{< ref "/user_guides/gateway/security/tls_setup">}}). If you don't do this, then you'll have multiple VirtualServices with different certificate information and Envoy will not know which one to use since the hosts are the same. 
 
 #### When I have both HTTP and HTTPS routes, why are they merged and only available on HTTPS?
 

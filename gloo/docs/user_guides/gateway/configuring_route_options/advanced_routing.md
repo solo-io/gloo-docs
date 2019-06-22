@@ -59,7 +59,7 @@ with others, i.e., all aspects must test `true` for the route to match and the s
 
 There are three options to do HTTP path matching. You can specify only one of the following three options within any given
 route matcher spec. Note, `routes` is an array of [gloo.solo.io.Route]({{% ref "/v1/github.com/solo-io/gloo/projects/gloo/api/v1/proxy.proto.sk#route" %}})
-objects, and each `route` has one [`matcher`]({{% ref "/user_guides/gateway/advanced_routing#path" %}}) that can contain one of
+objects, and each `route` has one [`matcher`]({{% ref "/user_guides/gateway/configuring_route_options/advanced_routing#path" %}}) that can contain one of
 the path matchers: `prefix`, `exact`, or `regex`.
 
 * `prefix` - match if the beginning path of request path matches specified path.

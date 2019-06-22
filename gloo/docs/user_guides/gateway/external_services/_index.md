@@ -1,5 +1,6 @@
 ---
-title: External API Routing
+menuTitle: External Services
+title: Adding External Services to Gloo
 weight: 30
 description: Example of routing to an external upstream.
 ---
