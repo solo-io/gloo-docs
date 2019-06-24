@@ -1,3 +1,10 @@
+### v0.14.1
+
+**Fixes**
+
+- Use apps/v1 api group for deployments (https://github.com/solo-io/gloo/issues/767)
+- fix append in hybridUpstreamSnapshot (https://github.com/solo-io/gloo/issues/771)
+
 ### v0.13.34
 
 **New Features**
