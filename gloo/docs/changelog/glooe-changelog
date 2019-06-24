@@ -17,6 +17,15 @@
 
 - Use apps/v1 api group for deployments (https://github.com/solo-io/gloo/issues/767)
 
+### v0.13.18
+
+**New Features**
+
+- Add config service to grpc service. (https://github.com/solo-io/solo-projects/issues/609)
+- Add gRPC service for artifacts. (https://github.com/solo-io/solo-projects/issues/610)
+- Add gRPC service for secrets. (https://github.com/solo-io/solo-projects/issues/611)
+
+
 ### v0.13.17
 
 **Dependency Bumps**
