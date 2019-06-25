@@ -4,7 +4,7 @@ languageCode = "en-us"
 title = "Gloo Docs"
 
 # Change the default theme to be use when building the site with Hugo
-theme = "hugo-theme-learn" # https://learn.netlify.com
+theme = "hugo-theme-docdock" # https://learn.netlify.com
 
 contentDir = "docs"
 # staticDir = "docs/static"
@@ -56,11 +56,12 @@ home = [ "HTML", "JSON"]
   # Hide breadcrumbs in the header and only show the current page title
   disableBreadcrumb = true
   # Hide Next and Previous page buttons normally displayed full height beside content
-  disableNextPrev = false
+  disableNextPrev = true
   # Order sections in menu by "weight" or "title". Default to "weight"
   ordersectionsby = "weight"
   # Change default color scheme with a variant one. Can be "red", "blue", "green".
   themeVariant = "gloo"
+  themeStyle = "original"
 
   glooctl-windows="https://storage.googleapis.com/glooctl-enterprise/051F7858-30A6-42CA-8EF2-9012D521358A/glooctl-windows-amd64.exe"
   glooctl-darwin="https://storage.googleapis.com/glooctl-enterprise/051F7858-30A6-42CA-8EF2-9012D521358A/glooctl-darwin-amd64"
