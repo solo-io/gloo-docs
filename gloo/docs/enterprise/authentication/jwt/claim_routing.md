@@ -1,5 +1,5 @@
 ---
-title: JWT Claim Based Routing Usage
+title: JWT Claim Based Routing
 weight: 3
 description: Perform routing decisions using information in a JWT's claims
 ---
@@ -73,7 +73,7 @@ Only use above keys for testing purposes! They are publicly available and theref
 {{% /notice %}}
 
 
-Similar to the [JWT and Access Control guide](../#create-the-json-web-token-jwt), using `jwt.io` we can generate two RS256 JWTs:
+Similar to the [JWT and Access Control guide](../access_control/#create-the-json-web-token-jwt), using `jwt.io` we can generate two RS256 JWTs:
 
 One for solo.io employess with the following payload:
 ```json

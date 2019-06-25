@@ -4,7 +4,7 @@ weight: 2
 description: JWT verification and Access Control (without an external auth server)
 ---
 
-## Pre-requesites
+## Prerequisites
 
 We will use the following utilities
 
