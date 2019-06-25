@@ -1,11 +1,10 @@
 ---
 weight: 99
 title: Gloo
+alwaysopen: true 
 ---
 
-<h1 align="center">
-    <img src="img/Gloo-01.png" alt="Gloo" width="200" height="242">
-  <br>
+<h1>
   An Envoy-Powered API Gateway
 </h1>
 
@@ -37,14 +36,4 @@ Community
 ### Thanks
 
 **Gloo** would not be possible without the valuable open-source work of projects in the community. We would like to extend a special thank-you to [Envoy](https://www.envoyproxy.io).
-
-
-{{< tabs name="tab_with_code" >}}
-{{{< tab name="Tab 1" codelang="bash" >}}
-echo "This is tab 1."
-{{< /tab >}}
-{{< tab name="Tab 2" codelang="go" >}}
-println "This is tab 2."
-{{< /tab >}}}
-{{< /tabs >}}
 

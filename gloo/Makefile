@@ -3,7 +3,7 @@
 #----------------------------------------------------------------------------------
 
 site:
-	if [ ! -d themes ]; then git clone https://github.com/vjeantet/hugo-theme-docdock themes/hugo-theme-docdock; fi
+	if [ ! -d themes ]; then git clone https://github.com/solo-io/hugo-theme-soloio themes/hugo-theme-soloio; fi
 	hugo --config docs.toml
 
 .PHONY: deploy-site
