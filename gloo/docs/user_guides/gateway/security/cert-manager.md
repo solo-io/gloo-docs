@@ -1,7 +1,7 @@
 ---
 title: "Integrating Gloo and Let's Encrypt with cert-manager"
 menuTitle: Let's Encrypt with cert-manager
-weight: 2
+weight: 90
 ---
 
 This document shows how to secure your ingress traffic using gloo and cert-manager. We will deploy everything
