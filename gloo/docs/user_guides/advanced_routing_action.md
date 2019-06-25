@@ -189,7 +189,7 @@ apiVersion: gateway.solo.io/v1
                     :path: /petstore/findPetById/{id}
             subset:
               values:
-              - color: blue
+                color: blue
             upstream:
               name: default-petstore-8080
               namespace: gloo-system
