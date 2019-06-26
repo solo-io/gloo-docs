@@ -438,5 +438,5 @@ spec:
       routePlugins:
         extensions:
           configs:
-            my-custom-key: my-custom-value\
+            my-custom-key: my-custom-value
 {{< /highlight >}}
