@@ -13,7 +13,7 @@ weight: 2
 If you use [Homebrew](https://brew.sh), you can install `glooshot` with the following command
 
 ```shell
-brew install solo-io/tap/glooshot
+brew install glooshot
 ```
 
 ### Other

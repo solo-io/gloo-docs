@@ -16,7 +16,7 @@ title: Installation
 If you use [Homebrew](https://brew.sh) package manager you can install with the following command
 
 ```shell
-brew install solo-io/tap/sqoopctl
+brew install sqoopctl
 ```
 
 You can also install by downloading from the Sqoop releases page <https://github.com/solo-io/sqoop/releases/>.
