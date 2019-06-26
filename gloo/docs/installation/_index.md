@@ -38,7 +38,7 @@ Gloo Open-Source runs in 3 different modes to enable different use cases:
 </table>
 </div>
 
-> Note: Each mode is not exclusive to the, e.g. if you wish to run `gateway` in conjunction with `ingress`, it can be done by installing both options to the same (or different) namespaces.
+> Note: The installation modes are not mutually exclusive, e.g. if you wish to run `gateway` in conjunction with `ingress`, it can be done by installing both options to the same (or different) namespaces.
 
 # Gloo Enterprise
 
