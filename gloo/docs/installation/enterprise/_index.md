@@ -30,6 +30,10 @@ Verify that you have the Enterprise version of the `glooctl` by running:
 glooctl --version
 ```
 
+```shell
+glooctl enterprise edition version 0.14.0
+```
+
 
 ## Installing Gloo Enterprise on Kubernetes
 
@@ -108,10 +112,6 @@ helm install gloo/gloo --name gloo-custom-0-7-6 --namespace my-namespace -f valu
 
 ---
 ## Verify your Installation
-
-Check that the Gloo pods and services have been created. Depending on your install option, you may see some differences
-from the following example. And if you choose to install Gloo into a different namespace than the default `gloo-system`,
-then you will need to query your chosen namespace instead.
 
 Check that the Gloo pods and services have been created. Depending on your install option, you may see some differences
 from the following example. And if you choose to install Gloo into a different namespace than the default `gloo-system`,

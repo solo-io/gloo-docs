@@ -8,29 +8,30 @@ weight: 2
 
 The `glooctl` command line provides useful functions to install, configure, and debug Gloo, though it is not required to use Gloo.
 
-To install `glooctl` using the [Homebrew](https://brew.sh) package manager, run the following.
+* To install `glooctl` using the [Homebrew](https://brew.sh) package manager, run the following.
+  
+  ```shell
+  brew install glooctl
+  ```
+  
+* To install on any platform run the following.
+  
+  ```bash
+  curl -sL https://run.solo.io/gloo/install | sh
 
-```shell
-brew install solo-io/tap/gloo
-```
-
-To install on any platform run the following.
-
-```bash
-curl -sL https://run.solo.io/gloo/install | sh
-```
-
-You can download `glooctl` directly via the GitHub releases page. You need to add `glooctl` to your path after downloading.
-
-
-```bash
-export PATH=$HOME/.gloo/bin:$PATH
-```
+  export PATH=$HOME/.gloo/bin:$PATH
+  ```
+  
+* You can download `glooctl` directly via the GitHub releases page. You need to add `glooctl` to your system's `PATH` after downloading.
 
 Verify the CLI is installed and running correctly with:
 
 ```bash
 glooctl --version
+```
+
+```shell
+glooctl community edition version 0.13.29
 ```
 
 ## Installing the Gloo Gateway on Kubernetes

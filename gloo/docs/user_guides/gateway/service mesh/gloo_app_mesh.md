@@ -115,4 +115,4 @@ And there you have it! You now have a powerful L7 Ingress and API Gateway for ma
 
 ### Limitations
 
-Currently, AWS App Mesh is fairly simple in its capabilities. It does very limited routing, does not have a way to auto-inject proxies next to your workloads, cannot do mTLS, etc. As App Mesh adds more capabilities, we'll integrate deeper. Even with its current limitations, if you would like to connect multiple meshes together (multiple App Mesh or other heterogeneous implementations like Istio), please check out the [SuperGloo](https://supergloo.solo.io) project where we make it easy to stitch together multiple meshes.
+Currently, AWS App Mesh is fairly simple in its capabilities. It does very limited routing, cannot do mTLS, etc. As App Mesh adds more capabilities, we'll integrate deeper. Even with its current limitations, if you would like to connect multiple meshes together (multiple App Mesh or other heterogeneous implementations like Istio), please check out the [SuperGloo](https://supergloo.solo.io) project where we make it easy to stitch together multiple meshes.

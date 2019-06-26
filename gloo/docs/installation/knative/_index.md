@@ -8,30 +8,32 @@ weight: 3
 
 The `glooctl` command line provides useful functions to install, configure, and debug Gloo, though it is not required to use Gloo.
 
-To install `glooctl` using the [Homebrew](https://brew.sh) package manager, run the following.
+* To install `glooctl` using the [Homebrew](https://brew.sh) package manager, run the following.
+  
+  ```shell
+  brew install glooctl
+  ```
+  
+* To install on any platform run the following.
+  
+  ```bash
+  curl -sL https://run.solo.io/gloo/install | sh
 
-```shell
-brew install solo-io/tap/gloo
-```
-
-To install on any platform run the following.
-
-```bash
-curl -sL https://run.solo.io/gloo/install | sh
-```
-
-You can download `glooctl` directly via the GitHub releases page. You need to add `glooctl` to your path after downloading.
-
-
-```bash
-export PATH=$HOME/.gloo/bin:$PATH
-```
+  export PATH=$HOME/.gloo/bin:$PATH
+  ```
+  
+* You can download `glooctl` directly via the GitHub releases page. You need to add `glooctl` to your system's `PATH` after downloading.
 
 Verify the CLI is installed and running correctly with:
 
 ```bash
 glooctl --version
 ```
+
+```shell
+glooctl community edition version 0.13.29
+```
+
 
 ## Installing the Gloo Knative Ingress on Kubernetes
 
@@ -99,9 +101,7 @@ pod/ingress-85ffc7b77b-z6lsm               1/1     Running   0          64s
 
 NAME                           TYPE           CLUSTER-IP     EXTERNAL-IP       PORT(S)                      AGE
 service/clusteringress-proxy   LoadBalancer   10.7.250.225   35.226.24.166     80:32436/TCP,443:32667/TCP   64s
-service/gateway-proxy          LoadBalancer   10.7.241.51    104.197.118.219   80:30531/TCP,443:32422/TCP   4d10h
 service/gloo                   ClusterIP      10.7.251.47    <none>            9977/TCP                     4d10h
-service/sqoop                  LoadBalancer   10.7.241.6     34.66.77.240      9095:31804/TCP               4d10h
 
 NAME                                   DESIRED   CURRENT   UP-TO-DATE   AVAILABLE   AGE
 deployment.apps/clusteringress-proxy   1         1         1            1           64s

@@ -8,29 +8,30 @@ weight: 4
 
 The `glooctl` command line provides useful functions to install, configure, and debug Gloo, though it is not required to use Gloo.
 
-To install `glooctl` using the [Homebrew](https://brew.sh) package manager, run the following.
+* To install `glooctl` using the [Homebrew](https://brew.sh) package manager, run the following.
+  
+  ```shell
+  brew install glooctl
+  ```
+  
+* To install on any platform run the following.
+  
+  ```bash
+  curl -sL https://run.solo.io/gloo/install | sh
 
-```shell
-brew install solo-io/tap/gloo
-```
-
-To install on any platform run the following.
-
-```bash
-curl -sL https://run.solo.io/gloo/install | sh
-```
-
-You can download `glooctl` directly via the GitHub releases page. You need to add `glooctl` to your path after downloading.
-
-
-```bash
-export PATH=$HOME/.gloo/bin:$PATH
-```
+  export PATH=$HOME/.gloo/bin:$PATH
+  ```
+  
+* You can download `glooctl` directly via the GitHub releases page. You need to add `glooctl` to your system's `PATH` after downloading.
 
 Verify the CLI is installed and running correctly with:
 
 ```bash
 glooctl --version
+```
+
+```shell
+glooctl community edition version 0.13.29
 ```
 
 ## Installing the Gloo Ingress Controller on Kubernetes
@@ -76,6 +77,40 @@ helm install gloo --namespace gloo-system -f gloo/values-ingress.yaml
 ```
 
 Gloo can be installed to a namespace of your choosing with the `--namespace` flag.
+
+## Verify your Installation
+
+Check that the Gloo pods and services have been created. Depending on your install option, you may see some differences
+from the following example. And if you choose to install Gloo into a different namespace than the default `gloo-system`,
+then you will need to query your chosen namespace instead.
+
+```shell
+kubectl get all -n gloo-system
+```
+
+```noop
+NAME                                       READY   STATUS    RESTARTS   AGE
+pod/ingress-proxy-6d786fd9f-4k5r4          1/1     Running   0          64s
+pod/discovery-55b8645d77-72mbt             1/1     Running   0          63s
+pod/gloo-9f9f77c8d-6sk7z                   1/1     Running   0          64s
+pod/ingress-85ffc7b77b-z6lsm               1/1     Running   0          64s
+
+NAME                           TYPE           CLUSTER-IP     EXTERNAL-IP       PORT(S)                      AGE
+service/ingress-proxy          LoadBalancer   10.7.250.225   35.226.24.166     80:32436/TCP,443:32667/TCP   64s
+service/gloo                   ClusterIP      10.7.251.47    <none>            9977/TCP                     4d10h
+
+NAME                                   DESIRED   CURRENT   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/ingress-proxy          1         1         1            1           64s
+deployment.apps/discovery              1         1         1            1           63s
+deployment.apps/gloo                   1         1         1            1           64s
+deployment.apps/ingress                1         1         1            1           64s
+
+NAME                                             DESIRED   CURRENT   READY   AGE
+replicaset.apps/ingress-proxy-6d786fd9f          1         1         1       64s
+replicaset.apps/discovery-55b8645d77             1         1         1       63s
+replicaset.apps/gloo-9f9f77c8d                   1         1         1       64s
+replicaset.apps/ingress-85ffc7b77b               1         1         1       64s
+```
 
 ---
 
