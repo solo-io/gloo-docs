@@ -3,7 +3,7 @@ title: NodeJs
 weight: 4
 ---
 <aside class="notice" style="background: pink">
-Enhanced support for NodeJS will be added in early 2019.
+Enhanced support for NodeJS will be added in 2019.
 Legacy Squash notes are shown below.
 </aside>
 

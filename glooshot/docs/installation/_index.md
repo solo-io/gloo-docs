@@ -25,6 +25,12 @@ KUBECONFIG setting to connect to Kubernetes cluster.
 
 ## Install and initialize Gloo Shot to Kubernetes
 
+1. To register the Custom Resource Definitions (CRDs) used by Gloo Shot, run `glooshot register`.
+  - This will register the `experiments.glooshot.solo.io` and `reports.glooshot.solo.io` CRDs
+1. To deploy the Gloo Shot resources, run `glooshot init`.
+  - This will create and populate the `glooshot` namespace.
+
 ```bash
+glooshot register
 glooshot init
 ```

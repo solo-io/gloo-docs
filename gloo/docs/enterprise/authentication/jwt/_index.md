@@ -127,7 +127,7 @@ Configure JWT verification in Gloo's default virtual service:
 # escape the spaces in the public key file:
 PUBKEY=$(cat public-key.pem|python -c 'import json,sys; print(json.dumps(sys.stdin.read()).replace(" ", "\\u0020"))')
 # patch the default virtual service
-kubectl patch virtualservice --namespace gloo-system default --type=merge -p '{"spec":{"virtualHost":{"virtualHostPlugins":{"extensions":{"configs":{"jwt":{"jwks":{"local":{"key":'$PUBKEY'}},"issuer":"kubernetes/serviceaccount"}}}}}}}' -o yaml
+kubectl patch virtualservice --namespace gloo-system default --type=merge -p '{"spec":{"virtualHost":{"virtualHostPlugins":{"extensions":{"configs":{"jwt":{"providers":{"kube":{"jwks":{"local":{"key":'$PUBKEY'}},"issuer":"kubernetes/serviceaccount"}}}}}}}}}' -o yaml
 ```
 The output should look like so:
 ```yaml
@@ -153,11 +153,13 @@ spec:
       extensions:
         configs:
           jwt:
-            issuer: kubernetes/serviceaccount
-            jwks:
-              local:
-                key: "-----BEGIN PUBLIC KEY-----\r\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA4XbzUpqbgKbDLngsLp4b\r\npjf04WkMzXx8QsZAorkuGprIc2BYVwAmWD2tZvez4769QfXsohu85NRviYsrqbyC\r\nw/NTs3fMlcgld+ayfb/1X3+6u4f1Q8JsDm4fkSWoBUlTkWO7Mcts2hF8OJ8LlGSw\r\nzUDj3TJLQXwtfM0Ty1VzGJQMJELeBuOYHl/jaTdGogI8zbhDZ986CaIfO+q/UM5u\r\nkDA3NJ7oBQEH78N6BTsFpjDUKeTae883CCsRDbsytWgfKT8oA7C4BFkvRqVMSek7\r\nFYkg7AesknSyCIVMObSaf6ZO3T2jVGrWc0iKfrR3Oo7WpiMH84SdBYXPaS1VdLC1\r\n7QIDAQAB\r\n-----END
-                  PUBLIC KEY-----\r\n"
+            providers:
+              kube:
+                issuer: kubernetes/serviceaccount
+                jwks:
+                  local:
+                    key: "-----BEGIN PUBLIC KEY-----\r\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA4XbzUpqbgKbDLngsLp4b\r\npjf04WkMzXx8QsZAorkuGprIc2BYVwAmWD2tZvez4769QfXsohu85NRviYsrqbyC\r\nw/NTs3fMlcgld+ayfb/1X3+6u4f1Q8JsDm4fkSWoBUlTkWO7Mcts2hF8OJ8LlGSw\r\nzUDj3TJLQXwtfM0Ty1VzGJQMJELeBuOYHl/jaTdGogI8zbhDZ986CaIfO+q/UM5u\r\nkDA3NJ7oBQEH78N6BTsFpjDUKeTae883CCsRDbsytWgfKT8oA7C4BFkvRqVMSek7\r\nFYkg7AesknSyCIVMObSaf6ZO3T2jVGrWc0iKfrR3Oo7WpiMH84SdBYXPaS1VdLC1\r\n7QIDAQAB\r\n-----END
+                      PUBLIC KEY-----\r\n"
 ```
 
 The updated virtual service now contains JWT configuration with the public key, and the issuer for the JWT.
@@ -209,11 +211,13 @@ spec:
       extensions:
         configs:
           jwt:
-            issuer: kubernetes/serviceaccount
-            jwks:
-              local:
-                key: "-----BEGIN PUBLIC KEY-----\r\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA4XbzUpqbgKbDLngsLp4b\r\npjf04WkMzXx8QsZAorkuGprIc2BYVwAmWD2tZvez4769QfXsohu85NRviYsrqbyC\r\nw/NTs3fMlcgld+ayfb/1X3+6u4f1Q8JsDm4fkSWoBUlTkWO7Mcts2hF8OJ8LlGSw\r\nzUDj3TJLQXwtfM0Ty1VzGJQMJELeBuOYHl/jaTdGogI8zbhDZ986CaIfO+q/UM5u\r\nkDA3NJ7oBQEH78N6BTsFpjDUKeTae883CCsRDbsytWgfKT8oA7C4BFkvRqVMSek7\r\nFYkg7AesknSyCIVMObSaf6ZO3T2jVGrWc0iKfrR3Oo7WpiMH84SdBYXPaS1VdLC1\r\n7QIDAQAB\r\n-----END
-                  PUBLIC KEY-----\r\n"
+            providers:
+              kube:
+                issuer: kubernetes/serviceaccount
+                jwks:
+                  local:
+                    key: "-----BEGIN PUBLIC KEY-----\r\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA4XbzUpqbgKbDLngsLp4b\r\npjf04WkMzXx8QsZAorkuGprIc2BYVwAmWD2tZvez4769QfXsohu85NRviYsrqbyC\r\nw/NTs3fMlcgld+ayfb/1X3+6u4f1Q8JsDm4fkSWoBUlTkWO7Mcts2hF8OJ8LlGSw\r\nzUDj3TJLQXwtfM0Ty1VzGJQMJELeBuOYHl/jaTdGogI8zbhDZ986CaIfO+q/UM5u\r\nkDA3NJ7oBQEH78N6BTsFpjDUKeTae883CCsRDbsytWgfKT8oA7C4BFkvRqVMSek7\r\nFYkg7AesknSyCIVMObSaf6ZO3T2jVGrWc0iKfrR3Oo7WpiMH84SdBYXPaS1VdLC1\r\n7QIDAQAB\r\n-----END
+                      PUBLIC KEY-----\r\n"
           rbac:
             config:
               policies:
@@ -308,7 +312,7 @@ then use the `pem-jwk` utility to convert our public key to a Json Web Key forma
 # install pem-jwk utility.
 npm install -g pem-jwk
 # extract public key and convert it to JWK.
-openssl rsa -in private-key.pem -pubout | pem-jwk  | jq .
+openssl rsa -in private-key.pem -pubout | pem-jwk | jq .
 ```
 
 Output should look like so:
@@ -374,7 +378,7 @@ Configure gloo to use the JWKS server:
 # remove the settings from the previous part of the guide
 kubectl patch virtualservice --namespace gloo-system default --type=json -p '[{"op":"remove","path":"/spec/virtualHost/virtualHostPlugins/extensions"}]' -o yaml
 # add the remote jwks
-kubectl patch virtualservice --namespace gloo-system default --type=merge -p '{"spec":{"virtualHost":{"virtualHostPlugins":{"extensions":{"configs":{"jwt":{"jwks":{"remote":{"url":"http://jwks-server/jwks.json","upstream_ref":{"name":"jwks-server","namespace":"gloo-system"}}},"issuer":"solo.io"}}}}}}}' -o yaml
+kubectl patch virtualservice --namespace gloo-system default --type=merge -p '{"spec":{"virtualHost":{"virtualHostPlugins":{"extensions":{"configs":{"jwt":{"providers":{"solo-provider":{"jwks":{"remote":{"url":"http://jwks-server/jwks.json","upstream_ref":{"name":"jwks-server","namespace":"gloo-system"}}},"issuer":"solo.io"}}}}}}}}}' -o yaml
 ```
 
 ### Create the Json Web Token (JWT)
@@ -427,4 +431,4 @@ curl localhost:8001/api/v1/namespaces/gloo-system/services/gateway-proxy:80/prox
 ```
 ### Conclusion
 We have created a JWKS server, signed a custom JWT and used Gloo to verify that JWT
-and authroize our request.
+and authorize our request.

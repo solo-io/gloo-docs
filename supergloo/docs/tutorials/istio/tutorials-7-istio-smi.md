@@ -53,7 +53,7 @@ smi-adapter-istio-f564fbcd8-xlchp        1/1     Running     0          2m53s
 We can verify that SuperGloo's `meshdiscovery` service has detected that SMI has been enabled for istio:
 
 ```bash
-kubectl get mesh -n supergloo-system istio -o yaml
+kubectl get mesh -n supergloo-system istio-istio-system -o yaml
 ```
 
 {{< highlight yaml "hl_lines=29" >}}
@@ -65,7 +65,7 @@ metadata:
   labels:
     created_by: mesh-discovery
     discovered_by: istio-mesh-discovery
-  name: my-istio
+  name: istio-istio-system
   namespace: supergloo-system
   resourceVersion: "6968896"
   selfLink: /apis/supergloo.solo.io/v1/namespaces/supergloo-system/meshes/my-istio

@@ -191,16 +191,16 @@ type: Opaque
 Finally, we must tell SuperGloo to use this secret for certificate provisioning in our mesh:
 
 ```bash
-supergloo set rootcert --target-mesh supergloo-system.istio \
+supergloo set mesh rootcert --target-mesh supergloo-system.istio-istio-system \
     --tls-secret supergloo-system.my-root-ca
 ```
 
 ```noop
-+----------+-------+------+
-|   MESH   | TYPE  | MTLS |
-+----------+-------+------+
-| my-istio | Istio | true |
-+----------+-------+------+
++--------------------+-------+------+
+|        MESH        | TYPE  | MTLS |
++--------------------+-------+------+
+| istio-istio-system | Istio | true |
++--------------------+-------+------+
 ```
 
 > Note: `target-mesh` should be set to the `NAMESPACE.NAME` of the managed mesh you'd like to configure. To

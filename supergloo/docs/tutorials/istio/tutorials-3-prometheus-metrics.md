@@ -57,7 +57,7 @@ when it is connected to that instance's configmap. Run the following command to 
 
 ```bash
 supergloo set mesh stats \
-    --target-mesh supergloo-system.istio \
+    --target-mesh supergloo-system.istio-istio-system \
     --prometheus-configmap prometheus-test.prometheus-server
 ```
 
@@ -90,7 +90,7 @@ kubectl --namespace prometheus-test get configmap --output yaml | grep istio
 We can see the configuration that this applied to our Mesh CRD by running:
 
 ```bash
-kubectl --namespace supergloo-system get mesh istio --output yaml
+kubectl --namespace supergloo-system get mesh istio-istio-system --output yaml
 ```
 
 {{< highlight yaml "hl_lines=14-17" >}}
@@ -99,7 +99,7 @@ kind: Mesh
 metadata:
   creationTimestamp: 2019-03-28T18:44:46Z
   generation: 1
-  name: istio
+  name: istio-istio-system
   namespace: supergloo-system
   resourceVersion: "178284"
   selfLink: /apis/supergloo.solo.io/v1/namespaces/supergloo-system/meshes/istio

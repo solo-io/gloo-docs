@@ -162,7 +162,7 @@ Run the following command to create a simple RoutingRule with the retry config w
 ```bash
 supergloo apply routingrule retries budget \
     --name retries \
-    --target-mesh supergloo-system.linkerd \
+    --target-mesh supergloo-system.linkerd-linkerd \
     --min-retries 3 \
     --ratio 0.1 \
     --ttl 1m
@@ -185,7 +185,7 @@ spec:
         retryRatio: 0.1
         ttl: 60s
   targetMesh:
-    name: linkerd
+    name: linkerd-linkerd
     namespace: supergloo-system
 EOF
 ```

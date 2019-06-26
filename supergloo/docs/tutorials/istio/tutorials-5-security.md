@@ -66,7 +66,7 @@ spec:
       - name: default-productpage-9080
         namespace: supergloo-system
   targetMesh:
-    name: istio
+    name: istio-istio-system
     namespace: supergloo-system
 
 ```
@@ -149,7 +149,7 @@ supergloo apply securityrule \
     --namespace default \
     --source-upstreams supergloo-system.default-productpage-9080 \
     --dest-upstreams supergloo-system.default-productpage-9080 \
-    --target-mesh supergloo-system.istio
+    --target-mesh supergloo-system.istio-istio-system
 ```
 
 - Or, using `kubectl`:
@@ -173,7 +173,7 @@ spec:
       - name: default-productpage-9080
         namespace: supergloo-system
   targetMesh:
-    name: istio
+    name: istio-istio-system
     namespace: supergloo-system
 EOF
 ```
@@ -199,7 +199,7 @@ supergloo apply securityrule \
     --namespace default \
     --source-upstreams supergloo-system.default-productpage-9080 \
     --dest-upstreams supergloo-system.default-details-9080 \
-    --target-mesh supergloo-system.istio
+    --target-mesh supergloo-system.istio-istio-system
 ```
 
 - Or with `kubectl`:
@@ -223,7 +223,7 @@ spec:
       - name: default-productpage-9080
         namespace: supergloo-system
   targetMesh:
-    name: istio
+    name: istio-istio-system
     namespace: supergloo-system
 EOF
 ```
@@ -243,7 +243,7 @@ supergloo apply securityrule \
     --namespace default \
     --source-upstreams supergloo-system.default-productpage-9080 \
     --dest-namespaces default \
-    --target-mesh supergloo-system.istio
+    --target-mesh supergloo-system.istio-istio-system
 ```
 
 - Or with `kubectl`:
@@ -266,7 +266,7 @@ spec:
       - name: default-productpage-9080
         namespace: supergloo-system
   targetMesh:
-    name: istio
+    name: istio-istio-system
     namespace: supergloo-system
 EOF
 ```

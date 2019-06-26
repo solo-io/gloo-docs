@@ -1,10 +1,10 @@
 ---
 title: Python
-weight: 4
+weight: 5
 ---
 
 <aside class="notice" style="background: pink">
-Enhanced support for Python will be added in early 2019.
+Enhanced support for Python will be added in 2019.
 Legacy Squash notes are shown below.
 </aside>
 

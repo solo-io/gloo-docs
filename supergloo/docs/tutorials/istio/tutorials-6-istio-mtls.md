@@ -52,7 +52,7 @@ Assuming that the exact names of the earlier tutorials were used, the command wi
 #### Option 1: CLI
 
 ```bash
-supergloo install gloo --name gloo --target-meshes supergloo-system.istio
+supergloo install gloo --name gloo --target-meshes supergloo-system.istio-istio-system
 ```
 
 #### Option 2: yaml
@@ -69,7 +69,7 @@ spec:
     gloo:
     glooVersion: 0.13.13
     meshes:
-    - name: istio
+    - name: istio-istio-system
       namespace: supergloo-system
   installationNamespace: gloo-system
 EOF
@@ -163,7 +163,7 @@ Now that we have verified that we cannot access the route, the next step is to a
 order to tell gloo to enable ssl with the istio certs. supergloo has a command to accomplish just that.
 
 ```bash
-supergloo set upstream mtls --name  default-details-9080 --target-mesh supergloo-system.istio
+supergloo set upstream mtls --name  default-details-9080 --target-mesh supergloo-system.istio-istio-system
 ```
 
 After this command completes successfully the upstream should contain the following. Notice the certificates in

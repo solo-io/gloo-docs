@@ -1,3 +1,31 @@
+### v0.14.0
+
+**Dependency Bumps**
+
+- solo-io/gloo has been upgraded to v0.14.1.
+
+**Breaking Changes**
+
+- Update to gloo 0.14.0 (https://github.com/solo-io/solo-projects/pull/622)
+
+**New Features**
+
+- Support multiple providers for JWT (https://github.com/solo-io/solo-projects/pull/622)
+- Support setting claims as headers (https://github.com/solo-io/solo-projects/pull/622)
+
+**Fixes**
+
+- Use apps/v1 api group for deployments (https://github.com/solo-io/gloo/issues/767)
+
+### v0.13.18
+
+**New Features**
+
+- Add config service to grpc service. (https://github.com/solo-io/solo-projects/issues/609)
+- Add gRPC service for artifacts. (https://github.com/solo-io/solo-projects/issues/610)
+- Add gRPC service for secrets. (https://github.com/solo-io/solo-projects/issues/611)
+
+
 ### v0.13.17
 
 **Dependency Bumps**

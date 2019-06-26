@@ -111,7 +111,7 @@ The equivalent non-interactive command:
 supergloo apply routingrule trafficshifting \
     --name reviews-v3 \
     --dest-upstreams supergloo-system.default-reviews-9080 \
-    --target-mesh supergloo-system.istio \
+    --target-mesh supergloo-system.istio-istio-system \
     --destination supergloo-system.default-reviews-v3-9080:1
 ```
 
@@ -140,7 +140,7 @@ spec:
               namespace: supergloo-system
           weight: 1
   targetMesh:
-    name: istio
+    name: istio-istio-system
     namespace: supergloo-system
 status:
   reported_by: istio-config-reporter
@@ -161,7 +161,7 @@ Lets update our rule to split traffic between the `v2` and `v3` versions of revi
 supergloo apply routingrule trafficshifting \
     --name reviews-v3 \
     --dest-upstreams supergloo-system.default-reviews-9080 \
-    --target-mesh supergloo-system.istio \
+    --target-mesh supergloo-system.istio-istio-system \
     --destination supergloo-system.default-reviews-v2-9080:1 \
     --destination supergloo-system.default-reviews-v3-9080:1
 ```
