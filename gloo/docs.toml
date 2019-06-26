@@ -1,4 +1,4 @@
-baseURL = "https://docs.corp.solo.io/gloo/"
+baseURL = "https://docs.corp.solo.io/"
 languageCode = "en-us"
 title = "Gloo Docs"
 theme = "hugo-theme-soloio"
