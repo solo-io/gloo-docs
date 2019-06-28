@@ -1,6 +1,6 @@
 ---
 title: Basic Routing in Gloo Enterprise Console
-menuTitle: Basic Routing
+menuTitle: Quick Start with Gloo Enterprise
 weight: 2
 description: Quick walk through of using Gloo Enterprise Console to configure route rules in Gloo.
 ---

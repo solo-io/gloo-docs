@@ -1,3 +1,56 @@
+### v0.14.0
+
+**Dependency Bumps**
+
+- solo-io/gloo has been upgraded to v0.14.1.
+
+**Breaking Changes**
+
+- Update to gloo 0.14.0 (https://github.com/solo-io/solo-projects/pull/622)
+
+**New Features**
+
+- Support multiple providers for JWT (https://github.com/solo-io/solo-projects/pull/622)
+- Support setting claims as headers (https://github.com/solo-io/solo-projects/pull/622)
+
+**Fixes**
+
+- Use apps/v1 api group for deployments (https://github.com/solo-io/gloo/issues/767)
+
+### v0.13.18
+
+**New Features**
+
+- Add config service to grpc service. (https://github.com/solo-io/solo-projects/issues/609)
+- Add gRPC service for artifacts. (https://github.com/solo-io/solo-projects/issues/610)
+- Add gRPC service for secrets. (https://github.com/solo-io/solo-projects/issues/611)
+
+
+### v0.13.17
+
+**Dependency Bumps**
+
+- solo-io/gloo-i has been upgraded to v0.1.25.
+
+### v0.13.16
+
+**New Features**
+
+- Add support for local JWKS (https://github.com/solo-io/solo-projects/pull/604)
+- JWT and RBAC support (https://github.com/solo-io/solo-projects/pull/602)
+
+### v0.13.15
+
+**Fixes**
+
+- Allow helm to provide an array of namespaces to watch. (https://github.com/solo-io/solo-projects/issues/597)
+
+### v0.13.14
+
+**Fixes**
+
+- User redis image instead of kubernetes/redis. (https://github.com/solo-io/solo-projects/pull/595)
+
 ### v0.13.13
 
 **Dependency Bumps**

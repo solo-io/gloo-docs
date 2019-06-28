@@ -44,6 +44,7 @@ Depending on the IDE and debugger you are using, you can specify source code map
   - In this case, you can choose the minimum unique path identifiers
   - For example:
 
+
 ```
 # This is the minimum path specification required:
 From: /Users/mitch/

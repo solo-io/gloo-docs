@@ -3,12 +3,6 @@ weight: 99
 title: Sqoop
 ---
 
-<h1 align="center">
-  <img src="Sqoop.png" alt="Sqoop" width="200" height="183">
-  <br>
-  GraphQL for Monolith, Microservices, and Serverless
-</h1>
-
 ### What is Sqoop?
 
 Sqoop (formerly QLoo) is a GraphQL Server built on top of [Gloo](https://github.com/solo-io/gloo) and the [Envoy Proxy](https://envoyproxy.io).
@@ -64,16 +58,16 @@ of data sources Sqoop can connect to.
 
 ### Installation:
 
-* [Installing on Kubernetes]({{< ref "/installation" >}}): Installation guide for Kubernetes
+* [Installing on Kubernetes](./installation): Installation guide for Kubernetes
 
 ### Getting Started:
 
-* [Getting Started on Kubernetes]({{< ref "/getting_started" >}}): Getting started with Kubernetes (recommended for first time users)
+* [Getting Started on Kubernetes](./getting_started): Getting started with Kubernetes (recommended for first time users)
 
 ### v1 API reference:
 
-* [Schemas]({{< ref "/v1/github.com/solo-io/sqoop/api/v1/schema.proto.sk" >}}): API Specification for proving your GraphQL Schemas to Sqoop
-* [ResolverMaps]({{< ref "/v1/github.com/solo-io/sqoop/api/v1/resolver_map.proto.sk" >}}): API Reference for ResolverMaps, which map your data sources to your Schemas
+* [Schemas](./v1/github.com/solo-io/sqoop/api/v1/schema.proto.sk): API Specification for proving your GraphQL Schemas to Sqoop
+* [ResolverMaps](./v1/github.com/solo-io/sqoop/api/v1/resolver_map.proto.sk): API Reference for ResolverMaps, which map your data sources to your Schemas
 
 ## Blogs & Demos
 

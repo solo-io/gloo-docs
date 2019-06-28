@@ -34,14 +34,14 @@ type DebugServer interface {
 }
 ```
 
-To add debugger support to squash, implement the functions above and add it to the squash client [main file](../../cmd/squash-client/platforms/kubernetes/main.go).
+To add debugger support to squash, implement the functions above and add it to the squash client.
 
 ```go
 func getDebugger(dbgtype string) debuggers.Debugger {
-	
+
 	var g gdb.GdbInterface
 	var d dlv.DLV
-	
+
 	switch dbgtype {
 	case "dlv":
 		return &d
@@ -51,5 +51,4 @@ func getDebugger(dbgtype string) debuggers.Debugger {
 		return nil
 	}
 }
-
 ```

@@ -1,6 +1,6 @@
 ---
 title: Gloo Enterprise
-weight: 2
+weight: 20
 ---
 
 Gloo Enterprise includes all of the Gloo open source code, and adds to it with a GUI console and some additional plugins.

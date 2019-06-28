@@ -14,20 +14,20 @@ The solution for this is to provide it with a secure way in. Normally, ssh comes
 
 ssh to a node on aws and create a socks proxy:
 
-```
+```shell
 ssh -N -D 12346  admin@[NODE in the cluster here]
 ```
 
 'convert' the socks proxy to an http proxy:
 
-```
+```shell
 docker run --rm --net=host clue/polipo proxyAddress=127.0.0.1 proxyPort=12347 socksParentProxy="localhost:12346" socksProxyType=socks5 allowedPorts=1-65535 tunnelAllowedPorts=1-65535
 ```
 
 then set an http proxy for kubectl.
 You can do it as an env var before starting vscode:
 
-```
+```shell
 export http_proxy=localhost:12347
 ```
 

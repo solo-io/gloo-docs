@@ -44,6 +44,7 @@ Meshes represent a currently registered service mesh.
 "mtlsConfig": .supergloo.solo.io.MtlsConfig
 "monitoringConfig": .supergloo.solo.io.MonitoringConfig
 "discoveryMetadata": .supergloo.solo.io.DiscoveryMetadata
+"smiEnabled": bool
 
 ```
 
@@ -57,6 +58,7 @@ Meshes represent a currently registered service mesh.
 | `mtlsConfig` | [.supergloo.solo.io.MtlsConfig](../mesh.proto.sk#mtlsconfig) | mtls config specifies configuration options for enabling mutual tls between pods in this mesh |  |
 | `monitoringConfig` | [.supergloo.solo.io.MonitoringConfig](../mesh.proto.sk#monitoringconfig) | configuration for propagating stats and metrics from mesh controllers and sidecars to a centralized datastore such as prometheus |  |
 | `discoveryMetadata` | [.supergloo.solo.io.DiscoveryMetadata](../mesh.proto.sk#discoverymetadata) | object which represents the data mesh discovery finds about a given mesh |  |
+| `smiEnabled` | `bool` | whether or not to use SMI to configure this mesh |  |
 
 
 
@@ -68,10 +70,7 @@ Meshes represent a currently registered service mesh.
 Generic discovery data shared between different meshes
 
 ```yaml
-"injectedNamespaceLabel": string
 "enableAutoInject": bool
-"meshVersion": string
-"installationNamespace": string
 "upstreams": []core.solo.io.ResourceRef
 "mtlsConfig": .supergloo.solo.io.MtlsConfig
 
@@ -79,10 +78,7 @@ Generic discovery data shared between different meshes
 
 | Field | Type | Description | Default |
 | ----- | ---- | ----------- |----------- | 
-| `injectedNamespaceLabel` | `string` | list of namespaces which we know are being injected by a given mesh |  |
 | `enableAutoInject` | `bool` | Whether or not auto-injection is enabled for a given mesh |  |
-| `meshVersion` | `string` | version of the mesh which is installed |  |
-| `installationNamespace` | `string` | namespace which the mesh is installed into |  |
 | `upstreams` | [[]core.solo.io.ResourceRef](../../../../solo-kit/api/v1/ref.proto.sk#resourceref) | upstreams which point to injected pods in the mesh |  |
 | `mtlsConfig` | [.supergloo.solo.io.MtlsConfig](../mesh.proto.sk#mtlsconfig) | discovered mtls config of the given mesh |  |
 

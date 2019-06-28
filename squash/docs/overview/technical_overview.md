@@ -24,6 +24,6 @@ Given the constraints, we need to run a Plank pod on the same node as the target
 To debug a process, the user selects it through one of Squash's interactive interfaces. The interface triggers the creation of a Plank pod. The Plank pod is initiated with knowledge of the user's debug intentions.
 
 Next, the Plank process determines which pid the user wants to debug. To do that, it obtains a list of all the
-currently running pids in that container using the Container Runtime Interface (CRI) API. It does so in a CRI agnostic way, with the only assumption that "ls" is present inside the image.
+currently running pids in that container using the Container Runtime Interface (CRI) API. It does so in a CRI agnostic way, with the only assumption that `ls` is present inside the image.
 
 Squash attaches a debugger to the target pid and exposes the debugger to the user. Depending on the language and user preferences, the debugger interface is exposed directly in the context of an IDE, in a terminal-based interactive debugger, or simply as a local port that they can attach to their preferred debug interface.

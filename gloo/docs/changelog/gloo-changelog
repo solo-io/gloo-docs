@@ -1,3 +1,121 @@
+### v0.14.2
+
+**New Features**
+
+- provide option for the helm chart to install gloo knative integration without installing knative itself (https://github.com/solo-io/gloo/issues/774)
+
+### v0.14.1
+
+**Fixes**
+
+- Use apps/v1 api group for deployments (https://github.com/solo-io/gloo/issues/767)
+- fix append in hybridUpstreamSnapshot (https://github.com/solo-io/gloo/issues/771)
+
+### v0.14.0
+
+**Breaking Changes**
+
+- Bumping minor version after the breaking API change from release 0.13.34 (which erroneously did not bump it). (https://github.com/solo-io/gloo/issues/760)
+- Fixing misspelled `ssl_configuations` field in `Listener` protobuf message. (https://github.com/solo-io/gloo/issues/762)
+- Extend the route params for the plugins to have the vhost included. (https://github.com/solo-io/gloo/pull/766)
+
+**New Features**
+
+- Updated `Route` API to allow Kubernetes services as direct routing destinations. This means that, in addition to
+  `Upstream`s, `Route`s on `VirtualService` and `Proxy` resources can now directly point to a Kubernetes service. (https://github.com/solo-io/gloo/issues/746)
+- Add [Virtual Clusters](https://www.envoyproxy.io/docs/envoy/v1.5.0/api-v2/rds.proto#envoy-api-msg-virtualcluster) to the Gloo API. (https://github.com/solo-io/gloo/issues/764)
+
+
+### v0.13.34
+
+**New Features**
+
+- Update API to support routing to Kubernetes services. (https://github.com/solo-io/gloo/issues/746)
+
+**Fixes**
+
+- Fix hardcoded Kubernetes cluster name in a Helm Chart (https://github.com/solo-io/gloo/issues/754)
+
+### v0.13.33
+
+This release contained no user-facing changes.
+
+
+### v0.13.32
+
+**New Features**
+
+- Allow two virtual services on the same host with identical SslConfigs to be merged (https://github.com/solo-io/gloo/issues/731)
+
+### v0.13.30
+
+**New Features**
+
+- Allow disabling function discovery. This can now be done with `--set discovery.disable_fds=true` when installing with helm. (https://github.com/solo-io/gloo/pull/729)
+
+**Fixes**
+
+- Allow two virtual services on the same host, differing by ssl/non-ssl (https://github.com/solo-io/gloo/pull/734)
+- Add tcp keepalive to knative and ingress projects. (https://github.com/solo-io/gloo/pull/728)
+
+
+### v0.13.29
+
+**Fixes**
+
+- Only use ipv4 for admin, to avoid failures when ipv6 not present. (https://github.com/solo-io/gloo/pull/716)
+
+### v0.13.28
+
+**Fixes**
+
+- Fix non existent var when using extra annotations for service (https://github.com/solo-io/gloo/issues/714)
+
+### v0.13.27
+
+This release contained no user-facing changes.
+
+### v0.13.26
+
+**Fixes**
+
+- Use underscores instead of dots in the cluster name, for better prometheus stats. (https://github.com/solo-io/gloo/pull/712)
+
+### v0.13.25
+
+**Fixes**
+
+- Quote annotations in helm chart (https://github.com/solo-io/gloo/pull/711)
+
+### v0.13.24
+
+**New Features**
+
+- Expose gloo and envoy stats by default (https://github.com/solo-io/gloo/pull/710)
+
+### v0.13.23
+
+**New Features**
+
+- Add upstream group to glooctl add route (https://github.com/solo-io/gloo/pull/709)
+
+### v0.13.22
+
+**Fixes**
+
+- Add Tcp keep alive to the static config to assist in detecting half open connections. (https://github.com/solo-io/gloo/pull/708)
+
+### v0.13.21
+
+**Dependency Bumps**
+
+- solo-io/solo-kit has been upgraded to v0.9.0.
+
+**Fixes**
+
+- Adds the missing CLlsterRole for knative-build access of the knative-serving controller. (https://github.com/solo-io/gloo/issues/704)
+
+
 ### v0.13.20
 
 **New Features**
@@ -35,7 +153,7 @@
 
 **Fixes**
 
-- Fix knative test flake (https://github.com/solo-io/gloo/685)
+- Fix knative test flake (https://github.com/solo-io/gloo/issues/685)
 - Allow upstream discovery discovery grpc services correctly. (https://github.com/solo-io/gloo/issues/688)
 
 ### v0.13.15

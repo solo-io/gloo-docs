@@ -138,4 +138,4 @@ server: envoy
 transfer-encoding: chunked
 ```
 ## Conclusion
-With the custom rate-limit configuration option, you have the full power of Envoy rate limits to use for your custom use cases. The downsides to this is the API is a bit more complicated. To leverage a simpler API that can do true per-user (logged-in, authenticated user) rate limits, take a look at [Gloo's simplified ratelimit API](../ratelimit).
+With the custom rate-limit configuration option, you have the full power of Envoy rate limits to use for your custom use cases. The downside to this is the API is a bit more complicated. To leverage a simpler API that can do true per-user (logged-in, authenticated user) rate limits, take a look at [Gloo's simplified ratelimit API](../ratelimit).

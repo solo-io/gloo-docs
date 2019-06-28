@@ -31,7 +31,7 @@ Gloo offers first-class API management features on all functions:
 
 ## Component Architecture
 
-In the most basic sense, Gloo is a translation engine and [Envoy xDS server](https://github.com/envoyproxy/data-plane-api/blob/master/XDS_PROTOCOL.md)
+In the most basic sense, Gloo is a translation engine and [Envoy xDS server](https://github.com/envoyproxy/data-plane-api/blob/master/xds_protocol.rst)
 providing advanced configuration for Envoy (including Gloo's custom Envoy filters). Gloo follows an event-based architecture, watching various sources of configuration for updates and responding immediately with v2 gRPC updates to Envoy.
 
 ![Component Architecture](../component_architecture.png "Component Architecture")
@@ -42,7 +42,7 @@ providing advanced configuration for Envoy (including Gloo's custom Envoy filter
 Endpoint Discovery is plugin-specific. For example, the [Kubernetes Plugin](../../v1/github.com/solo-io/gloo/projects/gloo/api/v1/plugins/kubernetes/kubernetes.proto.sk) runs its own Endpoint Discovery goroutine.
 * The **Translator** receives snapshots of the entire state, composed of user configuration, secrets, and discovery information
 and initiates a new *translation loop*, creating a new Envoy xDS Snapshot.
-  1. The translation cycle starts by creating **[Envoy clusters](https://www.envoyproxy.io/docs/envoy/latest/api-v1/cluster_manager/cluster.html?highlight=cluster)** from all configured upstreams. Each upstream has a **type**, indicating which upstream plugin is responsible for
+  1. The translation cycle starts by creating **[Envoy clusters](https://www.envoyproxy.io/docs/envoy/v1.8.0/api-v1/cluster_manager/cluster)** from all configured upstreams. Each upstream has a **type**, indicating which upstream plugin is responsible for
   processing that upstream object. Correctly configured upstreams are converted into Envoy clusters by their respective
   plugins. Plugins may set cluster metadata on the cluster object.
   1. The next step in the translation cycle is to process all the functions on each upstream. Functional plugins process

@@ -1,3 +1,17 @@
+### v0.2.7
+
+**Fixes**
+
+- fix the version incompatibility issue between the updated version of gloo and sqoop's envoy sidecar (https://github.com/solo-io/sqoop/issues/38)
+
+### v0.2.6
+
+This release contained no user-facing changes.
+
+### v0.2.5
+
+This release contained no user-facing changes.
+
 ### v0.2.4
 
 **New Features**

@@ -1,22 +1,19 @@
 ---
 title: "Installing Linkerd"
-weight: 1
+weight: 20
+description: "Installing Linkerd follows a familiar path to any other mesh when using SuperGloo. In this section, we take a look at installing Linkerd and understanding the supporting SuperGloo API objects that get created when doing a mesh installation."
 ---
 
-# Overview
+## Overview
 
-SuperGloo can be used to install, upgrade, and uninstall a supported mesh.
+Linkerd has a simple, focused user experience. As they continue to expand their feature set, users will want a consistent API to install and manage a Linkerd mesh. In this section we see how SuperGloo can unify the installation and management of a Linkerd service mesh similar to the other supported meshes.
 
-Currently supported meshes for installation:
-
-- Istio
-- Linkerd
 
 ## Installing Linkerd with SuperGloo
 
-First, ensure that SuperGloo has been initialized in your kubernetes cluster via `supergloo init` or the 
-[Supergloo Helm Chart](https://github.com/solo-io/supergloo/tree/master/install/helm/supergloo). See the [installation
-instructions](../../installation) for detailed instructions on installing SuperGloo.
+First, ensure that SuperGloo has been initialized in your kubernetes cluster via `supergloo init` or the
+[Supergloo Helm Chart](https://github.com/solo-io/supergloo/tree/master/install/helm/supergloo). See the
+[installation instructions]({{% ref "/installation" %}}) for detailed instructions on installing SuperGloo.
 
 Once SuperGloo has been installed, we'll create an Install CRD with configuration parameters which will then
 trigger SuperGloo to begin the mesh installation.
@@ -35,7 +32,7 @@ See `supergloo install linkerd --help` for the full list of installation options
 #### Option 2: Using `kubectl apply` on a yaml file:
 
 ```yaml
-cat << EOF | kubectl apply -f -
+cat <<EOF | kubectl apply --filename -
 apiVersion: supergloo.solo.io/v1
 kind: Install
 metadata:
@@ -46,17 +43,17 @@ spec:
     linkerdMesh:
       enableAutoInject: true
       enableMtls: true
-      linkerdVersion: stable-2.2.1
+      linkerdVersion: stable-2.3.0
 EOF
 ```
 
 Once you've created the Install CRD, you can track the progress of the Linkerd installation:
 
 ```bash
-kubectl get pod -n linkerd --watch
+kubectl --namespace linkerd get pod --watch
 ```
 
-```
+```noop
 NAME                                      READY   STATUS    RESTARTS   AGE
 linkerd-ca-585f97b595-l96mj               1/1     Running   0          46s
 linkerd-controller-6954987c97-mjj8l       3/3     Running   0          45s
@@ -69,8 +66,8 @@ linkerd-web-546b557f56-xsjqf              1/1     Running   0          5s
 To tear everything down from this demo:
 
 ```bash
-kubectl delete -n default -f https://raw.githubusercontent.com/istio/istio/1.0.6/samples/bookinfo/platform/kube/bookinfo.yaml
-kubectl delete ns not-injected
+kubectl --namespace default delete --filename https://raw.githubusercontent.com/istio/istio/1.0.6/samples/bookinfo/platform/kube/bookinfo.yaml
+kubectl delete namespace not-injected
 ```
 
 ## Uninstalling Linkerd
@@ -82,7 +79,6 @@ If the `disabled` field is set to `true` on the install CRD. Doing so, again we 
 ```bash
 supergloo uninstall --name linkerd
 ```
-
 
 #### Option 2: Using `kubectl edit` and set `spec.disabled: true`:
 
@@ -101,8 +97,8 @@ metadata:
   name: linkerd
   namespace: supergloo-system
 spec:
-   ## add the following line 
-   disabled: true            
+   ## add the following line
+   disabled: true
    ##
    installationNamespace: linkerd
    mesh:
@@ -112,16 +108,16 @@ spec:
      linkerdMesh:
        enableAutoInject: true
        enableMtls: true
-       linkerdVersion: stable-2.2.1
+       linkerdVersion: stable-2.3.0
 {{< /highlight >}}
 
-
-Verify uninstallation has begun: 
+Verify un-installation has begun:
 
 ```bash
-kubectl get pod -n linkerd --watch
+kubectl --namespace linkerd get pod --watch
 ```
-```bash
+
+```noop
 NAME                                      READY   STATUS    RESTARTS   AGE
 linkerd-ca-585f97b595-l96mj               1/1     Running   1          48m
 linkerd-controller-6954987c97-mjj8l       3/3     Running   3          48m
@@ -157,5 +153,5 @@ linkerd-grafana-7c6bbd8d-6vnqp            0/1     Terminating   1          48m
 linkerd-grafana-7c6bbd8d-6vnqp            0/1     Terminating   1          48m
 ```
 
-Note that the `linkerd` namespace will be left intact by this process, but can be safely removed using 
-`kubectl delete ns linkerd`. 
+Note that the `linkerd` namespace will be left intact by this process, but can be safely removed using
+`kubectl delete namespace linkerd`.

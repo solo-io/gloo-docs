@@ -44,7 +44,6 @@ weight: 3
 
 - Suggestion: do not authorize your users to `kubectl exec` into the namespace that stores the `squash` and `plank` pods.
 
-
 ```yaml
 # Reference: pod exec Policy Rule
 # DO NOT enable this permission for the squash-debugger namespace
@@ -317,7 +316,6 @@ rules:
   - create
   - update
   - delete
-  - register # This will not be needed in future versions
 ```
 
 ### Implicit Resources

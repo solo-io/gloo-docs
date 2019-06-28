@@ -5,7 +5,7 @@ weight: 4
 
 ## Squash Secure Mode Architecture
 
-<img src="/images/secure-mode-arch.png"/>
+![Architecture](../../images/secure-mode-arch.png "Architecture")
 
 ### Overview
 

@@ -6,8 +6,8 @@ weight: 99
 <h4 align="center">Debug your microservice applications from your terminal or IDE <i>while</i> they run in Kubernetes.</h4>
 <BR>
 
-[**Installation**](https://squash.solo.io/overview/) &nbsp; |
-&nbsp; [**Documentation**](https://squash.solo.io) &nbsp; |
+[**Installation**](/overview) &nbsp; |
+&nbsp; [**Documentation**](/) &nbsp; |
 &nbsp; [**Blog**](https://medium.com/solo-io/squash-microservices-debugger-5023e27533de) &nbsp; |
 &nbsp; [**Slack**](https://slack.solo.io) &nbsp; |
 &nbsp; [**Twitter**](https://twitter.com/soloio_inc)
@@ -76,7 +76,7 @@ Please visit [squash.solo.io](https://squash.solo.io) for documentation.
 
 **Debuggers**
 
-* - We will be adding support to several additional debuggers in early 2019, including gdb, nodejs, and python.
+* We will be adding support to several additional debuggers in early 2019, including gdb, nodejs, and python.
 
 **IDEs**
 
