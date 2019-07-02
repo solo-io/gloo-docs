@@ -7,4 +7,3 @@ Gloo Enterprise includes all of the Gloo open source code, and adds to it with a
 This section of the documentation highlights the Enterprise only capabilities.
 
 {{% children description="true" %}} 
-  

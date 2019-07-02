@@ -1,7 +1,6 @@
 ---
 weight: 99
 title: Gloo
-alwaysopen: true 
 ---
 
 <h1>
