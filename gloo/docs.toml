@@ -52,12 +52,6 @@ identifier = "ds"
 url = "https://github.com/solo-io/gloo"
 weight = 10
 
-[[menu.shortcuts]]
-name = "<i class='fa fa-bookmark'></i> Solo.io Homepage"
-identifier = "soloio"
-url = "https://solo.io/"
-weight = 20
-
 # [[menu.shortcuts]]
 # name = "<i class='fas fa-bullhorn'></i> Credits"
 # url = "/credits"

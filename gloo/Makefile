@@ -3,7 +3,10 @@
 #----------------------------------------------------------------------------------
 
 site:
-	if [ ! -d themes ]; then git clone https://github.com/solo-io/hugo-theme-soloio themes/hugo-theme-soloio; fi
+	if [ ! -d themes ]; then
+		git clone https://github.com/solo-io/hugo-theme-soloio themes/hugo-theme-soloio
+		git --git-dir=themes/hugo-theme-soloio/.git checkout e28e1ce73a680598fcf4b167f18a51c9ffcdb3f9
+	fi
 	hugo --config docs.toml
 
 .PHONY: deploy-site
