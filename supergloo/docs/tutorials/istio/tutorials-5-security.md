@@ -149,7 +149,7 @@ supergloo apply securityrule \
     --namespace default \
     --source-upstreams supergloo-system.default-productpage-9080 \
     --dest-upstreams supergloo-system.default-productpage-9080 \
-    --target-mesh supergloo-system.istio-istio-system
+    --target-mesh supergloo-system.istio
 ```
 
 - Or, using `kubectl`:
@@ -199,7 +199,7 @@ supergloo apply securityrule \
     --namespace default \
     --source-upstreams supergloo-system.default-productpage-9080 \
     --dest-upstreams supergloo-system.default-details-9080 \
-    --target-mesh supergloo-system.istio-istio-system
+    --target-mesh supergloo-system.istio
 ```
 
 - Or with `kubectl`:
@@ -243,7 +243,7 @@ supergloo apply securityrule \
     --namespace default \
     --source-upstreams supergloo-system.default-productpage-9080 \
     --dest-namespaces default \
-    --target-mesh supergloo-system.istio-istio-system
+    --target-mesh supergloo-system.istio
 ```
 
 - Or with `kubectl`:

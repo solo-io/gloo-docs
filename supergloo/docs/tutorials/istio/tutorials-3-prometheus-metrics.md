@@ -57,7 +57,7 @@ when it is connected to that instance's configmap. Run the following command to 
 
 ```bash
 supergloo set mesh stats \
-    --target-mesh supergloo-system.istio-istio-system \
+    --target-mesh supergloo-system.istio \
     --prometheus-configmap prometheus-test.prometheus-server
 ```
 

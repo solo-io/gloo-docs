@@ -82,7 +82,7 @@ The equivalent non-interactive command:
 
 ```bash
 supergloo apply routingrule faultinjection abort http \
-    --target-mesh supergloo-system.istio-istio-system \
+    --target-mesh supergloo-system.istio \
     -p 50 -s 404 --name rule1 \
     --dest-upstreams supergloo-system.default-reviews-9080
 ```
@@ -129,7 +129,7 @@ Let's update our rule to cause a delay instead.
 
 ```bash
 supergloo apply routingrule faultinjection delay fixed \
-    --target-mesh supergloo-system.istio-istio-system \
+    --target-mesh supergloo-system.istio \
     -p 50 -d 5s --name rule1 \
     --dest-upstreams supergloo-system.default-reviews-9080
 ```

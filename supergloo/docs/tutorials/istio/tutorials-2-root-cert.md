@@ -191,7 +191,7 @@ type: Opaque
 Finally, we must tell SuperGloo to use this secret for certificate provisioning in our mesh:
 
 ```bash
-supergloo set mesh rootcert --target-mesh supergloo-system.istio-istio-system \
+supergloo set mesh rootcert --target-mesh supergloo-system.istio \
     --tls-secret supergloo-system.my-root-ca
 ```
 
