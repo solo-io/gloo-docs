@@ -1,3 +1,17 @@
+### v0.16.0
+
+**Dependency Bumps**
+
+- solo-io/gloo has been upgraded to v0.16.0.
+
+**Breaking Changes**
+
+- Update to gloo 0.16.0 (https://github.com/solo-io/solo-projects/pull/669)
+
+**Fixes**
+
+- Fix a bug where OIDC was constantly returning 403 (https://github.com/solo-io/solo-projects/pull/669)
+
 ### v0.14.1
 
 **Dependency Bumps**
