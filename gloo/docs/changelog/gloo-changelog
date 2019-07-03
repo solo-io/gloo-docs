@@ -1,3 +1,14 @@
+### v0.16.0
+
+**Dependency Bumps**
+
+- solo-io/solo-kit has been upgraded to v0.10.2.
+- solo-io/go-utils has been upgraded to v0.9.1.
+
+**Breaking Changes**
+
+- Change how listener plugins are arranged on the proxy object (https://github.com/solo-io/gloo/issues/801)
+
 ### v0.15.0
 
 **Dependency Bumps**
