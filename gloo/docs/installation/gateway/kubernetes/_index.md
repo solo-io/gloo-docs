@@ -37,7 +37,7 @@ glooctl community edition version 0.13.29
 ## Installing the Gloo Gateway on Kubernetes
 
 These directions assume you've prepared your Kubernetes cluster appropriately. Full details on setting up your
-Kubernetes cluster [here](../cluster_setup).
+Kubernetes cluster [here](../../cluster_setup).
 
 ### Installing on Kubernetes with `glooctl`
 

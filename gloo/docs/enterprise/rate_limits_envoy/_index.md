@@ -17,7 +17,7 @@ Gloo supports two modes of rate limits:
 In this document, we will describe the second option (The first option is easily accessible via the UI, and described in [this doc](../ratelimit)).
 
 ## Setup - Installing Gloo 
-This is covered by [other parts of the documentation](../installation), here is the quick version:
+This is covered by [other parts of the documentation](../../../installation), here is the quick version:
 
 ```bash
 $ glooctl install gateway --license-key=<YOUR KEY>
