@@ -767,7 +767,7 @@ func (*plugin) WatchEndpoints(writeNamespace string, upstreamsToTrack v1.Upstrea
 
 {{< /highlight >}}
 
-Our `WatchEndpoints` is now finished as is our plugin!
+Our `WatchEndpoints` is now finished, along with our plugin!
 
 We are not finished, however. The task remains to wire our plugin 
 into the Gloo core, then rebuild Gloo and deploy to Kubernetes!
@@ -848,3 +848,11 @@ func Plugins(opts bootstrap.Opts, pluginExtensions ...plugins.Plugin) []plugins.
 
 {{< /highlight >}}
 
+Code changes are now complete. You can view the all of the code here:
+
+* [gce.proto](../gce.proto): API definitions for our plugin.
+* [plugins.proto](../plugins.proto): The Gloo Core API with our plugin API added to it.
+* [plugin.go](../plugin.go): The actual code for the plugin.
+* [registry.go](../registry.go): The Gloo Plugin Registry with our plugin added to it.
+
+Building and deploying Gloo to Kubernetes will be covered in another tutorial.
