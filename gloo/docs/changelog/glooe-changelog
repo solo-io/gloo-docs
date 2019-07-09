@@ -1,3 +1,16 @@
+### v0.16.2
+
+**New Features**
+
+- Support basic create upstream functionality. (https://github.com/solo-io/solo-projects/issues/635)
+- Create VS form with basic functionality. (https://github.com/solo-io/solo-projects/issues/634)
+- Filter upstreams by type on the catalog and table views (https://github.com/solo-io/solo-projects/issues/635)
+- Use correct logos for upstream cards. (https://github.com/solo-io/solo-projects/issues/635)
+
+**Fixes**
+
+- Change class names in svg elements so they dont override each other. (https://github.com/solo-io/solo-projects/pull/680)
+
 ### v0.16.0
 
 **Dependency Bumps**
