@@ -1,5 +1,5 @@
 ---
-menuTitle: "Developer Guides"
+title: "Developer Guides"
 weight: 4
 ---
 

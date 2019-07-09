@@ -10,12 +10,18 @@ Gloo uses the [v1.Upstream]({{< ref "/v1/github.com/solo-io/gloo/projects/gloo/a
 
 This tutorial will show how we can add an *Upstream Plugin* to Gloo to extend Gloo with service discovery data.
 
-Rather than provide a trivial example, we'll use VM instance groups on Google Compute Engine as our Upstream type, 
-and the corresponding VM instances as its endpoints.
+Rather than provide a trivial example, we'll use VM instances on Google Compute Engine as our Upstream. A single endpoint will represent a single VM instance, and an Upstream will group them by their VM Labels.
 
 Note that *any* backend store of service addresses can be plugged into Gloo in this way. 
 
 It will be the job of our plugin to connect to the external source of truth (in this case, the Google Compute Engine API) and convert it to configuration which Gloo can then supply to Envoy for routing. 
+
+To see the completed code for this tutorial:
+
+* [gce.proto](../gce.proto): API definitions for our plugin.
+* [plugins.proto](../plugins.proto): The Gloo Core API with our plugin API added to it.
+* [plugin.go](../plugin.go): The actual code for the plugin.
+* [registry.go](../registry.go): The Gloo Plugin Registry with our plugin added to it.
 
 ## Environment Setup
 
@@ -49,14 +55,18 @@ import "gogoproto/gogo.proto";
 option (gogoproto.equal_all) = true;
 
 // Upstream Spec for Google Compute Engine Upstreams
-// GCE Upstreams represent a set of one or more addressable VM instances for a VM Instance Group
+// GCE Upstreams represent a set of one or more addressable VM instances with
+// a shared set of tags
 message UpstreamSpec {
-    // The name of the Instance Group
-    string instance_group_name = 1;
-    // region in which the instance group lives
-    string instance_group_region = 2;
-    // the GCP project to which the instance group belongs
-    string projectId = 3;
+    // get endpoints from instances whose labels match this selector
+    map<string, string> selector = 1;
+    // zone in which the instances live
+    string zone = 2;
+    // the GCP project to which the instances belong
+    string project_id = 3;
+    // the port on which the instances are listening
+    // create multiple upstreams to support multiple ports
+    uint32 port = 4;
 }
 ```
 
@@ -78,14 +88,18 @@ import "gogoproto/gogo.proto";
 option (gogoproto.equal_all) = true;
 
 // Upstream Spec for Google Compute Engine Upstreams
-// GCE Upstreams represent a set of one or more addressable VM instances for a VM Instance Group
+// GCE Upstreams represent a set of one or more addressable VM instances with
+// a shared set of tags
 message UpstreamSpec {
-    // The name of the Instance Group
-    string instance_group_name = 1;
-    // region in which the instance group lives
-    string instance_group_region = 2;
-    // the GCP project to which the instance group belongs
-    string projectId = 3;
+    // get endpoints from instances whose labels match this selector
+    map<string, string> selector = 1;
+    // zone in which the instances live
+    string zone = 2;
+    // the GCP project to which the instances belong
+    string project_id = 3;
+    // the port on which the instances are listening
+    // create multiple upstreams to support multiple ports
+    uint32 port = 4;
 }
 EOF
 
@@ -99,7 +113,7 @@ the [`plugins.proto`](https://github.com/solo-io/gloo/blob/master/projects/gloo/
 
 First, we'll add an import to the top of the file
 
-{{< highlight yaml "hl_lines=31-32" >}}
+{{< highlight proto "hl_lines=31-32" >}}
 syntax = "proto3";
 package gloo.solo.io;
 option go_package = "github.com/solo-io/gloo/projects/gloo/pkg/api/v1";
@@ -137,7 +151,7 @@ import "github.com/solo-io/gloo/projects/gloo/api/v1/plugins/gce/gce.proto";
 
 Next we'll add the new `UpstreamSpec` from our import. Locate the `UpstreamSpec` at the bottom of the `plugins.proto` file. The new `gce` UpstreamSpec must be added to the `upstream_type` oneof, like so:
 
-{{< highlight yaml "hl_lines=27-28" >}}
+{{< highlight proto "hl_lines=27-28" >}}
 
 // Each upstream in Gloo has a type. Supported types include `static`, `kubernetes`, `aws`, `consul`, and more.
 // Each upstream type is handled by a corresponding Gloo plugin.
@@ -325,8 +339,8 @@ The last piece our plugin needs is the `WatchEndpoints` function.  Here's where 
 We need to:
 
 * Poll the GCE API
-* Retrieve the list of instances and instance groups
-* Correlate those addresses with the user's GCE Upstreams 
+* Retrieve the list of instances
+* Correlate those addresses with the user's GCE Upstreams by their labels 
 * Compose a list of Endpoints and send them on a channel to Gloo
 * Repeat this at some interval to keep endpoints updated
 
@@ -415,7 +429,7 @@ func getLatestEndpoints(instancesClient *compute.InstancesService, upstreams v1.
 
 `getLatestEndpoints` will take as inputs the instances client and the for which we're upstreams discovering endpoints. Its outputs will be a list of endpoints and an error (if encountered during polling).
 
-{{< highlight go "hl_lines=1-10" >}}
+{{< highlight go "hl_lines=9-14 17-24" >}}
 
 // one call results in a list of endpoints for our upstreams
 func getLatestEndpoints(instancesClient *compute.InstancesService, upstreams v1.UpstreamList) (v1.EndpointList, error) {
@@ -425,15 +439,412 @@ func getLatestEndpoints(instancesClient *compute.InstancesService, upstreams v1.
 
 	// for each upstream, retrieve its endpoints
 	for _, us := range upstreams {
+	  // check that the upstream uses the GCE Spec
 		gceSpec := us.UpstreamSpec.GetGce()
 		if gceSpec == nil {
 			// skip non-GCE upstreams
 			continue
+		}
+		
+		
+		// get the Google Compute VM Instances for the project/zone
+		instancesForUpstream, err := instancesClient.List(
+			gceSpec.ProjectId,
+			gceSpec.Zone,
+		).Do()
+		if err != nil {
+			return nil, err
+		}
+
+    //...
+	}
+	
+	return result, nil
+}
+
+{{< /highlight >}}
+
+We're now listing all the instances in the Google Cloud Project/Zone for the Upstream, but we still need to filter them down to the instances for the specific upstream. 
+
+Let's add a convenience function `shouldSelectInstance` to do our filtering:
+
+```go
+
+// inspect the labels for a match
+func shouldSelectInstance(selector, instanceLabels map[string]string) bool {
+	if len(instanceLabels) == 0 {
+		// only an empty selector can match empty labels
+		return len(selector) == 0
+	}
+
+	for k, v := range selector {
+		instanceVal, ok := instanceLabels[k]
+		if !ok {
+			// the selector key is missing from the instance labels
+			return false
+		}
+		if v != instanceVal {
+			// the label value in the selector does not match
+			// the label value from the instance
+			return false
+		}
+	}
+	// we didn't catch a mismatch by now, they match
+	return true
+}
+```
+
+We'll use this function to filter instances in `getLatestEndpoints`:
+
+{{< highlight go "hl_lines=26-33" >}}
+
+// one call results in a list of endpoints for our upstreams
+func getLatestEndpoints(instancesClient *compute.InstancesService, upstreams v1.UpstreamList) (v1.EndpointList, error) {
+
+	// initialize a new list of endpoints
+	var result v1.EndpointList
+
+	// for each upstream, retrieve its endpoints
+	for _, us := range upstreams {
+	  // check that the upstream uses the GCE Spec
+		gceSpec := us.UpstreamSpec.GetGce()
+		if gceSpec == nil {
+			// skip non-GCE upstreams
+			continue
+		}
+		
+		
+		// get the Google Compute VM Instances for the project/zone
+		instancesForUpstream, err := instancesClient.List(
+			gceSpec.ProjectId,
+			gceSpec.Zone,
+		).Do()
+		if err != nil {
+			return nil, err
+		}
+
+		// iterate over each instance
+		// add its address as an endpoint if its labels match
+		for _, instance := range instancesForUpstream.Items {
+
+			if !shouldSelectInstance(gceSpec.Selector, instance.Labels) {
+				// the selector doesn't match this instance, skip it
+				continue
+			}
+
+			// ...
 		}
 	}
 	
 	return result, nil
 }
 
+{{< /highlight >}}
+
+We must also filter instances that don't have an IP address:
+
+
+{{< highlight go "hl_lines=35-38" >}}
+
+// one call results in a list of endpoints for our upstreams
+func getLatestEndpoints(instancesClient *compute.InstancesService, upstreams v1.UpstreamList) (v1.EndpointList, error) {
+
+	// initialize a new list of endpoints
+	var result v1.EndpointList
+
+	// for each upstream, retrieve its endpoints
+	for _, us := range upstreams {
+	  // check that the upstream uses the GCE Spec
+		gceSpec := us.UpstreamSpec.GetGce()
+		if gceSpec == nil {
+			// skip non-GCE upstreams
+			continue
+		}
+		
+		
+		// get the Google Compute VM Instances for the project/zone
+		instancesForUpstream, err := instancesClient.List(
+			gceSpec.ProjectId,
+			gceSpec.Zone,
+		).Do()
+		if err != nil {
+			return nil, err
+		}
+
+		// iterate over each instance
+		// add its address as an endpoint if its labels match
+		for _, instance := range instancesForUpstream.Items {
+
+			if !shouldSelectInstance(gceSpec.Selector, instance.Labels) {
+				// the selector doesn't match this instance, skip it
+				continue
+			}
+
+			if len(instance.NetworkInterfaces) == 0 {
+				// skip vms that don't have an allocated IP address
+				continue
+			}
+		}
+		
+		// convert the instance to an endpoint ...
+	}
+	
+	return result, nil
+}
 
 {{< /highlight >}}
+
+Now we've filtered out all endpoints that don't map to 
+the upstream for which we're discovering. Finally, we must convert the endpoint to an upstream and append it to our list:
+
+{{< highlight go "hl_lines=40-61 63-64" >}}
+
+// one call results in a list of endpoints for our upstreams
+func getLatestEndpoints(instancesClient *compute.InstancesService, upstreams v1.UpstreamList) (v1.EndpointList, error) {
+
+	// initialize a new list of endpoints
+	var result v1.EndpointList
+
+	// for each upstream, retrieve its endpoints
+	for _, us := range upstreams {
+	  // check that the upstream uses the GCE Spec
+		gceSpec := us.UpstreamSpec.GetGce()
+		if gceSpec == nil {
+			// skip non-GCE upstreams
+			continue
+		}
+		
+		
+		// get the Google Compute VM Instances for the project/zone
+		instancesForUpstream, err := instancesClient.List(
+			gceSpec.ProjectId,
+			gceSpec.Zone,
+		).Do()
+		if err != nil {
+			return nil, err
+		}
+
+		// iterate over each instance
+		// add its address as an endpoint if its labels match
+		for _, instance := range instancesForUpstream.Items {
+
+			if !shouldSelectInstance(gceSpec.Selector, instance.Labels) {
+				// the selector doesn't match this instance, skip it
+				continue
+			}
+
+			if len(instance.NetworkInterfaces) == 0 {
+				// skip vms that don't have an allocated IP address
+				continue
+			}
+		
+			// use the first network ip of the vm for our endpoint
+			address := instance.NetworkInterfaces[0].NetworkIP
+
+			// get the port from the upstream spec
+			port := gceSpec.Port
+
+			// provide a pointer back to the upstream this
+			// endpoint was created for
+			upstreamRef := us.Metadata.Ref()
+
+			endpointForInstance := &v1.Endpoint{
+				Metadata: core.Metadata{
+					Namespace: us.Metadata.Namespace,
+					Name:      instance.Name,
+					Labels:    instance.Labels,
+				},
+				Address:   address,
+				Port:      port,
+				// normally if more than one upstream shares an endpoint
+				// we would provide a list here
+				Upstreams: []*core.ResourceRef{&upstreamRef},
+			}
+
+			// add the endpoint to our list
+			result = append(result, endpointForInstance)
+	}
+	
+	return result, nil
+}
+
+{{< /highlight >}}
+
+Now that our `getLatestEndpoints` function is finished, we 
+can tie everything together in our plugin's `WatchEndpoints`.
+
+Let's get the initializations out of the way:
+
+{{< highlight go "hl_lines=2-3 5-9 11-12 14-15 17-22 24-25" >}}
+
+func (*plugin) WatchEndpoints(writeNamespace string, upstreamsToTrack v1.UpstreamList, opts clients.WatchOpts) (<-chan v1.EndpointList, <-chan error, error) {
+	// use the context from the opts we were passed
+	ctx := opts.Ctx
+
+	// get the client for interacting with GCE VM Instances
+	instancesClient, err := initializeClient(ctx)
+	if err != nil {
+		return nil, nil, err
+	}
+
+	// initialize the channel on which we will send endpoint results to Gloo
+	results := make(chan v1.EndpointList)
+
+	// initialize a channel on which we can send polling errors to Gloo
+	errorsDuringUpdate := make(chan error)
+
+	// in a goroutine, continue updating endpoints at an interval
+	// until the context is done
+	go func() {
+		// poll endpoints here...
+		}
+	}()
+
+	// return the channels to Gloo
+	return results, errorsDuringUpdate, nil
+}
+
+
+The last step is to fill in our new goroutine. Let's have it poll on an interval of 10 seconds, sending updated `v1.EndpointList`s down the `results` channel:
+
+{{< /highlight >}}
+
+Now that our `getLatestEndpoints` function is finished, we 
+can tie everything together in our plugin's `WatchEndpoints`.
+
+Let's get the initializations out of the way:
+
+{{< highlight go "hl_lines=20-43" >}}
+
+func (*plugin) WatchEndpoints(writeNamespace string, upstreamsToTrack v1.UpstreamList, opts clients.WatchOpts) (<-chan v1.EndpointList, <-chan error, error) {
+	// use the context from the opts we were passed
+	ctx := opts.Ctx
+
+	// get the client for interacting with GCE VM Instances
+	instancesClient, err := initializeClient(ctx)
+	if err != nil {
+		return nil, nil, err
+	}
+
+	// initialize the channel on which we will send endpoint results to Gloo
+	results := make(chan v1.EndpointList)
+
+	// initialize a channel on which we can send polling errors to Gloo
+	errorsDuringUpdate := make(chan error)
+
+	// in a goroutine, continue updating endpoints at an interval
+	// until the context is done
+	go func() {
+		// once this goroutine exits, we should close our output channels
+		defer close(results)
+		defer close(errorsDuringUpdate)
+
+		// poll indefinitely
+		for {
+			select {
+			case <-ctx.Done():
+				// context was cancelled, stop polling
+				return
+			default:
+				endpoints, err := getLatestEndpoints(instancesClient, upstreamsToTrack)
+				if err != nil {
+					// send the error to Gloo for logging
+					errorsDuringUpdate <- err
+				} else {
+					// send the latest set of endpoints to Gloo
+					results <- endpoints
+				}
+
+				// sleep 10s between polling
+				time.Sleep(time.Second * 10)
+			}
+		}
+	}()
+
+	// return the channels to Gloo
+	return results, errorsDuringUpdate, nil
+}
+
+{{< /highlight >}}
+
+Our `WatchEndpoints` is now finished as is our plugin!
+
+We are not finished, however. The task remains to wire our plugin 
+into the Gloo core, then rebuild Gloo and deploy to Kubernetes!
+
+All Gloo plugins are registered inside of a `registry` subpackage within the `plugins` directory. See [the registry.go file on GitHub here](https://github.com/solo-io/gloo/blob/master/projects/gloo/pkg/plugins/registry/registry.go).
+
+We need to add our plugin (and its import) to `registry.go`:
+
+
+{{< highlight go "hl_lines=12-13 52-53" >}}
+package registry
+
+import (
+	"github.com/solo-io/gloo/projects/gloo/pkg/bootstrap"
+	"github.com/solo-io/gloo/projects/gloo/pkg/plugins"
+	"github.com/solo-io/gloo/projects/gloo/pkg/plugins/aws"
+	"github.com/solo-io/gloo/projects/gloo/pkg/plugins/azure"
+	"github.com/solo-io/gloo/projects/gloo/pkg/plugins/basicroute"
+	"github.com/solo-io/gloo/projects/gloo/pkg/plugins/consul"
+	"github.com/solo-io/gloo/projects/gloo/pkg/plugins/cors"
+	"github.com/solo-io/gloo/projects/gloo/pkg/plugins/faultinjection"
+	// add our plugin's import here:
+	"github.com/solo-io/gloo/projects/gloo/pkg/plugins/gce"
+	"github.com/solo-io/gloo/projects/gloo/pkg/plugins/grpc"
+	"github.com/solo-io/gloo/projects/gloo/pkg/plugins/hcm"
+	"github.com/solo-io/gloo/projects/gloo/pkg/plugins/kubernetes"
+	"github.com/solo-io/gloo/projects/gloo/pkg/plugins/linkerd"
+	"github.com/solo-io/gloo/projects/gloo/pkg/plugins/loadbalancer"
+	"github.com/solo-io/gloo/projects/gloo/pkg/plugins/rest"
+	"github.com/solo-io/gloo/projects/gloo/pkg/plugins/static"
+	"github.com/solo-io/gloo/projects/gloo/pkg/plugins/stats"
+	"github.com/solo-io/gloo/projects/gloo/pkg/plugins/transformation"
+	"github.com/solo-io/gloo/projects/gloo/pkg/plugins/upstreamconn"
+	"github.com/solo-io/gloo/projects/gloo/pkg/plugins/upstreamssl"
+)
+
+type registry struct {
+	plugins []plugins.Plugin
+}
+
+var globalRegistry = func(opts bootstrap.Opts, pluginExtensions ...plugins.Plugin) *registry {
+	transformationPlugin := transformation.NewPlugin()
+	reg := &registry{}
+	// plugins should be added here
+	reg.plugins = append(reg.plugins,
+		loadbalancer.NewPlugin(),
+		upstreamconn.NewPlugin(),
+		upstreamssl.NewPlugin(),
+		azure.NewPlugin(&transformationPlugin.RequireTransformationFilter),
+		aws.NewPlugin(&transformationPlugin.RequireTransformationFilter),
+		rest.NewPlugin(&transformationPlugin.RequireTransformationFilter),
+		hcm.NewPlugin(),
+		static.NewPlugin(),
+		transformationPlugin,
+		consul.NewPlugin(),
+		grpc.NewPlugin(&transformationPlugin.RequireTransformationFilter),
+		faultinjection.NewPlugin(),
+		basicroute.NewPlugin(),
+		cors.NewPlugin(),
+		linkerd.NewPlugin(),
+		stats.NewPlugin(),
+		// and our plugin goes here
+		gce.NewPlugin(),
+	)
+	if opts.KubeClient != nil {
+		reg.plugins = append(reg.plugins, kubernetes.NewPlugin(opts.KubeClient))
+	}
+	for _, pluginExtension := range pluginExtensions {
+		reg.plugins = append(reg.plugins, pluginExtension)
+	}
+
+	return reg
+}
+
+func Plugins(opts bootstrap.Opts, pluginExtensions ...plugins.Plugin) []plugins.Plugin {
+	return globalRegistry(opts, pluginExtensions...).plugins
+}
+
+{{< /highlight >}}
+
