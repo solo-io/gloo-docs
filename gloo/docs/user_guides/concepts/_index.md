@@ -4,6 +4,6 @@ weight: 4
 description: Understanding Gloo
 ---
 
-The Gloo Operator guides describe different ways of setting up the environment in which Gloo is running as well as connecting Gloo to external resources such as CI/CD systems, `cert-manager`, and Prometheus.
+Gloo follows a declarative "intention" based configuration model. YAML (or convenience tools like a CLI or web interface) is used to specify intended state of the system and Gloo's control plane reifies these intentions. This approach simplifies an otherwise potentially complex configuration scenarios and plays nicely with automation, versioning, and the workflows built on "gitops". See below for more:
 
 {{% children description="true" %}}

@@ -5,7 +5,7 @@ weight: 2
 
 ## Overview
 
-Gloo aggregates back end services and provides function-to-function translation for clients, allowing decoupling from back end APIs
+Gloo aggregates back end services and provides function-to-function translation for clients, allowing decoupling from back-end APIs
 
 ![Overview](../gloo_diagram.png "High Level Architecture")
 

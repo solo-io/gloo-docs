@@ -4,6 +4,12 @@ weight: 4
 description: Define limits on the number of requests per unit of time.
 ---
 
+## Why rate limit?
+
+When we expose services to potentially unknown or "less trusted users" we need mechanisms at the edge/ingress to control who's using the service and protect the system from malicious behavior whether intended or unintended. Additionally, rate-limiting may be necessary or desirable from a usage-quota perspective where we expose certain APIs through plans with pay-per-use policies. 
+
+Rate limiting can get fairly complicated, and with Gloo, we try to give a couple options to help the life of the developer or service operator get the protections needed with rate limiting. In this section, we look at the simplified approach to rate limiting. For a more powerful approach, take a look [at using Gloo with Envoy's native rate limiting model](../rate_limits_envoy)
+
 ## Rate Limit
 
 Rate limits are defined on the virtual service specification as `spec.virtualHost.virtualHostPlugins.extensions.configs.rate-limit`.

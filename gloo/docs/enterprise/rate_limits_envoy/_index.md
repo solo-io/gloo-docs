@@ -4,6 +4,12 @@ description: Advanced Rate Limit configuration.
 weight: 3
 ---
 
+## Why rate limit?
+
+When we expose services to potentially unknown or "less trusted users" we need mechanisms at the edge/ingress to control who's using the service and protect the system from malicious behavior whether intended or unintended. Additionally, rate-limiting may be necessary or desirable from a usage-quota perspective where we expose certain APIs through plans with pay-per-use policies. Rate limiting can get fairly complicated, and with Gloo, we try to give a couple options to help the life of the developer or service operator get the protections needed with rate limiting. 
+
+## Rate limiting options
+
 In this document, we will show how to use Gloo with [Envoy's rate-limit API](https://www.envoyproxy.io/docs/envoy/latest/configuration/http_filters/rate_limit_filter). We make the distinction here that this is "Envoy's" rate-limit API because Gloo [offers a much simpler rate-limit API](../ratelimit) as an alternative. 
 
 Gloo enterprise comes with a rate limit server based on [Lyft's Envoy rate-limit server](https://github.com/lyft/ratelimit). It is already installed when doing `gloo install gateway --license-key=...`
