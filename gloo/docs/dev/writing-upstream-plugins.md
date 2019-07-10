@@ -1,6 +1,6 @@
 ---
 title: "Service Discovery Plugins"
-title: "Extending Service Discovery with Upstream Plugins"
+menuTitle: "aService Discovery Plugins"
 weight: 5
 ---
 
@@ -855,4 +855,4 @@ Code changes are now complete. You can view the all of the code here:
 * [plugin.go](../plugin.go): The actual code for the plugin.
 * [registry.go](../registry.go): The Gloo Plugin Registry with our plugin added to it.
 
-Building and deploying Gloo to Kubernetes will be covered in another tutorial.
+The next steps are outlined in the [building and deploying Gloo tutorial]({{< ref "/dev/building-and-deploying-gloo.md" >}}).
