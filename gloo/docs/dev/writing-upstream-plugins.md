@@ -1,6 +1,6 @@
 ---
-title: "Service Discovery Plugins"
-menuTitle: "aService Discovery Plugins"
+title: "Service Discovery Plugins for Gloo"
+
 weight: 5
 ---
 
@@ -289,6 +289,7 @@ each iteration of Gloo's translation loop (in which Gloo config is translated to
 looks at each individual Upstream (the user input object) and modifies, if necessary, the ouptut [Envoy Cluster](https://www.envoyproxy.io/docs/envoy/latest/api-v2/api/v2/cds.proto) corresponding to that Upstream. 
 
 Our `ProcessUpstream` function should:
+
 * Check that the user's Upstream is *ours* (of type GCE)
 * If so, mark the Cluster to use EDS
 
@@ -344,15 +345,7 @@ We need to:
 * Compose a list of Endpoints and send them on a channel to Gloo
 * Repeat this at some interval to keep endpoints updated
 
-So let's start writing our function. We'll need to add some imports to interact with the GCE API.
-
-First, run the following command to download the Google Cloud SDK:
-
-```bash
-go get google.golang.org/api/compute/v1
-```
-
-Now we'll add the imports we need
+So let's start writing our function. We'll need to add some imports to interact with the GCE API:
 
 ```go
 package gce
@@ -363,6 +356,7 @@ import (
 	// add these imports to use Google Compute Engine's API
 	"golang.org/x/oauth2/google"
 	"google.golang.org/api/compute/v1"	
+	"google.golang.org/api/option"
 )
 ```
 
@@ -594,8 +588,9 @@ func getLatestEndpoints(instancesClient *compute.InstancesService, upstreams v1.
 
 {{< /highlight >}}
 
-Now we've filtered out all endpoints that don't map to 
-the upstream for which we're discovering. Finally, we must convert the endpoint to an upstream and append it to our list:
+Now we've filtered out all instances that don't match the upstream for which we're discovering endpoints. 
+
+Finally, we must convert the instance to an endpoint and append it to our list:
 
 {{< highlight go "hl_lines=40-61 63-64" >}}
 
@@ -704,15 +699,9 @@ func (*plugin) WatchEndpoints(writeNamespace string, upstreamsToTrack v1.Upstrea
 	return results, errorsDuringUpdate, nil
 }
 
-
-The last step is to fill in our new goroutine. Let's have it poll on an interval of 10 seconds, sending updated `v1.EndpointList`s down the `results` channel:
-
 {{< /highlight >}}
 
-Now that our `getLatestEndpoints` function is finished, we 
-can tie everything together in our plugin's `WatchEndpoints`.
-
-Let's get the initializations out of the way:
+The last step is to fill in our new goroutine. Let's have it poll on an interval of 10 seconds, sending updated `v1.EndpointList`s down the `results` channel:
 
 {{< highlight go "hl_lines=20-43" >}}
 
@@ -855,4 +844,29 @@ Code changes are now complete. You can view the all of the code here:
 * [plugin.go](../plugin.go): The actual code for the plugin.
 * [registry.go](../registry.go): The Gloo Plugin Registry with our plugin added to it.
 
-The next steps are outlined in the [building and deploying Gloo tutorial]({{< ref "/dev/building-and-deploying-gloo.md" >}}).
+## Build and Deploy from Source
+
+To see our new and improved Gloo in action, follow the 
+[building and deploying Gloo from source tutorial]({{< ref 
+"/dev/building-and-deploying-gloo.md" >}}).
+
+## Conclusions
+
+We've just seen how to extend Gloo's service discovery 
+mechanism via the use of a plugin. While this plugin 
+focused on the discovery of VMs from a hosted cloud 
+provider, Gloo Upstream Plugins can be used to import 
+endpoint data from any conceivable source of truth, as 
+long as those endpoints represent TCP/HTTP services 
+listening on some port. 
+
+There are many other places where Gloo supports 
+extensibility through plugins, including leveraging new 
+(or previously unused) Envoy filters. 
+
+Hopefully you're now more familiar with how Gloo plugins 
+work. Maybe you're even ready to start writing your own 
+plugins. At the very least, you now have a look inside 
+how Gloo Plugins connect external sources of truth to Envoy.
+
+We encourage you to check out our other dev tutorials to discover other ways of extending Gloo!

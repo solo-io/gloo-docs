@@ -11,7 +11,6 @@ import (
 	"github.com/solo-io/gloo/projects/gloo/pkg/plugins"
 	"github.com/solo-io/solo-kit/pkg/api/v1/clients"
 	"github.com/solo-io/solo-kit/pkg/api/v1/resources/core"
-	"google.golang.org/api/option"
 
 	// add these imports to use Envoy's API
 	envoyapi "github.com/envoyproxy/go-control-plane/envoy/api/v2"
@@ -20,6 +19,7 @@ import (
 	// add these imports to use Google Compute Engine's API
 	"golang.org/x/oauth2/google"
 	"google.golang.org/api/compute/v1"
+	"google.golang.org/api/option"
 )
 
 type plugin struct{}
