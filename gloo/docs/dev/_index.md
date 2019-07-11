@@ -1,17 +1,24 @@
 ---
-title: Developer Guide
-weight: 5
+title: "Developer Guides"
+weight: 4
 ---
 
-Developing on Gloo can be a fun and rewarding experience. 
+## Intro
 
-Gloo is designed to be highly pluggable and easily extendable in each of the following domains:
 
-- Routing Controllers (e.g. defining new APIs, automatic config in response to events, etc.)
-- Service Discovery backends
-- Configuring custom or upstream Envoy Filters
+Gloo invites invites developers to extend Gloo's functionality and adapt to new use cases via the addition of plugins. 
 
-The reason Gloo is extendable in so many directions is due in part to its Kubernetes Operator-style design. By interacting with two CRDs, it is possible to customize Gloo to virtually any environment and use case:
+Gloo's plugin based architecture makes it easy to extend functionality in a variety of areas:
+
+- [Gloo's API](https://github.com/solo-io/gloo/tree/master/projects/gloo/api/v1): extensible through the use of [Protocol Buffers](https://developers.google.com/protocol-buffers/) along with [Solo-Kit](https://github.com/solo-io/solo-kit)
+- [Service Discovery Plugins](https://github.com/solo-io/gloo/blob/master/projects/gloo/pkg/discovery/discovery.go#L21): automatically discover service endpoints from catalogs such as [Kubernetes](https://github.com/solo-io/gloo/tree/master/projects/gloo/pkg/plugins/kubernetes) and [Consul](https://github.com/solo-io/gloo/tree/master/projects/gloo/pkg/plugins/consul)
+- [Function Discovery Plugins](https://github.com/solo-io/gloo/blob/master/projects/discovery/pkg/fds/interface.go#L31): annotate services with information discovered by polling services directly (such as OpenAPI endpoints and gRPC methods).
+- [Routing Plugins](https://github.com/solo-io/gloo/blob/master/projects/gloo/pkg/plugins/plugin_interface.go#L53): customize what happens to requests when they match a route or virtual host
+- [Upstream Plugins](https://github.com/solo-io/gloo/blob/master/projects/gloo/pkg/plugins/plugin_interface.go#L44): customize what happens to requests when they are routed to a service
+- **Operators for Configuration**: Gloo exposes its intermediate language for proxy configuration via the [`gloo.solo.io/Proxy`](https://gloo.solo.io/v1/github.com/solo-io/gloo/projects/gloo/api/v1/proxy.proto.sk/#proxy) Custom Resource, allowing operators to leverage Gloo for multiple use cases. The [Gloo Gateway](https://github.com/solo-io/gloo/tree/master/projects/gateway) and [Sqoop](https://github.com/solo-io/sqoop) provide API Gateway and GraphQL Server functionality respectively, without needing to run in the same process (or even the same container) as Gloo.
+
+## Gloo API Concepts
+
 
 * [v1.Proxies]({{< ref "/v1/github.com/solo-io/gloo/projects/gloo/api/v1/proxy.proto.sk.md">}}) provide the routing configuration which Gloo will translate and apply to Envoy.
 * [v1.Upstreams]({{< ref "/v1/github.com/solo-io/gloo/projects/gloo/api/v1/upstream.proto.sk.md">}}) describe routable destinations for Gloo.
@@ -50,4 +57,12 @@ The reason Gloo is extendable in so many directions is due in part to its Kubern
 
 * **Upstreams** represent destinations for routing requests in Gloo. Routes in Gloo specify one or more Upstreams (by name) as their destination. Upstreams have a `type` which is provided in their `upstreamSpec` field. Each type of upstream corresponds to an **Upstream Plugin**, which tells Gloo how to translate upstreams of that type to Envoy clusters. When a route is declared for an upstream, Gloo invokes the corresponding plugin for that type 
 
-More tutorials and design documentation are coming soon!
+
+## Guides
+
+This Section includes the following developer guides:
+
+{{% children description="true" %}} 
+
+> Note: the Controller tutorial does not require modifying any Gloo code.
+

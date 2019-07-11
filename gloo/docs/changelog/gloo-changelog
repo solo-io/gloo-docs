@@ -1,3 +1,21 @@
+### v0.17.0
+
+**Breaking Changes**
+
+- Rename existing service destination type from `service` to `kubernetes`. (https://github.com/solo-io/gloo/issues/803)
+
+**New Features**
+
+- Add new routing destination type for Consul services. (https://github.com/solo-io/gloo/issues/803)
+- Allow disabling FDS on a per-namespace and per-service basis with blacklist/whitelist options.
+Note that `kube-system` and `kube-public` namespaces must be explicitly whitelisted even in
+blacklist mode. (https://github.com/solo-io/gloo/issues/679)
+- Knative installation via the CLI is now version-independent, allows installing additional Knative components Build, Eventing, and Monitoring (https://github.com/solo-io/gloo/issues/795)
+
+**Fixes**
+
+- Fix an issue where routing to a grpc upstream using parameters did not work. (https://github.com/solo-io/gloo/issues/809)
+
 ### v0.16.0
 
 **Dependency Bumps**
