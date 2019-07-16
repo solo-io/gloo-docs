@@ -1,3 +1,15 @@
+### v0.17.1
+
+**New Features**
+
+- Added Consul endpoint discovery. (https://github.com/solo-io/gloo/issues/803)
+- Introduce EC2 upstream type. (https://github.com/solo-io/gloo/issues/799)
+
+**Fixes**
+
+- Fix Endpoints getting lost in Kubernetes EDS. (https://github.com/solo-io/gloo/issues/816)
+- Fix a bug with handling of gRPC upstreams without a package (https://github.com/solo-io/gloo/issues/831)
+
 ### v0.17.0
 
 **Breaking Changes**
