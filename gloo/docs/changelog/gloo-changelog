@@ -1,3 +1,9 @@
+### v0.17.3
+
+**New Features**
+
+- Add the ability to deploy the gateway-proxy as a DaemonSet rather than a deployment. (https://github.com/solo-io/gloo/issues/842)
+
 ### v0.17.2
 
 This release contained no user-facing changes.
