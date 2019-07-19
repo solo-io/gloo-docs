@@ -64,7 +64,7 @@ glooctl get upstream
 
 Note that we explicitly specified the namespace otherwise `glooctl` would default to the `gloo-system` namespace.
 
-Let's add a route like we did in the [basic routing tutorial](../basic_routing) to route incoming traffic from
+Let's add a route like we did in the [getting started tutorial](../../getting_started) to route incoming traffic from
 `/api/posts` to our new jsonplaceholder upstream:
 
 ```shell

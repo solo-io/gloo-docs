@@ -25,3 +25,9 @@ clean:
 .PHONY: check-links
 check-links:
 	htmlproofer ./site/ --empty-alt-ignore  --allow-hash-href --alt-ignore "/img/Gloo-01.png" --url-ignore "/localhost/,/github.com/solo-io/solo-projects/,/developers.google.com/,/getgrav.org/,/github.com/solo-io/gloo/projects/,/developer.mozilla.org/"
+
+# If on fedora, run
+#     sudo dnf -y install gcc ruby-devel rubygems zlib-devel
+# to install html-proofer deps (only works with gcc, not clang!)
+install-tools:
+	gem install html-proofer
