@@ -1,6 +1,6 @@
 ---
 title: "Building a Proxy Controller for Gloo"
-weight: 1
+weight: 2
 ---
 
 In this tutorial, we're going to show how to use Gloo's Proxy API to build a router which automatically creates 

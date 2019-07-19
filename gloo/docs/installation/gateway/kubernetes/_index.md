@@ -37,7 +37,7 @@ glooctl community edition version 0.13.29
 ## Installing the Gloo Gateway on Kubernetes
 
 These directions assume you've prepared your Kubernetes cluster appropriately. Full details on setting up your
-Kubernetes cluster [here](../cluster_setup).
+Kubernetes cluster [here](../../cluster_setup).
 
 ### Installing on Kubernetes with `glooctl`
 
@@ -125,11 +125,16 @@ The table below describes all the values that you can override in your custom va
 | gateway.deployment.image.tag                              | string   | tag for the gateway controller container                                                                                                                                                                                                                       |
 | gateway.deployment.image.pullPolicy                       | string   | image pull policy for the gateway controller container                                                                                                                                                                                                         |
 | gateway.deployment.stats                                  | bool     | expose pod level stats                                                                                                                                                                                                                                         |
-| gatewayProxies[].gatewayProxy.deployment.image.repository | string   | image name (registry/repository) for the gateway proxy container. this proxy receives configuration created via VirtualService CRDs                                                                                                                            |
-| gatewayProxies[].gatewayProxy.deployment.image.tag        | string   | tag for the gateway proxy container                                                                                                                                                                                                                            |
-| gatewayProxies[].gatewayProxy.deployment.image.pullPolicy | string   | image pull policy for the gateway proxy container                                                                                                                                                                                                              |
-| gatewayProxies[].gatewayProxy.deployment.httpPort         | string   | HTTP port for the proxy                                                                                                                                                                                                                                        |
-| gatewayProxies[].gatewayProxy.deployment.replicas         | int      | number of gateway proxy instances to deploy                                                                                                                                                                                                                    |
+| gatewayProxies[].gatewayProxy.podTemplate.image.repository| string   | image name (registry/repository) for the gateway proxy container. this proxy receives configuration created via VirtualService CRDs                                                                                                                            |
+| gatewayProxies[].gatewayProxy.podTemplate.image.tag       | string   | tag for the gateway proxy container                    |
+| gatewayProxies[].gatewayProxy.podTemplate.image.pullPolicy |  string   |  image pull policy for the gateway proxy container       |
+| gatewayProxies[].gatewayProxy.podTemplate.httpPort        | string   | HTTP port for the proxy                                 |
+| gatewayProxies[].gatewayProxy.podTemplate.stats           | bool      | number of gateway proxy instances to deploy             |
+| gatewayProxies[].gatewayProxy.podTemplate.nodeSelector    | map[string]string      | label selector for nodes                   |
+| gatewayProxies[].gatewayProxy.podTemplate.nodeName        | string      | name of node to run on                               |
+| gatewayProxies[].gatewayProxy.kind                        | object   | Kind has 2 child ojects `DaemonSet` and `Deployment`. Depending on which value is set the `gateway-proxy` pod will be deployed by a `DaemonSet` controller or a `Deployment` controller. The default is `Deployment`                                                        | 
+| gatewayProxies[].gatewayProxy.kind.deployment.replicas    | int      | number of gateway proxy instances to deploy              |
+| gatewayProxies[].gatewayProxy.kind.daemonSet.hostPort     | bool     | whether or not to enable host networking on the gateway-proxy pod. Only relevant when running as a DaemonSet                                                                                                                                                     |
 | gatewayProxies[].gatewayProxy.service.type                | string   | gateway [service type](https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types). default is `LoadBalancer`                                                                                                          |
 | gatewayProxies[].gatewayProxy.service.clusterIP           | string   | static clusterIP (or `None`) when `gatewayProxies[].gatewayProxy.service.type` is `ClusterIP`                                                                                                                                                                  |
 | gatewayProxies[].gatewayProxy.service.httpPort            | string   | HTTP port for the gateway service                                                                                                                                                                                                                              |
@@ -144,7 +149,7 @@ The table below describes all the values that you can override in your custom va
 | ingressProxy.deployment.image.pullPolicy                  | string   | image pull policy for the ingress proxy container                                                                                                                                                                                                              |
 | ingressProxy.deployment.httpPort                          | string   | HTTP port for the proxy                                                                                                                                                                                                                                        |
 | ingressProxy.deployment.httpsPort                         | string   | HTTPS port for the proxy                                                                                                                                                                                                                                       |
-| ingressProxy.deployment.replicas                          | int      | number of ingress proxy instances to deploy                                                                                                                                                                                                                    |
+| ingressProxy.deployment.replicas                          | int      | number of ingress proxy instances to deploy            |
 
 ---
 ## Verify your Installation

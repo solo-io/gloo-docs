@@ -1,6 +1,6 @@
 ---
 title: "Contributor Guide"
-weight: 2
+weight: 20
 ---
 
 Excited about Gloo and want to help make it better? 

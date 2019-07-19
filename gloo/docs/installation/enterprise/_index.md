@@ -12,7 +12,7 @@ Download the CLI Command appropriate to your environment:
 * [Linux]( {{% siteparam "glooctl-linux" %}})
 * [Windows]( {{% siteparam "glooctl-windows" %}})
 
-To get your trial license key, go to: https://www.solo.io/glooe-trial
+To get your trial license key, go to: https://www.solo.io/gloo-trial
 
 {{% notice note %}}
 To facilitate usage we recommend renaming the file to **`glooctl`** and adding the CLI to your PATH.

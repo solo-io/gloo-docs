@@ -1,6 +1,6 @@
 ---
 title: Exposing Gloo with NodePort
-weight: 60
+weight: 5
 ---
 
 ## Motivation

@@ -1,3 +1,43 @@
+### v0.17.3
+
+**New Features**
+
+- Add the ability to deploy the gateway-proxy as a DaemonSet rather than a deployment. (https://github.com/solo-io/gloo/issues/842)
+
+### v0.17.2
+
+This release contained no user-facing changes.
+
+### v0.17.1
+
+**New Features**
+
+- Added Consul endpoint discovery. (https://github.com/solo-io/gloo/issues/803)
+- Introduce EC2 upstream type. (https://github.com/solo-io/gloo/issues/799)
+
+**Fixes**
+
+- Fix Endpoints getting lost in Kubernetes EDS. (https://github.com/solo-io/gloo/issues/816)
+- Fix a bug with handling of gRPC upstreams without a package (https://github.com/solo-io/gloo/issues/831)
+
+### v0.17.0
+
+**Breaking Changes**
+
+- Rename existing service destination type from `service` to `kubernetes`. (https://github.com/solo-io/gloo/issues/803)
+
+**New Features**
+
+- Add new routing destination type for Consul services. (https://github.com/solo-io/gloo/issues/803)
+- Allow disabling FDS on a per-namespace and per-service basis with blacklist/whitelist options.
+Note that `kube-system` and `kube-public` namespaces must be explicitly whitelisted even in
+blacklist mode. (https://github.com/solo-io/gloo/issues/679)
+- Knative installation via the CLI is now version-independent, allows installing additional Knative components Build, Eventing, and Monitoring (https://github.com/solo-io/gloo/issues/795)
+
+**Fixes**
+
+- Fix an issue where routing to a grpc upstream using parameters did not work. (https://github.com/solo-io/gloo/issues/809)
+
 ### v0.16.0
 
 **Dependency Bumps**

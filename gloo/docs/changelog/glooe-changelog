@@ -1,3 +1,50 @@
+### v0.17.0
+
+**Dependency Bumps**
+
+- solo-io/gloo has been upgraded to v0.17.0.
+
+**Breaking Changes**
+
+- Update to gloo 0.17.0 (https://github.com/solo-io/solo-projects/pull/683)
+
+**New Features**
+
+- Add the components for the AWS specific create us fields. (https://github.com/solo-io/solo-projects/issues/682)
+- Add the components for the Azure specific create us fields. (https://github.com/solo-io/solo-projects/issues/682)
+- Add the components for the Consul specific create upstream fields. (https://github.com/solo-io/solo-projects/issues/682)
+- Group upstreams by namespace in listing page. (https://github.com/solo-io/solo-projects/issues/682)
+- Add the components for the Kubernetes specific create upstream fields. (https://github.com/solo-io/solo-projects/issues/682)
+- Add the components for the create Static upstream fields. (https://github.com/solo-io/solo-projects/issues/682)
+
+**Fixes**
+
+- Upgrade cards to show health better. Creates component for status information. (https://github.com/solo-io/solo-projects/issues/685)
+- Fix typo in the static upstream form. (https://github.com/solo-io/solo-projects/issues/682)
+- Tables now have more functionality and real data showing. (https://github.com/solo-io/solo-projects/issues/687)
+- Show correct virtual service status on icons in vs listing page. (https://github.com/solo-io/solo-projects/issues/701)
+- Fix vulnerability. (https://github.com/solo-io/solo-projects/pull/692)
+- Fix vulnerability. (https://github.com/solo-io/solo-projects/pull/692)
+
+### v0.16.2
+
+**New Features**
+
+- Support basic create upstream functionality. (https://github.com/solo-io/solo-projects/issues/635)
+- Create VS form with basic functionality. (https://github.com/solo-io/solo-projects/issues/634)
+- Filter upstreams by type on the catalog and table views (https://github.com/solo-io/solo-projects/issues/635)
+- Use correct logos for upstream cards. (https://github.com/solo-io/solo-projects/issues/635)
+
+**Fixes**
+
+- Change class names in svg elements so they dont override each other. (https://github.com/solo-io/solo-projects/pull/680)
+
+### v0.16.1
+
+**Fixes**
+
+- Fix an issue where virtual host name containings dots in external auth. (https://github.com/solo-io/solo-projects/pull/673)
+
 ### v0.16.0
 
 **Dependency Bumps**
