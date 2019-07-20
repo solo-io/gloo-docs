@@ -37,7 +37,15 @@ spec:
       - arn:aws:iam::123456789012:role/describe-ec2-demo
 ```
 
-## Tutorial: basic configuration of EC2 upstreams
+## Key points
+- **Credentials**: each upstream can be configured with custom credentials which will influence what instances are available for use.
+  - User credentials can be passed as an upstream-specific secret ref or through common AWS environment variables
+  - Roles can be optionally be included in the upstream spec. If provided, Gloo will assume those roles on behalf of the upstream's user account prior to listing instances. This can be a convenient way to manage upstream-specific access control.
+- **Filtering**: tag filters allow you to define which instances should be associated with your upstream.
+  - Filters can be specified in terms of tag key or tag key-value matches
+  - If multiple filters are specified, an instance must match each filter in order to be associated with the upstream.
+
+## Tutorial: Basic Configuration of EC2 Upstreams
 
 - Below is an outline of how to use the EC2 plugin to create routes to EC2 instances.
 - Requirements: Gloo 0.17.4 or greater installed as a gateway.
