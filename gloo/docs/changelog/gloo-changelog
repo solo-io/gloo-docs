@@ -1,3 +1,14 @@
+### v0.17.5
+
+**New Features**
+
+- EC2 upstreams do not need to provide an AWS secret, it can be taken from the environment. (https://github.com/solo-io/gloo/issues/864)
+
+**Fixes**
+
+- Improve glooctl error message for malformed upstreams (https://github.com/solo-io/gloo/issues/655)
+- gRPC plugin to handle missing path matcher (https://github.com/solo-io/gloo/issues/860)
+
 ### v0.17.4
 
 **New Features**
