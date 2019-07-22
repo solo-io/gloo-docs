@@ -1,3 +1,30 @@
+### v0.17.1
+
+**Dependency Bumps**
+
+- solo-io/gloo has been upgraded to v0.17.4.
+- solo-io/gloo-i has been upgraded to v0.1.26.
+
+**New Features**
+
+- Allow for entering secrets in the secrets page table. (https://github.com/solo-io/solo-projects/issues/682)
+- Allow for entering aws secrets in the secrets page table. (https://github.com/solo-io/solo-projects/issues/682)
+- Can now set all fields in the aws upstream form. (https://github.com/solo-io/solo-projects/issues/682)
+- Can now set all fields in the azure upstream form. (https://github.com/solo-io/solo-projects/issues/682)
+- Watch namespaces is now hooked up to api. (https://github.com/solo-io/solo-projects/issues/639)
+
+**Fixes**
+
+- Create routes modal fed by tables in VS list and tables+cards in Upstreams list. (https://github.com/solo-io/solo-projects/issues/705)
+- Fix error state in upstream cards. (https://github.com/solo-io/solo-projects/issues/682)
+- New route modal now has full parity with previous version. (https://github.com/solo-io/solo-projects/issues/705)
+- First parts of create new route modal. (https://github.com/solo-io/solo-projects/issues/705)
+- First working version of create new route modal. Does not handle all cases. (https://github.com/solo-io/solo-projects/issues/705)
+- Route table in VS Details and Route creation fixes. (https://github.com/solo-io/solo-projects/issues/705)
+- Domain names now fully display in their lists in UI. (https://github.com/solo-io/solo-projects/issues/712)
+- Domains now listed in Virtual Service details page, and updates going through API. (https://github.com/solo-io/solo-projects/issues/636)
+- Routes in virtual service details page now delete and addable. (https://github.com/solo-io/solo-projects/issues/636)
+
 ### v0.17.0
 
 **Dependency Bumps**
