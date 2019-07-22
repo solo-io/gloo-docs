@@ -6,7 +6,7 @@ description: How to run Gloo Locally using Docker-Compose
 
 1. Clone the solo-docs repository and cd to this example: `git clone https://github.com/solo-io/solo-docs && cd solo-docs/gloo/docs/installation/gateway/docker-compose`
 1. Run `./prepare-directories.sh`
-1. You can optionally set `GLOO_VERSION` environment variable to the Gloo version you want (defaults to "0.7.14").
+1. You can optionally set `GLOO_VERSION` environment variable to the Gloo version you want (defaults to "0.17.4").
 1. Run `docker-compose up`
 
 ## Example
