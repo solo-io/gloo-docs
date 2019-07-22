@@ -1,8 +1,9 @@
 version: '3'
+
 services:
 
   gloo:
-    image: "soloio/gloo:${GLOO_VERSION:-0.6.19}"
+    image: "${GLOO_REPO:-quay.io/solo-io}/gloo:${GLOO_VERSION:-0.17.4}"
     working_dir: /
     command:
     - "--dir=/data/"
@@ -10,25 +11,28 @@ services:
     - ./data:/data/
     ports:
     - "9977:9977"
+    restart: always
 
-  discovery:
-    image: "soloio/discovery:${GLOO_VERSION:-0.6.19}"
-    working_dir: /
-    command:
-    - "--dir=/data/"
-    volumes:
-    - ./data:/data/
+  # discovery:
+  #   image: "${GLOO_REPO:-quay.io/solo-io}/discovery:${GLOO_VERSION:-0.17.4}"
+  #   working_dir: /
+  #   command:
+  #   - "--dir=/data/"
+  #   volumes:
+  #   - ./data:/data/
+  #   restart: always
 
   gateway:
-    image: "soloio/gateway:${GLOO_VERSION:-0.6.19}"
+    image: "${GLOO_REPO:-quay.io/solo-io}/gateway:${GLOO_VERSION:-0.17.4}"
     working_dir: /
     command:
     - "--dir=/data/"
     volumes:
     - ./data:/data/
+    restart: always
 
   gateway-proxy:
-    image: soloio/gloo-envoy-wrapper:${GLOO_VERSION:-0.6.19}
+    image: ${GLOO_REPO:-quay.io/solo-io}/gloo-envoy-wrapper:${GLOO_VERSION:-0.17.4}
     entrypoint: ["envoy"]
     command: ["-c", "/config/envoy.yaml", "--disable-hot-restart"]
     volumes:
@@ -37,8 +41,10 @@ services:
     - "8080:8080"
     - "8443:8443"
     - "19000:19000"
+    restart: always
 
   petstore:
-    image: soloio/petstore-example:latest
+    image: ${GLOO_REPO:-quay.io/solo-io}/petstore:v1
     ports:
     - "8090:8080"
+    restart: always
