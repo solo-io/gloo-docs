@@ -1,3 +1,17 @@
+### v0.17.3
+
+**Dependency Bumps**
+
+- solo-io/gloo has been upgraded to v0.17.6.
+
+**New Features**
+
+- Clean up static and consul forms. (https://github.com/solo-io/solo-projects/issues/682)
+
+**Fixes**
+
+- Rates now updatable. (https://github.com/solo-io/solo-projects/issues/636)
+
 ### v0.17.2
 
 **Dependency Bumps**
