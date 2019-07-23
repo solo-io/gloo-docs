@@ -109,6 +109,32 @@ and use it to override default values in the Gloo Helm chart:
 helm install gloo/gloo --name gloo-custom-0-7-6 --namespace my-namespace -f value-overrides.yaml
 ```
 
+#### List of Gloo Helm chart values
+
+The table below describes all the enterprise-only values that you can override in your custom values file.
+
+The table for gloo open-source overrides (also available in enterprise) is [here](../gateway/kubernetes/#list-of-gloo-helm-chart-values).
+
+| option                                                    | type     | description                                                                                                                                                                                                                                                    |
+| --------------------------------------------------------- | -------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| grafana.enabled                                           | bool     | deploy grafana in your gloo system namespace. default is `true` |
+| prometheus.enabled                                        | bool     | deploy prometheus in your gloo system namespace. default is `true` |
+| rateLimit.enabled                                         | bool     | deploy rate-limiting in your gloo system namespace. default is `true` |
+
+A common setup may be to run your own prometheus (and grafana), separate from the gloo-provided ones. The enterprise Gloo UI makes use of its own grafana to display dashboards for Envoy and Kubernetes, leveraging gloo custom resources such as `Upstreams`. You can point gloo's system grafana toward your prometheus by overriding grafana's datasources tag, i.e.
+
+```yaml
+grafana:
+  datasources:
+    datasources.yaml:
+      apiVersion: 1
+      datasources:
+        - name: gloo
+          type: prometheus
+          access: proxy
+          url: http://{{ your.prometheus }}:{{ your.port }}  # fill this in!
+          isDefault: true
+``` 
 
 ---
 ## Verify your Installation
