@@ -9,19 +9,19 @@ weight: 2
 The `glooctl` command line provides useful functions to install, configure, and debug Gloo, though it is not required to use Gloo.
 
 * To install `glooctl` using the [Homebrew](https://brew.sh) package manager, run the following.
-  
+
   ```shell
   brew install solo-io/tap/glooctl
   ```
-  
+
 * To install on any platform run the following.
-  
+
   ```bash
   curl -sL https://run.solo.io/gloo/install | sh
 
   export PATH=$HOME/.gloo/bin:$PATH
   ```
-  
+
 * You can download `glooctl` directly via the GitHub releases page. You need to add `glooctl` to your system's `PATH` after downloading.
 
 Verify the CLI is installed and running correctly with:
@@ -47,8 +47,8 @@ Once your Kubernetes cluster is up and running, run the following command to dep
 glooctl install gateway
 ```
 
-> Note: You can run the command with the flag `--dry-run` to output 
-the Kubernetes manifests (as `yaml`) that `glooctl` will 
+> Note: You can run the command with the flag `--dry-run` to output
+the Kubernetes manifests (as `yaml`) that `glooctl` will
 apply to the cluster instead of installing them.
 
 ### Installing on Kubernetes with Helm
@@ -89,7 +89,6 @@ and use it to override default values in the Gloo Helm chart:
 ```shell
 helm install gloo/gloo --name gloo-custom-0-7-6 --namespace my-namespace -f value-overrides.yaml
 ```
-
 
 #### List of Gloo Helm chart values
 
@@ -132,7 +131,7 @@ The table below describes all the values that you can override in your custom va
 | gatewayProxies[].gatewayProxy.podTemplate.stats           | bool      | number of gateway proxy instances to deploy             |
 | gatewayProxies[].gatewayProxy.podTemplate.nodeSelector    | map[string]string      | label selector for nodes                   |
 | gatewayProxies[].gatewayProxy.podTemplate.nodeName        | string      | name of node to run on                               |
-| gatewayProxies[].gatewayProxy.kind                        | object   | Kind has 2 child ojects `DaemonSet` and `Deployment`. Depending on which value is set the `gateway-proxy` pod will be deployed by a `DaemonSet` controller or a `Deployment` controller. The default is `Deployment`                                                        | 
+| gatewayProxies[].gatewayProxy.kind                        | object   | Kind has 2 child ojects `DaemonSet` and `Deployment`. Depending on which value is set the `gateway-proxy` pod will be deployed by a `DaemonSet` controller or a `Deployment` controller. The default is `Deployment`                                                        |
 | gatewayProxies[].gatewayProxy.kind.deployment.replicas    | int      | number of gateway proxy instances to deploy              |
 | gatewayProxies[].gatewayProxy.kind.daemonSet.hostPort     | bool     | whether or not to enable host networking on the gateway-proxy pod. Only relevant when running as a DaemonSet                                                                                                                                                     |
 | gatewayProxies[].gatewayProxy.service.type                | string   | gateway [service type](https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types). default is `LoadBalancer`                                                                                                          |
