@@ -95,7 +95,7 @@ The HTTP Connection Manager lets you refine the behavior of Envoy for each liste
 
 One of the fields in the HTTP Connection Manager Plugin is `tracing`. This specifies the listener-specific tracing configuration.
 
-For notes on configuring and using tracing with Gloo, please see [TODO - link to tracing docs]
+For notes on configuring and using tracing with Gloo, please see the [tracing setup docs.](../../../setup_options/observability/#configuration)
 
 The tracing configuration fields of the Gateway CRD are highlighted below.
 
