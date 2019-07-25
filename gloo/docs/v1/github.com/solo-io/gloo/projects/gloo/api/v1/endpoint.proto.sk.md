@@ -26,7 +26,6 @@ weight: 5
 ### Endpoint
 
  
-
 Endpoints represent dynamically discovered address/ports where an upstream service is listening
 
 ```yaml

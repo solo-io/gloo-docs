@@ -1,3 +1,32 @@
+### v0.18.0
+
+In Gloo 0.18.0, we added support for TCP proxying, which required a breaking change to the gateway API. 
+Please check out https://gloo.solo.io/upgrading/0.18.0/ for details on how to seamlessly upgrade Gloo, 
+automatically convert existing configuration, and migrate traffic while avoiding downtime. 
+
+
+**Breaking Changes**
+
+- update the gateway API in preparation for TCP proxy (https://github.com/solo-io/gloo/issues/778)
+- update the gateway to have multiple types to support tcp proxy (https://github.com/solo-io/gloo/issues/778)
+- Settings CRD has been refactored to reflect Consul changes. (https://github.com/solo-io/gloo/issues/883)
+
+**New Features**
+
+- add ability to print basic non-kube yaml with cli commands (https://github.com/solo-io/gloo/issues/896)
+- Add liveness and readiness probes (https://github.com/solo-io/gloo/issues/872)
+- Fix race condition where helm chart sometimes wouldn't publish on release builds. (https://github.com/solo-io/gloo/issues/778)
+- Add support for tolerations to gateway-proxy (https://github.com/solo-io/gloo/issues/877)
+- Enable tracing. (https://github.com/solo-io/gloo/issues/879)
+- Enable running Gloo using Vault as a Secret backend and Consul as a configuration Backend. (https://github.com/solo-io/gloo/issues/883)
+
+**Fixes**
+
+- glooctl interactive prompts display updated state (https://github.com/solo-io/gloo/issues/551)
+- Make liveness work even when there is no gloo config. (https://github.com/solo-io/gloo/issues/872)
+- Fix an unlikely edge case where a client might emit an incomplete list of upstreams. (https://github.com/solo-io/gloo/pull/886)
+- fix issue with partial EDS where clusters were out of sync with endpoints (https://github.com/solo-io/gloo/issues/899)
+
 ### v0.17.6
 
 **Fixes**
