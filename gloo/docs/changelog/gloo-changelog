@@ -1,3 +1,10 @@
+### v0.18.2
+
+**New Features**
+
+- Enable route-specific tracing config. (https://github.com/solo-io/gloo/issues/880)
+- Support unix socket upstreams (https://github.com/solo-io/gloo/issues/871)
+
 ### v0.18.1
 
 **New Features**
