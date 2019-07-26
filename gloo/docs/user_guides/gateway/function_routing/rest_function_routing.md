@@ -15,7 +15,7 @@ help make routing easier. In this tutorial, we'll take a look at Gloo's function
 
 ### What you'll need
 
-If you haven't already deployed Gloo and the example swagger service on kubernetes, [go back to the first tutorial](../basic_routing)
+If you haven't already deployed Gloo and the example swagger service on kubernetes, [go back to the first tutorial](../../getting_started) 
 
 Now that we've seen the traditional routing functionality of Gloo (i.e. API-to-service), let's try doing some function routing.
 
@@ -207,7 +207,7 @@ virtualHost:
 
     You may be asking "why are you calling that a header, it's not a header"? We're actually calling the service
     with a path parameter, but in HTTP2 a header called `:path` is used to pass the path information around. At the
-    moment, since Envoy has [built everything internally around HTTP2](https://www.envoyproxy.io/docs/envoy/latest/intro/arch_overview/http_connection_management),
+    moment, since Envoy has [built everything internally around HTTP2](https://www.envoyproxy.io/docs/envoy/v1.11.0/intro/arch_overview/http/http_connection_management),
     we can use this `:path` header to pull template parameters. We could have used another header like `x-gloo` to pass
     in and then create our `rest-parameters` with the `x-gloo` header and accomplish the same thing. We'll leave that
     as an exercise to the reader.

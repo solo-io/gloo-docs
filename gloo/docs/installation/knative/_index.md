@@ -9,19 +9,19 @@ weight: 3
 The `glooctl` command line provides useful functions to install, configure, and debug Gloo, though it is not required to use Gloo.
 
 * To install `glooctl` using the [Homebrew](https://brew.sh) package manager, run the following.
-  
+
   ```shell
   brew install solo-io/tap/glooctl
   ```
-  
+
 * To install on any platform run the following.
-  
+
   ```bash
   curl -sL https://run.solo.io/gloo/install | sh
 
   export PATH=$HOME/.gloo/bin:$PATH
   ```
-  
+
 * You can download `glooctl` directly via the GitHub releases page. You need to add `glooctl` to your system's `PATH` after downloading.
 
 Verify the CLI is installed and running correctly with:
@@ -33,7 +33,6 @@ glooctl --version
 ```shell
 glooctl community edition version 0.13.29
 ```
-
 
 ## Installing the Gloo Knative Ingress on Kubernetes
 
@@ -50,12 +49,11 @@ Once your Kubernetes cluster is up and running, run the following command to dep
 glooctl install knative
 ```
 
-> Note: You can run the command with the flag `--dry-run` to output 
-the Kubernetes manifests (as `yaml`) that `glooctl` will 
+> Note: You can run the command with the flag `--dry-run` to output
+the Kubernetes manifests (as `yaml`) that `glooctl` will
 apply to the cluster instead of installing them.
 
 ### Installing on Kubernetes with Helm
-
 
 This is the recommended method for installing Gloo to your production environment as it offers rich customization to
 the Gloo control plane and the proxies Gloo manages.
@@ -80,7 +78,6 @@ helm install gloo --namespace gloo-system -f gloo/values-knative.yaml
 ```
 
 Gloo can be installed to a namespace of your choosing with the `--namespace` flag.
-
 
 ## Verify your Installation
 
@@ -129,6 +126,7 @@ This will also remove Knative-Serving, if it was installed by `glooctl`.
 ```shell
 glooctl uninstall
 ```
+
 If you installed Gloo to a different namespace, you will have to specify that namespace using the `-n` option:
 
 ```shell

@@ -4,16 +4,17 @@ weight: 5
 description: How to run Gloo Locally using Docker-Compose
 ---
 
-1. Clone the solo-docs repository, and cd to this example: `git clone https://github.com/solo-io/solo-docs && cd solo-docs/gloo/docs/installation/gateway/docker-compose`
+1. Clone the solo-docs repository and cd to this example: `git clone https://github.com/solo-io/solo-docs && cd solo-docs/gloo/docs/installation/gateway/docker-compose`
 1. Run `./prepare-directories.sh`
-1. You can optionally set GLOO_VERSION environment variable to the gloo version you want (defaults to "0.6.19").
+1. You can optionally set `GLOO_VERSION` environment variable to the Gloo version you want (defaults to "0.17.4").
 1. Run `docker-compose up`
 
 ## Example
 
-This configuration comes pre-loaded with an example upstream:
+This configuration comes pre-loaded with an example upstream that includes an optional function service specification `serviceSpec`
+that Gloo uses to allow function level routing.
 
-```bash
+```shell
 # view the upstream definition
 cat data/config/upstreams/gloo-system/petstore.yaml
 ```
@@ -22,27 +23,6 @@ cat data/config/upstreams/gloo-system/petstore.yaml
 metadata:
   name: petstore
   namespace: gloo-system
-upstream_spec:
-  static:
-    hosts:
-    - addr: petstore
-      port: 8080
-```
-
-Gloo will automatically discover functions (may take a few seconds)
-
-```bash
-cat data/config/upstreams/gloo-system/petstore.yaml
-```
-
-```yaml
-metadata:
-  name: petstore
-  namespace: gloo-system
-  resourceVersion: "4"
-status:
-  reportedBy: gloo
-  state: Accepted
 upstreamSpec:
   static:
     hosts:
@@ -97,7 +77,7 @@ upstreamSpec:
               transfer-encoding: {}
 ```
 
-```bash
+```shell
 # see how the route is configured:
 cat data/config/virtualservices/gloo-system/default.yaml
 ```
@@ -106,30 +86,52 @@ cat data/config/virtualservices/gloo-system/default.yaml
 metadata:
   name: default
   namespace: gloo-system
-  resourceVersion: "2"
-status:
-  reportedBy: gateway
-  state: Accepted
-  subresourceStatuses:
-    '*v1.Proxy gloo-system gateway-proxy':
-      reportedBy: gloo
-      state: Accepted
 virtualHost:
+  domains:
+  - '*'
   name: gloo-system.default
   routes:
   - matcher:
-      exact: /petstore/findPet
+      prefix: /petstore/findWithId
     routeAction:
       single:
         destinationSpec:
           rest:
             functionName: findPetById
+            parameters:
+              headers:
+                :path: /petstore/findWithId/{id}
         upstream:
           name: petstore
           namespace: gloo-system
+  - matcher:
+      prefix: /petstore/findPets
+    routeAction:
+      single:
+        destinationSpec:
+          rest:
+            functionName: findPets
+            parameters: {}
+        upstream:
+          name: petstore
+          namespace: gloo-system
+  - matcher:
+      prefix: /petstore
+    routeAction:
+      single:
+        upstream:
+          name: petstore
+          namespace: gloo-system
+    routePlugins:
+      prefixRewrite:
+        prefixRewrite: /api/pets
 ```
 
-```bash
-# try the route
-curl localhost:8080/petstore/findPet
+You'll need to wait a minute for the virtual service to get processed by Gloo and the routes exposed externally.
+
+```shell
+# try the routes
+curl http://localhost:8080/petstore/findWithId/1
+curl http://localhost:8080/petstore/findPets
+curl http://localhost:8080/petstore/
 ```

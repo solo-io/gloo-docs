@@ -16,7 +16,7 @@ This guide also assumes that you have Gloo installed. Gloo is installed to the `
 and should *not* be injected with the Istio sidecar. If you have automatic injection enabled for Istio, make sure the `istio-injection` label does NOT exist on the `gloo-system` namespace. See [the Istio docs on automatic sidecar injection](https://istio.io/docs/setup/kubernetes/additional-setup/sidecar-injection/#automatic-sidecar-injection) for more. 
 
 To quickly install Gloo, download *glooctl* and run `glooctl install gateway`. See the 
-[quick start](../../installation/kubernetes/quick_start/) guide for more information.
+[quick start](../../../../installation/gateway/kubernetes/) guide for more information.
 
 ## Istio 1.0.x
 For a quick install of Istio 1.0.6 on minikube with mTLS enabled, run the following commands:

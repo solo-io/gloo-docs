@@ -10,7 +10,7 @@ weight: 1
 
 * **Next-generation API gateway** : Gloo provides a long list of API gateway features, including rate limiting, circuit breaking, retries, caching, external authentication and authorization, transformation, service-mesh integration, and security. Getting traffic to your microservices and existing monoliths can be an expensive and complicated matter; Gloo solves these problems by keeping a slim profile, secure and separate control plane, as well as layers into infrastructure you may already have (i.e., Kubernetes, Consul, EC2, etc).
 
-* **Kubernetes ingress controller**: Gloo can function as a feature-rich ingress controller when deployed on Kubernetes and especially simplifies routing capabi    lities when deployed into public clouds like AWS EKS.
+* **Kubernetes ingress controller**: Gloo can function as a feature-rich ingress controller when deployed on Kubernetes and especially simplifies routing capabilities when deployed into public clouds like AWS EKS.
 
 * **Hybrid apps**: Gloo creates applications that route to backends implemented as microservices, serverless functions, and legacy apps. This feature can help users to gradually migrate from their legacy code to microservices and serverless; can let users add new functionalities using cloud-native technologies while maintaining their legacy codebase; can be used in cases where different teams in an organization choose different architectures; and more. See [here](https://www.solo.io/hybrid-app) for more on the Hybrid App paradigm.
 

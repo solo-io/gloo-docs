@@ -33,7 +33,7 @@ kubectl config current-context
 
 Should return `minikube` as the context.
 
-You're all set. Gloo install guide [here](../quick_start).
+You're all set. Gloo install guide [here](../).
 
 ---
 
@@ -58,7 +58,7 @@ minishift addons apply admin-user
 oc login -u system:admin
 ```
 
-You're all set. Gloo install guide [here](../quick_start)
+You're all set. Gloo install guide [here](../)
 
 ---
 
@@ -85,7 +85,7 @@ kubectl create clusterrolebinding cluster-admin-binding \
     --user $(gcloud config get-value account)
 ```
 
-You're all set. Gloo install guide [here](../quick_start).
+You're all set. Gloo install guide [here](../).
 
 ---
 
@@ -125,7 +125,7 @@ kubectl config current-context
 
 Should return `myAKSCluster-admin` as the context.
 
-You're all set. Gloo install guide [here](../quick_start).
+You're all set. Gloo install guide [here](../).
 
 ---
 
@@ -150,7 +150,7 @@ kubectl config current-context
 
 Should return `arn:aws:eks:YOUR-REGION:ACCOUNT_ID:cluster/YOUR-CLUSTER-NAME` as the context.
 
-You're all set. Gloo install guide [here](../quick_start)
+You're all set. Gloo install guide [here](../)
 
 ---
 
@@ -164,4 +164,4 @@ with Gloo's VirtualService CRD.
 
 ## Next Steps
 
-[Install Gloo](../quick_start)!
+[Install Gloo](../)!

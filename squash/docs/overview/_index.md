@@ -8,7 +8,7 @@ weight: 10
 If you are using [Homebrew](https://brew.sh) package manager you can install `squashctl` with the following command.
 
 ```shell
-brew install squashctl
+brew install solo-io/tap/squashctl
 ```
 
 You can also download by going to our releases page <https://github.com/solo-io/squash/releases>. Once you download, you

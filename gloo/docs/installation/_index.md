@@ -8,7 +8,6 @@ weight: 2
 
 Gloo Open-Source runs in 3 different modes to enable different use cases:
 
-
 <dic markdown=1>
 <table>
   <tr height="100">
@@ -31,7 +30,7 @@ Gloo Open-Source runs in 3 different modes to enable different use cases:
     <td width="10%">
       <a href="ingress"><img src="../img/ingress.png" width="60"/></a>
     </td>
-    <td>Run Gloo in `ingress` mode to act as a standard Kubernetes Ingress controller. In this mode, Gloo will import 
+    <td>Run Gloo in `ingress` mode to act as a standard Kubernetes Ingress controller. In this mode, Gloo will import
         its configuration from the `extensions/v1beta1.Ingress` Kubernetes resource. This can be used to achieve compatibility with the standard Kubernetes ingress API. Note that Gloo's Ingress API does not support customization via annotations. If you wish to extend Gloo beyond the functions of basic ingress, it is recommended to run Gloo in `gateway` mode.
     </td>
   </tr>
@@ -43,7 +42,6 @@ Gloo Open-Source runs in 3 different modes to enable different use cases:
 # Gloo Enterprise
 
 Gloo Enterprise has a single installation workflow:
-
 
 <dic markdown=1>
 <table>

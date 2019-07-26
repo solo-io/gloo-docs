@@ -12,7 +12,7 @@ The `supergloo` command line makes it much easier to install and operate SuperGl
 To install using the [Homebrew](https://brew.sh) package manager, run the following.
 
 ```shell
-brew install supergloo
+brew install solo-io/tap/supergloo
 ```
 
 To install on any platform run the following.

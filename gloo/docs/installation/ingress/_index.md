@@ -9,19 +9,19 @@ weight: 4
 The `glooctl` command line provides useful functions to install, configure, and debug Gloo, though it is not required to use Gloo.
 
 * To install `glooctl` using the [Homebrew](https://brew.sh) package manager, run the following.
-  
+
   ```shell
   brew install solo-io/tap/glooctl
   ```
-  
+
 * To install on any platform run the following.
-  
+
   ```bash
   curl -sL https://run.solo.io/gloo/install | sh
 
   export PATH=$HOME/.gloo/bin:$PATH
   ```
-  
+
 * You can download `glooctl` directly via the GitHub releases page. You need to add `glooctl` to your system's `PATH` after downloading.
 
 Verify the CLI is installed and running correctly with:
@@ -47,8 +47,8 @@ Once your Kubernetes cluster is up and running, run the following command to dep
 glooctl install ingress
 ```
 
-> Note: You can run the command with the flag `--dry-run` to output 
-the Kubernetes manifests (as `yaml`) that `glooctl` will 
+> Note: You can run the command with the flag `--dry-run` to output
+the Kubernetes manifests (as `yaml`) that `glooctl` will
 apply to the cluster instead of installing them.
 
 ### Installing on Kubernetes with Helm
@@ -121,6 +121,7 @@ To uninstall Gloo and all related components, simply run the following.
 ```shell
 glooctl uninstall
 ```
+
 If you installed Gloo to a different namespace, you will have to specify that namespace using the `-n` option:
 
 ```shell
