@@ -42,6 +42,7 @@ The documentation on envoy formatting directives can be found [here](https://www
 
 An example config for string formatted logs is as follows:
 ```yaml
+{{< highlight yaml "hl_lines=14-19" >}}
 apiVersion: gateway.solo.io.v2/v2
 kind: Gateway
 metadata:
@@ -61,6 +62,8 @@ spec:
       - fileSink:
           path: /dev/stdout
           stringFormat: ""
+{{< / highlight >}}
+
 ```
 
 The above yaml also includes the Gateway object it is contained in. Notice that the `stringFormat` field above is set to `""`. This is intentional. If the string is set to `""` envoy will use a standard formatting string. More information on this as well as how to create a customized string see [here](https://www.envoyproxy.io/docs/envoy/v1.10.0/configuration/access_log#default-format-string).
@@ -70,6 +73,7 @@ The above yaml also includes the Gateway object it is contained in. Notice that 
 An example config for JSON formatted logs is as follows:
 
 ```yaml
+{{< highlight yaml "hl_lines=14-21" >}}
 apiVersion: gateway.solo.io.v2/v2
 kind: Gateway
 metadata:
@@ -91,6 +95,7 @@ spec:
           jsonFormat:
             protocol: "%PROTOCOL%"
             duration: "%DURATION%"
+{{< / highlight >}}
 ```
 
 The majority is the same as the above, as the gateway has the same config, the differece exists in the formatting of the file sink. Instead of a simple string formatting directive, this config accepts an object value which is transformed by envoy into JSON formatted logs. The object inside of the `jsonFormat` field is interperted as a JSON object. This object consists of nested json objects as well as keys which point to individual formatting directives. More documentation on JSON formatting can be found [here](https://www.envoyproxy.io/docs/envoy/v1.10.0/configuration/access_log#format-dictionaries).
