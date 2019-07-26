@@ -17,7 +17,7 @@ of the relative simplicity of TCP level routing. Current features include standa
 
 For reference on  the 
 
-- [Gateway]({{% ref "/v1/github.com/solo-io/gloo/projects/gateway/api/v1/gateway.proto.sk" %}})
+- [Gateway]({{% ref "/v2/github.com/solo-io/gloo/projects/gateway/api/v1/gateway.proto.sk" %}})
 - [Proxy]({{% ref "/v1/github.com/solo-io/gloo/projects/gloo/api/v1/proxy.proto.sk" %}})
 
 ### What you'll need
