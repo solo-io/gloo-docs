@@ -17,7 +17,7 @@ of the relative simplicity of TCP level routing. Current features include standa
 
 For reference on  the 
 
-- [Gateway]({{% ref "/v2/github.com/solo-io/gloo/projects/gateway/api/v1/gateway.proto.sk" %}})
+- [Gateway]({{% ref "/v2/github.com/solo-io/gloo/projects/gateway/api/v2/gateway.proto.sk" %}})
 - [Proxy]({{% ref "/v1/github.com/solo-io/gloo/projects/gloo/api/v1/proxy.proto.sk" %}})
 
 ### What you'll need
@@ -64,7 +64,7 @@ EOF
 
 Once the `tcp-echo` pod is up and running we are ready to create our gateway resource and begin routing to it.
 
-As of vesion v2alpha1 of the [gateway]({{% ref "/v1/github.com/solo-io/gloo/projects/gateway/api/v1/gateway.proto.sk" %}}) 
+As of vesion v2 of the [gateway]({{% ref "/v2/github.com/solo-io/gloo/projects/gateway/api/v2/gateway.proto.sk" %}}) 
 resource, it now supports 2 different types, those being HTTP, and TCP. 
 The [proxy]({{% ref "/v1/github.com/solo-io/gloo/projects/gloo/api/v1/proxy.proto.sk" %}}) resource has been extended as well with
 the TCP listener type. This is not a breaking change and therefore does not require an API upgrade. 
@@ -72,7 +72,7 @@ the TCP listener type. This is not a breaking change and therefore does not requ
 The gateway will contain the following: 
 ```bash
 kubectl apply -n gloo-system -f - << EOF
-apiVersion: gateway.solo.io/v2alpha1
+apiVersion: gateway.solo.io.v2/v2
 kind: Gateway
 metadata:
   name: tcp
