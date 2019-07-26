@@ -30,7 +30,8 @@ in cluster, this may be anything, for the purposes of this tutorial we will use 
 
 Firstly apply the following yaml into the namespace of your choice. For the purposes of this tutorial we will be using `gloo-system`
 
-```yaml
+```bash
+kubectl apply -n gloo-system -f - << EOF
 apiVersion: v1
 kind: Pod
 metadata:
@@ -43,9 +44,22 @@ spec:
     imagePullPolicy: IfNotPresent
     name: tcp-echo
   restartPolicy: Always
-```
-```bash
-pbpaste | k apply -n gloo-system -f -
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: gloo
+  name: tcp-echo
+spec:
+  ports:
+  - name: http
+    port: 1025
+    protocol: TCP
+    targetPort: 1025
+  selector:
+    gloo: tcp-echo
+EOF
 ```
 
 Once the `tcp-echo` pod is up and running we are ready to create our gateway resource and begin routing to it.
@@ -56,7 +70,8 @@ The [proxy]({{% ref "/v1/github.com/solo-io/gloo/projects/gloo/api/v1/proxy.prot
 the TCP listener type. This is not a breaking change and therefore does not require an API upgrade. 
 
 The gateway will contain the following: 
-```yaml
+```bash
+kubectl apply -n gloo-system -f - << EOF
 apiVersion: gateway.solo.io/v2alpha1
 kind: Gateway
 metadata:
@@ -74,9 +89,7 @@ spec:
             name: gloo-system-tcp-echo-1025
             namespace: gloo-system
   useProxyProto: false
-```
-```bash
-pbpaste | k apply -n gloo-system -f -
+EOF
 ```
 
 To check that the gateway has been created properly run:
@@ -94,7 +107,7 @@ The above gateway will be read in by gloo, which will combine it with the other 
 To make sure that the configuration has been translated properly run:
 ```bash
 $ kubectl get proxies.gloo.solo.io -n gloo-system -oyaml
-
+{{< highlight yaml "hl_lines=20-26" >}}
 apiVersion: v1
 items:
 - apiVersion: gloo.solo.io/v1
@@ -130,6 +143,7 @@ kind: List
 metadata:
   resourceVersion: ""
   selfLink: ""
+{{< /highlight >}}
 ```
 
 If the translation worked than the listeners array in the resource spec will contain an entry for the tcp service we will be routing to.
@@ -139,6 +153,7 @@ The next step is adding a port to the gateway-proxy service so we can route to t
 
 The service should look like the following:
 ```yaml
+{{< highlight yaml "hl_lines=23-27" >}}
 apiVersion: v1
 kind: Service
 metadata:
@@ -172,6 +187,7 @@ spec:
   type: LoadBalancer
 status:
   loadBalancer: {}
+{{< /highlight >}}
 ```
 
 The important part here is the entry on port `8000` for our tcp service. Once the service has been saved to kubernetes, get the NodePort from the
@@ -188,7 +204,11 @@ curl -v telnet://$(minikube ip):30197
 * Connected to 192.168.64.13 (192.168.64.13) port 30197 (#0)
 
 ```
+
+{{% notice note %}}
 note: The node port was inserted in the above command following the ip
+{{% /notice %}}
+
 
 Now the terminal is waiting for input, all input entered will be echo'd back. And an inspection of the logs from the pod will reveal that the data
 is in fact being proxied through.
