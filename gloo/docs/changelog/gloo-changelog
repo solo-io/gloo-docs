@@ -1,3 +1,11 @@
+### v0.18.1
+
+**New Features**
+
+- Add access logging capability to gloo. (https://github.com/solo-io/gloo/issues/814)
+- Add glooctl support for creating and deleting upstream groups (https://github.com/solo-io/gloo/issues/649)
+- Allow setting resource limits in the helm chart. (https://github.com/solo-io/gloo/pull/889)
+
 ### v0.18.0
 
 In Gloo 0.18.0, we added support for TCP proxying, which required a breaking change to the gateway API. 
