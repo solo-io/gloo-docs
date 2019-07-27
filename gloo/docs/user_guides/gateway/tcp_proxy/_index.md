@@ -31,7 +31,7 @@ in cluster, this may be anything, for the purposes of this tutorial we will use 
 Firstly apply the following yaml into the namespace of your choice. For the purposes of this tutorial we will be using `gloo-system`
 
 ```bash
-kubectl apply -n gloo-system -f - << EOF
+kubectl apply -n gloo-system -f - <<EOF
 apiVersion: v1
 kind: Pod
 metadata:
@@ -71,7 +71,7 @@ the TCP listener type. This is not a breaking change and therefore does not requ
 
 The gateway will contain the following: 
 ```bash
-kubectl apply -n gloo-system -f - << EOF
+kubectl apply -n gloo-system -f - <<EOF
 apiVersion: gateway.solo.io.v2/v2
 kind: Gateway
 metadata:
@@ -152,7 +152,7 @@ Once the state on the resource is recorded as `1` the service is ready to be rou
 The next step is adding a port to the gateway-proxy service so we can route to the envoy listener which is handling our TCP traffic.
 
 The service should look like the following:
-```yaml
+
 {{< highlight yaml "hl_lines=23-27" >}}
 apiVersion: v1
 kind: Service
@@ -188,7 +188,6 @@ spec:
 status:
   loadBalancer: {}
 {{< /highlight >}}
-```
 
 The important part here is the entry on port `8000` for our tcp service. Once the service has been saved to kubernetes, get the NodePort from the
 service port entry and save it for later.
