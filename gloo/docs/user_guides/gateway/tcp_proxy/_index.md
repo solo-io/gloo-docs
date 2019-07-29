@@ -106,7 +106,7 @@ gloo-system   tcp           5s
 The above gateway will be read in by gloo, which will combine it with the other gateways into a Proxy resource.
 To make sure that the configuration has been translated properly run:
 
-{{< highlight yaml "hl_lines=20-26" >}}
+{{< highlight yaml "hl_lines=22-29" >}}
 $ kubectl get proxies.gloo.solo.io -n gloo-system -oyaml
 
 apiVersion: v1
