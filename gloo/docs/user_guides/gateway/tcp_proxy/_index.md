@@ -105,9 +105,10 @@ gloo-system   tcp           5s
 
 The above gateway will be read in by gloo, which will combine it with the other gateways into a Proxy resource.
 To make sure that the configuration has been translated properly run:
-```bash
-$ kubectl get proxies.gloo.solo.io -n gloo-system -oyaml
+
 {{< highlight yaml "hl_lines=20-26" >}}
+$ kubectl get proxies.gloo.solo.io -n gloo-system -oyaml
+
 apiVersion: v1
 items:
 - apiVersion: gloo.solo.io/v1
@@ -144,7 +145,7 @@ metadata:
   resourceVersion: ""
   selfLink: ""
 {{< /highlight >}}
-```
+
 
 If the translation worked than the listeners array in the resource spec will contain an entry for the tcp service we will be routing to.
 Once the state on the resource is recorded as `1` the service is ready to be routed to.

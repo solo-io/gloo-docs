@@ -25,7 +25,7 @@ Possible use cases include:
 
 The following explination assumes that the user has gloo `v0.18.1` or above running, as well as some previous knowledge of Gloo resources, and how to use them. In order to install Gloo if it is not already please refer to the following [tutorial](../../../installation/gateway/kubernetes). The only Gloo resource involved in enabling Access Loggins is the `Gateway`. Further Documentation can be found [here]().
 
-Enabling access logs in Gloo is as simple as adding a [listener plugin](../../gateway/configuring_route_options/listener_plugins) to any one of the gateway resources. The documentation for the `Access Logging Service` plugin API can be found [here]().
+Enabling access logs in Gloo is as simple as adding a [listener plugin](../../gateway/configuring_route_options/listener_plugins) to any one of the gateway resources. The documentation for the `Access Logging Service` plugin API can be found [here]({{% ref "/v1/github.com/solo-io/gloo/projects/gloo/api/v1/plugins/als/als.proto.sk" %}}).
 
 Envoy supports two types of Access Logging. `File Sink` and `GRPC`. Currently Gloo supports `File Sink` with plans to add GRPC streaming in the future.
 
@@ -41,7 +41,6 @@ The documentation on envoy formatting directives can be found [here](https://www
 ##### String formatted
 
 An example config for string formatted logs is as follows:
-```yaml
 {{< highlight yaml "hl_lines=14-19" >}}
 apiVersion: gateway.solo.io.v2/v2
 kind: Gateway
@@ -64,7 +63,6 @@ spec:
           stringFormat: ""
 {{< / highlight >}}
 
-```
 
 The above yaml also includes the Gateway object it is contained in. Notice that the `stringFormat` field above is set to `""`. This is intentional. If the string is set to `""` envoy will use a standard formatting string. More information on this as well as how to create a customized string see [here](https://www.envoyproxy.io/docs/envoy/v1.10.0/configuration/access_log#default-format-string).
 
@@ -72,7 +70,6 @@ The above yaml also includes the Gateway object it is contained in. Notice that 
 
 An example config for JSON formatted logs is as follows:
 
-```yaml
 {{< highlight yaml "hl_lines=14-21" >}}
 apiVersion: gateway.solo.io.v2/v2
 kind: Gateway
@@ -96,7 +93,6 @@ spec:
             protocol: "%PROTOCOL%"
             duration: "%DURATION%"
 {{< / highlight >}}
-```
 
 The majority is the same as the above, as the gateway has the same config, the differece exists in the formatting of the file sink. Instead of a simple string formatting directive, this config accepts an object value which is transformed by envoy into JSON formatted logs. The object inside of the `jsonFormat` field is interperted as a JSON object. This object consists of nested json objects as well as keys which point to individual formatting directives. More documentation on JSON formatting can be found [here](https://www.envoyproxy.io/docs/envoy/v1.10.0/configuration/access_log#format-dictionaries).
 
