@@ -1,3 +1,16 @@
+### v0.18.3
+
+**New Features**
+
+- Enable function discovery for consul upstreams (https://github.com/solo-io/gloo/issues/913)
+- Enable upstream discovery for consul upstreams (https://github.com/solo-io/gloo/issues/914)
+
+**Fixes**
+
+- Enable uds to run without crashing when kubernetes is not reachable (https://github.com/solo-io/gloo/issues/905)
+- Sanitize Consul EDS names (https://github.com/solo-io/gloo/issues/906)
+- Make Liveness probe work in read only file systems. (https://github.com/solo-io/gloo/issues/917)
+
 ### v0.18.2
 
 **New Features**
