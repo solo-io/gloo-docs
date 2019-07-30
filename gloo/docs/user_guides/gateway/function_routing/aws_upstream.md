@@ -52,7 +52,7 @@ glooctl create secret aws \
 You can see the details of the created secret as follows.
 
 ```shell
-kubectl describe secret my-aws
+kubectl describe secret my-aws -n gloo-system
 ```
 
 ```noop
@@ -116,7 +116,7 @@ glooctl add route \
     --name 'default' \
     --namespace 'gloo-system' \
     --path-prefix '/helloworld' \
-    --dest-name 'my-aws' \
+    --dest-name 'my-aws-upstream' \
     --aws-function-name 'helloworld'
 ```
 
