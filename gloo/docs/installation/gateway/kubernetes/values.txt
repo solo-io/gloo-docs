@@ -1,0 +1,156 @@
+|Option|Type|Default Value|Description|
+|------|----|-----------|-------------|
+|namespace.create|bool|false|create the installation namespace|
+|rbac.create|bool|true|create rbac rules for the gloo-system service account|
+|crds.create|bool|true|create CRDs for Gloo (turn off if installing with Helm to a cluster that already has Gloo CRDs)|
+|settings.watchNamespaces[]|string||whitelist of namespaces for gloo to watch for services and CRDs. Empty list means all namespaces|
+|settings.writeNamespace|string|gloo-system|namespace where intermediary CRDs will be written to, e.g. Upstreams written by Gloo Discovery.|
+|settings.integrations.knative.enabled|bool|false|enabled knative components|
+|settings.integrations.knative.proxy.image.tag|string||tag for the container|
+|settings.integrations.knative.proxy.image.repository|string||image name (registry/repository) for the container.|
+|settings.integrations.knative.proxy.image.pullPolicy|string||image pull policy for the container|
+|settings.integrations.knative.proxy.image.pullSecret|string||image pull policy for the container |
+|settings.integrations.knative.proxy.httpPort|string||HTTP port for the proxy|
+|settings.integrations.knative.proxy.httpsPort|string||HTTPS port for the proxy|
+|settings.integrations.knative.proxy.tracing|string||tracing configuration|
+|settings.integrations.knative.proxy.replicas|int||number of instances to deploy|
+|settings.integrations.knative.proxy.resources.limits.memory|string||amount of memory|
+|settings.integrations.knative.proxy.resources.limits.cpu|string||amount of CPUs|
+|settings.integrations.knative.proxy.resources.requests.memory|string||amount of memory|
+|settings.integrations.knative.proxy.resources.requests.cpu|string||amount of CPUs|
+|settings.create|bool|false|create a Settings CRD which configures Gloo controllers at boot time|
+|settings.extensions|interface|||
+|gloo.deployment.image.tag|string|0.18.5|tag for the container|
+|gloo.deployment.image.repository|string|quay.io/solo-io/gloo|image name (registry/repository) for the container.|
+|gloo.deployment.image.pullPolicy|string|Always|image pull policy for the container|
+|gloo.deployment.image.pullSecret|string||image pull policy for the container |
+|gloo.deployment.xdsPort|string|9977|port where gloo serves xDS API to Envoy|
+|gloo.deployment.replicas|int|1|number of instances to deploy|
+|gloo.deployment.resources.limits.memory|string||amount of memory|
+|gloo.deployment.resources.limits.cpu|string||amount of CPUs|
+|gloo.deployment.resources.requests.memory|string||amount of memory|
+|gloo.deployment.resources.requests.cpu|string||amount of CPUs|
+|discovery.deployment.image.tag|string|0.18.5|tag for the container|
+|discovery.deployment.image.repository|string|quay.io/solo-io/discovery|image name (registry/repository) for the container.|
+|discovery.deployment.image.pullPolicy|string|Always|image pull policy for the container|
+|discovery.deployment.image.pullSecret|string||image pull policy for the container |
+|discovery.deployment.replicas|int|1|number of instances to deploy|
+|discovery.deployment.resources.limits.memory|string||amount of memory|
+|discovery.deployment.resources.limits.cpu|string||amount of CPUs|
+|discovery.deployment.resources.requests.memory|string||amount of memory|
+|discovery.deployment.resources.requests.cpu|string||amount of CPUs|
+|discovery.fdsMode|string|||
+|gateway.enabled|bool|true|enable Gloo API Gateway features|
+|gateway.upgrade|bool|false|Deploy a Job to convert (but not delete) v1 Gateway resources to v2 and not add a |
+|gateway.deployment.image.tag|string|0.18.5|tag for the container|
+|gateway.deployment.image.repository|string|quay.io/solo-io/gateway|image name (registry/repository) for the container.|
+|gateway.deployment.image.pullPolicy|string|Always|image pull policy for the container|
+|gateway.deployment.image.pullSecret|string||image pull policy for the container |
+|gateway.deployment.replicas|int|1|number of instances to deploy|
+|gateway.deployment.resources.limits.memory|string||amount of memory|
+|gateway.deployment.resources.limits.cpu|string||amount of CPUs|
+|gateway.deployment.resources.requests.memory|string||amount of memory|
+|gateway.deployment.resources.requests.cpu|string||amount of CPUs|
+|gateway.conversionJob.image.tag|string|0.18.5|tag for the container|
+|gateway.conversionJob.image.repository|string|quay.io/solo-io/gateway-conversion|image name (registry/repository) for the container.|
+|gateway.conversionJob.image.pullPolicy|string|Always|image pull policy for the container|
+|gateway.conversionJob.image.pullSecret|string||image pull policy for the container |
+|gateway.conversionJob.restartPolicy|string|Never|restart policy to use when the pod exits|
+|gatewayProxies.NAME.kind.deployment.replicas|int||number of instances to deploy|
+|gatewayProxies.NAME.kind.deployment.resources.limits.memory|string||amount of memory|
+|gatewayProxies.NAME.kind.deployment.resources.limits.cpu|string||amount of CPUs|
+|gatewayProxies.NAME.kind.deployment.resources.requests.memory|string||amount of memory|
+|gatewayProxies.NAME.kind.deployment.resources.requests.cpu|string||amount of CPUs|
+|gatewayProxies.NAME.kind.daemonSet.hostPort|bool||whether or not to enable host networking on the pod. Only relevant when running as a DaemonSet|
+|gatewayProxies.NAME.podTemplate.image.tag|string||tag for the container|
+|gatewayProxies.NAME.podTemplate.image.repository|string||image name (registry/repository) for the container.|
+|gatewayProxies.NAME.podTemplate.image.pullPolicy|string||image pull policy for the container|
+|gatewayProxies.NAME.podTemplate.image.pullSecret|string||image pull policy for the container |
+|gatewayProxies.NAME.podTemplate.httpPort|string||HTTP port for the gateway service|
+|gatewayProxies.NAME.podTemplate.httpsPort|string||HTTPS port for the gateway service|
+|gatewayProxies.NAME.podTemplate.extraPorts[]|interface||extra ports for the gateway pod|
+|gatewayProxies.NAME.podTemplate.extraAnnotations.NAME|string||extra annotations to add to the pod|
+|gatewayProxies.NAME.podTemplate.nodeName|string||name of node to run on|
+|gatewayProxies.NAME.podTemplate.nodeSelector.NAME|string||label selector for nodes|
+|gatewayProxies.NAME.podTemplate.stats|bool||enable prometheus stats|
+|gatewayProxies.NAME.podTemplate.tolerations[].key|string|||
+|gatewayProxies.NAME.podTemplate.tolerations[].operator|string|||
+|gatewayProxies.NAME.podTemplate.tolerations[].value|string|||
+|gatewayProxies.NAME.podTemplate.tolerations[].effect|string|||
+|gatewayProxies.NAME.podTemplate.tolerations[].tolerationSeconds|int64|||
+|gatewayProxies.NAME.podTemplate.probes|bool||enable liveness and readiness probes|
+|gatewayProxies.NAME.podTemplate.resources.limits.memory|string||amount of memory|
+|gatewayProxies.NAME.podTemplate.resources.limits.cpu|string||amount of CPUs|
+|gatewayProxies.NAME.podTemplate.resources.requests.memory|string||amount of memory|
+|gatewayProxies.NAME.podTemplate.resources.requests.cpu|string||amount of CPUs|
+|gatewayProxies.NAME.configMap.data.NAME|string|||
+|gatewayProxies.NAME.service.type|string||gateway [service type](https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types). default is `LoadBalancer`|
+|gatewayProxies.NAME.service.httpPort|string||HTTP port for the gateway service|
+|gatewayProxies.NAME.service.httpsPort|string||HTTPS port for the gateway service|
+|gatewayProxies.NAME.service.clusterIP|string||static clusterIP (or `None`) when `gatewayProxies[].gatewayProxy.service.type` is `ClusterIP`|
+|gatewayProxies.NAME.service.extraAnnotations.NAME|string|||
+|gatewayProxies.NAME.service.externalTrafficPolicy|string|||
+|gatewayProxies.NAME.tracing.provider|string|||
+|gatewayProxies.NAME.tracing.cluster|string|||
+|gatewayProxies.gatewayProxyV2.kind.deployment.replicas|int|1|number of instances to deploy|
+|gatewayProxies.gatewayProxyV2.kind.deployment.resources.limits.memory|string||amount of memory|
+|gatewayProxies.gatewayProxyV2.kind.deployment.resources.limits.cpu|string||amount of CPUs|
+|gatewayProxies.gatewayProxyV2.kind.deployment.resources.requests.memory|string||amount of memory|
+|gatewayProxies.gatewayProxyV2.kind.deployment.resources.requests.cpu|string||amount of CPUs|
+|gatewayProxies.gatewayProxyV2.kind.daemonSet.hostPort|bool||whether or not to enable host networking on the pod. Only relevant when running as a DaemonSet|
+|gatewayProxies.gatewayProxyV2.podTemplate.image.tag|string|0.18.5|tag for the container|
+|gatewayProxies.gatewayProxyV2.podTemplate.image.repository|string|quay.io/solo-io/gloo-envoy-wrapper|image name (registry/repository) for the container.|
+|gatewayProxies.gatewayProxyV2.podTemplate.image.pullPolicy|string|Always|image pull policy for the container|
+|gatewayProxies.gatewayProxyV2.podTemplate.image.pullSecret|string||image pull policy for the container |
+|gatewayProxies.gatewayProxyV2.podTemplate.httpPort|string|8080|HTTP port for the gateway service|
+|gatewayProxies.gatewayProxyV2.podTemplate.httpsPort|string|8443|HTTPS port for the gateway service|
+|gatewayProxies.gatewayProxyV2.podTemplate.extraPorts[]|interface||extra ports for the gateway pod|
+|gatewayProxies.gatewayProxyV2.podTemplate.extraAnnotations.NAME|string||extra annotations to add to the pod|
+|gatewayProxies.gatewayProxyV2.podTemplate.nodeName|string||name of node to run on|
+|gatewayProxies.gatewayProxyV2.podTemplate.nodeSelector.NAME|string||label selector for nodes|
+|gatewayProxies.gatewayProxyV2.podTemplate.stats|bool|true|enable prometheus stats|
+|gatewayProxies.gatewayProxyV2.podTemplate.tolerations[].key|string|||
+|gatewayProxies.gatewayProxyV2.podTemplate.tolerations[].operator|string|||
+|gatewayProxies.gatewayProxyV2.podTemplate.tolerations[].value|string|||
+|gatewayProxies.gatewayProxyV2.podTemplate.tolerations[].effect|string|||
+|gatewayProxies.gatewayProxyV2.podTemplate.tolerations[].tolerationSeconds|int64|||
+|gatewayProxies.gatewayProxyV2.podTemplate.probes|bool|false|enable liveness and readiness probes|
+|gatewayProxies.gatewayProxyV2.podTemplate.resources.limits.memory|string||amount of memory|
+|gatewayProxies.gatewayProxyV2.podTemplate.resources.limits.cpu|string||amount of CPUs|
+|gatewayProxies.gatewayProxyV2.podTemplate.resources.requests.memory|string||amount of memory|
+|gatewayProxies.gatewayProxyV2.podTemplate.resources.requests.cpu|string||amount of CPUs|
+|gatewayProxies.gatewayProxyV2.configMap.data.NAME|string|||
+|gatewayProxies.gatewayProxyV2.service.type|string|LoadBalancer|gateway [service type](https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types). default is `LoadBalancer`|
+|gatewayProxies.gatewayProxyV2.service.httpPort|string|80|HTTP port for the gateway service|
+|gatewayProxies.gatewayProxyV2.service.httpsPort|string|443|HTTPS port for the gateway service|
+|gatewayProxies.gatewayProxyV2.service.clusterIP|string||static clusterIP (or `None`) when `gatewayProxies[].gatewayProxy.service.type` is `ClusterIP`|
+|gatewayProxies.gatewayProxyV2.service.extraAnnotations.NAME|string|||
+|gatewayProxies.gatewayProxyV2.service.externalTrafficPolicy|string|||
+|gatewayProxies.gatewayProxyV2.tracing.provider|string|||
+|gatewayProxies.gatewayProxyV2.tracing.cluster|string|||
+|ingress.enabled|bool|false||
+|ingress.deployment.image.tag|string||tag for the container|
+|ingress.deployment.image.repository|string||image name (registry/repository) for the container.|
+|ingress.deployment.image.pullPolicy|string||image pull policy for the container|
+|ingress.deployment.image.pullSecret|string||image pull policy for the container |
+|ingress.deployment.replicas|int||number of instances to deploy|
+|ingress.deployment.resources.limits.memory|string||amount of memory|
+|ingress.deployment.resources.limits.cpu|string||amount of CPUs|
+|ingress.deployment.resources.requests.memory|string||amount of memory|
+|ingress.deployment.resources.requests.cpu|string||amount of CPUs|
+|ingressProxy.deployment.image.tag|string||tag for the container|
+|ingressProxy.deployment.image.repository|string||image name (registry/repository) for the container.|
+|ingressProxy.deployment.image.pullPolicy|string||image pull policy for the container|
+|ingressProxy.deployment.image.pullSecret|string||image pull policy for the container |
+|ingressProxy.deployment.httpPort|string||HTTP port for the ingress container|
+|ingressProxy.deployment.httpsPort|string||HTTPS port for the ingress container|
+|ingressProxy.deployment.extraPorts[]|interface|||
+|ingressProxy.deployment.extraAnnotations.NAME|string|||
+|ingressProxy.deployment.replicas|int||number of instances to deploy|
+|ingressProxy.deployment.resources.limits.memory|string||amount of memory|
+|ingressProxy.deployment.resources.limits.cpu|string||amount of CPUs|
+|ingressProxy.deployment.resources.requests.memory|string||amount of memory|
+|ingressProxy.deployment.resources.requests.cpu|string||amount of CPUs|
+|ingressProxy.configMap.data.NAME|string|||
+|ingressProxy.tracing|string|||
+|k8s.clusterName|string|cluster.local|cluster name to use when referencing services.|
