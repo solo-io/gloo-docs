@@ -358,7 +358,7 @@ routes:
 {{< /highlight >}}
 
 {{% notice note %}}
-You can use a destination of any type an part of a multi destination action. This means that the same route can split 
+You can use a destination of any type as part of a multi destination action. This means that the same route can split 
 traffic between `upstream`, `kube`, and `consul` destinations.
 {{% /notice %}}
 
