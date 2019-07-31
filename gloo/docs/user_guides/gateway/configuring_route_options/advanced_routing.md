@@ -203,6 +203,17 @@ spec:
             namespace: gloo-system
 {{< /highlight >}}
 
+To create the above route using `glooctl`, you can do the following. Multiple `--rest-parameters` can be specified. The CLI will
+try to inspect the provided value to guess if its a regular expression (or not), and set the `regex` field accordingly.
+
+```shell
+glooctl add route \
+    --name default \
+    --rest-parameters "foo=bar" \
+    --path-prefix /hello \
+    --dest-name default-hello-8080
+```
+
 To test you can use `glooctl proxy url` to get the Gloo gateway base URL, and then add the path.
 
 ```shell
