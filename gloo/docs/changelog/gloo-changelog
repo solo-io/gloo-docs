@@ -1,3 +1,11 @@
+### v0.18.4
+
+**Fixes**
+
+- Set all kube2e tests to use the same lock to avoid overwriting CRDs (https://github.com/solo-io/gloo/issues/912)
+- Disable liveness and readiness temporarily to bring the proxy back into a good state. (https://github.com/solo-io/gloo/issues/924)
+- Fix VS edit cli command so it no longer always writes an empty sslConfig causing the VS to break. (https://github.com/solo-io/gloo/issues/921)
+
 ### v0.18.3
 
 **New Features**
