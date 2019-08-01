@@ -129,10 +129,11 @@ glooctl add route \
 [Subset]({{% ref "/v1/github.com/solo-io/gloo/projects/gloo/api/v1/subset.proto.sk#subset" %}}) currently lets you
 provide a Kubernetes selector to allow request forwarding to a subset of Kubernetes Pods within the upstream associated
 Kubernetes Service. There are currently two steps required to get subsetting to work for Kubernetes upstreams, which are
-the only upstream type currently supported. First, you need to edit the upstream manifest and add a
-[`subsetSpec`]({{% ref "/v1/github.com/solo-io/gloo/projects/gloo/api/v1/plugins/subset_spec.proto.sk#subsetspec" %}})
+the only upstream type currently supported. 
+
+1. First, you need to edit the upstream manifest and add a [`subsetSpec`]({{% ref "/v1/github.com/solo-io/gloo/projects/gloo/api/v1/plugins/subset_spec.proto.sk#subsetspec" %}})
 within the [Kubernetes Upstream Spec]({{% ref "/v1/github.com/solo-io/gloo/projects/gloo/api/v1/plugins/kubernetes/kubernetes.proto.sk" %}}).
-Second, you need to add a [`subset`]({{% ref "/v1/github.com/solo-io/gloo/projects/gloo/api/v1/subset.proto.sk#subset" %}})
+2. Second, you need to add a [`subset`]({{% ref "/v1/github.com/solo-io/gloo/projects/gloo/api/v1/subset.proto.sk#subset" %}})
 within the [`Destination` spec]({{% ref "/v1/github.com/solo-io/gloo/projects/gloo/api/v1/proxy.proto.sk#destination" %}})
 of the Route Action.
 
@@ -208,8 +209,10 @@ apiVersion: gateway.solo.io/v1
 
 If you are running Gloo in a Kubernetes cluster, it is possible to directly specify 
 [Kubernetes Services](https://kubernetes.io/docs/concepts/services-networking/service/) as routing destinations. 
-The `kube` destination type has two required fields: `ref` is a [ResourceRef]({{% ref "/v1/github.com/solo-io/solo-kit/api/v1/ref.proto.sk#resourceref" %}}) 
-to the service that should receive traffic and `port` is the port on which the service is listening.
+The `kube` destination type has two required fields:
+
+* `ref` is a [ResourceRef]({{% ref "/v1/github.com/solo-io/solo-kit/api/v1/ref.proto.sk#resourceref" %}}) to the service that should receive traffic
+* `port` is an `int` which represents the port on which the service is listening. This must be one of the ports defined in the Kubernetes service spec
 
 The following configuration will forward all requests to `/petstore` to port `8080` on the Kubernetes service named 
 `petstore` in the `default` namespace.
@@ -230,8 +233,8 @@ routes:
 #### Consul destination {#dest-consul}
 
 Gloo is capable of discovering services registered with [HashiCorp Consul](https://www.hashicorp.com/products/consul/). 
-If this feature has been enabled via the [correspondent field]({{% ref "/v1/github.com/solo-io/gloo/projects/gloo/api/v1/settings.proto.sk#servicediscoveryoptions" %}}) 
-in the `Settings` resource, it is possible to specify Consul services as routing destinations.
+If this feature has been enabled via the `serviceDiscovery` field in the [ConsulConfiguration]({{% ref "/v1/github.com/solo-io/gloo/projects/gloo/api/v1/settings.proto.sk#consulconfiguration" %}}) 
+section of the `Settings` resource, it is possible to specify Consul services as routing destinations.
 
 A single Consul service usually maps to several service instances, which can have distinct sets of tags, listen on 
 different ports, and live in multiple data centers. To give a concrete example, here is a simplified response you might 
@@ -294,7 +297,7 @@ routes:
         - secondary
 {{< /highlight >}}
 
-while this one will forward the same requests only to the first two instances (the ones in data center `dc1`)
+while this next example will forward the same requests only to the first two instances (the ones in data center `dc1`)
 
 {{< highlight yaml "hl_lines=6-9" >}}
 routes:
