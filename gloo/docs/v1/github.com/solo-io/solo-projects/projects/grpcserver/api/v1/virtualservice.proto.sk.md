@@ -11,14 +11,23 @@ weight: 5
 #### Types:
 
 
+- [VirtualServiceDetails](#virtualservicedetails)
+- [Plugins](#plugins)
+- [ExtAuthPlugin](#extauthplugin)
+- [RateLimitPlugin](#ratelimitplugin)
+- [RepeatedStrings](#repeatedstrings)
+- [RepeatedRoutes](#repeatedroutes)
+- [SslConfigValue](#sslconfigvalue)
+- [IngressRateLimitValue](#ingressratelimitvalue)
+- [ExtAuthInput](#extauthinput)
+- [Config](#config)
 - [GetVirtualServiceRequest](#getvirtualservicerequest)
 - [GetVirtualServiceResponse](#getvirtualserviceresponse)
 - [ListVirtualServicesRequest](#listvirtualservicesrequest)
 - [ListVirtualServicesResponse](#listvirtualservicesresponse)
-- [StreamVirtualServiceListRequest](#streamvirtualservicelistrequest)
-- [StreamVirtualServiceListResponse](#streamvirtualservicelistresponse)
 - [VirtualServiceInput](#virtualserviceinput)
 - [BasicAuthInput](#basicauthinput)
+- [VirtualServiceInputV2](#virtualserviceinputv2)
 - [CreateVirtualServiceRequest](#createvirtualservicerequest)
 - [CreateVirtualServiceResponse](#createvirtualserviceresponse)
 - [UpdateVirtualServiceRequest](#updatevirtualservicerequest)
@@ -47,6 +56,186 @@ weight: 5
 
 
 ---
+### VirtualServiceDetails
+
+
+
+```yaml
+"virtualService": .gateway.solo.io.VirtualService
+"plugins": .glooeeapi.solo.io.Plugins
+
+```
+
+| Field | Type | Description | Default |
+| ----- | ---- | ----------- |----------- | 
+| `virtualService` | [.gateway.solo.io.VirtualService](../../../../../../gloo/projects/gateway/api/v1/virtual_service.proto.sk#virtualservice) |  |  |
+| `plugins` | [.glooeeapi.solo.io.Plugins](../virtualservice.proto.sk#plugins) |  |  |
+
+
+
+
+---
+### Plugins
+
+
+
+```yaml
+"extAuth": .glooeeapi.solo.io.ExtAuthPlugin
+"rateLimit": .glooeeapi.solo.io.RateLimitPlugin
+
+```
+
+| Field | Type | Description | Default |
+| ----- | ---- | ----------- |----------- | 
+| `extAuth` | [.glooeeapi.solo.io.ExtAuthPlugin](../virtualservice.proto.sk#extauthplugin) |  |  |
+| `rateLimit` | [.glooeeapi.solo.io.RateLimitPlugin](../virtualservice.proto.sk#ratelimitplugin) |  |  |
+
+
+
+
+---
+### ExtAuthPlugin
+
+
+
+```yaml
+"value": .extauth.plugins.gloo.solo.io.ExtAuthConfig
+"error": string
+
+```
+
+| Field | Type | Description | Default |
+| ----- | ---- | ----------- |----------- | 
+| `value` | [.extauth.plugins.gloo.solo.io.ExtAuthConfig](../../../../gloo/api/v1/plugins/extauth/extauth.proto.sk#extauthconfig) |  |  |
+| `error` | `string` |  |  |
+
+
+
+
+---
+### RateLimitPlugin
+
+
+
+```yaml
+"value": .ratelimit.plugins.gloo.solo.io.IngressRateLimit
+"error": string
+
+```
+
+| Field | Type | Description | Default |
+| ----- | ---- | ----------- |----------- | 
+| `value` | [.ratelimit.plugins.gloo.solo.io.IngressRateLimit](../../../../gloo/api/v1/plugins/ratelimit/ratelimit.proto.sk#ingressratelimit) |  |  |
+| `error` | `string` |  |  |
+
+
+
+
+---
+### RepeatedStrings
+
+
+
+```yaml
+"values": []string
+
+```
+
+| Field | Type | Description | Default |
+| ----- | ---- | ----------- |----------- | 
+| `values` | `[]string` |  |  |
+
+
+
+
+---
+### RepeatedRoutes
+
+
+
+```yaml
+"values": []gloo.solo.io.Route
+
+```
+
+| Field | Type | Description | Default |
+| ----- | ---- | ----------- |----------- | 
+| `values` | [[]gloo.solo.io.Route](../../../../../../gloo/projects/gloo/api/v1/proxy.proto.sk#route) |  |  |
+
+
+
+
+---
+### SslConfigValue
+
+
+
+```yaml
+"value": .gloo.solo.io.SslConfig
+
+```
+
+| Field | Type | Description | Default |
+| ----- | ---- | ----------- |----------- | 
+| `value` | [.gloo.solo.io.SslConfig](../../../../../../gloo/projects/gloo/api/v1/ssl.proto.sk#sslconfig) |  |  |
+
+
+
+
+---
+### IngressRateLimitValue
+
+
+
+```yaml
+"value": .ratelimit.plugins.gloo.solo.io.IngressRateLimit
+
+```
+
+| Field | Type | Description | Default |
+| ----- | ---- | ----------- |----------- | 
+| `value` | [.ratelimit.plugins.gloo.solo.io.IngressRateLimit](../../../../gloo/api/v1/plugins/ratelimit/ratelimit.proto.sk#ingressratelimit) |  |  |
+
+
+
+
+---
+### ExtAuthInput
+
+
+
+```yaml
+"config": .glooeeapi.solo.io.ExtAuthInput.Config
+
+```
+
+| Field | Type | Description | Default |
+| ----- | ---- | ----------- |----------- | 
+| `config` | [.glooeeapi.solo.io.ExtAuthInput.Config](../virtualservice.proto.sk#config) |  |  |
+
+
+
+
+---
+### Config
+
+
+
+```yaml
+"oauth": .extauth.plugins.gloo.solo.io.OAuth
+"customAuth": .extauth.plugins.gloo.solo.io.CustomAuth
+
+```
+
+| Field | Type | Description | Default |
+| ----- | ---- | ----------- |----------- | 
+| `oauth` | [.extauth.plugins.gloo.solo.io.OAuth](../../../../gloo/api/v1/plugins/extauth/extauth.proto.sk#oauth) |  |  |
+| `customAuth` | [.extauth.plugins.gloo.solo.io.CustomAuth](../../../../gloo/api/v1/plugins/extauth/extauth.proto.sk#customauth) |  |  |
+
+
+
+
+---
 ### GetVirtualServiceRequest
 
 
@@ -70,12 +259,14 @@ weight: 5
 
 ```yaml
 "virtualService": .gateway.solo.io.VirtualService
+"virtualServiceDetails": .glooeeapi.solo.io.VirtualServiceDetails
 
 ```
 
 | Field | Type | Description | Default |
 | ----- | ---- | ----------- |----------- | 
-| `virtualService` | [.gateway.solo.io.VirtualService](../../../../../../gloo/projects/gateway/api/v1/virtual_service.proto.sk#virtualservice) |  |  |
+| `virtualService` | [.gateway.solo.io.VirtualService](../../../../../../gloo/projects/gateway/api/v1/virtual_service.proto.sk#virtualservice) | Deprecated. Use virtual_service_details. |  |
+| `virtualServiceDetails` | [.glooeeapi.solo.io.VirtualServiceDetails](../virtualservice.proto.sk#virtualservicedetails) |  |  |
 
 
 
@@ -104,48 +295,14 @@ weight: 5
 
 ```yaml
 "virtualServices": []gateway.solo.io.VirtualService
+"virtualServiceDetails": []glooeeapi.solo.io.VirtualServiceDetails
 
 ```
 
 | Field | Type | Description | Default |
 | ----- | ---- | ----------- |----------- | 
-| `virtualServices` | [[]gateway.solo.io.VirtualService](../../../../../../gloo/projects/gateway/api/v1/virtual_service.proto.sk#virtualservice) |  |  |
-
-
-
-
----
-### StreamVirtualServiceListRequest
-
-
-
-```yaml
-"namespace": string
-"selector": map<string, string>
-
-```
-
-| Field | Type | Description | Default |
-| ----- | ---- | ----------- |----------- | 
-| `namespace` | `string` |  |  |
-| `selector` | `map<string, string>` |  |  |
-
-
-
-
----
-### StreamVirtualServiceListResponse
-
-
-
-```yaml
-"virtualServices": []gateway.solo.io.VirtualService
-
-```
-
-| Field | Type | Description | Default |
-| ----- | ---- | ----------- |----------- | 
-| `virtualServices` | [[]gateway.solo.io.VirtualService](../../../../../../gloo/projects/gateway/api/v1/virtual_service.proto.sk#virtualservice) |  |  |
+| `virtualServices` | [[]gateway.solo.io.VirtualService](../../../../../../gloo/projects/gateway/api/v1/virtual_service.proto.sk#virtualservice) | Deprecated. Use virtual_service_details. |  |
+| `virtualServiceDetails` | [[]glooeeapi.solo.io.VirtualServiceDetails](../virtualservice.proto.sk#virtualservicedetails) |  |  |
 
 
 
@@ -153,7 +310,8 @@ weight: 5
 ---
 ### VirtualServiceInput
 
-
+ 
+Deprecated. Use VirtualServiceInputV2
 
 ```yaml
 "ref": .core.solo.io.ResourceRef
@@ -203,18 +361,49 @@ weight: 5
 
 
 ---
+### VirtualServiceInputV2
+
+
+
+```yaml
+"ref": .core.solo.io.ResourceRef
+"displayName": .google.protobuf.StringValue
+"domains": .glooeeapi.solo.io.RepeatedStrings
+"routes": .glooeeapi.solo.io.RepeatedRoutes
+"sslConfig": .glooeeapi.solo.io.SslConfigValue
+"rateLimitConfig": .glooeeapi.solo.io.IngressRateLimitValue
+"extAuthConfig": .glooeeapi.solo.io.ExtAuthInput
+
+```
+
+| Field | Type | Description | Default |
+| ----- | ---- | ----------- |----------- | 
+| `ref` | [.core.solo.io.ResourceRef](../../../../../../solo-kit/api/v1/ref.proto.sk#resourceref) |  |  |
+| `displayName` | [.google.protobuf.StringValue](https://developers.google.com/protocol-buffers/docs/reference/csharp/class/google/protobuf/well-known-types/string-value) |  |  |
+| `domains` | [.glooeeapi.solo.io.RepeatedStrings](../virtualservice.proto.sk#repeatedstrings) |  |  |
+| `routes` | [.glooeeapi.solo.io.RepeatedRoutes](../virtualservice.proto.sk#repeatedroutes) |  |  |
+| `sslConfig` | [.glooeeapi.solo.io.SslConfigValue](../virtualservice.proto.sk#sslconfigvalue) |  |  |
+| `rateLimitConfig` | [.glooeeapi.solo.io.IngressRateLimitValue](../virtualservice.proto.sk#ingressratelimitvalue) |  |  |
+| `extAuthConfig` | [.glooeeapi.solo.io.ExtAuthInput](../virtualservice.proto.sk#extauthinput) |  |  |
+
+
+
+
+---
 ### CreateVirtualServiceRequest
 
 
 
 ```yaml
 "input": .glooeeapi.solo.io.VirtualServiceInput
+"inputV2": .glooeeapi.solo.io.VirtualServiceInputV2
 
 ```
 
 | Field | Type | Description | Default |
 | ----- | ---- | ----------- |----------- | 
-| `input` | [.glooeeapi.solo.io.VirtualServiceInput](../virtualservice.proto.sk#virtualserviceinput) |  |  |
+| `input` | [.glooeeapi.solo.io.VirtualServiceInput](../virtualservice.proto.sk#virtualserviceinput) | Deprecated. Will be removed, but in the meantime we will fallback to this input if v2 is not provided. |  |
+| `inputV2` | [.glooeeapi.solo.io.VirtualServiceInputV2](../virtualservice.proto.sk#virtualserviceinputv2) |  |  |
 
 
 
@@ -226,12 +415,14 @@ weight: 5
 
 ```yaml
 "virtualService": .gateway.solo.io.VirtualService
+"virtualServiceDetails": .glooeeapi.solo.io.VirtualServiceDetails
 
 ```
 
 | Field | Type | Description | Default |
 | ----- | ---- | ----------- |----------- | 
-| `virtualService` | [.gateway.solo.io.VirtualService](../../../../../../gloo/projects/gateway/api/v1/virtual_service.proto.sk#virtualservice) |  |  |
+| `virtualService` | [.gateway.solo.io.VirtualService](../../../../../../gloo/projects/gateway/api/v1/virtual_service.proto.sk#virtualservice) | Deprecated. Use virtual_service_details. |  |
+| `virtualServiceDetails` | [.glooeeapi.solo.io.VirtualServiceDetails](../virtualservice.proto.sk#virtualservicedetails) |  |  |
 
 
 
@@ -243,12 +434,14 @@ weight: 5
 
 ```yaml
 "input": .glooeeapi.solo.io.VirtualServiceInput
+"inputV2": .glooeeapi.solo.io.VirtualServiceInputV2
 
 ```
 
 | Field | Type | Description | Default |
 | ----- | ---- | ----------- |----------- | 
-| `input` | [.glooeeapi.solo.io.VirtualServiceInput](../virtualservice.proto.sk#virtualserviceinput) |  |  |
+| `input` | [.glooeeapi.solo.io.VirtualServiceInput](../virtualservice.proto.sk#virtualserviceinput) | Deprecated. Will be removed, but in the meantime we will fallback to this input if v2 is not provided. |  |
+| `inputV2` | [.glooeeapi.solo.io.VirtualServiceInputV2](../virtualservice.proto.sk#virtualserviceinputv2) |  |  |
 
 
 
@@ -260,12 +453,14 @@ weight: 5
 
 ```yaml
 "virtualService": .gateway.solo.io.VirtualService
+"virtualServiceDetails": .glooeeapi.solo.io.VirtualServiceDetails
 
 ```
 
 | Field | Type | Description | Default |
 | ----- | ---- | ----------- |----------- | 
-| `virtualService` | [.gateway.solo.io.VirtualService](../../../../../../gloo/projects/gateway/api/v1/virtual_service.proto.sk#virtualservice) |  |  |
+| `virtualService` | [.gateway.solo.io.VirtualService](../../../../../../gloo/projects/gateway/api/v1/virtual_service.proto.sk#virtualservice) | Deprecated. Use virtual_service_details. |  |
+| `virtualServiceDetails` | [.glooeeapi.solo.io.VirtualServiceDetails](../virtualservice.proto.sk#virtualservicedetails) |  |  |
 
 
 
@@ -347,12 +542,14 @@ weight: 5
 
 ```yaml
 "virtualService": .gateway.solo.io.VirtualService
+"virtualServiceDetails": .glooeeapi.solo.io.VirtualServiceDetails
 
 ```
 
 | Field | Type | Description | Default |
 | ----- | ---- | ----------- |----------- | 
-| `virtualService` | [.gateway.solo.io.VirtualService](../../../../../../gloo/projects/gateway/api/v1/virtual_service.proto.sk#virtualservice) |  |  |
+| `virtualService` | [.gateway.solo.io.VirtualService](../../../../../../gloo/projects/gateway/api/v1/virtual_service.proto.sk#virtualservice) | Deprecated. Use virtual_service_details. |  |
+| `virtualServiceDetails` | [.glooeeapi.solo.io.VirtualServiceDetails](../virtualservice.proto.sk#virtualservicedetails) |  |  |
 
 
 
@@ -381,12 +578,14 @@ weight: 5
 
 ```yaml
 "virtualService": .gateway.solo.io.VirtualService
+"virtualServiceDetails": .glooeeapi.solo.io.VirtualServiceDetails
 
 ```
 
 | Field | Type | Description | Default |
 | ----- | ---- | ----------- |----------- | 
-| `virtualService` | [.gateway.solo.io.VirtualService](../../../../../../gloo/projects/gateway/api/v1/virtual_service.proto.sk#virtualservice) |  |  |
+| `virtualService` | [.gateway.solo.io.VirtualService](../../../../../../gloo/projects/gateway/api/v1/virtual_service.proto.sk#virtualservice) | Deprecated. Use virtual_service_details. |  |
+| `virtualServiceDetails` | [.glooeeapi.solo.io.VirtualServiceDetails](../virtualservice.proto.sk#virtualservicedetails) |  |  |
 
 
 
@@ -417,12 +616,14 @@ weight: 5
 
 ```yaml
 "virtualService": .gateway.solo.io.VirtualService
+"virtualServiceDetails": .glooeeapi.solo.io.VirtualServiceDetails
 
 ```
 
 | Field | Type | Description | Default |
 | ----- | ---- | ----------- |----------- | 
-| `virtualService` | [.gateway.solo.io.VirtualService](../../../../../../gloo/projects/gateway/api/v1/virtual_service.proto.sk#virtualservice) |  |  |
+| `virtualService` | [.gateway.solo.io.VirtualService](../../../../../../gloo/projects/gateway/api/v1/virtual_service.proto.sk#virtualservice) | Deprecated. Use virtual_service_details. |  |
+| `virtualServiceDetails` | [.glooeeapi.solo.io.VirtualServiceDetails](../virtualservice.proto.sk#virtualservicedetails) |  |  |
 
 
 
@@ -455,12 +656,14 @@ weight: 5
 
 ```yaml
 "virtualService": .gateway.solo.io.VirtualService
+"virtualServiceDetails": .glooeeapi.solo.io.VirtualServiceDetails
 
 ```
 
 | Field | Type | Description | Default |
 | ----- | ---- | ----------- |----------- | 
-| `virtualService` | [.gateway.solo.io.VirtualService](../../../../../../gloo/projects/gateway/api/v1/virtual_service.proto.sk#virtualservice) |  |  |
+| `virtualService` | [.gateway.solo.io.VirtualService](../../../../../../gloo/projects/gateway/api/v1/virtual_service.proto.sk#virtualservice) | Deprecated. Use virtual_service_details. |  |
+| `virtualServiceDetails` | [.glooeeapi.solo.io.VirtualServiceDetails](../virtualservice.proto.sk#virtualservicedetails) |  |  |
 
 
 
@@ -493,12 +696,14 @@ weight: 5
 
 ```yaml
 "virtualService": .gateway.solo.io.VirtualService
+"virtualServiceDetails": .glooeeapi.solo.io.VirtualServiceDetails
 
 ```
 
 | Field | Type | Description | Default |
 | ----- | ---- | ----------- |----------- | 
-| `virtualService` | [.gateway.solo.io.VirtualService](../../../../../../gloo/projects/gateway/api/v1/virtual_service.proto.sk#virtualservice) |  |  |
+| `virtualService` | [.gateway.solo.io.VirtualService](../../../../../../gloo/projects/gateway/api/v1/virtual_service.proto.sk#virtualservice) | Deprecated. Use virtual_service_details. |  |
+| `virtualServiceDetails` | [.glooeeapi.solo.io.VirtualServiceDetails](../virtualservice.proto.sk#virtualservicedetails) |  |  |
 
 
 

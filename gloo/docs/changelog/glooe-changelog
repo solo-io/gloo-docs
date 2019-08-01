@@ -1,3 +1,40 @@
+### v0.18.0
+
+**Breaking Changes**
+
+- Bump Gloo to v0.18.2. This involves a breaking change to the Gateway API. Follow this guide for instructions on upgrading: https://gloo.solo.io/upgrading/0.18.1/. (https://github.com/solo-io/solo-projects/issues/754)
+
+**New Features**
+
+- Allow users to enable/disable grafana, prometheus, and rate-limiting. (https://github.com/solo-io/gloo/issues/840)
+- Allow users to route to aws upstreams. (https://github.com/solo-io/gloo/issues/744)
+- Add button to redirect user to the secrets page if no secret is found. (https://github.com/solo-io/gloo/issues/744)
+- Display the list of lambda functions on the upstreams page. (https://github.com/solo-io/gloo/issues/744)
+- Allow users to delete secrets from the table. (https://github.com/solo-io/gloo/issues/639)
+- Show all upstream types we can discover in the checkboxes. (https://github.com/solo-io/solo-projects/issues/744)
+- Version is now actually tied to something in the UI. (https://github.com/solo-io/gloo/issues/781)
+
+**Fixes**
+
+- Virtual Service details now has propre route creation UX. (https://github.com/solo-io/solo-projects/issues/636)
+- Creating a route in the UI now requires all valid data. (https://github.com/solo-io/solo-projects/issues/775)
+- Virtual Service creation now requires proper values. (https://github.com/solo-io/solo-projects/issues/772)
+- Virtual Service details now has propre route creation UX. (https://github.com/solo-io/solo-projects/issues/773)
+- Virtual Service OAuth configuration is now mutable from the UI. (https://github.com/solo-io/solo-projects/issues/636)
+- Fix parsing of anon/authorized rate limit from field map. (https://github.com/solo-io/solo-projects/issues/734)
+- Route order can now be swapped. (https://github.com/solo-io/solo-projects/issues/636)
+- Make it easier to work with virtual service plugins on the front end (https://github.com/solo-io/solo-projects/issues/767)
+- Add smoother validation. Tape patch bug in anticipation of real fix. (https://github.com/solo-io/solo-projects/issues/682)
+- Upstream names, and all titles, no longer break their cards in the listing. (https://github.com/solo-io/solo-projects/issues/761)
+- Virtual service creation now ends more naturally for user. (https://github.com/solo-io/solo-projects/issues/760)
+- Now catch and inform user when attempting to create a route without setting upstream. (https://github.com/solo-io/solo-projects/issues/759)
+- Dropdowns in UI fields now work fine on blur. (https://github.com/solo-io/solo-projects/issues/782)
+- The rate limit form in the UI now disables and submits properly. (https://github.com/solo-io/solo-projects/issues/782)
+- The checkboxes for Lambda functions in the UI are now aligned. (https://github.com/solo-io/solo-projects/issues/782)
+- Other minor errors in the Rate Limit form are now fixed. (https://github.com/solo-io/solo-projects/issues/782)
+- Upstream dropdowns now show the upstream type by icon. (https://github.com/solo-io/solo-projects/issues/744)
+- Add a new virtual service input object to create / update API to allow delta-style updates. (https://github.com/solo-io/solo-projects/issues/749)
+
 ### v0.17.3
 
 **Dependency Bumps**
