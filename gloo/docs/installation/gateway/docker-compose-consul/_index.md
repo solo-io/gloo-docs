@@ -25,11 +25,8 @@ Docker Compose, connecting it to Consul for configuration storage and Vault for 
 
 {{% notice note %}}
 Consul's KV interface will be exposed on `localhost:8500`, while the Gloo Gateway Proxy will be listening for HTTP on `localhost:8080`
-and HTTPS on `localhost:8443`, respectively. 
-
-You can view resources stored in the Consul
-UI at `http://localhost:8500/ui`.
-{{% /notice %}}.
+and HTTPS on `localhost:8443`, respectively. You can view resources stored in the Consul UI at `http://localhost:8500/ui`.
+{{% /notice %}}
 
 ## Example using Petstore
 
