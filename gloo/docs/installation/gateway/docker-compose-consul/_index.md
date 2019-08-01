@@ -19,9 +19,9 @@ Docker Compose, connecting it to Consul for configuration storage and Vault for 
 ## Installation
 
 1. Clone the solo-docs repository and cd to this example: `git clone https://github.com/solo-io/solo-docs && cd solo-docs/gloo/docs/installation/gateway/docker-compose-consul`
-1. Run `./prepare-directories.sh`
-1. You can optionally set `GLOO_VERSION` environment variable to the Gloo version you want (defaults to "0.18.3").
-1. Run `docker-compose up`
+2. Run `./prepare-directories.sh`
+3. You can optionally set `GLOO_VERSION` environment variable to the Gloo version you want (defaults to "0.18.3").
+4. Run `docker-compose up`
 
 {{% notice note %}}
 Consul's KV interface will be exposed on `localhost:8500`, while the Gloo Gateway Proxy will be listening for HTTP on `localhost:8080`
