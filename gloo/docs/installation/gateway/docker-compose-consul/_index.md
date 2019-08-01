@@ -113,5 +113,5 @@ curl http://localhost:8080/sample-route-1
 ```
 
 While the tutorials in User Guides have been written with Kubernetes in mind, most concepts will map directly to
-Consul-based installations of Gloo. Please correspond with us on our Slack channel while we work to expand our 
+Consul-based installations of Gloo. Please correspond with us on [our Slack channel](https://slack.solo.io/) while we work to expand our 
 documentation on running Gloo without Kubernetes.
