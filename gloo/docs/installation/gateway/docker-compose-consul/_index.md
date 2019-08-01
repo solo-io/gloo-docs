@@ -23,8 +23,13 @@ Docker Compose, connecting it to Consul for configuration storage and Vault for 
 1. You can optionally set `GLOO_VERSION` environment variable to the Gloo version you want (defaults to "0.18.3").
 1. Run `docker-compose up`
 
-> Note: Consul's KV interface will be exposed on `localhost:8500`, while the Gloo Gateway Proxy will be listening for HTTP on `localhost:8080`
-and HTTPS on `localhost:8443`, respectively.
+{{% notice note %}}
+Consul's KV interface will be exposed on `localhost:8500`, while the Gloo Gateway Proxy will be listening for HTTP on `localhost:8080`
+and HTTPS on `localhost:8443`, respectively. 
+
+You can view resources stored in the Consul
+UI at `http://localhost:8500/ui`.
+{{% /notice %}}.
 
 ## Example using Petstore
 
@@ -82,11 +87,12 @@ virtualHost:
         prefixRewrite: /api/pets
 ```
 
-
-> Note: all `glooctl add` and `glooctl create` commands can be run with a `--yaml` flag
+{{% notice note %}}
+All `glooctl add` and `glooctl create` commands can be run with a `--yaml` flag
 which will output Gloo YAML to stdout. These outputs can be stored as Consul Values
 and `.yaml` files for configuring Gloo. See the [API reference]({{< ref "/v1/github.com/solo-io/gloo/projects/gateway/api/v1/virtual_service.proto.sk.md" >}})
 for details on writing Gloo configuration YAML.
+{{% /notice %}}
 
 Store the Virtual Service in Consul's Key-Value store:
 
@@ -97,10 +103,12 @@ curl -v \
     "http://127.0.0.1:8500/v1/kv/gloo/gateway.solo.io/v1/VirtualService/gloo-system/default"
 ```
 
-> Note: Consul Keys for Gloo resources follow the following format: 
+{{% notice note %}}
+Note: Consul Keys for Gloo resources follow the following format: 
 `gloo/<resource group>/<group version>/<resource kind>/<resource namespace>/<resource name>`. 
 See [the Consul Key-Value configuration guide]({{< ref "/user_guides/setup_options/consul_kv.md" >}})
 for more information.
+{{% /notice %}}
 
 You should now be able to hit the route we exposed with `curl`:
 
