@@ -34,6 +34,7 @@ UI at `http://localhost:8500/ui`.
 ## Example using Petstore
 
 Get the IP of the Petstore service:
+
 ```bash
 PETSTORE_IP=$(docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' docker-compose-consul_petstore_1)
 cat > petstore-service.json <<EOF
