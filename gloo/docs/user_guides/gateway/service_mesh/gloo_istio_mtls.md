@@ -175,7 +175,7 @@ Gloo can easily and automatically plug into the Istio SDS architecture. To confi
 ```bash
 kubectl edit deploy/gateway-proxy -n gloo-system
 ```
-{{< highlight yaml "hl_lines=51-52 61-64" >}}
+{{< highlight yaml "hl_lines=51-52 63-66" >}}
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
