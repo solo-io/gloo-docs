@@ -1,3 +1,19 @@
+### v0.18.6
+
+**Dependency Bumps**
+
+- solo-io/solo-kit has been upgraded to v0.10.7.
+
+**New Features**
+
+- Expose Envoy's traffic shadowing capabilities. (https://github.com/solo-io/gloo/issues/934)
+- Add command for getting xds snapshot (https://github.com/solo-io/gloo/issues/938)
+
+**Fixes**
+
+- Use IfNotPresent image pull policy for release images, and Always for dev images. (https://github.com/solo-io/gloo/issues/942)
+- Clean up output logic and formatting for glooctl get and dry-run. (https://github.com/solo-io/gloo/issues/904)
+
 ### v0.18.5
 
 **New Features**

@@ -20,9 +20,9 @@
 |settings.integrations.knative.proxy.resources.requests.cpu|string||amount of CPUs|
 |settings.create|bool|false|create a Settings CRD which configures Gloo controllers at boot time|
 |settings.extensions|interface|||
-|gloo.deployment.image.tag|string|0.18.5|tag for the container|
+|gloo.deployment.image.tag|string|0.18.6|tag for the container|
 |gloo.deployment.image.repository|string|quay.io/solo-io/gloo|image name (registry/repository) for the container.|
-|gloo.deployment.image.pullPolicy|string|Always|image pull policy for the container|
+|gloo.deployment.image.pullPolicy|string|IfNotPresent|image pull policy for the container|
 |gloo.deployment.image.pullSecret|string||image pull policy for the container |
 |gloo.deployment.xdsPort|string|9977|port where gloo serves xDS API to Envoy|
 |gloo.deployment.replicas|int|1|number of instances to deploy|
@@ -30,9 +30,9 @@
 |gloo.deployment.resources.limits.cpu|string||amount of CPUs|
 |gloo.deployment.resources.requests.memory|string||amount of memory|
 |gloo.deployment.resources.requests.cpu|string||amount of CPUs|
-|discovery.deployment.image.tag|string|0.18.5|tag for the container|
+|discovery.deployment.image.tag|string|0.18.6|tag for the container|
 |discovery.deployment.image.repository|string|quay.io/solo-io/discovery|image name (registry/repository) for the container.|
-|discovery.deployment.image.pullPolicy|string|Always|image pull policy for the container|
+|discovery.deployment.image.pullPolicy|string|IfNotPresent|image pull policy for the container|
 |discovery.deployment.image.pullSecret|string||image pull policy for the container |
 |discovery.deployment.replicas|int|1|number of instances to deploy|
 |discovery.deployment.resources.limits.memory|string||amount of memory|
@@ -42,18 +42,18 @@
 |discovery.fdsMode|string|||
 |gateway.enabled|bool|true|enable Gloo API Gateway features|
 |gateway.upgrade|bool|false|Deploy a Job to convert (but not delete) v1 Gateway resources to v2 and not add a |
-|gateway.deployment.image.tag|string|0.18.5|tag for the container|
+|gateway.deployment.image.tag|string|0.18.6|tag for the container|
 |gateway.deployment.image.repository|string|quay.io/solo-io/gateway|image name (registry/repository) for the container.|
-|gateway.deployment.image.pullPolicy|string|Always|image pull policy for the container|
+|gateway.deployment.image.pullPolicy|string|IfNotPresent|image pull policy for the container|
 |gateway.deployment.image.pullSecret|string||image pull policy for the container |
 |gateway.deployment.replicas|int|1|number of instances to deploy|
 |gateway.deployment.resources.limits.memory|string||amount of memory|
 |gateway.deployment.resources.limits.cpu|string||amount of CPUs|
 |gateway.deployment.resources.requests.memory|string||amount of memory|
 |gateway.deployment.resources.requests.cpu|string||amount of CPUs|
-|gateway.conversionJob.image.tag|string|0.18.5|tag for the container|
+|gateway.conversionJob.image.tag|string|0.18.6|tag for the container|
 |gateway.conversionJob.image.repository|string|quay.io/solo-io/gateway-conversion|image name (registry/repository) for the container.|
-|gateway.conversionJob.image.pullPolicy|string|Always|image pull policy for the container|
+|gateway.conversionJob.image.pullPolicy|string|IfNotPresent|image pull policy for the container|
 |gateway.conversionJob.image.pullSecret|string||image pull policy for the container |
 |gateway.conversionJob.restartPolicy|string|Never|restart policy to use when the pod exits|
 |gatewayProxies.NAME.kind.deployment.replicas|int||number of instances to deploy|
@@ -98,9 +98,9 @@
 |gatewayProxies.gatewayProxyV2.kind.deployment.resources.requests.memory|string||amount of memory|
 |gatewayProxies.gatewayProxyV2.kind.deployment.resources.requests.cpu|string||amount of CPUs|
 |gatewayProxies.gatewayProxyV2.kind.daemonSet.hostPort|bool||whether or not to enable host networking on the pod. Only relevant when running as a DaemonSet|
-|gatewayProxies.gatewayProxyV2.podTemplate.image.tag|string|0.18.5|tag for the container|
+|gatewayProxies.gatewayProxyV2.podTemplate.image.tag|string|0.18.6|tag for the container|
 |gatewayProxies.gatewayProxyV2.podTemplate.image.repository|string|quay.io/solo-io/gloo-envoy-wrapper|image name (registry/repository) for the container.|
-|gatewayProxies.gatewayProxyV2.podTemplate.image.pullPolicy|string|Always|image pull policy for the container|
+|gatewayProxies.gatewayProxyV2.podTemplate.image.pullPolicy|string|IfNotPresent|image pull policy for the container|
 |gatewayProxies.gatewayProxyV2.podTemplate.image.pullSecret|string||image pull policy for the container |
 |gatewayProxies.gatewayProxyV2.podTemplate.httpPort|string|8080|HTTP port for the gateway service|
 |gatewayProxies.gatewayProxyV2.podTemplate.httpsPort|string|8443|HTTPS port for the gateway service|
