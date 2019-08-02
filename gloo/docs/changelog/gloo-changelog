@@ -1,3 +1,9 @@
+### v0.18.5
+
+**New Features**
+
+- Introduce probs again, but set them to off by default. (https://github.com/solo-io/gloo/issues/924)
+
 ### v0.18.4
 
 **Fixes**
