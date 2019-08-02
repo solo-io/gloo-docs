@@ -1,3 +1,10 @@
+### v0.18.7
+
+**New Features**
+
+- Add Header Manipulation Features Plugin (https://github.com/solo-io/gloo/issues/936)
+- Add Host Rewrite Plugin (https://github.com/solo-io/gloo/issues/936)
+
 ### v0.18.6
 
 **Dependency Bumps**
