@@ -1,3 +1,10 @@
+### v0.18.8
+
+**Fixes**
+
+- Remove pre-install hook from settings resource in helm chart. (https://github.com/solo-io/gloo/issues/956)
+- Apply namespace exclusively in pre-install. (https://github.com/solo-io/gloo/issues/957)
+
 ### v0.18.7
 
 **New Features**
