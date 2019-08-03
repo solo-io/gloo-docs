@@ -1,3 +1,21 @@
+### v0.18.1
+
+**New Features**
+
+- Support creating ec2 upstreams via the new apiserver (https://github.com/solo-io/solo-projects/issues/785)
+- Show a confirmation modal and redirect after upstream creation. (https://github.com/solo-io/solo-projects/issues/796)
+- Allow users to delete virtual services. (https://github.com/solo-io/gloo/issues/794)
+
+**Fixes**
+
+- Do not overwrite all upstreamspec fields when updating an upstream (https://github.com/solo-io/solo-projects/issues/785)
+- Creating virtual services and routes now default to the gloo-system namespace. (https://github.com/solo-io/solo-projects/issues/793)
+- Routes can now be created while specifying a brand new virtual service at the same time. (https://github.com/solo-io/solo-projects/issues/792)
+- Stats page link removed until its true calling is discovered. A long journey awaits it. (https://github.com/solo-io/solo-projects/issues/825)
+- Creating a route in the UI now redirects the user to the virtual service details which house it. (https://github.com/solo-io/solo-projects/issues/823)
+- Methods, Headers, and Query Params now have prettier UI to highlight their natural beauty. (https://github.com/solo-io/solo-projects/issues/815)
+- Allow entering static upstreams. (https://github.com/solo-io/solo-projects/issues/790)
+
 ### v0.18.0
 
 **Breaking Changes**
