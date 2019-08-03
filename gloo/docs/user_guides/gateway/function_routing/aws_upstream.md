@@ -4,20 +4,20 @@ weight: 1
 description: AWS Upstream configuration guide.
 ---
 
-## How to setup and use AWS Upstream
+## How to setup and use an AWS Upstream
 
 There are 2 steps to enabling Gloo to discover and access AWS Lambda services.
 
 1. Create an AWS Secret to give Gloo credentials to access AWS.
-2. Create a Gloo upstream, referencing AWS Secret, that will populate the Gloo function catalog with available
+2. Create a Gloo upstream referencing the AWS Secret that will populate the Gloo function catalog with available
 AWS Lambda functions. 
 
-### Create AWS Secret
+### Create an AWS Secret
 
-The following command will create a Kubernetes secret that contains the AWS Access Key and Secret Key needed by Gloo
-to connect to AWS for service discovery.
+This command can be used to create a Kubernetes secret which contains the AWS Access Key and Secret Key needed by Gloo
+to connect to AWS in order to do Lambda function discovery.
 
-```shell
+```noop
 glooctl create secret aws --help
 
 Create an AWS secret with the given name
@@ -37,7 +37,7 @@ Global Flags:
   -o, --output string   output format: (yaml, json, table)
 ```
 
-For example, to create an AWS secret named `my-aws` in the (default) namespace `gloo-system`, run the following command.
+For example, the following command creates an AWS secret named `my-aws` in the (default) namespace `gloo-system`.
 You can name the secret (`--name 'your_name'`) whatever you like. Just make sure you use the correct name when
 referencing it from AWS Upstream.
 
@@ -49,7 +49,7 @@ glooctl create secret aws \
     --secret-key '<AWS SECRET KEY>'
 ```
 
-You can see the details of the created secret as follows.
+You can see the details of the created secret using `kubectl`.
 
 ```shell
 kubectl describe secret my-aws -n gloo-system
@@ -68,12 +68,11 @@ Data
 aws:  84 bytes
 ```
 
-### Create AWS Upstream
+### Create an AWS Upstream
 
-This is how you create an AWS Upstream so that Gloo can do both: Lambda service discovery; and allow you to create routing rules
-referencing those Lambda functions.
+This command can be used to create an AWS upstream. Once it is created, Gloo can perform Lambda function discovery, and you can create virtual services with route rules referencing Lambda functions.
 
-```shell
+```noop
 glooctl create upstream aws --help
 
 AWS Upstreams represent a set of AWS Lambda Functions for a Region that can be routed to with Gloo. AWS Upstreams require a valid set of AWS Credentials to be provided. These should be uploaded to Gloo using `glooctl create secret aws`
@@ -94,8 +93,7 @@ Global Flags:
   -o, --output string   output format: (yaml, json, table)
 ```
 
-For example, to create an AWS Upstream nammed `my-aws-upstream` in the (default) namespace `gloo-system` against the AWS
-region `us-east-1` and referencing the AWS Secret we created in the previous step - `my-aws` in `gloo-system` namespace.
+For example, this command creates an AWS Upstream named `my-aws-upstream` in the (default) namespace `gloo-system`. This upstream will contain the Lambda functions available in the `us-east-1` region under the AWS account referenced by the `my-aws` secret, which lives in the `gloo-system` namespace. 
 
 ```shell
 glooctl create upstream aws \
@@ -108,8 +106,7 @@ glooctl create upstream aws \
 
 ### Usage
 
-To create a route rule for your new AWS upstream, you use the `glooctl add route` command with the `--aws-function-name`
-option. For example,
+To create a route rule for your new AWS upstream, you can use the `glooctl add route` command. For example, this command creates a route rule that matches the path `/helloworld` and routes to the `helloworld` Lambda function in the AWS Upstream `my-aws-upstream`.
 
 ```shell
 glooctl add route \
