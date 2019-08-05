@@ -1,3 +1,9 @@
+### v0.18.10
+
+**Fixes**
+
+- Fix ec2 bug where it only listed public ips (https://github.com/solo-io/gloo/pull/968)
+
 ### v0.18.9
 
 **New Features**
