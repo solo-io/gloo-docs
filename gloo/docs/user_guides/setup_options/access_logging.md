@@ -5,7 +5,7 @@ description: How to configure access logging for your Gloo proxy
 ---
 
 Gloo can be configured to provide extensive Access Logging from envoy. These logs can be configured for 
-HTTP (L7) connections as well at TCP (L4).
+HTTP (L7) connections as well as TCP (L4).
 
 
 # Access Logging
