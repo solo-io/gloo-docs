@@ -6,6 +6,7 @@
 |settings.watchNamespaces[]|string||whitelist of namespaces for gloo to watch for services and CRDs. Empty list means all namespaces|
 |settings.writeNamespace|string|gloo-system|namespace where intermediary CRDs will be written to, e.g. Upstreams written by Gloo Discovery.|
 |settings.integrations.knative.enabled|bool|false|enabled knative components|
+|settings.integrations.knative.version|string|||
 |settings.integrations.knative.proxy.image.tag|string||tag for the container|
 |settings.integrations.knative.proxy.image.repository|string||image name (registry/repository) for the container.|
 |settings.integrations.knative.proxy.image.pullPolicy|string||image pull policy for the container|
@@ -20,7 +21,8 @@
 |settings.integrations.knative.proxy.resources.requests.cpu|string||amount of CPUs|
 |settings.create|bool|false|create a Settings CRD which configures Gloo controllers at boot time|
 |settings.extensions|interface|||
-|gloo.deployment.image.tag|string|0.18.8|tag for the container|
+|settings.singleNamespace|bool|false|Enable to use install namespace as WatchNamespace and WriteNamespace|
+|gloo.deployment.image.tag|string|0.18.9|tag for the container|
 |gloo.deployment.image.repository|string|quay.io/solo-io/gloo|image name (registry/repository) for the container.|
 |gloo.deployment.image.pullPolicy|string|IfNotPresent|image pull policy for the container|
 |gloo.deployment.image.pullSecret|string||image pull policy for the container |
@@ -30,7 +32,7 @@
 |gloo.deployment.resources.limits.cpu|string||amount of CPUs|
 |gloo.deployment.resources.requests.memory|string||amount of memory|
 |gloo.deployment.resources.requests.cpu|string||amount of CPUs|
-|discovery.deployment.image.tag|string|0.18.8|tag for the container|
+|discovery.deployment.image.tag|string|0.18.9|tag for the container|
 |discovery.deployment.image.repository|string|quay.io/solo-io/discovery|image name (registry/repository) for the container.|
 |discovery.deployment.image.pullPolicy|string|IfNotPresent|image pull policy for the container|
 |discovery.deployment.image.pullSecret|string||image pull policy for the container |
@@ -42,7 +44,7 @@
 |discovery.fdsMode|string|||
 |gateway.enabled|bool|true|enable Gloo API Gateway features|
 |gateway.upgrade|bool|false|Deploy a Job to convert (but not delete) v1 Gateway resources to v2 and not add a |
-|gateway.deployment.image.tag|string|0.18.8|tag for the container|
+|gateway.deployment.image.tag|string|0.18.9|tag for the container|
 |gateway.deployment.image.repository|string|quay.io/solo-io/gateway|image name (registry/repository) for the container.|
 |gateway.deployment.image.pullPolicy|string|IfNotPresent|image pull policy for the container|
 |gateway.deployment.image.pullSecret|string||image pull policy for the container |
@@ -51,7 +53,7 @@
 |gateway.deployment.resources.limits.cpu|string||amount of CPUs|
 |gateway.deployment.resources.requests.memory|string||amount of memory|
 |gateway.deployment.resources.requests.cpu|string||amount of CPUs|
-|gateway.conversionJob.image.tag|string|0.18.8|tag for the container|
+|gateway.conversionJob.image.tag|string|0.18.9|tag for the container|
 |gateway.conversionJob.image.repository|string|quay.io/solo-io/gateway-conversion|image name (registry/repository) for the container.|
 |gateway.conversionJob.image.pullPolicy|string|IfNotPresent|image pull policy for the container|
 |gateway.conversionJob.image.pullSecret|string||image pull policy for the container |
@@ -98,7 +100,7 @@
 |gatewayProxies.gatewayProxyV2.kind.deployment.resources.requests.memory|string||amount of memory|
 |gatewayProxies.gatewayProxyV2.kind.deployment.resources.requests.cpu|string||amount of CPUs|
 |gatewayProxies.gatewayProxyV2.kind.daemonSet.hostPort|bool||whether or not to enable host networking on the pod. Only relevant when running as a DaemonSet|
-|gatewayProxies.gatewayProxyV2.podTemplate.image.tag|string|0.18.8|tag for the container|
+|gatewayProxies.gatewayProxyV2.podTemplate.image.tag|string|0.18.9|tag for the container|
 |gatewayProxies.gatewayProxyV2.podTemplate.image.repository|string|quay.io/solo-io/gloo-envoy-wrapper|image name (registry/repository) for the container.|
 |gatewayProxies.gatewayProxyV2.podTemplate.image.pullPolicy|string|IfNotPresent|image pull policy for the container|
 |gatewayProxies.gatewayProxyV2.podTemplate.image.pullSecret|string||image pull policy for the container |

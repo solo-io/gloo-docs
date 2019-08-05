@@ -1,3 +1,10 @@
+### v0.18.9
+
+**New Features**
+
+- Support Knative Namespace-Scoped Ingress (https://github.com/solo-io/gloo/issues/937)
+- Allow using the release namespace as the namespace for both reading and writing (https://github.com/solo-io/gloo/issues/949)
+
 ### v0.18.8
 
 **Fixes**
