@@ -1,3 +1,13 @@
+### v0.18.11
+
+**New Features**
+
+- Support global image variables in helm chart (https://github.com/solo-io/gloo/issues/892)
+
+**Fixes**
+
+- Knative Ingress Status is now updated whenever `generation` changes (https://github.com/solo-io/gloo/issues/971)
+
 ### v0.18.10
 
 **Fixes**
