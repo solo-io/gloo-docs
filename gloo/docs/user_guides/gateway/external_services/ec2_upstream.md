@@ -39,7 +39,7 @@ spec:
 ## Key points
 - **Credentials**: each upstream can be configured with custom credentials which will influence what instances are available for use.
   - User credentials can be passed as an upstream-specific secret ref or through common AWS environment variables
-  - Roles can be optionally be included in the upstream spec. If provided, Gloo will assume those roles on behalf of the upstream's user account prior to listing instances. This can be a convenient way to manage upstream-specific access control.
+  - A role can be optionally be included in the upstream spec. If provided, Gloo will assume this role on behalf of the upstream's user account prior to listing instances. This can be a convenient way to manage upstream-specific access control.
 - **Filtering**: tag filters allow you to define which instances should be associated with your upstream.
   - Filters can be specified in terms of tag key or tag key-value matches
   - If multiple filters are specified, an instance must match each filter in order to be associated with the upstream.
@@ -99,17 +99,17 @@ glooctl create secret aws \
 ```
 
 
-#### Create roles for Gloo to assume on behalf of your upstreams
+#### Create a role for Gloo to assume on behalf of your upstreams
 - For additional control over Gloo's access to your resources and as an additional filter on your EC2 Upstream's list of
 available instances it is recommended that you credential your upstreams with a low-access user account that has the
-ability to assume the specific roles it requires.
-- When you provide both a secret ref and a list of Role ARNs to your upstream, Gloo will call the AWS API with credentials
-composed from the user account associated with the secret and the provided roles (via the AssumeRole feature).
+ability to assume the specific role it requires.
+- When you provide both a secret ref and a Role ARN to your upstream, Gloo will call the AWS API with credentials
+composed from the user account associated with the secret and the provided role (via the AssumeRole feature).
 
 ##### Create a role
-- To configure you AWS account with the relevant ARN Roles, there are two steps to take (if you have not already done so):
+- To configure you AWS account with the relevant ARN Role, there are two steps to take (if you have not already done so):
   - Create a policy that allows the policy holder to describe EC2 instances
-  - Create a role that contains that policy and trusts (ie: grants roles assumption to) the upstream's account 
+  - Create a role that contains that policy and trusts (ie: grants role assumption to) the upstream's account 
 - First create a role. In the AWS console:
   - Navigate to IAM > Roles, choose "Create Role"
   - Follow the interactive guide to create a role
@@ -167,7 +167,7 @@ composed from the user account associated with the secret and the provided roles
   - **Region**: this upstream indicates that it reads instances from the "us-east-1" region
   - **Public IP**: this upstream routes to the instances' public IPs. If not set, Gloo will default the private IPs.
   - **Secret Ref**: a reference to the secret associated with the AWS account that Gloo should use on behalf of the upstream.
-  - **Role ARNs**: a list of roles that Gloo should assume on behalf of the upstream when listing the set of available instances.
+  - **Role ARN**: a role that Gloo should assume on behalf of the upstream when listing the set of available instances.
   - **Filters**: this upstream uses three tag filters to indicate which instances, among those that are accessible given the upstream's credentials, should be routed to. One of the filters only specifies that a certain tag should be present on the instance. The other two filters require that a given tag and tag value are present.
 
 ```yaml
