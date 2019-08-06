@@ -33,8 +33,7 @@ spec:
       secretRef:
         name: my-aws-secret
         namespace: default
-      roleArns:
-      - arn:aws:iam::123456789012:role/describe-ec2-demo
+      roleArn: arn:aws:iam::123456789012:role/describe-ec2-demo
 ```
 
 ## Key points
@@ -194,8 +193,7 @@ spec:
       secretRef:
         name: gloo-tag-group1
         namespace: default
-      roleArns:
-      - "<arn-for-the-role-you-created>"
+      roleArn: "<arn-for-the-role-you-created>"
 ```
 
 - Save the spec to ``ec2-demo-upstream.yaml` and use `kubectl` to create the upstream in Kubernetes.
