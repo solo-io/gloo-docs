@@ -219,4 +219,4 @@ glooctl uninstall -n my-namespace
 
 ## Next Steps
 
-After you've installed Gloo, please check out our [User Guides]({{< ref "/user_guides" >}}).
+After you've installed Gloo, please check out our [User Guides]({{< ref "/gloo_routing" >}}).

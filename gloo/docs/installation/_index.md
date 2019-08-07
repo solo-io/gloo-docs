@@ -1,6 +1,5 @@
 ---
-
-title: Installing Gloo
+title: Installation
 weight: 2
 ---
 

@@ -504,7 +504,7 @@ go get -v ./..
 ```
 
 While it's possible to package this application in a Docker container and deploy it as a pod inside of Kubernetes, let's 
-just try running it locally. [Make sure you have Gloo installed]({{< ref "/installation/_index.md" >}}) in your cluster so 
+just try running it locally. [Make sure you have Gloo installed](/installation) in your cluster so 
 that Discovery will create some Upstreams for us.
 
 Once that's done, to see our code in action, simply run `go run main.go` !
