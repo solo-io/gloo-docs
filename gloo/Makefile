@@ -31,3 +31,8 @@ check-links:
 # to install html-proofer deps (only works with gcc, not clang!)
 install-tools:
 	gem install html-proofer
+
+.PHONY: docker-push
+docker-push:
+	docker build -t gcr.io/solo-test-236622/gloo-docs:dev .
+	docker push gcr.io/solo-test-236622/gloo-docs:dev
