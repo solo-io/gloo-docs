@@ -1,6 +1,6 @@
 ---
 title: Advanced Configuration
-weight: 5
+weight: 4
 ---
 
 {{% children description="true" %}}
