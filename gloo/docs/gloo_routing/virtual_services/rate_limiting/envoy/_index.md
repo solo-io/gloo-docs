@@ -6,7 +6,7 @@ weight: 20
 
 ## Overview
 
-In this document, we show how to use Gloo with [Envoy's rate-limit API](https://www.envoyproxy.io/docs/envoy/latest/configuration/http_filters/rate_limit_filter). We make the distinction here that this is "Envoy's" rate-limit API because Gloo [offers a much simpler rate-limit API](../ratelimit) as an alternative.
+In this document, we show how to use Gloo with [Envoy's rate-limit API](https://www.envoyproxy.io/docs/envoy/latest/configuration/http_filters/rate_limit_filter). We make the distinction here that this is "Envoy's" rate-limit API because Gloo [offers a much simpler rate-limit API](../simple) as an alternative.
 
 Gloo Enterprise includes a rate limit server based on [Lyft's Envoy rate-limit server](https://github.com/lyft/ratelimit). It is already installed when doing `glooctl install gateway --license-key=...` or using the [Helm install]({{% ref "/installation/enterprise" %}}). To get your trial license key, go to <https://www.solo.io/gloo-trial>
 
@@ -279,4 +279,4 @@ glooctl edit settings --name default --namespace gloo-system ratelimit --deny-on
 
 ## Conclusion
 
-With the custom rate-limit configuration option, you have the full power of Envoy rate limits to use for your custom use cases. The downside to this is the API is a bit more complicated. To leverage a simpler API that can do true per-user (logged-in, authenticated user) rate limits, take a look at [Gloo's simplified ratelimit API](../ratelimit).
+With the custom rate-limit configuration option, you have the full power of Envoy rate limits to use for your custom use cases. The downside to this is the API is a bit more complicated. To leverage a simpler API that can do true per-user (logged-in, authenticated user) rate limits, take a look at [Gloo's simplified ratelimit API](../simple).

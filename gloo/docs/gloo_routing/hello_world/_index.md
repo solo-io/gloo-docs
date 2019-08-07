@@ -159,7 +159,7 @@ Let's verify this:
 
     The application endpoints were discovered by Gloo's Function Discovery (fds) service. This was possible because the petstore
     application implements OpenAPI (specifically, discovering a Swagger JSON document at `petstore-svc/swagger.json`).
-    Note that some functions were discovered. We will use these to demonstrate function routing in the [next tutorial](../function_routing).
+    Note that some functions were discovered. We will use these to demonstrate function routing in the [next tutorial](../virtual_services/routes/route_destinations/single_upstreams/function_routing/).
 
 1. Let's now use `glooctl` to create a basic route for this upstream.
 

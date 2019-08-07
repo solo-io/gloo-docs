@@ -96,6 +96,6 @@ routes:
 {{< /highlight >}}
 
 {{% notice note %}}
-As is the case with [`Subsets`](#subset), Gloo will fall back to forwarding the request to all available service 
+As is the case with [`Subsets`](../multiple_upstreams/subsets/), Gloo will fall back to forwarding the request to all available service 
 instances if the given criteria do not match any subset of instances.
 {{% /notice %}}

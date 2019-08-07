@@ -24,7 +24,7 @@ Possible use cases include:
 
 The following explination assumes that the user has gloo `v0.18.1` or above running, as well as some previous knowledge of Gloo resources, and how to use them. In order to install Gloo if it is not already please refer to the following [tutorial](../../../installation/gateway/kubernetes). The only Gloo resource involved in enabling Access Loggins is the `Gateway`. Further Documentation can be found [here]().
 
-Enabling access logs in Gloo is as simple as adding a [listener plugin](../../gateway/configuring_route_options/listener_plugins) to any one of the gateway resources. The documentation for the `Access Logging Service` plugin API can be found [here]({{% ref "/v1/github.com/solo-io/gloo/projects/gloo/api/v1/plugins/als/als.proto.sk" %}}).
+Enabling access logs in Gloo is as simple as adding a [listener plugin](../../gateway_configuration/) to any one of the gateway resources. The documentation for the `Access Logging Service` plugin API can be found [here]({{% ref "/v1/github.com/solo-io/gloo/projects/gloo/api/v1/plugins/als/als.proto.sk" %}}).
 
 Envoy supports two types of Access Logging. `File Sink` and `GRPC`. Currently Gloo supports `File Sink` with plans to add GRPC streaming in the future.
 

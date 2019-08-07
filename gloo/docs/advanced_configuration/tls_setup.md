@@ -46,7 +46,7 @@ glooctl get upstream default-petstore-8080
 +-----------------------+------------+----------+-------------------------+
 ```
 
-Now let's create a route to the petstore like [we did in the getting started tutorial]((../../getting_started) )
+Now let's create a route to the petstore like [we did in the hello world tutorial](../../gloo_routing/hello_world/ )
 
 ```bash
 glooctl add route \

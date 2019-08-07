@@ -15,7 +15,7 @@ to the JSON testing API available at `http://jsonplaceholder.typicode.com/`.
 
 ## 
 
-If you haven't already deployed Gloo and the example swagger service on kubernetes, [go back to the first tutorial](../../getting_started) 
+If you haven't already deployed Gloo and the example swagger service on kubernetes, [go back to the first tutorial](../../../../../../hello_world) 
 
 Now that we've seen the traditional routing functionality of Gloo (i.e. API-to-service), let's try doing some function routing.
 
