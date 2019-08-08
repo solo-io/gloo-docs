@@ -18,7 +18,7 @@ service must have a valid apikey in the `api-key` header or will be denied.
 ## Setup
 
 {{% notice note %}}
-ApiKey auth is a feature of **Gloo Enterprise**. If you are using Open Source Gloo, this tutorial will not work. 
+ApiKey auth is a feature of **Gloo Enterprise**, release 0.18.5+. If you are using Open Source Gloo, this tutorial will not work.
 {{% /notice %}}
 
 
