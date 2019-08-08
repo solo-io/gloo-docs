@@ -72,15 +72,15 @@ an apikey secret that's part of the `infrastructure` team with `N2YwMDIxZTEtNGUz
 the apikey.
 
 ```shell
-glooctl create secret apikey dev-apikey --apikey N2YwMDIxZTEtNGUzNS1jNzgzLTRkYjAtYjE2YzRkZGVmNjcy --apikey-labels team=infrastructure
+glooctl create secret apikey infra-apikey --apikey N2YwMDIxZTEtNGUzNS1jNzgzLTRkYjAtYjE2YzRkZGVmNjcy --apikey-labels team=infrastructure
 ```
 
-This creates a secret named `dev-apikey` in the `gloo-system` namespace. If we had instead opted to generate the apikey
+This creates a secret named `infra-apikey` in the `gloo-system` namespace. If we had instead opted to generate the apikey
 using the `--apikey-generate` flag, we can extract the generated apikey by getting the secret contents and decoding the
 extension configuration:
 
 ```shell
-kubectl get secret dev-apikey -n gloo-system -oyaml
+kubectl get secret infra-apikey -n gloo-system -oyaml
 ```
 
 returns secret yaml similar to:
@@ -88,26 +88,25 @@ returns secret yaml similar to:
 ```yaml
 apiVersion: v1
 data:
-  extension: Y29uZmlnOgogIGFwaV9rZXk6IE4yWXdNREl4WlRFdE5HVXpOUzFqTnpnekxUUmtZakF0WWpFMll6UmtaR1ZtTmpjeQogIGdyb3VwczoKICAtIGRldmVsb3Blcgo=
+  extension: Y29uZmlnOgogIGFwaV9rZXk6IE4yWXdNREl4WlRFdE5HVXpOUzFqTnpnekxUUmtZakF0WWpFMll6UmtaR1ZtTmpjeQogIGxhYmVsczoKICAtIHRlYW09aW5mcmFzdHJ1Y3R1cmUK
 kind: Secret
 metadata:
   annotations:
     resource_kind: '*v1.Secret'
-  creationTimestamp: "2019-08-07T17:26:18Z"
+  creationTimestamp: "2019-08-08T15:32:05Z"
   labels:
-    developer: gloo-managed
-    gloo-secret: apikey
-  name: dev-apikey
+    team: infrastructure
+  name: infra-apikey
   namespace: gloo-system
-  resourceVersion: "2624607"
-  selfLink: /api/v1/namespaces/gloo-system/secrets/dev-apikey
-  uid: 776637c1-b938-11e9-a8d7-42010a800055
+  resourceVersion: "2888983"
+  selfLink: /api/v1/namespaces/gloo-system/secrets/infra-apikey
+  uid: acfe796e-b9f1-11e9-a8d7-42010a800055
 type: Opaque
 ```
 
 Take the extension configuration and decode it to get the apikey:
 ```shell
-echo Y29uZmlnOgogIGFwaV9rZXk6IE4yWXdNREl4WlRFdE5HVXpOUzFqTnpnekxUUmtZakF0WWpFMll6UmtaR1ZtTmpjeQogIGdyb3VwczoKICAtIGRldmVsb3Blcgo= | base64 -D
+echo Y29uZmlnOgogIGFwaV9rZXk6IE4yWXdNREl4WlRFdE5HVXpOUzFqTnpnekxUUmtZakF0WWpFMll6UmtaR1ZtTmpjeQogIGxhYmVsczoKICAtIHRlYW09aW5mcmFzdHJ1Y3R1cmUK | base64 -D
 ```
 
 returns
@@ -182,11 +181,13 @@ Cleanup the resources by running:
 kubectl delete vs -n gloo-system test-no-auth
 kubectl delete vs -n gloo-system test-auth
 kubectl delete upstream -n gloo-system json-upstream
+kubectl delete secret -n gloo-system infra-apikey
 {{< /tab >}}
 {{< tab name="glooctl" codelang="shell" >}}
 glooctl delete vs test-no-auth
 glooctl delete vs test-auth
 glooctl delete upstream json-upstream
+glooctl delete secret -n gloo-system infra-apikey
 {{< /tab >}}
 {{< /tabs >}}
 
