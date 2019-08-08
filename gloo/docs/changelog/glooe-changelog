@@ -1,3 +1,10 @@
+### v0.18.5
+
+**New Features**
+
+- Add external auth support for apikey-based authentication. (https://github.com/solo-io/solo-projects/issues/719)
+- provide feedback after upstream creation (https://github.com/solo-io/solo-projects/issues/822)
+
 ### v0.18.4
 
 **Fixes**
