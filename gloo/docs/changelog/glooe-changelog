@@ -1,3 +1,17 @@
+### v0.18.3
+
+**New Features**
+
+- Use default namespace from API in front-end (https://github.com/solo-io/solo-projects/issues/821)
+- Replace former UI and API server with gRPC implementations. (https://github.com/solo-io/solo-projects/issues/745)
+- Add GetPodNamespace to the config service. (https://github.com/solo-io/solo-projects/issues/820)
+- allow routing to kube upstreams (https://github.com/solo-io/solo-projects/issues/826)
+
+**Fixes**
+
+- Delete virtual services and upstreams from the table view. (https://github.com/solo-io/solo-projects/issues/818)
+- Routes now be sorted more smoothly. (https://github.com/solo-io/solo-projects/issues/824)
+
 ### v0.18.2
 
 **Dependency Bumps**
