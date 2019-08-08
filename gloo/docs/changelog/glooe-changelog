@@ -1,3 +1,11 @@
+### v0.18.4
+
+**Fixes**
+
+- Can now create routes without specifying a virtual service. (https://github.com/solo-io/solo-projects/issues/818)
+- Routes are now editable in their modal via the VS Details route list. (https://github.com/solo-io/solo-projects/issues/814)
+- Fix bug in displaying the available functions to route to. (https://github.com/solo-io/solo-projects/issues/847)
+
 ### v0.18.3
 
 **New Features**
