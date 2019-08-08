@@ -156,7 +156,7 @@ Now let's add the authorization headers:
 curl -H "api-key: N2YwMDIxZTEtNGUzNS1jNzgzLTRkYjAtYjE2YzRkZGVmNjcy" -H "Host: bar" $GATEWAY_URL/posts/1
 ```
 
-This returns the following response:
+returns
 
 ```json
 {
@@ -187,7 +187,7 @@ kubectl delete secret -n gloo-system infra-apikey
 glooctl delete vs test-no-auth
 glooctl delete vs test-auth
 glooctl delete upstream json-upstream
-glooctl delete secret -n gloo-system infra-apikey
+kubectl delete secret -n gloo-system infra-apikey
 {{< /tab >}}
 {{< /tabs >}}
 

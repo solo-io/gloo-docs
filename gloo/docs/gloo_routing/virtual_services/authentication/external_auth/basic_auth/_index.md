@@ -109,7 +109,7 @@ This outputs `dXNlcjpwYXNzd29yZA==`. Now let's add the authorization headers:
 curl -H "Authorization: basic dXNlcjpwYXNzd29yZA==" -H "Host: bar" $GATEWAY_URL/posts/1
 ```
 
-This returns the following response:
+returns
 
 ```json
 {
