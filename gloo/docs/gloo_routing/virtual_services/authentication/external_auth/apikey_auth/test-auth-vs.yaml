@@ -22,7 +22,5 @@ spec:
         configs:
           extauth:
             api_key_auth:
-              group_to_namespaces:
-                developer:
-                  namespaces:
-                    - '*'
+              label_selector:
+                team: infrastructure

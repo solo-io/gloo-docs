@@ -126,7 +126,7 @@ to allow access from all apikeys in the `infrastructure` team to our upstream:
 {{< readfile file="gloo_routing/virtual_services/authentication/external_auth/apikey_auth/test-auth-vs.yaml">}}
 {{< /tab >}}
 {{< tab name="glooctl" codelang="shell">}}
-glooctl create vs test-auth --domains bar --enable-apikey-auth --apikey-labels team=infrastructure
+glooctl create vs test-auth --domains bar --enable-apikey-auth --apikey-label-selector team=infrastructure
 glooctl add route --name test-auth  --path-prefix / --dest-name json-upstream{{< /tab >}}
 {{< /tabs >}} 
 
