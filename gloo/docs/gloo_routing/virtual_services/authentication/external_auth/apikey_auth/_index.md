@@ -4,9 +4,10 @@ weight: 1
 description: How to setup ApiKey authentication. 
 ---
 
-There are a few different ways to use Gloo External Auth. In certain cases – such as protecting low-priority routes with
-secure pre-existing identifiers – it may be desirable to secure a set of routes with **ApiKey Auth**. Keep in mind 
-that your routes are only as secure as your ApiKeys; thus ApiKeys are generally better for identification and analytics.
+There are a few different ways to use Gloo External Auth. In certain cases – such as protecting routes with
+secure, long-lived UUIDs – it may be desirable to secure a set of routes with **ApiKey Auth**. Keep in mind
+that your routes are only as secure as your apikeys; securing apikeys and proper apikey rotation is
+up to the user, thus the security of the routes is up to the user.
 
 In **ApiKey Auth**, the Gloo VirtualService containing the routes can be configured with a label selector to identify
 multiple valid apikey secrets, or direct references to apikey secrets. When the virtual service configuration changes,
