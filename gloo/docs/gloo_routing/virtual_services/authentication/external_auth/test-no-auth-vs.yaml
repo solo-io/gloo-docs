@@ -4,6 +4,7 @@ metadata:
   name: test-no-auth
   namespace: gloo-system
 spec:
+  displayName: test-no-auth
   virtualHost:
     domains:
       - 'foo'
