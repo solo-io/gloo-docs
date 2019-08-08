@@ -43,8 +43,8 @@ First, let's create a virtual service with no auth configured.
 {{< readfile file="gloo_routing/virtual_services/authentication/external_auth/test-no-auth-vs.yaml">}}
 {{< /tab >}}
 {{< tab name="glooctl" codelang="shell">}}
-glooctl create vs --name test-post --namespace gloo-system --domains foo
-glooctl add route --name test-post  --path-prefix / --dest-name json-upstream
+glooctl create vs --name test-no-auth --namespace gloo-system --domains foo
+glooctl add route --name test-no-auth --path-prefix / --dest-name json-upstream
 {{< /tab >}}
 {{< /tabs >}} 
 
