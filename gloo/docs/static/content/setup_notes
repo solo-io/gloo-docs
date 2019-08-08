@@ -1,0 +1,6 @@
+This guide assumes you've installed Gloo into the `gloo-system` namespace, and `glooctl` is installed to your machine.
+Let's also make sure `$GATEWAY_URL` is set in your terminal:
+
+```shell
+export GATEWAY_URL=$(glooctl proxy url)
+```

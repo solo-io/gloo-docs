@@ -1,3 +1,20 @@
+### v0.18.12
+
+**Dependency Bumps**
+
+- knative.dev/serving has been upgraded to v0.8.0.
+
+**New Features**
+
+- Knative Install deploys public and private proxy (https://github.com/solo-io/gloo/issues/980)
+- Allow configuring the QPS and burst settings for kube clients (https://github.com/solo-io/gloo/pull/970)
+
+**Fixes**
+
+- Knative routes fixed for presence of multiple knative ingress (https://github.com/solo-io/gloo/issues/979)
+- fix typo in ingress proxy deployment (https://github.com/solo-io/gloo/issues/986)
+- fix typo in values-ingress template (https://github.com/solo-io/gloo/issues/987)
+
 ### v0.18.11
 
 **New Features**

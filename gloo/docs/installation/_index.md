@@ -1,6 +1,5 @@
 ---
-
-title: Installing Gloo
+title: Installation
 weight: 2
 ---
 
@@ -50,7 +49,7 @@ Gloo Enterprise has a single installation workflow:
       <a href="enterprise"><img src="../img/gloo-ee.png" width="60"/></a>
     </td>
     <td>
-    Gloo Enterprise is based on the open-source Gloo Gateway with additional (closed source) UI and plugins. See [the Gloo Enterprise documentation](../enterprise) for more details on the additional features of the Enterprise version of Gloo.
+    Gloo Enterprise is based on the open-source Gloo Gateway with additional (closed source) UI and plugins. See [the Gloo Enterprise documentation](https://solo.io/glooe) for more details on the additional features of the Enterprise version of Gloo.
     </td>
   </tr>
 </table>
