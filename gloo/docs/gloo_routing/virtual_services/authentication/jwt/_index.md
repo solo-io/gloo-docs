@@ -5,10 +5,12 @@ description: Introduction to JWT and what they are used for
 ---
 
 ## What are Json Web Tokens
-Json Web Tokens or JWT for short, are a standard way to carry verifiable identity information.
+Json Web Tokens, or JWT for short, are a standard way to carry verifiable identity information.
 This can be used for authentication. The advantage of using JWTs is that since they are a standard
-format and cryptographically signed, they can usually be verified with contacting an external server.
-To support this use case, the server verifying the JWTs needs be setup with a key for verification - JWTs signed by that key will be verified by the server. those who are not will be rejected (usually via an HTTP 401 response code).
+format and cryptographically signed, they can usually be verified without contacting an external
+authentication server. To support this use case, the application server verifying the JWTs needs to
+be setup with a private key for verification - JWTs signed by that key will be verified by the
+application server. Those who are not will be rejected (usually via an HTTP 401 response code).
 
 JWTs are in use in various scenarios:
 - OpenID Connect's id_token is a JWT. The id_token is used to identify the End User (Resource Owner 

@@ -4,8 +4,8 @@ weight: 20
 description: External Authentication With your own auth server
 ---
 
-While Gloo provides an auth server that covers your OpenID Connect and Basic Auth use cases, it also
-allows your to use your own authentication server, to implement custom auth logic.
+While Gloo provides an auth server that covers your OpenID Connect, ApiKey, and Basic Auth use cases, it
+also allows your to use your own authentication server, to implement custom auth logic.
 
 In this guide we will demonstrate your to create and configure Gloo to use your own auth service.
 For simplicity we will use an http service. Though this guide will work (with minor adjustments) also work with a gRPC server that implements
