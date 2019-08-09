@@ -1,3 +1,9 @@
+### v0.18.13
+
+**Fixes**
+
+- Fix value merging and copy paste errors in global image prefix. (https://github.com/solo-io/gloo/issues/988)
+
 ### v0.18.12
 
 **Dependency Bumps**
