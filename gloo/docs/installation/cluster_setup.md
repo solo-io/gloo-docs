@@ -37,9 +37,9 @@ You're all set. Gloo install guide [here](../).
 
 ---
 
-## Minishift
+## Minishift / OpenShift
 
-Ensure you're running a standard Minishift cluster, e.g. `minishift start`, and verify that your `kubectl` context is
+Ensure you're running a standard Minishift cluster or OpenShift cluster, e.g. `minishift start`, and verify that your `kubectl` context is
 correctly pointing to it. More details on Minishift [here](https://github.com/minishift/minishift).
 
 ```bash
@@ -56,6 +56,14 @@ minishift addons apply admin-user
 
 # Login as administrator
 oc login -u system:admin
+```
+For Gloo Enterprise, you need to enable certain permissions for storage and userid:
+
+```bash
+oc adm policy add-scc-to-user anyuid  -z glooe-prometheus-server -n gloo-system 
+oc adm policy add-scc-to-user anyuid  -z glooe-prometheus-kube-state-metrics  -n gloo-system 
+oc adm policy add-scc-to-user anyuid  -z default -n gloo-system 
+oc adm policy add-scc-to-user anyuid  -z glooe-grafana -n gloo-system
 ```
 
 You're all set. Gloo install guide [here](../)

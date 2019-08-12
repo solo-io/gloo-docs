@@ -39,6 +39,8 @@ glooctl community edition version 0.13.29
 These directions assume you've prepared your Kubernetes cluster appropriately. Full details on setting up your
 Kubernetes cluster [here](../../cluster_setup).
 
+Note: For certain providers with more strict multi-tenant security, like OpenShift, be sure to follow the cluster set up accordingly. 
+
 ### Installing on Kubernetes with `glooctl`
 
 Once your Kubernetes cluster is up and running, run the following command to deploy the Gloo Gateway to the `gloo-system` namespace:
