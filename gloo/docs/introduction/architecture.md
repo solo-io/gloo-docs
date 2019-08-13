@@ -1,6 +1,6 @@
 ---
 title: "Architecture"
-weight: 2
+weight: 30
 ---
 
 ## Overview
@@ -12,7 +12,7 @@ Gloo aggregates back end services and provides function-to-function translation 
 Clients issue requests or [emit events](https://github.com/solo-io/gloo-sdk-go) to routes defined on Gloo. These routes are mapped
 to functions on upstream services by Gloo's configuration (provided by clients of Gloo's API).
 
-Clients connect to proxies managed by Gloo who then transforms requests into function invocations
+Clients connect to proxies managed by Gloo who then transform requests into function invocations
 for a variety of functional backends. Non-functional backends are supported via a traditional
 Gateway-to-Service routing model.
 
@@ -46,16 +46,16 @@ and initiates a new *translation loop*, creating a new Envoy xDS Snapshot.
   processing that upstream object. Correctly configured upstreams are converted into Envoy clusters by their respective
   plugins. Plugins may set cluster metadata on the cluster object.
   1. The next step in the translation cycle is to process all the functions on each upstream. Functional plugins process
-  the functions on each upstream, setting function-specifc cluster metadata, which will be later processed by
+  the functions on upstream, setting function-specifc cluster metadata, which will be later processed by
   function-specific Envoy filters.
   1. The next step generates all of the **[Envoy routes](https://www.envoyproxy.io/docs/envoy/latest/api-v2/api/v2/route/route.proto.html?highlight=route)**
   via the route plugins . Routes are generated for each route rule defined on the [virtual service objects](../../v1/github.com/solo-io/gloo/projects/gateway/api/v1/virtual_service.proto.sk). When all of the routes are created, the translator aggregates them into
   [Envoy virtual hosts](https://www.envoyproxy.io/docs/envoy/latest/api-v2/api/v2/route/route.proto#route-virtualhost)
-  and adds them to a new [Envoy HTTP Connection Manager](https://www.envoyproxy.io/docs/envoy/latest/intro/arch_overview/http_connection_management)
+  and adds them to a new [Envoy HTTP Connection Manager](https://www.envoyproxy.io/docs/envoy/latest/configuration/http_conn_man/http_conn_man)
   configuration.
   1. Filter plugins are queried for their filter configurations, generating the list of HTTP Filters that will go on the
   [Envoy listeners](https://www.envoyproxy.io/docs/envoy/latest/configuration/listeners/listeners).
-  1. Finally, a snapshot is composed of all the valid endpoints, clusters, rds configs, and listeners.
+  1. Finally, a snapshot is composed of the all the valid endpoints, clusters, rds configs, and listeners
 * The **Reporter** receives a validation report for every upstream and virtual service processed by the translator. Any invalid
 config objects are reported back to the user through the storage layer. Invalid objects are marked as "Rejected" with
 detailed error messages describing mistakes in the user config.

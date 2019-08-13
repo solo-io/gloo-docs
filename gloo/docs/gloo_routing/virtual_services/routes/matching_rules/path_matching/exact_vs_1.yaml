@@ -1,0 +1,18 @@
+apiVersion: gateway.solo.io/v1
+kind: VirtualService
+metadata:
+  name: test-exact-1
+  namespace: gloo-system
+spec:
+  virtualHost:
+    domains:
+      - 'foo'
+    name: gloo-system.default
+    routes:
+      - matcher:
+          exact: /
+        routeAction:
+          single:
+            upstream:
+              name: json-upstream
+              namespace: gloo-system

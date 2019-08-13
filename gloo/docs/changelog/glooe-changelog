@@ -1,3 +1,55 @@
+### v0.18.6
+
+**Fixes**
+
+- Allow routing to a normal kube service without rest and fix a bug where aws destination spec wasnt being set. (https://github.com/solo-io/solo-projects/issues/854)
+
+### v0.18.5
+
+**New Features**
+
+- Add external auth support for apikey-based authentication. (https://github.com/solo-io/solo-projects/issues/719)
+- provide feedback after upstream creation (https://github.com/solo-io/solo-projects/issues/822)
+
+### v0.18.4
+
+**Fixes**
+
+- Can now create routes without specifying a virtual service. (https://github.com/solo-io/solo-projects/issues/818)
+- Routes are now editable in their modal via the VS Details route list. (https://github.com/solo-io/solo-projects/issues/814)
+- Fix bug in displaying the available functions to route to. (https://github.com/solo-io/solo-projects/issues/847)
+
+### v0.18.3
+
+**New Features**
+
+- Use default namespace from API in front-end (https://github.com/solo-io/solo-projects/issues/821)
+- Replace former UI and API server with gRPC implementations. (https://github.com/solo-io/solo-projects/issues/745)
+- Add GetPodNamespace to the config service. (https://github.com/solo-io/solo-projects/issues/820)
+- allow routing to kube upstreams (https://github.com/solo-io/solo-projects/issues/826)
+
+**Fixes**
+
+- Delete virtual services and upstreams from the table view. (https://github.com/solo-io/solo-projects/issues/818)
+- Routes now be sorted more smoothly. (https://github.com/solo-io/solo-projects/issues/824)
+
+### v0.18.2
+
+**Dependency Bumps**
+
+- solo-io/gloo has been upgraded to v0.18.10.
+
+**New Features**
+
+- Allow users to delete upstreams. (https://github.com/solo-io/gloo/issues/818)
+
+**Fixes**
+
+- Fix virtual service deletion. (https://github.com/solo-io/solo-projects/issues/819)
+- Remove pre-install hook from settings. (https://github.com/solo-io/solo-projects/issues/827)
+- Create a default virtual service if one isn't provided and can't be identified. (https://github.com/solo-io/solo-projects/issues/792)
+- Only filter upstream types that are handled in the grpc server. (https://github.com/solo-io/solo-projects/issues/817)
+
 ### v0.18.1
 
 **New Features**

@@ -1,3 +1,64 @@
+### v0.18.15
+
+This release contained no user-facing changes.
+
+### v0.18.14
+
+**Dependency Bumps**
+
+- solo-io/solo-kit has been upgraded to v0.10.9.
+- solo-io/go-utils has been upgraded to v0.9.17.
+
+**New Features**
+
+- Allow Gloo to run as default Ingress, without requiring ingress class annotation (https://github.com/solo-io/gloo/issues/507)
+- Knative Install defaults to knative-serving 0.8.0 (https://github.com/solo-io/gloo/issues/1006)
+- Allow virtual service with different domains to share the same certificate (https://github.com/solo-io/gloo/pull/1004)
+- Allow using roles with gloo instead of cluster roles. This makes single namespace install more isolated. (https://github.com/solo-io/gloo/issues/751)
+
+**Fixes**
+
+- Ensure each crd is registered during install steps (https://github.com/solo-io/gloo/issues/996)
+
+### v0.18.13
+
+**Fixes**
+
+- Fix value merging and copy paste errors in global image prefix. (https://github.com/solo-io/gloo/issues/988)
+
+### v0.18.12
+
+**Dependency Bumps**
+
+- knative.dev/serving has been upgraded to v0.8.0.
+
+**New Features**
+
+- Knative Install deploys public and private proxy (https://github.com/solo-io/gloo/issues/980)
+- Allow configuring the QPS and burst settings for kube clients (https://github.com/solo-io/gloo/pull/970)
+
+**Fixes**
+
+- Knative routes fixed for presence of multiple knative ingress (https://github.com/solo-io/gloo/issues/979)
+- fix typo in ingress proxy deployment (https://github.com/solo-io/gloo/issues/986)
+- fix typo in values-ingress template (https://github.com/solo-io/gloo/issues/987)
+
+### v0.18.11
+
+**New Features**
+
+- Support global image variables in helm chart (https://github.com/solo-io/gloo/issues/892)
+
+**Fixes**
+
+- Knative Ingress Status is now updated whenever `generation` changes (https://github.com/solo-io/gloo/issues/971)
+
+### v0.18.10
+
+**Fixes**
+
+- Fix ec2 bug where it only listed public ips (https://github.com/solo-io/gloo/pull/968)
+
 ### v0.18.9
 
 **New Features**

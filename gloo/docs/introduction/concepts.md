@@ -1,11 +1,12 @@
 ---
 title: "Concepts"
-weight: 2
+weight: 40
 ---
 
 <br/>
 
 - [Overview](#overview)
+- [Gateway](#gateways)
 - [Virtual Services](#virtual-services)
   - [Routes](#routes)
   - [Matchers](#matchers)
@@ -19,12 +20,46 @@ weight: 2
 The two top-level concepts in Gloo are **Virtual Services** and **Upstreams**.
 
 - **Virtual Services** define a set of route rules that live under a domain or set of domains. Route rules consist
-of a *matcher*, which specifies the kind of function calls to match (requests and events are currently supported),
+of a *matcher*, which specifies the kind of function calls to match (requests and events,  are currently supported),
 and the name of the destination (or destinations) to route them to.
 
 - **Upstreams** define destinations for routes. Upstreams tell Gloo what to route to. Upstreams may also define
 [functions](../../v1/github.com/solo-io/gloo/projects/gloo/api/v1/plugins/aws/aws.proto.sk#LambdaFunctionSpec)
 and [service specs](../../v1/github.com/solo-io/gloo/projects/gloo/api/v1/plugins/service_spec.proto.sk) for *function-level routing*.
+
+## Gateways
+
+**Gateway** definitions set up the protocols and ports on which Gloo listens for traffic.  For example, by default Gloo will have a gateway configured for HTTTP and HTTPS traffic:
+
+```bash
+$  kubectl get gateway -n gloo-system 
+
+NAME          AGE
+gateway       2m
+gateway-ssl   2m
+```
+
+A single gateway definition looks like the following:
+
+```yaml
+apiVersion: gateway.solo.io.v2/v2
+kind: Gateway
+metadata:
+  annotations:
+    origin: default
+  name: gateway-ssl
+  namespace: gloo-system
+spec:
+  bindAddress: '::'
+  bindPort: 8443
+  gatewayProxyName: gateway-proxy-v2
+  httpGateway: {}
+  ssl: true
+  useProxyProto: false
+status: {}
+```
+
+In this case, we are setting up an HTTP listener on port 8443. When [VirtualServices](#virtual-services) define a TLS context, they'll automatically bind to this Gateway. You can explicitly configure the Gateway to which a [VirtualService](#virtual-services) binds. In addition, you can also create [TCP gateways](../../gloo_routing/tcp_proxy/) that allow for binary traffic. 
 
 ## Virtual Services
 
@@ -39,10 +74,10 @@ Gloo will create a `default` virtual service for the user if the user does not p
 matches the `*` domain, which will serve routes for any request that does not include a `Host`/`:authority` header,
 or a request that requests a domain that does not match another virtual service.
 
-Each domain specified for a `virtualservice` must be unique across the set of all virtual services provided to Gloo.
+The each domain specified for a `virtualservice` must be unique across the set of all virtual services provided to Gloo.
 
 For many use cases, it may be sufficient to let all routes live on a single virtual service. In this scenario,
-Gloo will use the same set of route rules for requests, regardless of their `Host` or `:authority` header.
+Gloo will use the same set of route rules to for requests, regardless of their `Host` or `:authority` header.
 
 Route rules consist of a *matcher*, which specifies the kind of function calls to match (requests and events,
 are currently supported), and the name of the destination (or destinations, for load balancing) to route them to.
@@ -64,31 +99,31 @@ all domains.
 
 ### Routes
 
-**Routes** are the primary building block of the virtual service. A route contains a single **matcher** and either a
+**Routes** are the primary building block of the virtual service. A route contains a single **matcher** and one of: a
 **single destination**, or a **list of weighted destinations**.
 
 In short, a route is essentially a rule which tells Gloo: **if** the request matches this matcher, **then** route it to this
 destination.
 
 Because multiple matchers can match a single request, the order of routes in the virtual service matters. Gloo
-will select the first route which matches the request when making routing decisions. Because of this, it is important to place
+will select the first route which matches the request when making routing decisions. It is therefore important to place
 fallback routes (e.g. matching any request for path `/` with a custom 404 page) towards the bottom of the route list.
 
 ### Matchers
 
 Matchers currently support two types of requests:
 
-- **Request Matchers** match on properties of HTTP requests. These include the request path (`:path` header in HTTP 2.0),
-method (`:method` in HTTP 2.0), headers (their keys and optionally their values), and query parameters.
+- **Request Matchers** match on properties of HTTP requests. This includes the request path (`:path` header in HTTP 2.0),
+method (`:method` in HTTP 2.0) headers (their keys and optionally their values), and query parameters.
 
 - **Event Matchers** match properties of HTTP events, as per the [CloudEvents specification](https://github.com/cloudevents/spec/blob/master/spec.md).
-*Note: the CloudEvents spec is in version 0.3 and likely to be changed in the future*. The only property **Event Matcher**
+*Note: the CloudEvents spec is in version 0.2 and likely to be changed in the future*. The only property **Event Matcher**
 currently matches on is the *event-type* of an event (specified by the `x-event-type` request header).
 
 ### Destinations
 
 Destinations specify where to route a request once a matching route has been selected. A route can point to a single
-destination, or it can split traffic among a series of weighted destinations.
+destination, or it can split traffic for that route among a series of weighted destinations.
 
 A destination can be either an *upstream destination* or a *function destination*.
 
@@ -105,12 +140,14 @@ types as well as new function types through our plugin interface.
 ## Upstreams
 
 **Upstreams** define destinations for routes. Upstreams tell Gloo what to route to and how to route to them. Gloo determines
-how to handle routing for the upstream based on its `spec` field. This field is type-specific.
+how to handle routing for the upstream based on its `spec` field. Upstreams have a type-specific `spec` field which must
+be used to provide routing information to Gloo.
 
-The most basic upstream type is the [`static` upstream](../../v1/github.com/solo-io/gloo/projects/gloo/api/v1/plugins/static/static.proto.sk), which can route to a list of static hosts or dns names. More sophisticated upstream types
-include the [`kubernetes` upstream](../../v1/github.com/solo-io/gloo/projects/gloo/api/v1/plugins/kubernetes/kubernetes.proto.sk/) and the [`AWS Lambda` upstream](../../v1/github.com/solo-io/gloo/projects/gloo/api/v1/plugins/aws/aws.proto.sk).
+The most basic upstream type is the [`static` upstream type](../../v1/github.com/solo-io/gloo/projects/gloo/api/v1/plugins/static/static.proto.sk), which tells Gloo
+a list of static hosts or dns names logically grouped together for an upstream. More sophisticated upstream types
+include the kubernetes upstream and the [AWS Lambda upstream](../../v1/github.com/solo-io/gloo/projects/gloo/api/v1/plugins/aws/aws.proto.sk).
 
-Let's walk through an example of a kubernetes upstream in order to understand how upstreams work.
+Let's walk through an example of a kubernetes upstream in order to understand how this works.
 
 Gloo reads in a configuration that looks like the following:
 
@@ -134,9 +171,9 @@ upstreamSpec:
     servicePort: 6379
 ```
 
-- `name:` tells Gloo what the identifier for this upstream will be (for routes that point to it).
-- `type: kubernetes` tells Gloo that the kubernetes plugin knows how to route to this upstream.
-- `spec: ...` tells the kubernetes plugin the service name and namespace, which is used by Gloo for routing.
+- `name` tells Gloo what the identifier for this upstream will be (for routes that point to it).
+- `type: kubernetes` tells Gloo that the kubernetes plugin knows how to route to this upstream
+- `spec: ...` tells the kubernetes plugin the service name and namespace, which is used by Gloo for routing
 
 ### Functions
 
