@@ -4,8 +4,6 @@ description: How to install Gloo to run in Ingress Mode on Kubernetes.
 weight: 4
 ---
 
-Although running Gloo as [Gloo Gateway](../gateway/) is more full featured, we do support using [Kubernetes Ingress](https://kubernetes.io/docs/concepts/services-networking/ingress/) resources with Gloo as well. In this case, you're limited to the API surface of the Kubernetes Ingress (which is very limiting). We don't believe in untyped strings hacked together through annotations, so for a more full-featured experience, please use Gloo Gateway with its CRDs for configuration. 
-
 ## Install command line tool (CLI)
 
 The `glooctl` command line provides useful functions to install, configure, and debug Gloo, though it is not required to use Gloo.
@@ -33,7 +31,7 @@ glooctl --version
 ```
 
 ```shell
-glooctl community edition version 0.13.29
+glooctl community edition version 0.18.15
 ```
 
 ## Installing the Gloo Ingress Controller on Kubernetes
@@ -132,5 +130,4 @@ glooctl uninstall -n my-namespace
 
 ## Next Steps
 
-TODO
-To begin using Gloo with the Kubernetes Ingress API, check out the [Ingress Controller guide]({{< ref "/gloo_routing" >}}).
+To begin using Gloo with the Kubernetes Ingress API, check out the [Ingress Controller guide]({{< ref "/gloo_integrations/ingress" >}}).
