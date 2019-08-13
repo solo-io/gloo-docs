@@ -4,6 +4,18 @@ description: How to install Gloo to run in Knative Mode on Kubernetes.
 weight: 3
 ---
 
+## Motivation
+
+For the purpose of running Knative, Gloo can function as a complete replacement for Istio (supporting all documented Knative features), requiring less resource usage and operational overhead. 
+
+This guide walks you through installing Gloo and Knative using `glooctl`, the Gloo command line. 
+
+{{% notice note %}}
+`glooctl` generates a manifest which can be piped to stdout or a file using the `--dry-run` flag. Alternatively,
+Gloo can be installed via its [Helm Chart]({{< ref "/installation/gateway/kubernetes#installing-on-kubernetes-with-helm" >}}), which will permit fine-grained configuration of installation parameters.
+{{% /notice %}}
+
+
 ## Install command line tool (CLI)
 
 The `glooctl` command line provides useful functions to install, configure, and debug Gloo, though it is not required to use Gloo.
@@ -31,7 +43,7 @@ glooctl --version
 ```
 
 ```shell
-glooctl community edition version 0.13.29
+glooctl community edition version 0.18.15
 ```
 
 ## Installing the Gloo Knative Ingress on Kubernetes
@@ -90,27 +102,31 @@ kubectl get all -n gloo-system
 ```
 
 ```noop
-NAME                                       READY   STATUS    RESTARTS   AGE
-pod/clusteringress-proxy-6d786fd9f-4k5r4   1/1     Running   0          64s
-pod/discovery-55b8645d77-72mbt             1/1     Running   0          63s
-pod/gloo-9f9f77c8d-6sk7z                   1/1     Running   0          64s
-pod/ingress-85ffc7b77b-z6lsm               1/1     Running   0          64s
+NAME                                          READY   STATUS    RESTARTS   AGE
+pod/discovery-7b6684f57d-ldcvx                1/1     Running   0          73m
+pod/gloo-6658f49f64-9zlgh                     1/1     Running   5          73m
+pod/ingress-5476d956c7-rrr6m                  1/1     Running   0          73m
+pod/knative-external-proxy-fdfc894fb-6w4m9    1/1     Running   0          73m
+pod/knative-internal-proxy-745c9f6f86-t7h5j   1/1     Running   0          73m
 
-NAME                           TYPE           CLUSTER-IP     EXTERNAL-IP       PORT(S)                      AGE
-service/clusteringress-proxy   LoadBalancer   10.7.250.225   35.226.24.166     80:32436/TCP,443:32667/TCP   64s
-service/gloo                   ClusterIP      10.7.251.47    <none>            9977/TCP                     4d10h
+NAME                             TYPE           CLUSTER-IP     EXTERNAL-IP     PORT(S)                      AGE
+service/gloo                     ClusterIP      10.7.246.232   <none>          9977/TCP                     73m
+service/knative-external-proxy   LoadBalancer   10.7.247.23    35.188.41.169   80:30388/TCP,443:32060/TCP   73m
+service/knative-internal-proxy   ClusterIP      10.7.243.248   <none>          80/TCP,443/TCP               73m
 
-NAME                                   DESIRED   CURRENT   UP-TO-DATE   AVAILABLE   AGE
-deployment.apps/clusteringress-proxy   1         1         1            1           64s
-deployment.apps/discovery              1         1         1            1           63s
-deployment.apps/gloo                   1         1         1            1           64s
-deployment.apps/ingress                1         1         1            1           64s
+NAME                                     READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/discovery                1/1     1            1           73m
+deployment.apps/gloo                     1/1     1            1           73m
+deployment.apps/ingress                  1/1     1            1           73m
+deployment.apps/knative-external-proxy   1/1     1            1           73m
+deployment.apps/knative-internal-proxy   1/1     1            1           73m
 
-NAME                                             DESIRED   CURRENT   READY   AGE
-replicaset.apps/clusteringress-proxy-6d786fd9f   1         1         1       64s
-replicaset.apps/discovery-55b8645d77             1         1         1       63s
-replicaset.apps/gloo-9f9f77c8d                   1         1         1       64s
-replicaset.apps/ingress-85ffc7b77b               1         1         1       64s
+NAME                                                DESIRED   CURRENT   READY   AGE
+replicaset.apps/discovery-7b6684f57d                1         1         1       73m
+replicaset.apps/gloo-6658f49f64                     1         1         1       73m
+replicaset.apps/ingress-5476d956c7                  1         1         1       73m
+replicaset.apps/knative-external-proxy-fdfc894fb    1         1         1       73m
+replicaset.apps/knative-internal-proxy-745c9f6f86   1         1         1       73m
 ```
 
 ---
