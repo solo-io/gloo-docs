@@ -48,7 +48,7 @@ convention of not specifying host or path. More details at [Kuberbetes Ingress C
     We're specifying a host `gloo.example.com` in this example. You should replace this with your domain, or do not
     include the host attribute at all to indicate all domains (`*`).
 
-    {{< highlight noop "hl_lines=6-7 13" >}}
+    {{< highlight noop >}}
 cat <<EOF | kubectl apply --filename -
 apiVersion: extensions/v1beta1
 kind: Ingress
@@ -200,7 +200,7 @@ Great! Our ingress is up and running. See <https://kubernetes.io/docs/concepts/s
 for more information on using Kubernetes Ingress Controllers.
 
 If you want to take advantage of greater routing capabilities of Gloo, you should look at
-[Gloo in gateway mode]({{% ref "http://localhost:1313/user_guides/ingress" %}}), which complements Gloo's Ingress
+[Gloo in gateway mode]({{% ref "http://localhost:1313/gloo_routing" %}}), which complements Gloo's Ingress
 support, i.e., you can use both modes together in a single cluster. Gloo Gateway uses
 [Kubernetes Custom Resources](https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/)
 instead of Ingress Objects as the only way to configure Ingress' beyond their basic routing spec is to use lots of
