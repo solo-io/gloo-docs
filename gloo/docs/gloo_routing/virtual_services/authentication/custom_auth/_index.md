@@ -105,7 +105,7 @@ spec:
     configs:
       extauth:
         extauthzServerRef:
-          name: auth-server
+          name: auth-service
           namespace: gloo-system
         httpService: {}
         requestBody:
