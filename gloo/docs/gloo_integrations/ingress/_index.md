@@ -38,14 +38,9 @@ great way to get a cluster up quickly.
       --filename https://raw.githubusercontent.com/solo-io/gloo/master/example/petstore/petstore.yaml
     ```
 
-1. Let's create a Kubernetes Ingress object to route requests to the petstore following the [Default Backend](https://kubernetes.io/docs/concepts/services-networking/ingress/#default-backend)
-convention of not specifying host or path. More details at [Kuberbetes Ingress Concepts](https://kubernetes.io/docs/concepts/services-networking/ingress/).
+1. Let's create a Kubernetes Ingress object to route requests to the petstore:
 
-    Notice that the Kubernetes Ingress objects use regex for paths by default, e.g.: `/.*`.
-
-    We're specifying a host `gloo.example.com` in this example. You should replace this with the domain for which you want to route traffic, or you may omit the host field to indicate all domains (`*`).
-
-{{< highlight noop >}}
+    {{< highlight noop >}}
 cat <<EOF | kubectl apply --filename -
 apiVersion: extensions/v1beta1
 kind: Ingress
@@ -54,7 +49,7 @@ metadata:
  annotations:
     # note: this annotation is only required if you've set 
     # REQUIRE_INGRESS_CLASS=true in the environment for 
-    # the `ingress` deployment
+    # the ingress deployment
     kubernetes.io/ingress.class: gloo
 spec:
   rules:
@@ -66,7 +61,12 @@ spec:
           serviceName: petstore
           servicePort: 8080
 EOF
-    {{< /highlight >}}
+{{< /highlight >}}
+
+    We're specifying the host as `gloo.example.com` in this example. You should replace this with the domain for which you want to route traffic, or you may omit the host field to indicate all domains (`*`).
+    
+    The domain will be used to match the `Host` header on incoming HTTP requests.
+
 
 1. Validate Ingress routing looks to be set up and running.
 
@@ -79,58 +79,36 @@ EOF
     petstore-ingress   gloo.example.com             80      14h
     ```
 
-1. Let's test the route `/api/pets` using `curl`. The petstore service requires the query path `/api/pets` to access its
-`findPets` REST function, so we'll need to append that to our `curl` requests. If you are running this against a cluster
-with load balancing and DNS configured, then you should be able to access your domain directly.
+1. Let's test the route `/api/pets` using `curl`. First, we'll need to get the address of Gloo's Ingress proxy:
 
-    Make sure you set up your cloud provider LoadBalancer to connect to the `service/ingress-proxy` in the `gloo-system`
-    namespace.
 
     ```shell
-    curl http://gloo.example.com/api/pets
+    INGRESS_URL=$(glooctl proxy url --name ingress-proxy)
+    echo $INGRESS_URL
     ```
-
-    If you are running this locally, e.g., in minikube, then you will need to do a little extra indirection to have `curl`
-    send all the proper request headers.
-
-    First, we'll need to get the local cluster IP address and port that Gloo is
-    exposing for all Ingress objects. We can get the local cluster information using the
-    `glooctl proxy url --name <proxy service name>` command. So for our example running on a local minikube, you would see
-    output similar to the following.
 
     ```shell
-    glooctl proxy url --name ingress-proxy
+    http://35.238.21.0:80
     ```
-
-    ```noop
-    http://192.168.64.46:30949
-    ```
-
-    Then we can combine that information with a new capability of curl `--connect-to` to replace host and port
-    information in the request connection while preserving request headers for host and sni. More details at
-    [curl man page](https://curl.haxx.se/docs/manpage.html#--connect-to)
+    
+1. Now we can access the petstore service through Gloo:
 
     ```shell
-    curl --connect-to SOURCE_HOST:SOURCE_PORT:DESTINATION_HOST:DESTINATION_PORT http://SOURCE_HOST:SOURCE_PORT/your/query/path
+    curl -H "Host: gloo.example.com" ${INGRESS_URL}/api/pets
     ```
-
-    In this case, the Gloo proxy url gives us the destination host IP and port details, and your Ingress host setting is
-    the SOURCE_HOST, and the SOURCE_PORT is 80 or 443 depending on if you've setup TLS (443) or not (80). More on setting up
-    TLS for Ingress' later in this document. So using a little bit of command line magic to strip off the `http(s)://`
-    prefix, you can run the following against your local cluster for our example ingress.
-
-    ```shell
-    export PROXY_HOST_PORT=$(glooctl proxy url --name ingress-proxy --port http | sed -n -e 's/^.*:\/\///p')
-    curl --connect-to gloo.example.com:80:${PROXY_HOST_PORT} http://gloo.example.com/api/pets
-    ```
-
-    Either way you make the request you should see the following response from the petstore. If you have any issues,
-    you can use `curl -v <rest of command>` to have it dump out more information about the request to help you debug
-    the issue, e.g., are load balancers setup correctly, etc.
 
     ```json
     [{"id":1,"name":"Dog","status":"available"},{"id":2,"name":"Cat","status":"pending"}]
     ```
+
+    {{% notice note %}}
+    If you configure your DNS to resolve `gloo.example.com` to the Gloo proxy URL (e.g. by modifying your `/etc/resolv.conf`), you can omit the `Host` header in the command above, and instead use the command:
+    
+    ```shell
+    curl http://gloo.example.com/api/pets
+    ```
+    {{% /notice %}}
+
 
 ## TLS Configuration
 
@@ -176,19 +154,28 @@ spec:
 EOF
     {{< /highlight >}}
 
-1. To validate, just like previously, if you're in a cluster with load balancers and DNS then you can call the test
-example directly. Make sure that your load balancers are referencing the Gloo `service/ingress-proxy`.
+
+1. To access our service, we'll need to connect to the Gloo Ingress's HTTPS port. Retrieve the HTTPS address like so:
+
 
     ```shell
-    curl https://gloo.example.com/api/pets
+    # get the IP:Port instead of the full URL this time
+    INGRESS_HTTPS=$(glooctl proxy url --name ingress-proxy --port https | sed -n -e 's/^.*:\/\///p')
+    echo $INGRESS_HTTPS
     ```
 
-    And for local clusters, we can do our `curl --connect-to` trick against a slightly different call to
-    `glooctl proxy url --port https --name <ingress name>`. Note the `--port https` for TLS use cases.
-
     ```shell
-    export PROXY_HOST_PORT=$(glooctl proxy url --name ingress-proxy --port https | sed -n -e 's/^.*:\/\///p')
-    curl --cacert my_cert.cert --connect-to gloo.example.com:443:${PROXY_HOST_PORT} https://gloo.example.com/api/pets
+    35.238.21.0:443
+    ```
+        
+1. Now we can access the petstore using end-to-end encryption like so:
+    
+    ```shell
+    curl --cacert my_cert.cert --connect-to gloo.example.com:443:${INGRESS_HTTPS} https://gloo.example.com/api/pets
+    ```
+
+    ```json
+    [{"id":1,"name":"Dog","status":"available"},{"id":2,"name":"Cat","status":"pending"}]
     ```
 
 ## Next Steps
