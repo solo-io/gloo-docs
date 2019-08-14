@@ -1,3 +1,27 @@
+### v0.18.7
+
+**Dependency Bumps**
+
+- solo-io/gloo has been upgraded to v0.18.15.
+- solo-io/go-utils has been upgraded to v0.9.17.
+
+**New Features**
+
+- The UI now confirms before deleting a route. (https://github.com/solo-io/solo-projects/issues/843)
+- API for reading and listing gateways and proxies. (https://github.com/solo-io/solo-projects/issues/856)
+- Support global image variables in helm chart (https://github.com/solo-io/gloo/issues/892)
+- Filter upstreams by rejected and accepted and show in the url and breadcrumb. (https://github.com/solo-io/solo-projects/issues/873)
+- Show table view in url to keep table view on refresh. (https://github.com/solo-io/solo-projects/issues/841)
+- Show feedback after creating and deleting secrets. (https://github.com/solo-io/solo-projects/issues/850)
+- Give regex options in UI for matchers and query parameters. (https://github.com/solo-io/solo-projects/issues/816)
+- Sort upstreams and virtual services by status and reflect it on url. (https://github.com/solo-io/solo-projects/issues/873)
+
+**Fixes**
+
+- Allow deselecting status filters and navigating to vs details page. (https://github.com/solo-io/solo-projects/issues/873)
+- In UI, when the list of virtual services is empty it now looks less goofy. (https://github.com/solo-io/solo-projects/issues/859)
+- Update envoy (https://github.com/solo-io/solo-projects/pull/885)
+
 ### v0.18.6
 
 **Fixes**
