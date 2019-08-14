@@ -1,3 +1,13 @@
+### v0.18.8
+
+**New Features**
+
+- The UI has a new overview page which shows the status of various configurations. (https://github.com/solo-io/solo-projects/issues/872)
+
+**Fixes**
+
+- Switch table/cataglog icons to correct ones, truncate card names to avoid awkward spacing. (https://github.com/solo-io/solo-projects/issues/888)
+
 ### v0.18.7
 
 **Dependency Bumps**
