@@ -1,3 +1,11 @@
+### v0.18.16
+
+**Fixes**
+
+- Fix default address being configured on knative lb status (https://github.com/solo-io/gloo/issues/1017)
+- Ensure Knative CRDs are installed and registered before applying manifests in knative install. (https://github.com/solo-io/gloo/issues/996)
+- Update envoy to 1.11.1 (https://github.com/solo-io/gloo/pull/1028)
+
 ### v0.18.15
 
 This release contained no user-facing changes.
