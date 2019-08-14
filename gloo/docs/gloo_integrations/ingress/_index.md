@@ -29,7 +29,7 @@ great way to get a cluster up quickly.
 
 ### Steps
 
-1. The Gloo Ingress [installed]({{< ref "/installation" >}}) and running on Kubernetes.
+1. The Gloo Ingress [installed]({{< ref "/installation/ingress" >}}) and running on Kubernetes.
 
 1. Next, deploy the Pet Store app to Kubernetes:
 
@@ -41,14 +41,11 @@ great way to get a cluster up quickly.
 1. Let's create a Kubernetes Ingress object to route requests to the petstore following the [Default Backend](https://kubernetes.io/docs/concepts/services-networking/ingress/#default-backend)
 convention of not specifying host or path. More details at [Kuberbetes Ingress Concepts](https://kubernetes.io/docs/concepts/services-networking/ingress/).
 
-    Notice the `kubernetes.io/ingress.class: gloo` annotation that we've added, which indicates to Gloo that it should handle this Ingress Object.
+    Notice that the Kubernetes Ingress objects use regex for paths by default, e.g.: `/.*`.
 
-    Also notice that the Kubernetes Ingress objects want you to do special wildcarding of paths, `/.*`.
+    We're specifying a host `gloo.example.com` in this example. You should replace this with the domain for which you want to route traffic, or you may omit the host field to indicate all domains (`*`).
 
-    We're specifying a host `gloo.example.com` in this example. You should replace this with your domain, or do not
-    include the host attribute at all to indicate all domains (`*`).
-
-    {{< highlight noop >}}
+{{< highlight noop >}}
 cat <<EOF | kubectl apply --filename -
 apiVersion: extensions/v1beta1
 kind: Ingress
@@ -87,7 +84,7 @@ EOF
 with load balancing and DNS configured, then you should be able to access your domain directly.
 
     Make sure you set up your cloud provider LoadBalancer to connect to the `service/ingress-proxy` in the `gloo-system`
-    namespace (or whatever namespace you deployed Gloo).
+    namespace.
 
     ```shell
     curl http://gloo.example.com/api/pets
@@ -98,7 +95,7 @@ with load balancing and DNS configured, then you should be able to access your d
 
     First, we'll need to get the local cluster IP address and port that Gloo is
     exposing for all Ingress objects. We can get the local cluster information using the
-    `glooctl proxy url --name <ingress name>` command. So for our example running on a local minikube, you would see
+    `glooctl proxy url --name <proxy service name>` command. So for our example running on a local minikube, you would see
     output similar to the following.
 
     ```shell
