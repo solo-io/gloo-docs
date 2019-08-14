@@ -1,5 +1,6 @@
 ---
-title: Knative 
+title: Knative with Gloo
+description: Connect to Knative Serverless Apps with Gloo.
 weight: 90
 ---
 
