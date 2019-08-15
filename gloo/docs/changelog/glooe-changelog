@@ -1,3 +1,17 @@
+### v0.18.9
+
+**Dependency Bumps**
+
+- solo-io/envoy-gloo-ee has been upgraded to v0.1.11.
+
+**New Features**
+
+- Gateway configurations can now be viewed in the UI (http only currently). (https://github.com/solo-io/solo-projects/issues/875)
+
+**Fixes**
+
+- Make klog not restart gloo when ewatches end (https://github.com/solo-io/gloo/issues/1021)
+
 ### v0.18.8
 
 **New Features**
