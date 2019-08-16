@@ -1,3 +1,9 @@
+### v0.18.18
+
+**Fixes**
+
+- Make the gateway proxy service selectors more specific. (https://github.com/solo-io/gloo/issues/1029)
+
 ### v0.18.17
 
 **Dependency Bumps**
