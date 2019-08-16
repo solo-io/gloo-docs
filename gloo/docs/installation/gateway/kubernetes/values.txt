@@ -2,10 +2,10 @@
 |------|----|-----------|-------------|
 |namespace.create|bool|false|create the installation namespace|
 |rbac.create|bool|true|create rbac rules for the gloo-system service account|
-|rbac.Namespaced desc:|bool|false||
+|rbac.Namespaced|bool|false|use Roles instead of ClusterRoles|
 |crds.create|bool|true|create CRDs for Gloo (turn off if installing with Helm to a cluster that already has Gloo CRDs)|
 |settings.watchNamespaces[]|string||whitelist of namespaces for gloo to watch for services and CRDs. Empty list means all namespaces|
-|settings.writeNamespace|string|gloo-system|namespace where intermediary CRDs will be written to, e.g. Upstreams written by Gloo Discovery.|
+|settings.writeNamespace|string||namespace where intermediary CRDs will be written to, e.g. Upstreams written by Gloo Discovery.|
 |settings.integrations.knative.enabled|bool|false|enabled knative components|
 |settings.integrations.knative.version|string||the version of knative installed to the cluster. if using version < 0.8.0, gloo will use Knative's ClusterIngress API for configuration rather than the namespace-scoped Ingress|
 |settings.integrations.knative.proxy.image.tag|string||tag for the container|
@@ -24,22 +24,24 @@
 |settings.create|bool|false|create a Settings CRD which configures Gloo controllers at boot time|
 |settings.extensions|interface|||
 |settings.singleNamespace|bool|false|Enable to use install namespace as WatchNamespace and WriteNamespace|
-|gloo.deployment.image.tag|string|0.18.16|tag for the container|
+|gloo.deployment.image.tag|string|0.18.17|tag for the container|
 |gloo.deployment.image.repository|string|gloo|image name (repository) for the container.|
 |gloo.deployment.image.registry|string||image prefix/registry e.g. (quay.io/solo-io)|
 |gloo.deployment.image.pullPolicy|string||image pull policy for the container|
 |gloo.deployment.image.pullSecret|string||image pull policy for the container |
 |gloo.deployment.xdsPort|int|9977|port where gloo serves xDS API to Envoy|
+|gloo.deployment.stats|bool|true|enable prometheus stats|
 |gloo.deployment.replicas|int|1|number of instances to deploy|
 |gloo.deployment.resources.limits.memory|string||amount of memory|
 |gloo.deployment.resources.limits.cpu|string||amount of CPUs|
 |gloo.deployment.resources.requests.memory|string||amount of memory|
 |gloo.deployment.resources.requests.cpu|string||amount of CPUs|
-|discovery.deployment.image.tag|string|0.18.16|tag for the container|
+|discovery.deployment.image.tag|string|0.18.17|tag for the container|
 |discovery.deployment.image.repository|string|discovery|image name (repository) for the container.|
 |discovery.deployment.image.registry|string||image prefix/registry e.g. (quay.io/solo-io)|
 |discovery.deployment.image.pullPolicy|string||image pull policy for the container|
 |discovery.deployment.image.pullSecret|string||image pull policy for the container |
+|discovery.deployment.stats|bool|true|enable prometheus stats|
 |discovery.deployment.replicas|int|1|number of instances to deploy|
 |discovery.deployment.resources.limits.memory|string||amount of memory|
 |discovery.deployment.resources.limits.cpu|string||amount of CPUs|
@@ -48,17 +50,18 @@
 |discovery.fdsMode|string|||
 |gateway.enabled|bool|true|enable Gloo API Gateway features|
 |gateway.upgrade|bool|false|Deploy a Job to convert (but not delete) v1 Gateway resources to v2 and not add a |
-|gateway.deployment.image.tag|string|0.18.16|tag for the container|
+|gateway.deployment.image.tag|string|0.18.17|tag for the container|
 |gateway.deployment.image.repository|string|gateway|image name (repository) for the container.|
 |gateway.deployment.image.registry|string||image prefix/registry e.g. (quay.io/solo-io)|
 |gateway.deployment.image.pullPolicy|string||image pull policy for the container|
 |gateway.deployment.image.pullSecret|string||image pull policy for the container |
+|gateway.deployment.stats|bool|true|enable prometheus stats|
 |gateway.deployment.replicas|int|1|number of instances to deploy|
 |gateway.deployment.resources.limits.memory|string||amount of memory|
 |gateway.deployment.resources.limits.cpu|string||amount of CPUs|
 |gateway.deployment.resources.requests.memory|string||amount of memory|
 |gateway.deployment.resources.requests.cpu|string||amount of CPUs|
-|gateway.conversionJob.image.tag|string|0.18.16|tag for the container|
+|gateway.conversionJob.image.tag|string|0.18.17|tag for the container|
 |gateway.conversionJob.image.repository|string|gateway-conversion|image name (repository) for the container.|
 |gateway.conversionJob.image.registry|string||image prefix/registry e.g. (quay.io/solo-io)|
 |gateway.conversionJob.image.pullPolicy|string||image pull policy for the container|
@@ -101,13 +104,14 @@
 |gatewayProxies.NAME.service.externalTrafficPolicy|string|||
 |gatewayProxies.NAME.tracing.provider|string|||
 |gatewayProxies.NAME.tracing.cluster|string|||
+|gatewayProxies.NAME.extraContainersHelper|string|||
 |gatewayProxies.gatewayProxyV2.kind.deployment.replicas|int|1|number of instances to deploy|
 |gatewayProxies.gatewayProxyV2.kind.deployment.resources.limits.memory|string||amount of memory|
 |gatewayProxies.gatewayProxyV2.kind.deployment.resources.limits.cpu|string||amount of CPUs|
 |gatewayProxies.gatewayProxyV2.kind.deployment.resources.requests.memory|string||amount of memory|
 |gatewayProxies.gatewayProxyV2.kind.deployment.resources.requests.cpu|string||amount of CPUs|
 |gatewayProxies.gatewayProxyV2.kind.daemonSet.hostPort|bool||whether or not to enable host networking on the pod. Only relevant when running as a DaemonSet|
-|gatewayProxies.gatewayProxyV2.podTemplate.image.tag|string|0.18.16|tag for the container|
+|gatewayProxies.gatewayProxyV2.podTemplate.image.tag|string|0.18.17|tag for the container|
 |gatewayProxies.gatewayProxyV2.podTemplate.image.repository|string|gloo-envoy-wrapper|image name (repository) for the container.|
 |gatewayProxies.gatewayProxyV2.podTemplate.image.registry|string||image prefix/registry e.g. (quay.io/solo-io)|
 |gatewayProxies.gatewayProxyV2.podTemplate.image.pullPolicy|string||image pull policy for the container|
@@ -138,6 +142,7 @@
 |gatewayProxies.gatewayProxyV2.service.externalTrafficPolicy|string|||
 |gatewayProxies.gatewayProxyV2.tracing.provider|string|||
 |gatewayProxies.gatewayProxyV2.tracing.cluster|string|||
+|gatewayProxies.gatewayProxyV2.extraContainersHelper|string|||
 |ingress.enabled|bool|false||
 |ingress.deployment.image.tag|string||tag for the container|
 |ingress.deployment.image.repository|string||image name (repository) for the container.|
@@ -172,3 +177,4 @@
 |global.image.registry|string|quay.io/solo-io|image prefix/registry e.g. (quay.io/solo-io)|
 |global.image.pullPolicy|string|IfNotPresent|image pull policy for the container|
 |global.image.pullSecret|string||image pull policy for the container |
+|global.extensions|interface|||

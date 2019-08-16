@@ -1,3 +1,20 @@
+### v0.18.17
+
+**Dependency Bumps**
+
+- solo-io/solo-kit has been upgraded to v0.10.10.
+
+**New Features**
+
+- Enable per-route CORS policy specification. (https://github.com/solo-io/gloo/issues/1020)
+- Use fine grained RBAC permissions for each component (https://github.com/solo-io/gloo/issues/250)
+- Allow Gloo gateway to be configured with sidecar containers via a provided helm helper (https://github.com/solo-io/gloo/issues/871)
+
+**Fixes**
+
+- Make eds ignore upstreams in non watched namespaces (https://github.com/solo-io/gloo/pull/1034)
+- Knative install creates settings (https://github.com/solo-io/gloo/issues/1023)
+
 ### v0.18.16
 
 **Fixes**
