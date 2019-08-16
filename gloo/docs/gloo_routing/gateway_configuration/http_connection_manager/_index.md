@@ -13,21 +13,22 @@ For notes on configuring and using tracing with Gloo, please see the [tracing se
 
 The tracing configuration fields of the Gateway CRD are highlighted below.
 
-{{< highlight yaml "hl_lines=7-13" >}}
-apiVersion: gateway.solo.io/v1
+{{< highlight yaml "hl_lines=8-15" >}}
+apiVersion: gateway.solo.io.v2/v2
 kind: Gateway
 metadata: # collapsed for brevity
 spec:
+spec:
   bindAddress: '::'
   bindPort: 8080
-  plugins:
-    httpConnectionManagerSettings:
-      tracing:
-        requestHeadersForTags:
-          - path
-          - origin
-        verbose: true
-  useProxyProto: false
+  httpGateway:
+    plugins:
+      httpConnectionManagerSettings:
+        tracing:
+          verbose: true
+          requestHeadersForTags:
+            - path
+            - origin
 status: # collapsed for brevity
 {{< /highlight >}}
 
@@ -37,31 +38,31 @@ Gloo exposes Envoy's powerful configuration capabilities with the HTTP Connectio
 
 Below, see a reference configuration specification to demonstrate the structure of the expected yaml.
 
-{{< highlight yaml "hl_lines=7-23" >}}
-apiVersion: gateway.solo.io/v1
+{{< highlight yaml "hl_lines=7-24" >}}
+apiVersion: gateway.solo.io.v2/v2
 kind: Gateway
 metadata: # collapsed for brevity
 spec:
   bindAddress: '::'
   bindPort: 8080
-  plugins:
-    httpConnectionManagerSettings:
-      skipXffAppend: false
-      via: reference-string
-      xffNumTrustedHops: 1234
-      useRemoteAddress: false
-      generateRequestId: false
-      proxy100Continue: false
-      streamIdleTimeout: 1m2s
-      idleTimeout: 1m2s
-      maxRequestHeadersKb: 1234
-      requestTimeout: 1m2s
-      drainTimeout: 1m2s
-      delayedCloseTimeout: 1m2s
-      serverName: reference-string
-      acceptHttp10: false
-      defaultHostForHttp10: reference-string
-  useProxyProto: false
+  httpGateway:
+    plugins:
+      httpConnectionManagerSettings:
+        skipXffAppend: false
+        via: reference-string
+        xffNumTrustedHops: 1234
+        useRemoteAddress: false
+        generateRequestId: false
+        proxy100Continue: false
+        streamIdleTimeout: 1m2s
+        idleTimeout: 1m2s
+        maxRequestHeadersKb: 1234
+        requestTimeout: 1m2s
+        drainTimeout: 1m2s
+        delayedCloseTimeout: 1m2s
+        serverName: reference-string
+        acceptHttp10: false
+        defaultHostForHttp10: reference-string
 status: # collapsed for brevity
 {{< /highlight >}}
 
