@@ -74,7 +74,7 @@ kubectl --namespace gloo-system get gateway gateway-ssl --output yaml
 ```
 
 {{< highlight yaml "hl_lines=6-9" >}}
-apiVersion: gateway.solo.io/v1
+apiVersion: gateway.solo.io.v2/v2
 kind: Gateway
 metadata:
   name: gateway-ssl
@@ -144,7 +144,7 @@ If you create a VirtualService and assign it TLS/SSL configuration, it will be b
 In the event you have multiple Gateways/listeners or you want more fine-grained control over how a VirtualService gets associated with a Gateway, you can explicitly add the VirtualService name to the Gateway resource like this:
 
 {{< highlight yaml "hl_lines=9-11" >}}
-apiVersion: gateway.solo.io/v1
+apiVersion: gateway.solo.io.v2/v2
 kind: Gateway
 metadata:
   name: gateway
@@ -389,11 +389,11 @@ glooctl get virtualservice default
 ```
 
 ```noop
-+-----------------+--------------+---------+------+----------+---------+--------+
++-----------------|--------------|---------|------|----------|---------|--------+
 | VIRTUAL SERVICE | DISPLAY NAME | DOMAINS | SSL  |  STATUS  | PLUGINS | ROUTES |
-+-----------------+--------------+---------+------+----------+---------+--------+
++-----------------|--------------|---------|------|----------|---------|--------+
 | default         | default      | *       | none | Accepted |         |        |
-+-----------------+--------------+---------+------+----------+---------+--------+
++-----------------|--------------|---------|------|----------|---------|--------+
 ```
 
 This is by design with the intention of not over-exposing your cluster by accident (for security). If you feel this behavior is not justified, please let us know.
@@ -407,7 +407,7 @@ When you create multiple VirtualServices that have TLS/SSL configuration, Gloo w
 This is similar to the previous FAQ: if you use wildcard domains on all your VirtualServices, they will be merged. If you happen to have wildcard domain on both an HTTP-intended VirtualService (ie, one without TLS/SSL config) and wildcard on the HTTPS-intended VirtualService (ie, one WITH TLS/SSL config), then you need to be explicit about which Gateway should serve which VirtualService. Using the examples from another FAQ in this document, we can explicitly list the VirtualServices for a Gateway:
 
 {{< highlight yaml "hl_lines=9-11" >}}
-apiVersion: gateway.solo.io/v1
+apiVersion: gateway.solo.io.v2/v2
 kind: Gateway
 metadata:
   name: gateway
