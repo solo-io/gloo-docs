@@ -1,3 +1,21 @@
+### v0.18.10
+
+**Dependency Bumps**
+
+- solo-io/gloo has been upgraded to v0.18.17.
+
+**New Features**
+
+- Style filter headers to match design. (https://github.com/solo-io/solo-projects/issues/873)
+- External Auth and Rate Limiting links in the UI have been updated for the new documentation. The link to Join the Community within the UI now invites them to join our slack channel. (https://github.com/solo-io/solo-projects/issues/891)
+- The Admin Summary page is now available in the UI. (https://github.com/solo-io/solo-projects/issues/872)
+- The Admin Summary page is now available in the UI. (https://github.com/solo-io/solo-projects/issues/877)
+- Add upate api for gateways (https://github.com/solo-io/solo-projects/issues/857)
+
+**Fixes**
+
+- The route creation and editing modal is now, hopefully, more easily digested. (https://github.com/solo-io/solo-projects/issues/892)
+
 ### v0.18.9
 
 **Dependency Bumps**
