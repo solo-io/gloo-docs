@@ -49,7 +49,9 @@ get when querying Consul for a service with a given name:
 
 The [`consul` destination type]({{% ref "/v1/github.com/solo-io/gloo/projects/gloo/api/v1/proxy.proto.sk#consulservicedestination" %}}) 
 allows you to target a subset of these service instances via the optional `tags` and `dataCenters` fields. Gloo will 
-detect the correspondent IP addresses and ports and load balance traffic between them.
+detect the correspondent IP addresses and ports and load balance traffic between them. 
+
+If the ports and data centers for all of the endpoints for a Consul service are the same, and you don't need to slice and dice them up into finer-grained subsets, you can just use [Upstreams](../../../../../introduction/concepts#upstreams) like you do with any other service to which to route. Also, with using Upstreams instead of the consul-specific config, you can also leverage the fact that Gloo does [function discovery](../../../../../introduction/concepts/#functions) (ie, REST or gRPC based on swagger or reflection respectively).
 
 {{% notice note %}}
 When providing the `tags` option, Gloo will only match service instances that **exactly** match the given tag set.
