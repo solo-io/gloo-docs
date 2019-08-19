@@ -1,3 +1,23 @@
+### v0.18.11
+
+**Dependency Bumps**
+
+- solo-io/ext-auth-service has been upgraded to v0.3.0.
+- solo-io/ext-auth-plugins has been upgraded to v0.0.1.
+
+**New Features**
+
+- Publish a script that can be used during ext-auth plugin development to verify whether a plugin can be loaded by
+a specific version of GlooE. The next steps are 1) wiring script up in `ext-auth-plugins` repo and 2) add docs. (https://github.com/solo-io/solo-projects/issues/720)
+- Implement external auth via dynamically loaded Go plugins. The next steps are 1) publishing a script that can be used
+by plugin developers to verify that their plugins are compatible with a particulare version of GlooE and 2) add docs. (https://github.com/solo-io/solo-projects/issues/720)
+
+**Fixes**
+
+- - Observability service account and settings-user role.
+- Apiserver service account and custom role.
+- Apiserver will not register settings CRD unless an env var is set. (https://github.com/solo-io/solo-projects/issues/915)
+
 ### v0.18.10
 
 **Dependency Bumps**
