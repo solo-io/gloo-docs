@@ -5,6 +5,6 @@ operations = {"CREATE", "UPDATE"}
 deny[msg] {
 	input.request.kind.kind == "VirtualService"
 	operations[input.request.operation]
-	input.request.object.spec.routes[_].routePlugins.prefixRewrite
-	msg := "no prefix re-write"
+	input.request.object.spec.virtualHost.routes[_].routePlugins.prefixRewrite
+	msg := "prefix re-write not allowed"
 }
