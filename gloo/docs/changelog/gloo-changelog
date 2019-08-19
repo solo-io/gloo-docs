@@ -1,3 +1,9 @@
+### v0.18.19
+
+**Fixes**
+
+- Support Knative Ingress' TLS configuration to support default keys for ServerCertificate and PrivateKey (https://github.com/solo-io/gloo/issues/1040)
+
 ### v0.18.18
 
 **Fixes**
