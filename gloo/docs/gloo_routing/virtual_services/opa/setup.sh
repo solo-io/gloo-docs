@@ -1,25 +1,5 @@
 kubectl create namespace opa
-
-openssl genrsa -out ca.key 2048
-openssl req -x509 -new -nodes -key ca.key -days 100000 -out ca.crt -subj "/CN=admission_ca"
-
-cat >server.conf <<EOF
-[req]
-req_extensions = v3_req
-distinguished_name = req_distinguished_name
-[req_distinguished_name]
-[ v3_req ]
-basicConstraints = CA:FALSE
-keyUsage = nonRepudiation, digitalSignature, keyEncipherment
-extendedKeyUsage = clientAuth, serverAuth
-EOF
-
-openssl genrsa -out server.key 2048
-openssl req -new -key server.key -out server.csr -subj "/CN=opa.opa.svc" -config server.conf
-openssl x509 -req -in server.csr -CA ca.crt -CAkey ca.key -CAcreateserial -out server.crt -days 100000 -extensions v3_req -extfile server.conf
-
-kubectl --namespace=opa create secret tls opa-server --cert=server.crt --key=server.key
-
+# create Roles as they may need a second to propagate
 kubectl --namespace=opa apply -f - <<EOF
 # Grant OPA/kube-mgmt read-only access to resources. This lets kube-mgmt
 # replicate resources into OPA so they can be used in policies.
@@ -88,7 +68,29 @@ subjects:
 - kind: Group
   name: system:serviceaccounts:opa
   apiGroup: rbac.authorization.k8s.io
----
+EOF
+
+openssl genrsa -out ca.key 2048
+openssl req -x509 -new -nodes -key ca.key -days 100000 -out ca.crt -subj "/CN=admission_ca"
+
+cat >server.conf <<EOF
+[req]
+req_extensions = v3_req
+distinguished_name = req_distinguished_name
+[req_distinguished_name]
+[ v3_req ]
+basicConstraints = CA:FALSE
+keyUsage = nonRepudiation, digitalSignature, keyEncipherment
+extendedKeyUsage = clientAuth, serverAuth
+EOF
+
+openssl genrsa -out server.key 2048
+openssl req -new -key server.key -out server.csr -subj "/CN=opa.opa.svc" -config server.conf
+openssl x509 -req -in server.csr -CA ca.crt -CAkey ca.key -CAcreateserial -out server.crt -days 100000 -extensions v3_req -extfile server.conf
+
+kubectl --namespace=opa create secret tls opa-server --cert=server.crt --key=server.key
+
+kubectl --namespace=opa apply -f - <<EOF
 kind: Service
 apiVersion: v1
 metadata:
