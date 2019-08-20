@@ -221,4 +221,3 @@ webhooks:
         namespace: opa
         name: opa
 EOF
-
