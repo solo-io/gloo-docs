@@ -28,7 +28,8 @@ We will assume that you use `color-mesh` as the name of you mesh.
 Once you have the examples installed, you should have an environment like this:
 
 ```noop
-kubectl -n appmesh-demo get pods                                                                                                                  130 ↵
+kubectl -n appmesh-demo get pods
+                                                                
 NAME                                 READY   STATUS    RESTARTS   AGE
 colorgateway-69cd4fc669-xv55k        2/2     Running   0          57m
 colorteller-845959f54-tdzjq          2/2     Running   0          57m
