@@ -5,7 +5,7 @@ description: Using Gloo as an ingress to App Mesh
 ---
 
 [AWS App Mesh](https://docs.aws.amazon.com/app-mesh/latest/userguide/what-is-app-mesh.html) is an AWS-native service mesh implementation based on [Envoy Proxy](https://www.envoyproxy.io) making it compatible with a wide range of AWS partner and open source tools. 
-AWS App Mesh is a managed and highly available service, AWS manages the service-mesh control plane and you connect up the data plane to the control plane by installing and configuring an Envoy Proxy instance next to your workloads. You can use AWSApp Mesh with AWS Fargate, Amazon EC2, Amazon ECS, Amazon EKS, and Kubernetes running on AWS, to better run your application at scale.
+AWS App Mesh is a managed and highly available service, AWS manages the service-mesh control plane and you connect up the data plane to the control plane by installing and configuring an Envoy Proxy instance next to your workloads. You can use AWS App Mesh with AWS Fargate, Amazon EC2, Amazon ECS, Amazon EKS, and Kubernetes running on AWS, to better run your application at scale.
 
 Gloo complements service-mesh technology by bringing a powerful "API Gateway" to the edge (or even inside) of your mesh to handle things like:
 
@@ -13,8 +13,9 @@ Gloo complements service-mesh technology by bringing a powerful "API Gateway" to
 * Request/Response transformation
 * API Aggregation with GraphQL
 * Function routing
+* And more.
 
-And more. Please see our [FAQ]({{< ref "/introduction/faq#what-s-the-difference-between-gloo-and-istio" >}}) for more on how Gloo can complement a service mesh.
+Please see our [FAQ]({{< ref "/introduction/faq#what-s-the-difference-between-gloo-and-istio" >}}) for more on how Gloo can complement a service mesh.
 
 ## Getting started with AWS App Mesh
 
