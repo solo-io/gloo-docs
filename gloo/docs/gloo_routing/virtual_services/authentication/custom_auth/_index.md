@@ -1,7 +1,7 @@
 ---
-title: Custom Auth
-weight: 20
-description: External Authentication With your own auth server
+title: Custom Auth server
+weight: 30
+description: External Authentication with your own auth server
 ---
 
 While Gloo provides an auth server that covers your OpenID Connect, ApiKey, and Basic Auth use cases, it

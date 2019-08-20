@@ -1,6 +1,6 @@
 ---
 title: Json Web Tokens (JWT)
-weight: 30
+weight: 20
 description: Introduction to JWT and what they are used for
 ---
 
@@ -35,6 +35,7 @@ signs the header and the payload.
 ## How does a JWT Carry Identity Information
 
 Inside the JWT various *claims* are encoded, that provide identity information. A few of standard claims are:
+
 - iss - The entity that issued the token
 - sub - Subject of the token. This is usually a user id.
 - aud - The audience the token was issued for. This is an important security feature that makes sure
@@ -54,6 +55,7 @@ In each provider you can specify where to find the keys required for JWT verific
 values for the issuer and audience claims to verify, as well as [other settings](../../../v1/github.com/solo-io/solo-projects/projects/gloo/api/v1/plugins/jwt/jwt.proto.sk/#provider).
 
 We have a few guides that go into more details:
+
 - [JWT and Access Control](./access_control) - Demonstrates how to use Gloo as an internal API Gateway
   in a Kubernetes environment. Gloo is used to verify Kuberentes service accounts JWTs and to define
   and RBAC policy on what those service accounts are allowed to access.

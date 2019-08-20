@@ -8,7 +8,7 @@ There are a few different ways to use Gloo External Auth. In certain cases -- su
 a new API to a small number of known users -- it may be desirable to secure a set of routes with **Basic Auth**. 
 
 In **BasicAuth**, the Gloo **VirtualService** containing the routes can be configured with a dictionary of 
-authenticated usernames and password. When the virtual service configuration changes, Gloo immediately updates the 
+authenticated usernames and passwords. When the virtual service configuration changes, Gloo immediately updates the 
 external auth server with the new configuration. On the request path, Envoy asks the external auth service to check 
 the request; any request to a path on that virtual service must have a valid set of credentials or will be denied. 
 
