@@ -1,3 +1,18 @@
+### v0.18.13
+
+**Dependency Bumps**
+
+- solo-io/ext-auth-plugins has been upgraded to v0.0.3.
+
+**New Features**
+
+- Add list envoy details to the apiserver. (https://github.com/solo-io/solo-projects/issues/894)
+- Add raw yaml to upstream API on the new upstream details object. (https://github.com/solo-io/solo-projects/issues/928)
+
+**Fixes**
+
+- Set default Helm value for `imagePullPolicy` to `IfNotPresent`. (https://github.com/solo-io/solo-projects/issues/930)
+
 ### v0.18.12
 
 **New Features**
