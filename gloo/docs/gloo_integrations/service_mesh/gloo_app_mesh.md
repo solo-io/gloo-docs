@@ -19,63 +19,61 @@ Please see our [FAQ]({{< ref "/introduction/faq#what-s-the-difference-between-gl
 
 ## Getting started with AWS App Mesh
 
-For this guide, we'll assume you want to use App Mesh on Kubernetes (AWS EKS in this case, but it can be any Kubernetes on AWS), but App Mesh is not limited to Kubernetes. 
+For this guide, we'll assume you want to use AWS App Mesh on Kubernetes (AWS EKS in this case, but it can be any Kubernetes on AWS), but AWS App Mesh is not limited to Kubernetes. 
 
-We recommend you check out the [App Mesh examples](https://github.com/aws/aws-app-mesh-examples) repo for getting started with App Mesh and setting up the examples.
+We recommend you follow the [Tutorial: Configure App Mesh Integration with Kubernetes] (https://docs.aws.amazon.com/app-mesh/latest/userguide/mesh-k8s-integration.html) for getting started with AWS App Mesh and setting the examples.
+
+We will assume that you use `color-mesh` as the name of you mesh.
 
 Once you have the examples installed, you should have an environment like this:
 
 ```noop
-kubectl get pod
-
+kubectl -n appmesh-demo get pods                                                                                                                  130 ↵
 NAME                                 READY   STATUS    RESTARTS   AGE
-colorgateway-57574547f7-mcnvq        2/2     Running   0          1h
-colorteller-black-dd4665554-qtcdq    2/2     Running   0          1h
-colorteller-blue-78f84c8d75-cx7zl    2/2     Running   0          1h
-colorteller-red-6fd785755d-68n8n     2/2     Running   0          1h
-colorteller-white-55c5ddc644-fqlg2   2/2     Running   0          1h
-tcpecho-5b7cd4d994-2tlk2             1/1     Running   0          1h
-tester-app-7c49d9f7db-d2qk8          1/1     Running   1          1h
+colorgateway-69cd4fc669-xv55k        2/2     Running   0          57m
+colorteller-845959f54-tdzjq          2/2     Running   0          57m
+colorteller-black-6cc98458db-lq257   2/2     Running   0          57m
+colorteller-blue-88bcffddb-vt2ls     2/2     Running   0          57m
+colorteller-red-6f55b447db-znk8j     2/2     Running   0          57m
 ```
 
-Notice that we have Envoy Proxy running next to the workloads (except for the tcpecho and tester apps, that's fine). 
+Notice that we have Envoy Proxy running next to the workloads.  
 
 You should also verify you have all the Virtual Nodes, Virtual Routers, Routes, and Virtual Services:
 
 ```noop
-aws appmesh describe-route --route-name colorteller-route \
-   --virtual-router-name colorteller-vr --mesh-name ceposta-mesh
-
+aws appmesh --region=us-east-2 describe-route --route-name color-route-appmesh-demo \
+   --virtual-router-name colorgateway-appmesh-demo  --mesh-name color-mesh
 {
     "route": {
-        "status": {
-            "status": "ACTIVE"
-        }, 
-        "meshName": "ceposta-mesh", 
-        "virtualRouterName": "colorteller-vr", 
-        "routeName": "colorteller-route", 
+        "meshName": "color-mesh",
+        "metadata": {
+            "arn": "arn:aws:appmesh:us-east-2:992143172250:mesh/color-mesh/virtualRouter/colorgateway-appmesh-demo/route/color-route-appmesh-demo",
+            "createdAt": 1566324369.64,
+            "lastUpdatedAt": 1566324369.64,
+            "uid": "25d95b1d-ec98-47d4-be46-aaafbdcedfbf",
+            "version": 1
+        },
+        "routeName": "color-route-appmesh-demo",
         "spec": {
             "httpRoute": {
                 "action": {
                     "weightedTargets": [
                         {
-                            "virtualNode": "colorteller-blue-vn", 
+                            "virtualNode": "colorgateway-appmesh-demo",
                             "weight": 1
                         }
                     ]
-                }, 
+                },
                 "match": {
-                    "prefix": "/"
+                    "prefix": "/color"
                 }
             }
-        }, 
-        "metadata": {
-            "version": 5, 
-            "lastUpdatedAt": 1553204779.5, 
-            "createdAt": 1553201981.212, 
-            "arn": "arn:aws:appmesh:us-west-2:410461945957:mesh/ceposta-mesh/virtualRouter/colorteller-vr/route/colorteller-route", 
-            "uid": "98aaf4e4-d568-4f45-9925-3ea46696f61b"
-        }
+        },
+        "status": {
+            "status": "ACTIVE"
+        },
+        "virtualRouterName": "colorgateway-appmesh-demo"
     }
 }
 ```
@@ -95,7 +93,7 @@ To accomplish steps 2 and 3, run the following command:
 
 ```noop
 glooctl add route --path-prefix /appmesh/color \
-   --prefix-rewrite /color --dest-name default-colorgateway-9080    
+    --prefix-rewrite /color --dest-name appmesh-demo-colorgateway-9080   
 ```
 
 Now let's figure out what the right URL is to contact Gloo:
@@ -110,7 +108,7 @@ And then call our new API:
 ```bash
 curl $(glooctl proxy url)/appmesh/color
 
-{"color":"blue", "stats": {"blue":1}}
+{"color":"white", "stats": {"black":0.34,"blue":0.35,"white":0.31}}
 ```
 
 And there you have it! You now have a powerful L7 Ingress and API Gateway for managing traffic coming into your cluster being served with AWS App Mesh. 
