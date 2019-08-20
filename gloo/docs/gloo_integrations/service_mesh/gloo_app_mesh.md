@@ -29,7 +29,7 @@ Once you have the examples installed, you should have an environment like this:
 
 ```noop
 kubectl -n appmesh-demo get pods
-                                                                
+
 NAME                                 READY   STATUS    RESTARTS   AGE
 colorgateway-69cd4fc669-xv55k        2/2     Running   0          57m
 colorteller-845959f54-tdzjq          2/2     Running   0          57m
@@ -43,7 +43,7 @@ Notice that we have Envoy Proxy running next to the workloads.
 You should also verify you have all the Virtual Nodes, Virtual Routers, Routes, and Virtual Services:
 
 ```noop
-aws appmesh --region=us-east-2 describe-route --route-name color-route-appmesh-demo \
+aws appmesh describe-route --route-name color-route-appmesh-demo \
    --virtual-router-name colorgateway-appmesh-demo  --mesh-name color-mesh
 {
     "route": {
