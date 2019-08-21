@@ -1,7 +1,7 @@
 ---
 title: Gloo and AWS App Mesh
 weight: 2
-description: Using Gloo as an ingress to App Mesh
+description: Using Gloo as an ingress to AWS App Mesh
 ---
 
 [AWS App Mesh](https://docs.aws.amazon.com/app-mesh/latest/userguide/what-is-app-mesh.html) is an AWS-native service mesh implementation based on [Envoy Proxy](https://www.envoyproxy.io) making it compatible with a wide range of AWS partner and open source tools. 
@@ -79,9 +79,9 @@ aws appmesh describe-route --route-name color-route-appmesh-demo \
 }
 ```
 
-## Using Gloo as the Ingress for App Mesh
+## Using Gloo as the Ingress for AWS App Mesh
 
-In our above example, the `colorgateway` service calls the `colorteller` service which has a few variants (`colorteller-black`, `colorteller-red`, `colorteller-white`, etc). Both of those services are part of the mesh, and we can control the routing between the components with the mesh. To get traffic into the mesh with a powerful API Gateway like Gloo, all we have to do is the following:
+In our above example, the `colorgateway` service calls the `colorteller` service which has a few variants (`colorteller`,`colorteller-black`, `colorteller-red`, `colorteller-blue`). Both of those services are part of the mesh, and we can control the routing between the components with the mesh. To get traffic into the mesh with a powerful API Gateway like Gloo, all we have to do is the following:
 
 1. Install Gloo
 2. Create a Gloo VirtualService
@@ -116,4 +116,4 @@ And there you have it! You now have a powerful L7 Ingress and API Gateway for ma
 
 ### Limitations
 
-Currently, AWS App Mesh is fairly simple in its capabilities. It does very limited routing, cannot do mTLS, etc. As App Mesh adds more capabilities, we'll integrate deeper. Even with its current limitations, if you would like to connect multiple meshes together (multiple App Mesh or other heterogeneous implementations like Istio), please check out the [SuperGloo](https://supergloo.solo.io) project where we make it easy to stitch together multiple meshes.
+Currently, AWS App Mesh is fairly simple in its capabilities. It does very limited routing, cannot do mTLS, etc. As AWS App Mesh adds more capabilities, we'll integrate deeper. Even with its current limitations, if you would like to connect multiple meshes together (multiple AWS App Mesh or other heterogeneous implementations like Istio), please check out the [SuperGloo](https://supergloo.solo.io) project where we make it easy to stitch together multiple meshes.
