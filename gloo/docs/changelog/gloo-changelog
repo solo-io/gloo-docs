@@ -1,3 +1,19 @@
+### v0.18.20
+
+**Dependency Bumps**
+
+- solo-io/solo-kit has been upgraded to v0.10.12.
+
+**New Features**
+
+- Allow disabling discovery deployment (https://github.com/solo-io/gloo/issues/1026)
+- Allow specify anti pod affinity in the helm chart (https://github.com/solo-io/gloo/pull/1042)
+- Mount proxy service account by default and add option to disable it. (https://github.com/solo-io/gloo/issues/1057)
+
+**Fixes**
+
+- Fix `glooctl add route` for calls in which virtual service is not specified. (https://github.com/solo-io/gloo/issues/1050)
+
 ### v0.18.19
 
 **Fixes**
