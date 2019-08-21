@@ -149,7 +149,7 @@ Let's assume we start with a blank sheet, that is, no plugins are configured on 
 
 1. Start a new cancellable `context.Context`
 2. Loop over all detected plugin configurations and for each one:
-    1. Load the correspondent plugin `.so` file from the `auth-plugins` directory (more info about this [later](http://localhost:1313/dev/writing_auth_plugins/#configuring-gloo-to-load-your-plugins))
+    1. Load the correspondent plugin `.so` file from the `auth-plugins` directory (more info about this [later](#configuring-gloo-to-load-your-plugins))
     2. Invoke `NewConfigInstance` **passing in the context**
     3. Deserialize detected plugin config into the provided object
     4. Invoke `GetAuthService` **passing in the context** and the configuration object
@@ -178,7 +178,7 @@ This is usually a struct or a pointer to a struct (Gloo is smart enough to handl
 Gloo will use the [Lookup function](https://golang.org/pkg/plugin/#Plugin.Lookup) to find the exported variable and 
 assert that it in fact implements the expected interface.
 
-You can specify the name of the variable Gloo looks for when you reference your plugin in your virtual services:
+You can specify the name of the variable Gloo looks for when you reference your plugin in your Virtual Services:
 
 {{< highlight yaml "hl_lines=5" >}}
 plugin_auth:
