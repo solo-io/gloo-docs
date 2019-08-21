@@ -1,3 +1,17 @@
+### v0.18.14
+
+**Dependency Bumps**
+
+- solo-io/gloo has been upgraded to v0.18.20.
+
+**New Features**
+
+- Yaml configurations are now viewable and downloadable from several spots in the UI. (https://github.com/solo-io/solo-projects/issues/874)
+
+**Fixes**
+
+- Scrub contents when returning secrets from the apiserver. (https://github.com/solo-io/solo-projects/issues/933)
+
 ### v0.18.13
 
 **Dependency Bumps**
