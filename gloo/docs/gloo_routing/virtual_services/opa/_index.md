@@ -23,14 +23,14 @@ In this guide we will demonstrate OPA and Gloo
 
 As a first install Gloo.
 
-First, setup OPA as validating web hook. In this mode, OPA valiodates kubernetes objects before
+First, setup OPA as a validating web hook. In this mode, OPA validates the Kubernetes objects before
 they are visible to the controllers that act on them (Gloo in our case).
 
-you can use the [setup.sh](setup.sh) script for that purpose.
+You can use the [setup.sh](setup.sh) script for that purpose.
 Note this script follows the docs outlined in [official OPA docs](https://www.openpolicyagent.org/docs/latest/kubernetes-admission-control/)
-with some small adaptations for Gloo's API.
+with some small adaptations for the Gloo API.
 
-For you conveniences, here's the content of setup.sh (click to reveal):
+For you convenience, here's the content of setup.sh (click to reveal):
 <details><summary>[setup.sh](setup.sh)</summary>
 ```
 {{% readfile file="docs/gloo_routing/virtual_services/opa/setup.sh" %}}
