@@ -62,7 +62,7 @@ Gloo's plugin based architecture makes it easy to extend functionality in a vari
 
 This Section includes the following developer guides:
 
-{{% children description="true" %}} 
+{{% children description="true" %}}
 
 > Note: the Controller tutorial does not require modifying any Gloo code.
 

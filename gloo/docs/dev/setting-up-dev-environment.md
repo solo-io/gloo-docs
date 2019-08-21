@@ -62,13 +62,15 @@ go get -u github.com/gogo/protobuf/...
 
 Next, we'll clone the Gloo and Solo-Kit source code. Solo-Kit is required for code generation in Gloo. 
 
-> Note: Currently, Gloo plugins must live inside the Gloo repo itself. 
+{{% notice info %}}
+Currently, Gloo plugins must live inside the Gloo repo itself. 
+{{% /notice %}}
 
-Ensure you've installed `go` and have a your `$GOPATH` set. If unset, it will default to `${HOME}/go`.
-
-The Gloo repo should live in `${GOPATH}/src/github.com/solo-io/gloo`.
+Ensure you've installed `go` and have a your `$GOPATH` set. If unset, it will default to `${HOME}/go`. The Gloo repo 
+should live in `${GOPATH}/src/github.com/solo-io/gloo`. 
 
 To clone your fork of the repository:
+
 ```bash
 mkdir -p ${GOPATH}/src/github.com/solo-io
 cd ${GOPATH}/src/github.com/solo-io

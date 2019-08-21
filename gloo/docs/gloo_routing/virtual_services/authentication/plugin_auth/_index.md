@@ -23,10 +23,16 @@ release 0.18.11+, you can do just that!
 
 In this guide we will show you how easy it is to extend Gloo's Ext Auth server via [Go plugins](https://golang.org/pkg/plugin/).
 
-TODO: better summary, use PR comment
+## Development workflow overview
+Following are the high-level steps required to use your plugin with Gloo. In the following sections we will see 
+each one of them in greater detail.
 
-1. First we will see how to write and distribute Ext Auth Go plugins
-2. Then we will show how to
+1. Write a plugin and publish it as a `docker image` which, when run, copies the compiled plugin file to a 
+predefined directory.
+2. Configure Gloo to load the plugin by running the image as an `initContainer` on the `extauth` deployment. This can be 
+done by rendering the Gloo Helm chart with some value overrides or by modifying the Gloo installation manifest manually.
+3. Reference your plugin in your Virtual Services for it to be invoked for requests matching particular virtual hosts or 
+routes.
 
 TODO(marco): fill in specific link
 {{% notice note %}}
@@ -111,7 +117,7 @@ You can see that it contains the compiled plugin file `RequiredHeader.so`.
 ## Configuring Gloo
 
 #### Installation
-Let's start by installing Gloo Enterprise (make sure the version is >= **0.8.11**). We will use the 
+Let's start by installing Gloo Enterprise (make sure the version is >= **0.18.11**). We will use the 
 [Helm install option]({{< ref "installation/enterprise#installing-on-kubernetes-with-helm" >}}), as it is the easiest 
 way of configuring Gloo to load your plugin. First we need to fetch the Helm chart:
 
@@ -139,7 +145,7 @@ EOF
 
 `global.extensions.extAuth.plugins` is a map where:
 
-* each key is a plugin container display name (in this case `myPlugin`)
+* each key is a plugin container display name (in this case `my-plugin`)
 * the correspondent value is an image spec
 
 Now we can render the helm chart and `apply` it:
