@@ -17,7 +17,7 @@ publish your ext auth plugins.
 This guide will make frequent references to the code contained in our 
 [Ext Auth Plugin examples](https://github.com/solo-io/ext-auth-plugin-examples) GitHub repository. In addition to sample 
 plugin implementation, the repository contains useful tools to verify whether your plugin is compatible with a certain 
-version of Gloo. Given the (TODO: ref) constrains imposed by Go plugins, these utilities will make your life 
+version of Gloo. Given the [constrains imposed by Go plugins](#build-helper-tools), these utilities will make your life 
 significantly easier.
 
 {{% notice note %}}
@@ -108,7 +108,7 @@ Gloo will populate the struct fields with the values found on the correspondent 
 
 {{% notice note %}}
 You might have noticed that the `plugins` attribute in the configuration example above is an array. It is in fact 
-possible to define multiple plugins on a virtual host. We'll see how [plugin chains](TODO) work later on.
+possible to define multiple plugins on a virtual host. We'll see how [plugin chains](#plugin-chains-and-header-propagation) work later on.
 {{% /notice %}}
 
 The `GetAuthService` function will be invoked by Gloo right after this step. As its `configInstance` argument, Gloo will 
@@ -149,11 +149,11 @@ Let's assume we start with a blank sheet, that is, no plugins are configured on 
 
 1. Start a new cancellable `context.Context`
 2. Loop over all detected plugin configurations and for each one:
-    1. Load the correspondent plugin `.so` file from the `auth-plugins` directory (more info about this later TODO)
+    1. Load the correspondent plugin `.so` file from the `auth-plugins` directory (more info about this [later](http://localhost:1313/dev/writing_auth_plugins/#configuring-gloo-to-load-your-plugins))
     2. Invoke `NewConfigInstance` **passing in the context**
     3. Deserialize detected plugin config into the provided object
     4. Invoke `GetAuthService` **passing in the context** and the configuration object
-    5. (if more than one plugin) Add it to the plugin chain TODO ref
+    5. (if more than one plugin) Add it to the [plugin chain](#plugin-chains-and-header-propagation)
 3. If an error occurred, return it and do not update the `extauth` server configuration, else continue
 4. Cancel the previous `context.Context`
 5. Invoke the `Start` functions on all plugins **passing in the context**
@@ -189,12 +189,13 @@ plugin_auth:
     config: {}
 {{< /highlight >}}
 
-We will get back to this configuration [later](TODO).
+See the [*Plugin Auth* guide]({{< ref "gloo_routing/virtual_services/authentication/plugin_auth#secure-the-virtual-service" >}}) 
+for more information about the structure of this piece of configuration. 
 
 ### Build helper tools
 Now that we saw how to write your plugin, it's time to look at how to build it. When working with plugins, building your 
-code is not as straightforward as when working with regular Go programs. Go plugins impose a set of pretty harsh 
-constraints on your build environment for plugins work with the program that is supposed to load them:
+code is not as straightforward as when working with regular Go programs. Go plugins impose a set of **pretty harsh 
+constraints on your build environment** for plugins work with the program that is supposed to load them:
 
 1. The plugin Go compiler version must exactly match the program's compiler version. For example, loading a plugin 
 compiled with Go 1.12.9 will not work with a program compiled with 1.12.8. The flags provided during compilation must match 
@@ -315,7 +316,9 @@ We mentioned that the plugin must be compiled with the same `GOPATH` as Gloo. We
 container.
 
 The example repository contains a [Dockerfile](https://github.com/solo-io/ext-auth-plugin-examples/blob/master/Dockerfile),
-which we include here since all of it is relevant. See the comments for an explanation of each build layer:
+which we include here since all of it is relevant. You can use it as a starting point for your builds. We recommend that 
+you use [multi-stage builds](https://docs.docker.com/develop/develop-images/multistage-build/) to keep the size of 
+your final image to a minimum. See the comments for an explanation of each build layer:
 
 ```Dockerfile
 # This stage is parametrized to replicate the same environment GlooE was built in.
@@ -369,13 +372,204 @@ RUN mkdir /compiled-auth-plugins
 COPY --from=build-env /go/src/github.com/solo-io/ext-auth-plugin-examples/plugins/RequiredHeader.so /compiled-auth-plugins/
 
 # This is the command that will be executed when the container is run. 
-# It has to copy the compiled plugin file(s) to a directory. TODO document dir
+# It has to copy the compiled plugin file(s) to a directory.
 CMD cp /compiled-auth-plugins/* /auth-plugins/
 ```
 
-We recommend that you use [multi-stage builds](https://docs.docker.com/develop/develop-images/multistage-build/) to keep 
-the size of your final image to a minimum.
+The two `GO_BUILD_IMAGE`, `VERIFY_SCRIPT`, and `GC_FLAGS` arguments have to be passed to docker via the `--build-arg` flag(s):
+
+```bash
+docker build -t your_repo:your_tag \
+    --build-arg GO_BUILD_IMAGE=<value-from-build_env-file> \
+	--build-arg GC_FLAGS=<value-from-build_env-file> \
+    --build-arg VERIFY_SCRIPT=<value-from-build_env-file> \
+	.
+```
+
+You have to get the values for these arguments from the Google Cloud bucket. 
+
+{{% notice note %}}
+Our example repository contains a [Makefile](https://github.com/solo-io/ext-auth-plugin-examples/blob/master/Makefile) 
+with targets that automate these steps and can be easily modified to fit your needs. Be sure to check it out!
+{{% /notice %}}
 
 #### Wrapping it up
+If you followed the guide to this point, you should have an image that is guaranteed to be compatible with Gloo.
 
-## 
+The next step is to see how to set up Gloo to use your plugins.
+
+## Configuring Gloo to load your plugins
+The Gloo `extauth` server loads plugins from a directory in the file system it has access to. It is possible to 
+accomplish this in different ways, but the preferred one (and the reason why we packaged the plugins as docker images 
+with a `copy` entry point) is by running the plugin container(s) as `initContainer`(s) and mounting a volume shared with 
+the `extauth` deployment.
+
+In the [**Plugin Auth** guide]({{< ref "gloo_routing/virtual_services/authentication/plugin_auth" >}}) we saw how to do 
+this [using the GlooE Helm chart]({{< ref "gloo_routing/virtual_services/authentication/plugin_auth#installation" >}}). 
+Here we will see how to accomplish the same result by editing the raw GlooE YAML manifest.
+
+Let's start with a basic version of the `extauth` deployment. Note that we are omitting many attributes for brevity.
+
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: gloo
+    gloo: extauth
+  name: extauth
+  namespace: gloo-system
+spec:
+  selector:
+    matchLabels:
+      gloo: extauth
+  template:
+    metadata:
+      labels:
+        gloo: extauth
+    spec:
+      containers:
+      - image: quay.io/solo-io/extauth-ee:0.18.13
+        imagePullPolicy: IfNotPresent
+        name: extauth
+```
+
+In order for the `extauth` server to load the plugin files from your images, we apply the following changes:
+
+{{< highlight yaml "hl_lines=22-34" >}}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: gloo
+    gloo: extauth
+  name: extauth
+  namespace: gloo-system
+spec:
+  selector:
+    matchLabels:
+      gloo: extauth
+  template:
+    metadata:
+      labels:
+        gloo: extauth
+    spec:
+      containers:
+      - image: quay.io/solo-io/extauth-ee:0.18.13
+        imagePullPolicy: IfNotPresent
+        name: extauth
+        volumeMounts:
+        - mountPath: /auth-plugins
+          name: auth-plugins
+      initContainers:
+      - image: quay.io/solo-io/ext-auth-plugin-examples:0.0.1
+        imagePullPolicy: IfNotPresent
+        name: plugin-my-plugin
+        volumeMounts:
+        - mountPath: /auth-plugins
+          name: auth-plugins
+      volumes:
+      - emptyDir: {}
+        name: auth-plugins
+{{< /highlight >}}
+
+A [emptyDir](https://kubernetes.io/docs/concepts/storage/volumes/#emptydir) volume has been added and it is mounted on 
+both the `extauth` container and the plugin `initContainers` at the `/auth-plugins` path. This is the same path our 
+plugin container is configured to copy the plugin files to when it is run.
+
+{{% notice note %}}
+Currently, Gloo expects to find the plugin files in the `/auth-plugins` directory. We plan to make this location configurable soon.
+{{% /notice %}}
+
+## Configuring Virtual Services to use your plugins
+The [*Plugin Auth* guide]({{< ref "gloo_routing/virtual_services/authentication/plugin_auth#secure-the-virtual-service" >}}) 
+contains a thorough explanation of how to update Virtual Service specs to use your plugins to authenticate requests. 
+What it does not cover are some specific properties of *plugin chains*.
+
+### Plugin chains and header propagation
+As we saw earlier, the `plugins` element in the `plugin_auth` configuration is an array:
+
+```yaml
+virtualHostPlugins:
+  extensions:
+    configs:
+      extauth:
+        plugin_auth:
+          plugins:
+          - name: my-plugin
+            plugin_file_name: MyPlugin.so
+            exported_symbol_name: Plugin
+            config:
+              some_key: value-1
+              some_struct:
+                another_key: value-2
+```
+
+We call this sequence of plugins a **plugin chain**. Plugins in a plugin chain will be executed in the order they are 
+defined. The first plugin to deny the request will cause the chain execution to be interrupted and Gloo to return the 
+response from the plugin that denied it. 
+
+Each external auth plugin can append, add or override headers from the request it received before dispatching it to the 
+upstream or the next plugin in the chain. It is important to understand how headers modifications are handled when more 
+than one plugin gets executed.
+
+Let's look at the response you look at the [response object](https://github.com/solo-io/ext-auth-plugins/blob/master/api/interface.go#L15) 
+returned by our `AuthService` instance:
+
+{{< highlight go "hl_lines=7-10" >}}
+package api
+
+import (
+	envoyauthv2 "github.com/envoyproxy/go-control-plane/envoy/service/auth/v2"
+)
+
+type AuthorizationResponse struct {
+	UserInfo UserInfo
+	CheckResponse envoyauthv2.CheckResponse
+}
+{{< /highlight >}}
+
+You can see that it wraps the Envoy [CheckResponse](https://www.envoyproxy.io/docs/envoy/latest/api-v2/service/auth/v2/external_auth.proto#service-auth-v2-checkresponse) 
+type. Gloo conforms to the Envoy API semantics when merging headers in plugin chains. If you go to the linked Envoy docs 
+page and inspect the [OkHttpResponse](https://www.envoyproxy.io/docs/envoy/latest/api-v2/service/auth/v2/external_auth.proto#service-auth-v2-okhttpresponse) 
+object, you will see that it consists of just an array of [HeadersValueOption objects](https://www.envoyproxy.io/docs/envoy/latest/api-v2/api/v2/core/base.proto#envoy-api-msg-core-headervalueoption).
+A `HeadersValueOption` associates a header value with an `Append` flag. The flag determines whether the header will 
+overridden or appended to the one in the request.
+
+To give a concrete example, suppose Gloo receives a request that with the following header:
+
+```text
+Headers:
+  - one: foo
+```
+
+and that the request matches a virtual host that is configured with the following plugin chain:
+
+```     
+Plugin_1:
+  HeadersValueOptions:
+  - Header:
+      one: bar
+    Append: false
+Plugin_2:
+  HeadersValueOptions:
+  - Header:
+      one: baz
+    Append: true
+  - Header:
+      two: asd
+```
+
+If the request is authenticated by both plugins, then the headers on the final request that will be sent to the upstream 
+will be:
+
+```text
+Headers:
+  - one: bar, baz
+  - two: asd
+```
+
+## Conclusion
+If you got to this point, we hope that you have a good understanding of how the Gloo Ext Auth plugin framework works and 
+that you are ready to start hacking away! If you have any questions or ideas about how to improve this guide, please 
+contact us on our [**Slack**](https://slack.solo.io) or open an issue in our [docs repository](https://github.com/solo-io/solo-docs).
