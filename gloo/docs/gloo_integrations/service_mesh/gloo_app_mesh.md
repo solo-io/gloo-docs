@@ -21,9 +21,9 @@ Please see our [FAQ]({{< ref "/introduction/faq#what-s-the-difference-between-gl
 
 For this guide, we'll assume you want to use AWS App Mesh on Kubernetes (AWS EKS in this case, but it can be any Kubernetes on AWS), but AWS App Mesh is not limited to Kubernetes. 
 
-We recommend you follow the [Tutorial: Configure App Mesh Integration with Kubernetes] (https://docs.aws.amazon.com/app-mesh/latest/userguide/mesh-k8s-integration.html) for getting started with AWS App Mesh and setting the examples.
+We recommend you follow this link:  [Tutorial: Configure App Mesh Integration with Kubernetes] (https://docs.aws.amazon.com/app-mesh/latest/userguide/mesh-k8s-integration.html) for getting started with AWS App Mesh and setting the examples.
 
-We will assume that you use `color-mesh` as the name of you mesh.
+We will assumed that you use `color-mesh` as the name of you mesh and you deployed your EKS cluster in the `us-east-2 (Oregon)` as the AWS region.
 
 Once you have the examples installed, you should have an environment like this:
 
@@ -43,8 +43,25 @@ Notice that we have Envoy Proxy running next to the workloads.
 You should also verify you have all the Virtual Nodes, Virtual Routers, Routes, and Virtual Services:
 
 ```noop
-aws appmesh describe-route --route-name color-route-appmesh-demo \
-   --virtual-router-name colorgateway-appmesh-demo  --mesh-name color-mesh
+kubectl -n appmesh-demo get virtualservice.appmesh.k8s.aws,virtualnode.appmesh.k8s.aws
+NAME                                                       AGE
+virtualservice.appmesh.k8s.aws/colorgateway.appmesh-demo   1d
+virtualservice.appmesh.k8s.aws/colorteller.appmesh-demo    1d
+
+NAME                                            AGE
+virtualnode.appmesh.k8s.aws/colorgateway        1d
+virtualnode.appmesh.k8s.aws/colorteller         1d
+virtualnode.appmesh.k8s.aws/colorteller-black   1d
+virtualnode.appmesh.k8s.aws/colorteller-blue    1d
+virtualnode.appmesh.k8s.aws/colorteller-red     1d
+```
+
+
+```noop
+aws --region us-east-2 appmesh describe-route --route-name color-route-appmesh-demo \
+    --virtual-router-name colorgateway-appmesh-demo  --mesh-name color-mesh
+```
+```json
 {
     "route": {
         "meshName": "color-mesh",
@@ -78,10 +95,57 @@ aws appmesh describe-route --route-name color-route-appmesh-demo \
     }
 }
 ```
+```bash
+aws --region us-east-2 appmesh describe-route --route-name color-route-appmesh-demo \
+    --virtual-router-name colorteller-appmesh-demo  --mesh-name color-mesh
+```
+```json
+{
+    "route": {
+        "meshName": "color-mesh",
+        "metadata": {
+            "arn": "arn:aws:appmesh:us-east-2:992143172250:mesh/color-mesh/virtualRouter/colorteller-appmesh-demo/route/color-route-appmesh-demo",
+            "createdAt": 1566324367.037,
+            "lastUpdatedAt": 1566328452.747,
+            "uid": "4899bec5-4f80-449c-8ddc-e8ec388a1b56",
+            "version": 6
+        },
+        "routeName": "color-route-appmesh-demo",
+        "spec": {
+            "httpRoute": {
+                "action": {
+                    "weightedTargets": [
+                        {
+                            "virtualNode": "colorteller-appmesh-demo",
+                            "weight": 1
+                        },
+                        {
+                            "virtualNode": "colorteller-black-appmesh-demo",
+                            "weight": 1
+                        },
+                        {
+                            "virtualNode": "colorteller-blue-appmesh-demo",
+                            "weight": 1
+                        }
+                    ]
+                },
+                "match": {
+                    "prefix": "/"
+                }
+            },
+            "priority": 1
+        },
+        "status": {
+            "status": "ACTIVE"
+        },
+        "virtualRouterName": "colorteller-appmesh-demo"
+    }
+}
+```
 
 ## Using Gloo as the Ingress for AWS App Mesh
 
-In our above example, the `colorgateway` service calls the `colorteller` service which has a few variants (`colorteller`,`colorteller-black`, `colorteller-red`, `colorteller-blue`). Both of those services are part of the mesh, and we can control the routing between the components with the mesh. To get traffic into the mesh with a powerful API Gateway like Gloo, all we have to do is the following:
+In our above example, the `colorgateway` service calls the `colorteller` service which has a few variants (`colorteller`, `colorteller-black` , `colorteller-blue`). Both of those services are part of the mesh, and we can control the routing between the components with the mesh. To get traffic into the mesh with a powerful API Gateway like Gloo, all we have to do is the following:
 
 1. Install Gloo
 2. Create a Gloo VirtualService
@@ -108,7 +172,8 @@ And then call our new API:
 
 ```bash
 curl $(glooctl proxy url)/appmesh/color
-
+```
+```json
 {"color":"white", "stats": {"black":0.34,"blue":0.35,"white":0.31}}
 ```
 
@@ -116,4 +181,6 @@ And there you have it! You now have a powerful L7 Ingress and API Gateway for ma
 
 ### Limitations
 
-Currently, AWS App Mesh is fairly simple in its capabilities. It does very limited routing, cannot do mTLS, etc. As AWS App Mesh adds more capabilities, we'll integrate deeper. Even with its current limitations, if you would like to connect multiple meshes together (multiple AWS App Mesh or other heterogeneous implementations like Istio), please check out the [SuperGloo](https://supergloo.solo.io) project where we make it easy to stitch together multiple meshes.
+Currently, AWS App Mesh is fairly simple in its capabilities. It does very limited routing, cannot do mTLS, etc. As AWS App Mesh adds more capabilities, we'll integrate deeper. The AWS App Mesh roadmap is [publicly available and can be found on GitHub](https://github.com/aws/aws-app-mesh-roadmap/projects/1).
+
+Even with its current limitations, if you would like to connect multiple meshes together (multiple AWS App Mesh or other heterogeneous implementations like Istio), please check out the [SuperGloo](https://supergloo.solo.io) project where we make it easy to stitch together multiple meshes.
