@@ -1,3 +1,14 @@
+### v0.18.21
+
+**New Features**
+
+- Added "glooctl check" command for quickly highlighting issues with Gloo CRDs. (https://github.com/solo-io/gloo/issues/1052)
+- Add listener level extensions in Gateway. (https://github.com/solo-io/gloo/issues/1055)
+
+**Fixes**
+
+- Move rbac to globals.glooRbac to simplify rbac config access in gloo-ee. (https://github.com/solo-io/gloo/issues/989)
+
 ### v0.18.20
 
 **Dependency Bumps**
