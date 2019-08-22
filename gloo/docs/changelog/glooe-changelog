@@ -1,3 +1,16 @@
+### v0.18.15
+
+**New Features**
+
+- Envoy information is now displayed in UI. (https://github.com/solo-io/solo-projects/issues/876)
+- Gateway configurations can now be edited in the UI (http only currently). (https://github.com/solo-io/solo-projects/issues/875)
+- Implement polling to ensure up to date data. (https://github.com/solo-io/solo-projects/issues/822)
+- Upstream status is up to date. (https://github.com/solo-io/solo-projects/issues/893)
+
+**Fixes**
+
+- Always set Raw on virtual service details regardless of whether there are plugins. (https://github.com/solo-io/solo-projects/issues/942)
+
 ### v0.18.14
 
 **Dependency Bumps**
