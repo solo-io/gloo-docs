@@ -265,7 +265,7 @@ Now create a route to the app with `glooctl`:
 glooctl add route --path-exact /route1 --dest-name default-session-affinity-app-80 --prefix-rewrite /count --name default
 ```
 
-In a browser, navigate to this route, `/route`, on your gateway's URL (you can find this with `glooctl proxy url`).
+In a browser, navigate to this route, `/route1`, on your gateway's URL (you can find this with `glooctl proxy url`).
 If you refresh the page, you should observe a non-incrementing count.
 For example, in cluster with three nodes, you should see something like the sequence:
 
@@ -325,7 +325,7 @@ spec:
     name: gloo-system.default
     routes:
     - matcher:
-        exact: /p1
+        exact: /route1
       routeAction:
         single:
           upstream:
