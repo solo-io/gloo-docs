@@ -21,28 +21,23 @@ There are two steps to configuring session affinity:
 1. Define the hash key parameters on the desired routes.
   - This can include any combination of headers, cookies, and source IP address.
 
-##### Considerations
 
 Below, we show how to configure Gloo to use hashing load balancers and demonstrate a common cookie-based
 hashing strategy using a Ring Hash load balancer.
 
-For insights into whether a Ring Hash or Maglev load balancer is best for your use case, please review
-the details in Envoy's [load balancer selection docs](https://www.envoyproxy.io/docs/envoy/latest/intro/arch_overview/upstream/load_balancing/load_balancers#ring-hash).
-In many cases, either load balancer will work.
-
-There are more options when it comes to hashing request properties for association with a service instance.
-We outline the range of possiblities and demonstrate their configuration details below.
-For additional insights, please refer to Envoy's [route hash policy documentation](https://www.envoyproxy.io/docs/envoy/latest/api-v2/api/v2/route/route.proto#route-routeaction-hashpolicy).
 
 
 ### Upstream Plugin Configuration
 
 - Whether an upstream was discovered by Gloo or created manually, just add the `loadBalancerConfig` spec to your upstream.
-- Either a `ringHash` or `maglev` load balancer must be specified. Some examples are shown below.
+- Either a `ringHash` or `maglev` load balancer must be specified to achieve session affinity. Some examples are shown below.
+  - To determine whether a Ring Hash or Maglev load balancer is best for your use case, please review
+the details in Envoy's [load balancer selection docs](https://www.envoyproxy.io/docs/envoy/latest/intro/arch_overview/upstream/load_balancing/load_balancers#ring-hash).
+  - In many cases, either load balancer will work.
 
 #### Configure a Ring Hash Load Balancer on an Upstream
 
-- Full specification
+- Full reference specification:
 
 {{< highlight yaml "hl_lines=17-21" >}}
 apiVersion: gloo.solo.io/v1
@@ -68,7 +63,7 @@ spec:
           minimumRingSize: "10"
 {{< /highlight >}}
 
-- Optional fields omitted
+- Optional fields omitted:
 
 {{< highlight yaml "hl_lines=17-18" >}}
 apiVersion: gloo.solo.io/v1
@@ -93,7 +88,7 @@ spec:
 
 #### Configure a Maglev Load Balancer on an Upstream
 
-- There are no configurable parameters for Maglev load balancers.
+- There are no configurable parameters for Maglev load balancers:
 
 {{< highlight yaml "hl_lines=2-2" >}}
     loadBalancerConfig:
@@ -104,7 +99,8 @@ spec:
 
 ### Route Plugin Configuration
 
-- Full specification
+
+- Full reference specification:
 
 {{< highlight yaml "hl_lines=20-29" >}}
 apiVersion: gateway.solo.io/v1
@@ -153,6 +149,7 @@ spec:
   - `ttl`, optional, if set, Envoy will create the specified cookie, if it is not present on the request
 6. Envoy can be configured to create cookies by setting the `ttl` parameter. If the specified cookie is not available on the request, Envoy will create it and add it to the response.
 
+For additional insights, please refer to Envoy's [route hash policy documentation](https://www.envoyproxy.io/docs/envoy/latest/api-v2/api/v2/route/route.proto#route-routeaction-hashpolicy).
 
 ## Tutorial: Cookie-based route hashing
 
@@ -289,7 +286,7 @@ If you refresh the page, you should observe a non-incrementing count.
 For example, in cluster with three nodes, you should see something like the sequence:
 
 ```
-1,1,1,2,2,2,3,3,3,4,4,4...
+1,1,1,2,2,2,3,3,3,4,4,4,...
 ```
 
 
@@ -365,7 +362,7 @@ Return to the app in your browser and refresh the page a few times.
 You should see an increasing count similar to this:
 
 ```
-5,6,7,8...
+5,6,7,8,...
 ```
 
 Now that you have configured cookie-based sticky sessions, web requests from your browser will be served by the same instance of the counter app (unless you delete the cookie).
