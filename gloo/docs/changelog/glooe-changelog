@@ -1,3 +1,15 @@
+### v0.18.16
+
+**New Features**
+
+- Show envoy status in ui. (https://github.com/solo-io/solo-projects/pull/953)
+- Add envoy status to envoy details. (https://github.com/solo-io/solo-projects/issues/949)
+- Add Gateway and Envoy api calls to redux store, refactor Gateway form to comform to backend. (https://github.com/solo-io/solo-projects/issues/951)
+
+**Fixes**
+
+- The UI no longer sends an erroneous empty rate limit while editing Virtual Services. (https://github.com/solo-io/solo-projects/issues/924)
+
 ### v0.18.15
 
 **New Features**
