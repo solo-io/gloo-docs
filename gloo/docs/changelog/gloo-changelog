@@ -1,3 +1,11 @@
+### v0.18.22
+
+**New Features**
+
+- Add helm value that allows running envoy as user (https://github.com/solo-io/gloo/issues/1071)
+- added helm value to create a gateway proxy without NET_BIND_SERVICE (https://github.com/solo-io/gloo/issues/1068)
+- Enable session affinity through Envoy's hashing load balancers. (https://github.com/solo-io/gloo/issues/935)
+
 ### v0.18.21
 
 **New Features**
