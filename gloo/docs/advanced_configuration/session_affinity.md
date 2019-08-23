@@ -21,6 +21,18 @@ There are two steps to configuring session affinity:
 1. Define the hash key parameters on the desired routes.
   - This can include any combination of headers, cookies, and source IP address.
 
+##### Considerations
+
+Below, we show how to configure Gloo to use hashing load balancers and demonstrate a common cookie-based
+hashing strategy using a Ring Hash load balancer.
+
+For insights into whether a Ring Hash or Maglev load balancer is best for your use case, please review
+the details in Envoy's [load balancer selection docs](https://www.envoyproxy.io/docs/envoy/latest/intro/arch_overview/upstream/load_balancing/load_balancers#ring-hash).
+In many cases, either load balancer will work.
+
+There are more options when it comes to hashing request properties for association with a service instance.
+We outline the range of possiblities and demonstrate their configuration details below.
+For additional insights, please refer to Envoy's [route hash policy documentation](https://www.envoyproxy.io/docs/envoy/latest/api-v2/api/v2/route/route.proto#route-routeaction-hashpolicy).
 
 
 ### Upstream Plugin Configuration
@@ -28,7 +40,7 @@ There are two steps to configuring session affinity:
 - Whether an upstream was discovered by Gloo or created manually, just add the `loadBalancerConfig` spec to your upstream.
 - Either a `ringHash` or `maglev` load balancer must be specified. Some examples are shown below.
 
-#### Ring Hash Upstream Example
+#### Configure a Ring Hash Load Balancer on an Upstream
 
 - Full specification
 
@@ -79,7 +91,7 @@ spec:
       ringHash: {}
 {{< /highlight >}}
 
-#### Maglev Upstream Example
+#### Configure a Maglev Load Balancer on an Upstream
 
 - There are no configurable parameters for Maglev load balancers.
 
@@ -142,11 +154,18 @@ spec:
 6. Envoy can be configured to create cookies by setting the `ttl` parameter. If the specified cookie is not available on the request, Envoy will create it and add it to the response.
 
 
-## Basic Demonstration
+## Tutorial: Cookie-based route hashing
 
 The following tutorial walks through the steps involved in configuring and verifying session affinity.
 
-Requirements:
+##### Summary
+
+- Before enabling session affinity, each instance of our "Counter" app will service our requests in turn (Round Robin).
+  - This will result in non-incrementing responses, such as [1,1,1,2,2,2,3,3,...].
+- After enabling cookie-based session affinity, a single instance of our "Counter" app will service all requests.
+  - This will produce incremeting responses, such as [4,5,6,...].
+
+##### Requirements
 
 - Kubernetes cluster with Gloo installed
 - At least two nodes in the cluster.
