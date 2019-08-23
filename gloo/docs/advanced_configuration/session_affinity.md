@@ -4,7 +4,6 @@ weight: 48
 description: Configure Gloo session affinity (sticky sessions)
 ---
 
-# Session Affinity
 
 For certain applications deployed across multiple replicas, it may be desireable
 to route all traffic from a single client session to the same instance of the
@@ -141,3 +140,213 @@ spec:
   - `path`, optional, cookie path
   - `ttl`, optional, if set, Envoy will create the specified cookie, if it is not present on the request
 6. Envoy can be configured to create cookies by setting the `ttl` parameter. If the specified cookie is not available on the request, Envoy will create it and add it to the response.
+
+
+## Basic Demonstration
+
+The following tutorial walks through the steps involved in configuring and verifying session affinity.
+
+Requirements:
+
+- Kubernetes cluster with Gloo installed
+- At least two nodes in the cluster.
+- Permission to deploy a DaemonSet and edit Gloo resources.
+
+### Deploy a sample app in a DaemonSet
+
+DaemonSets are one type of resource that may benefit from session affinity.
+A DaemonSet ensures that all (or some) nodes run a given Pod.
+Depending on your architecture, you may have node-local caches that you want to associate with segments of your traffic.
+Session affinity can help steer requests from a given client to a consistent node.
+
+##### Overview of the "Counter" application
+
+We will use a very simple "counter" app to demonstrate session affinity configuration.
+The counter simply reports how many requests have been made to the `/count` endpoint.
+Without session affinity, subsequent requests will return a non-monotonically increasing response.
+For example, on a fresh deployment, your first request will be handled by node 1, and return a count of 1.
+Your second request will by handled by node 2, and also return a count of 1.
+After you enable session affinity, repeat requests will return a strictly increasing count response.
+
+The source code for the session affinity app is available in the [solo-docs repo](https://github.com/solo-io/solo-docs). The core logic is shown below.
+
+{{< highlight golang "hl_lines=24-29" >}}
+package main
+
+import (
+	"fmt"
+	"net/http"
+	"os"
+)
+
+func main() {
+	if err := App(); err != nil {
+		os.Exit(1)
+	}
+}
+
+var (
+	countUrl = "/count"
+	helpMsg  = fmt.Sprintf(`Simple counter app for testing Gloo
+
+%v - reports number of times the %v path was queried`, countUrl, countUrl)
+)
+
+func App() error {
+	count := 0
+	http.HandleFunc(countUrl, func(w http.ResponseWriter, r *http.Request) {
+		count++
+		if _, err := fmt.Fprint(w, count); err != nil {
+			fmt.Printf("error with request: %v\n", err)
+		}
+	})
+	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		if _, err := fmt.Fprint(w, helpMsg); err != nil {
+			fmt.Printf("error with request: %v\n", err)
+		}
+	})
+	return http.ListenAndServe("0.0.0.0:8080", nil)
+
+}
+{{< /highlight >}}
+
+##### Apply the DaemonSet
+
+The following command will create our DaemonSet and a matching Service.
+
+```
+cat << EOF | kubectl apply -f -
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: session-affinity-app
+spec:
+  selector:
+    matchLabels:
+      name: session-affinity-app
+      app: session-affinity-app
+  template:
+    metadata:
+      labels:
+        name: session-affinity-app
+        app: session-affinity-app
+    spec:
+      containers:
+      - name: session-affinity-app
+        image: soloio/session-affinity-app:0.0.3
+        resources:
+          limits:
+            memory: 10Mi
+          requests:
+            cpu: 10m
+            memory: 10Mi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: session-affinity-app
+spec:
+  selector:
+    name: session-affinity-app
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8080
+EOF
+```
+Note: if you deployed the app to a namespace other than the default namespace you will need to adjust the following commands accordingly.
+
+
+Gloo will have discovered the `session-affinity-app` service and created an Upstream from it.
+
+Now create a route to the app with `glooctl`:
+
+```
+glooctl add route --path-exact /route1 --dest-name default-session-affinity-app-80 --prefix-rewrite /count --name default
+```
+
+In a browser, navigate to this route, `/route`, on your gateway's URL (you can find this with `glooctl proxy url`).
+If you refresh the page, you should observe a non-incrementing count.
+For example, in cluster with three nodes, you should see something like the sequence:
+
+```
+1,1,1,2,2,2,3,3,3,4,4,4...
+```
+
+
+### Apply the session affinity configuration
+
+
+##### Configure the upstream
+
+Use `kubectl edit upstream -n gloo-system default-session-affinity-app-80` and apply the changes shown below to set a hashing load balancer on the app's upstream.
+
+
+{{< highlight yaml "hl_lines=17-21" >}}
+apiVersion: gloo.solo.io/v1
+kind: Upstream
+metadata:
+  annotations:
+  labels:
+    discovered_by: kubernetesplugin
+  name: default-session-affinity-app-80
+  namespace: gloo-system
+spec:
+  upstreamSpec:
+    kube:
+      selector:
+        name: session-affinity-app
+      serviceName: session-affinity-app
+      serviceNamespace: default
+      servicePort: 80
+    loadBalancerConfig:
+      ringHash:
+        ringHashConfig:
+          maximumRingSize: "200"
+          minimumRingSize: "10"
+{{< /highlight >}}
+
+##### Configure the route
+
+Now configure your route to produce hash keys based on a cookie.
+Update the route with `kubectl edit virtualservice -n gloo-system default` and apply the changes shown below.
+
+
+{{< highlight yaml "hl_lines=20-25" >}}
+apiVersion: gateway.solo.io/v1
+kind: VirtualService
+metadata:
+  name: default
+  namespace: gloo-system
+spec:
+  virtualHost:
+    domains:
+    - '*'
+    name: gloo-system.default
+    routes:
+    - matcher:
+        exact: /p1
+      routeAction:
+        single:
+          upstream:
+            name: default-session-affinity-app-80
+            namespace: gloo-system
+      routePlugins:
+        lbHash:
+          hashPolicies:
+          - cookie:
+              name: gloo
+              path: /abc
+              ttl: 10s
+        prefixRewrite:
+          prefixRewrite: /count
+{{< /highlight >}}
+
+Return to the app in your browser and refresh the page a few times.
+You should see an increasing count similar to this:
+
+```
+5,6,7,8...
+```
+
+Now that you have configured cookie-based sticky sessions, web requests from your browser will be served by the same instance of the counter app (unless you delete the cookie).
