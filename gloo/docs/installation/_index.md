@@ -14,7 +14,7 @@ Gloo Open-Source runs in 3 different modes to enable different use cases:
       <a href="gateway"><img src="../img/Gloo-01.png" width="60"/></a>
     </td>
     <td>
-     Run Gloo in `gateway` mode to function as an API Gateway. This mode uses Kubernetes Custom Resources to configure routing. This is the most fully-featured and customizable installation of Gloo, and is our <b>recommended install for first-time users</b>.
+     Run Gloo in `gateway` mode to function as an API Gateway. This is the most fully-featured and customizable installation of Gloo, and is our <b>recommended install for first-time users</b>. The Gloo Gateway can be configured via Kubernetes Custom Resources, Consul Key-Value storage, or `.yaml` files on Gloo's local filesystem.
     </td>
   </tr>
   <tr height="100">
@@ -22,7 +22,7 @@ Gloo Open-Source runs in 3 different modes to enable different use cases:
       <a href="knative"><img src="../img/knative.png" width="60"/></a>
     </td>
     <td>
-     Run Gloo in `knative` mode to act an ingress controller for Knative (configured using the `ClusterIngress` CRD), providing routing to Knative services without the need to install Istio.
+     Run Gloo in `knative` mode to serve as the Gateway/Ingress for Knative, configured automatically by [Knative Serving](https://github.com/knative/serving) to route to [Knative Services](https://github.com/knative/serving/blob/master/docs/spec/spec.md).
     </td>
   </tr>
   <tr height="100">

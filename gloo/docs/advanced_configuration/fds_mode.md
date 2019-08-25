@@ -30,8 +30,8 @@ services we choose.
 ## Configuring the `fdsMode` Setting
 
 FDS can run in one of 3 modes:
-* `BLACKLIST`: The most liberal FDS polling policy. Using this mode, FDS will poll any service unless its namespace or the service itself is explicitly blacklisted. *`BLACKLIST` is the default mode for FDS*.
 
+* `BLACKLIST`: The most liberal FDS polling policy. Using this mode, FDS will poll any service unless its namespace or the service itself is explicitly blacklisted. *`BLACKLIST` is the default mode for FDS*.
 * `WHITELIST`: A more restricted FDS polling policy. Using this mode, FDS will poll only those services who either live in an explicitly whitelisted namespace, or themselves are are explicitly whitelisted.
 * `DISABLED`: FDS will not run. Upsrteam Discovery (UDS) will still run as normal.
 
