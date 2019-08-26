@@ -1,3 +1,5 @@
+#!/bin/bash
+
 kubectl create namespace opa
 # create Roles as they may need a second to propagate
 kubectl --namespace=opa apply -f - <<EOF
