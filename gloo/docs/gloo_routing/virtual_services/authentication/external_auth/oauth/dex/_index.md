@@ -13,7 +13,7 @@ Using an Identity Hub like Dex has a few advantages:
 - JWT based authentication lends itself well for distributed systems. With an identity hub you can re-use your existing investment
 - Allows you to change your authentication back-end without affecting the rest of the system.
 
-You can also use Dex for kubernetes itself. for example, to allow LDAP logins to work with kubectl.  
+You can also use Dex for Kubernetes itself; for example, to allow LDAP logins to work with `kubectl`.  
 This is outside the scope of this document, but you can read more about it [here](https://github.com/dexidp/dex/blob/master/Documentation/kubernetes.md).
 
 In this document we will demonstrate how to integrate Gloo and Dex using Gloo's support for OpenID Connect.
