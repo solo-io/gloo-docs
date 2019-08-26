@@ -1,3 +1,25 @@
+### v0.18.18
+
+**Dependency Bumps**
+
+- solo-io/gloo has been upgraded to v0.18.22.
+
+**New Features**
+
+- Show Upstream counts. (https://github.com/solo-io/solo-projects/issues/957)
+- Provide feedback after updating a gateway. (https://github.com/solo-io/solo-projects/issues/975)
+
+**Fixes**
+
+- Switch Envoy logo. (https://github.com/solo-io/solo-projects/issues/955)
+- Center text in boxes with numbers. (https://github.com/solo-io/solo-projects/issues/956)
+- Fix updating values in the gateway form. (https://github.com/solo-io/solo-projects/issues/967)
+- Include pipe and description on same level in dialogs. (https://github.com/solo-io/solo-projects/issues/968)
+- Fix spacing on upstream count. (https://github.com/solo-io/solo-projects/issues/973)
+- Remove extra text on gateway form. (https://github.com/solo-io/solo-projects/issues/974)
+- The Overview page now properly displays errors for Envoy. (https://github.com/solo-io/solo-projects/issues/965)
+- Make the secret selection more use friendly when creating AWS Upstreams. (https://github.com/solo-io/solo-projects/issues/969)
+
 ### v0.18.17
 
 **Fixes**
