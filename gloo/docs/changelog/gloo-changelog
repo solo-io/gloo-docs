@@ -1,3 +1,11 @@
+### v0.18.23
+
+**New Features**
+
+- add support for consul-based artifacts (https://github.com/solo-io/gloo/pull/1073)
+- Enable Glooctl create/update/delete commands for config backed by consul and secrets backed by vault. (https://github.com/solo-io/gloo/pull/1067)
+- add support for nomad install (https://github.com/solo-io/gloo/pull/1075)
+
 ### v0.18.22
 
 **New Features**
