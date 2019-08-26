@@ -79,7 +79,7 @@ We will add an init container that adds the Dex CA cert to the trusted CA certif
 
 {{% notice note %}}
 You may need to modify the command below to match your version of Gloo.
-You can edit your deployment and copy the highlighted parts. Alternativly, you can
+You can edit your deployment and copy the highlighted parts. Alternatively, you can
 use the `kubectl patch` method.
 {{% /notice %}}
 
