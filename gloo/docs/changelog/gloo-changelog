@@ -1,3 +1,9 @@
+### v0.18.24
+
+**New Features**
+
+- Enable random sampling for tracing. (https://github.com/solo-io/gloo/pull/1081)
+
 ### v0.18.23
 
 **New Features**
