@@ -1,3 +1,11 @@
+### v0.18.17
+
+**Fixes**
+
+- Fix long loading time for proxies and gateways in Admin page. (https://github.com/solo-io/solo-projects/issues/958)
+- Fix update gateway functionality. (https://github.com/solo-io/solo-projects/issues/959)
+- Show correct envoy status on overview page. (https://github.com/solo-io/solo-projects/issues/960)
+
 ### v0.18.16
 
 **New Features**
