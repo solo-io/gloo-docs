@@ -79,9 +79,13 @@ We will add an init container that adds the Dex CA cert to the trusted CA certif
 
 {{% notice note %}}
 You may need to modify the command below to match your version of Gloo.
-You can edit your deployment and copy the highlighted parts.
+You can edit your deployment and copy the highlighted parts. Alternativly, you can
+use the `kubectl patch` method.
 {{% /notice %}}
 
+
+{{< tabs >}}
+{{< tab name="kubectl">}}
 {{< highlight shell "hl_lines=24-45 48-50" >}}
 kubectl apply -f - <<EOF
 apiVersion: apps/v1
@@ -166,6 +170,75 @@ spec:
                 topologyKey: kubernetes.io/hostname
 EOF
 {{< /highlight >}}
+{{< /tab >}}
+{{< tab name="kubectl patch" codelang="shell">}}
+cat  <<EOF | xargs -0 kubectl patch deployment -n gloo-system extauth --type='json' -p
+[
+    {
+        "op": "add",
+        "path": "/spec/template/spec/containers/0/volumeMounts",
+        "value": [
+            {
+                "name": "certs",
+                "mountPath": "/etc/ssl/certs/"
+            }
+        ]
+    },
+    {
+        "op": "add",
+        "path": "/spec/template/spec/volumes",
+        "value": [
+            {
+                "name": "certs",
+                "emptyDir": {}
+            },
+            {
+                "name": "ca-certs",
+                "secret": {
+                    "secretName": "dex-web-server-ca",
+                    "items": [
+                        {
+                            "key": "tls.crt",
+                            "path": "ca.crt"
+                        }
+                    ]
+                }
+            }
+        ]
+    },
+    {
+        "op": "add",
+        "path": "/spec/template/spec/initContainers",
+        "value": [
+            {
+                "name": "add-ca-cert",
+                "image": "quay.io/solo-io/extauth-ee:0.18.13",
+                "command": [
+                    "sh"
+                ],
+                "args": [
+                    "-c",
+                    "cp -r /etc/ssl/certs/* /certs; cat /etc/ssl/certs/ca-certificates.crt /ca-certs/ca.crt > /certs/ca-certificates.crt"
+                ],
+                "volumeMounts": [
+                    {
+                        "name": "certs",
+                        "mountPath": "/certs"
+                    },
+                    {
+                        "name": "ca-certs",
+                        "mountPath": "/ca-certs"
+                    }
+                ]
+            }
+        ]
+    }
+]
+EOF
+{{< /tab >}}
+{{< /tabs >}} 
+
+
 
 ## Test!
 
