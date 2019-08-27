@@ -120,6 +120,7 @@ The table for gloo open-source overrides (also available in enterprise) is [here
 | grafana.enabled                                           | bool     | deploy grafana in your gloo system namespace. default is `true` |
 | prometheus.enabled                                        | bool     | deploy prometheus in your gloo system namespace. default is `true` |
 | rateLimit.enabled                                         | bool     | deploy rate-limiting in your gloo system namespace. default is `true` |
+| global.extensions.extAuth.envoySidecar                    | bool     | deploy ext-auth in the gateway-proxy pod, as a sidecar to envoy. communicates over unix domain socket instead of TCP. default is `false` |
 
 A common setup may be to run your own prometheus (and grafana), separate from the gloo-provided ones. The enterprise Gloo UI makes use of its own grafana to display dashboards for Envoy and Kubernetes, leveraging gloo custom resources such as `Upstreams`. You can point gloo's system grafana toward your prometheus by overriding grafana's datasources tag, i.e.
 

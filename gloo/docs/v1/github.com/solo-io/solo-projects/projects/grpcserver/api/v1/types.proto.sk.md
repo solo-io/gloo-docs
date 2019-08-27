@@ -12,6 +12,8 @@ weight: 5
 
 
 - [Raw](#raw)
+- [Status](#status)
+- [Code](#code)
   
 
 
@@ -31,6 +33,7 @@ weight: 5
 ```yaml
 "fileName": string
 "content": string
+"contentRenderError": string
 
 ```
 
@@ -38,6 +41,40 @@ weight: 5
 | ----- | ---- | ----------- |----------- | 
 | `fileName` | `string` | e.g. resource-name.yaml |  |
 | `content` | `string` | Content of the file |  |
+| `contentRenderError` | `string` | Error encountered while rendering content |  |
+
+
+
+
+---
+### Status
+
+
+
+```yaml
+"code": .glooeeapi.solo.io.Status.Code
+"message": string
+
+```
+
+| Field | Type | Description | Default |
+| ----- | ---- | ----------- |----------- | 
+| `code` | [.glooeeapi.solo.io.Status.Code](../types.proto.sk#code) | Red / Yellow / Green status of the resource |  |
+| `message` | `string` | Optional error message or other information about resource status |  |
+
+
+
+
+---
+### Code
+
+
+
+| Name | Description |
+| ----- | ----------- | 
+| `ERROR` |  |
+| `WARNING` |  |
+| `OK` |  |
 
 
 

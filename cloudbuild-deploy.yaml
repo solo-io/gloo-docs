@@ -1,6 +1,6 @@
 steps:
 
-- name: 'gcr.io/solo-public/go-mod-make:0.1.1'
+- name: 'gcr.io/solo-public/go-mod-make:0.1.15'
   args: ['deploy-site']
   env:
   - 'TAGGED_VERSION=$TAG_NAME'
@@ -8,7 +8,7 @@ steps:
   secretEnv: ['FIREBASE_TOKEN']
   waitFor: ['-']
 
-- name: 'gcr.io/solo-public/go-mod-make:0.1.1'
+- name: 'gcr.io/solo-public/go-mod-make:0.1.15'
   args: ['deploy-site']
   env:
   - 'TAGGED_VERSION=$TAG_NAME'
@@ -16,7 +16,7 @@ steps:
   secretEnv: ['FIREBASE_TOKEN']
   waitFor: ['-']
 
-- name: 'gcr.io/solo-public/go-mod-make:0.1.1'
+- name: 'gcr.io/solo-public/go-mod-make:0.1.15'
   args: ['deploy-site']
   env:
   - 'TAGGED_VERSION=$TAG_NAME'
@@ -24,7 +24,7 @@ steps:
   secretEnv: ['FIREBASE_TOKEN']
   waitFor: ['-']
 
-- name: 'gcr.io/solo-public/go-mod-make:0.1.1'
+- name: 'gcr.io/solo-public/go-mod-make:0.1.15'
   args: ['deploy-site']
   env:
   - 'TAGGED_VERSION=$TAG_NAME'

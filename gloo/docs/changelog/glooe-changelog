@@ -1,3 +1,97 @@
+### v0.18.19
+
+**New Features**
+
+- Glooctl now has a check command to detect known issues with CRDs. (https://github.com/solo-io/solo-projects/issues/978)
+
+**Fixes**
+
+- UI now routes to overview by default. (https://github.com/solo-io/solo-projects/issues/985)
+
+### v0.18.18
+
+**Dependency Bumps**
+
+- solo-io/gloo has been upgraded to v0.18.22.
+
+**New Features**
+
+- Show Upstream counts. (https://github.com/solo-io/solo-projects/issues/957)
+- Provide feedback after updating a gateway. (https://github.com/solo-io/solo-projects/issues/975)
+
+**Fixes**
+
+- Switch Envoy logo. (https://github.com/solo-io/solo-projects/issues/955)
+- Center text in boxes with numbers. (https://github.com/solo-io/solo-projects/issues/956)
+- Fix updating values in the gateway form. (https://github.com/solo-io/solo-projects/issues/967)
+- Include pipe and description on same level in dialogs. (https://github.com/solo-io/solo-projects/issues/968)
+- Fix spacing on upstream count. (https://github.com/solo-io/solo-projects/issues/973)
+- Remove extra text on gateway form. (https://github.com/solo-io/solo-projects/issues/974)
+- The Overview page now properly displays errors for Envoy. (https://github.com/solo-io/solo-projects/issues/965)
+- Make the secret selection more use friendly when creating AWS Upstreams. (https://github.com/solo-io/solo-projects/issues/969)
+
+### v0.18.17
+
+**Fixes**
+
+- Fix long loading time for proxies and gateways in Admin page. (https://github.com/solo-io/solo-projects/issues/958)
+- Fix update gateway functionality. (https://github.com/solo-io/solo-projects/issues/959)
+- Show correct envoy status on overview page. (https://github.com/solo-io/solo-projects/issues/960)
+
+### v0.18.16
+
+**New Features**
+
+- Show envoy status in ui. (https://github.com/solo-io/solo-projects/pull/953)
+- Add envoy status to envoy details. (https://github.com/solo-io/solo-projects/issues/949)
+- Add Gateway and Envoy api calls to redux store, refactor Gateway form to comform to backend. (https://github.com/solo-io/solo-projects/issues/951)
+
+**Fixes**
+
+- The UI no longer sends an erroneous empty rate limit while editing Virtual Services. (https://github.com/solo-io/solo-projects/issues/924)
+
+### v0.18.15
+
+**New Features**
+
+- Envoy information is now displayed in UI. (https://github.com/solo-io/solo-projects/issues/876)
+- Gateway configurations can now be edited in the UI (http only currently). (https://github.com/solo-io/solo-projects/issues/875)
+- Implement polling to ensure up to date data. (https://github.com/solo-io/solo-projects/issues/822)
+- Upstream status is up to date. (https://github.com/solo-io/solo-projects/issues/893)
+
+**Fixes**
+
+- Always set Raw on virtual service details regardless of whether there are plugins. (https://github.com/solo-io/solo-projects/issues/942)
+
+### v0.18.14
+
+**Dependency Bumps**
+
+- solo-io/gloo has been upgraded to v0.18.20.
+
+**New Features**
+
+- Yaml configurations are now viewable and downloadable from several spots in the UI. (https://github.com/solo-io/solo-projects/issues/874)
+
+**Fixes**
+
+- Scrub contents when returning secrets from the apiserver. (https://github.com/solo-io/solo-projects/issues/933)
+
+### v0.18.13
+
+**Dependency Bumps**
+
+- solo-io/ext-auth-plugins has been upgraded to v0.0.3.
+
+**New Features**
+
+- Add list envoy details to the apiserver. (https://github.com/solo-io/solo-projects/issues/894)
+- Add raw yaml to upstream API on the new upstream details object. (https://github.com/solo-io/solo-projects/issues/928)
+
+**Fixes**
+
+- Set default Helm value for `imagePullPolicy` to `IfNotPresent`. (https://github.com/solo-io/solo-projects/issues/930)
+
 ### v0.18.12
 
 **New Features**
