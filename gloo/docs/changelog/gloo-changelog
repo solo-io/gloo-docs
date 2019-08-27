@@ -1,3 +1,14 @@
+### v0.18.25
+
+**New Features**
+
+- Add http listener level extensions in Gateway. (https://github.com/solo-io/gloo/issues/1055)
+
+**Fixes**
+
+- Fix rendering of DaemonSet (https://github.com/solo-io/gloo/issues/1087)
+- Assign a service account name to the gateway conversion job. (https://github.com/solo-io/gloo/issues/1085)
+
 ### v0.18.24
 
 **New Features**
