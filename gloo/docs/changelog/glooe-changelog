@@ -1,3 +1,13 @@
+### v0.18.19
+
+**New Features**
+
+- Glooctl now has a check command to detect known issues with CRDs. (https://github.com/solo-io/solo-projects/issues/978)
+
+**Fixes**
+
+- UI now routes to overview by default. (https://github.com/solo-io/solo-projects/issues/985)
+
 ### v0.18.18
 
 **Dependency Bumps**
