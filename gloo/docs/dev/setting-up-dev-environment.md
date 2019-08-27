@@ -63,7 +63,7 @@ go get -u github.com/gogo/protobuf/...
 Next, we'll clone the Gloo and Solo-Kit source code. Solo-Kit is required for code generation in Gloo. 
 
 {{% notice info %}}
-Currently, Gloo plugins must live inside the Gloo repo itself. 
+Currently, Gloo plugins must live inside the [Gloo repository](https://github.com/solo-io/gloo) itself. 
 {{% /notice %}}
 
 Ensure you've installed `go` and have a your `$GOPATH` set. If unset, it will default to `${HOME}/go`. The Gloo repo 

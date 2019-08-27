@@ -17,7 +17,7 @@ publish your ext auth plugins.
 This guide will make frequent references to the code contained in our 
 [Ext Auth Plugin examples](https://github.com/solo-io/ext-auth-plugin-examples) GitHub repository. In addition to sample 
 plugin implementation, the repository contains useful tools to verify whether your plugin is compatible with a certain 
-version of Gloo. Given the [constrains imposed by Go plugins](#build-helper-tools), these utilities will make your life 
+version of Gloo. Given the [constraints imposed by Go plugins](#build-helper-tools), these utilities will make your life 
 significantly easier.
 
 {{% notice note %}}
@@ -42,7 +42,7 @@ In this section we will see how to develop an auth plugin and distribute it in t
 by Gloo.
 
 ### API overview
-There are two interfaces that are of interest when developing external auth plugins. They are both defined 
+When developing external auth plugins, there are two interfaces we need to be familiar with. They are both defined 
 [here](https://github.com/solo-io/ext-auth-plugins/blob/master/api/interface.go)
 
 ##### ExtAuthPlugin
@@ -64,7 +64,7 @@ object to deserialize the plugin configuration into.
 The object returned by the `NewConfigInstance` function **MUST** be a pointer type.
 {{% /notice %}}
 
-Let's see example to understand this better. If your plugin configuration looks like this:
+Let's see an example to understand this better. If your plugin configuration looks like this:
 
 {{< highlight yaml "hl_lines=17-22" >}}
 apiVersion: gateway.solo.io/v1
@@ -212,7 +212,7 @@ meant make your plugin development experience as smooth as possible. You can fin
 [Ext Auth Plugin examples](https://github.com/solo-io/ext-auth-plugin-examples) GitHub repository.
 
 {{% notice note %}}
-Gloo publishes information about the environment it was build with to a Google Storage bucket. The tools in this section 
+Gloo publishes information about the environment it was built with to a Google Storage bucket. The tools in this section 
 will make use of those information. You can find the information for a specific Gloo version in the following files located 
 under `http://storage.googleapis.com/gloo-ee-dependencies/[GLOOE_VERSION]`:
 
@@ -510,7 +510,7 @@ defined. The first plugin to deny the request will cause the chain execution to 
 response from the plugin that denied it. 
 
 Each external auth plugin can append, add or override headers from the request it received before dispatching it to the 
-upstream or the next plugin in the chain. It is important to understand how headers modifications are handled when more 
+upstream or the next plugin in the chain. It is important to understand how header modifications are handled when more 
 than one plugin gets executed.
 
 Let's look at the response you look at the [response object](https://github.com/solo-io/ext-auth-plugins/blob/master/api/interface.go#L15) 
