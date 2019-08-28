@@ -1,3 +1,9 @@
+### v0.18.26
+
+**Fixes**
+
+- Fix confusing and bug prone helm render bug by wrapping render and undoing chart side-effects (https://github.com/solo-io/gloo/issues/1092)
+
 ### v0.18.25
 
 **New Features**
