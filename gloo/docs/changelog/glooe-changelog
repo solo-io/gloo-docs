@@ -1,3 +1,26 @@
+### v0.18.20
+
+**Dependency Bumps**
+
+- solo-io/gloo has been upgraded to v0.18.26.
+
+**New Features**
+
+- For gateways and proxies that are invalid, pipe their status and reason through to the UI. (https://github.com/solo-io/solo-projects/issues/961)
+- Added OPA support for glooctl (https://github.com/solo-io/solo-projects/pull/1001)
+- Added OPA support for gloo (https://github.com/solo-io/solo-projects/pull/992)
+- Allow specifying custom scopes to OIDC (https://github.com/solo-io/solo-projects/pull/1005)
+- Yaml configurations can now be seen within UI for Gateways and Virtual Services. (https://github.com/solo-io/solo-projects/issues/931)
+
+**Fixes**
+
+- Headers and Query Parameters may now fully be created with blank values. (https://github.com/solo-io/solo-projects/issues/925)
+- Hitting enter in an input box will, in more cases, complete the desired form. (https://github.com/solo-io/solo-projects/issues/946)
+- Upstream names now get properly verified during creation. (https://github.com/solo-io/solo-projects/issues/982)
+- Use helms values in glooctl. (https://github.com/solo-io/solo-projects/issues/995)
+- Glooctl install works when disabling grafana and/or prometheus. (https://github.com/solo-io/solo-projects/issues/996)
+- Fix indentation in yaml renderer. (https://github.com/solo-io/solo-projects/issues/990)
+
 ### v0.18.19
 
 **New Features**

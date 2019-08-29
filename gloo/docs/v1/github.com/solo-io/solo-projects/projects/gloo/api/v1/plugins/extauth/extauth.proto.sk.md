@@ -26,11 +26,15 @@ weight: 5
 - [OauthSecret](#oauthsecret)
 - [ApiKeyAuth](#apikeyauth)
 - [ApiKeySecret](#apikeysecret)
+- [OpaAuth](#opaauth)
+- [AuthConfig](#authconfig)
 - [VhostExtension](#vhostextension)
 - [RouteExtension](#routeextension)
 - [ExtAuthConfig](#extauthconfig)
 - [OAuthConfig](#oauthconfig)
 - [ApiKeyAuthConfig](#apikeyauthconfig)
+- [OpaAuthConfig](#opaauthconfig)
+- [AuthConfig](#authconfig)
   
 
 
@@ -169,6 +173,7 @@ This is used with custom auth servers.
 
  
 Configures auth via dynamically loaded Go plugins.
+Deprecated
 
 ```yaml
 "plugins": []extauth.plugins.gloo.solo.io.AuthPlugin
@@ -177,7 +182,7 @@ Configures auth via dynamically loaded Go plugins.
 
 | Field | Type | Description | Default |
 | ----- | ---- | ----------- |----------- | 
-| `plugins` | [[]extauth.plugins.gloo.solo.io.AuthPlugin](../extauth.proto.sk#authplugin) | A chain of plugins which will be executed in the order they are specified. The first plugin to deny a request will cause a 403 response to be returned; any subsequent plugin in the chain will not be executed. The headers on the OkHttpResponse returned from a plugin in the chain will be added to the request that will be sent to the next one(s) according to the rules described here: https://www.envoyproxy.io/docs/envoy/latest/api-v2/service/auth/v2/external_auth.proto#service-auth-v2-okhttpresponse |  |
+| `plugins` | [[]extauth.plugins.gloo.solo.io.AuthPlugin](../extauth.proto.sk#authplugin) | Deprecated |  |
 
 
 
@@ -271,6 +276,7 @@ Configures auth via dynamically loaded Go plugins.
 "issuerUrl": string
 "appUrl": string
 "callbackPath": string
+"scopes": []string
 
 ```
 
@@ -281,6 +287,7 @@ Configures auth via dynamically loaded Go plugins.
 | `issuerUrl` | `string` | The url of the issuer. We will look for OIDC information in issuerUrl+ ".well-known/openid-configuration" |  |
 | `appUrl` | `string` | we to redirect after successful auth, if we can't determine the original url this should be your publicly available app url. |  |
 | `callbackPath` | `string` | a callback path relative to app url that will be used for OIDC callbacks. needs to not be used by the application |  |
+| `scopes` | `[]string` | Scopes to request in addtion to openid scope. |  |
 
 
 
@@ -343,6 +350,52 @@ Configures auth via dynamically loaded Go plugins.
 
 
 ---
+### OpaAuth
+
+
+
+```yaml
+"modules": []core.solo.io.ResourceRef
+"query": string
+
+```
+
+| Field | Type | Description | Default |
+| ----- | ---- | ----------- |----------- | 
+| `modules` | [[]core.solo.io.ResourceRef](../../../../../../../../solo-kit/api/v1/ref.proto.sk#resourceref) | An optional resource reference to config maps containing modules to assist in the resolution of `query`. |  |
+| `query` | `string` | The query that determines the auth decision. The result of this query must be either a boolean or an array with boolean as the first element. A boolean `true` value means that the request will be authorized. Any other value, or error, means that the request will be denied. |  |
+
+
+
+
+---
+### AuthConfig
+
+
+
+```yaml
+"basicAuth": .extauth.plugins.gloo.solo.io.BasicAuth
+"oauth": .extauth.plugins.gloo.solo.io.OAuth
+"customAuth": .extauth.plugins.gloo.solo.io.CustomAuth
+"apiKeyAuth": .extauth.plugins.gloo.solo.io.ApiKeyAuth
+"pluginAuth": .extauth.plugins.gloo.solo.io.AuthPlugin
+"opaAuth": .extauth.plugins.gloo.solo.io.OpaAuth
+
+```
+
+| Field | Type | Description | Default |
+| ----- | ---- | ----------- |----------- | 
+| `basicAuth` | [.extauth.plugins.gloo.solo.io.BasicAuth](../extauth.proto.sk#basicauth) |  |  |
+| `oauth` | [.extauth.plugins.gloo.solo.io.OAuth](../extauth.proto.sk#oauth) |  |  |
+| `customAuth` | [.extauth.plugins.gloo.solo.io.CustomAuth](../extauth.proto.sk#customauth) |  |  |
+| `apiKeyAuth` | [.extauth.plugins.gloo.solo.io.ApiKeyAuth](../extauth.proto.sk#apikeyauth) |  |  |
+| `pluginAuth` | [.extauth.plugins.gloo.solo.io.AuthPlugin](../extauth.proto.sk#authplugin) |  |  |
+| `opaAuth` | [.extauth.plugins.gloo.solo.io.OpaAuth](../extauth.proto.sk#opaauth) |  |  |
+
+
+
+
+---
 ### VhostExtension
 
 
@@ -353,16 +406,18 @@ Configures auth via dynamically loaded Go plugins.
 "customAuth": .extauth.plugins.gloo.solo.io.CustomAuth
 "apiKeyAuth": .extauth.plugins.gloo.solo.io.ApiKeyAuth
 "pluginAuth": .extauth.plugins.gloo.solo.io.PluginAuth
+"configs": []extauth.plugins.gloo.solo.io.AuthConfig
 
 ```
 
 | Field | Type | Description | Default |
 | ----- | ---- | ----------- |----------- | 
-| `basicAuth` | [.extauth.plugins.gloo.solo.io.BasicAuth](../extauth.proto.sk#basicauth) |  |  |
-| `oauth` | [.extauth.plugins.gloo.solo.io.OAuth](../extauth.proto.sk#oauth) |  |  |
-| `customAuth` | [.extauth.plugins.gloo.solo.io.CustomAuth](../extauth.proto.sk#customauth) |  |  |
-| `apiKeyAuth` | [.extauth.plugins.gloo.solo.io.ApiKeyAuth](../extauth.proto.sk#apikeyauth) |  |  |
-| `pluginAuth` | [.extauth.plugins.gloo.solo.io.PluginAuth](../extauth.proto.sk#pluginauth) |  |  |
+| `basicAuth` | [.extauth.plugins.gloo.solo.io.BasicAuth](../extauth.proto.sk#basicauth) | Deprecated: use `configs` field instead. |  |
+| `oauth` | [.extauth.plugins.gloo.solo.io.OAuth](../extauth.proto.sk#oauth) | Deprecated: use `configs` field instead. |  |
+| `customAuth` | [.extauth.plugins.gloo.solo.io.CustomAuth](../extauth.proto.sk#customauth) | Deprecated: use `configs` field instead. |  |
+| `apiKeyAuth` | [.extauth.plugins.gloo.solo.io.ApiKeyAuth](../extauth.proto.sk#apikeyauth) | Deprecated: use `configs` field instead. |  |
+| `pluginAuth` | [.extauth.plugins.gloo.solo.io.PluginAuth](../extauth.proto.sk#pluginauth) | Deprecated: use `configs` field instead. |  |
+| `configs` | [[]extauth.plugins.gloo.solo.io.AuthConfig](../extauth.proto.sk#authconfig) | A chain of AuthN\AuthZ configurations which will be executed in the order they are specified. The first plugin to deny a request will cause a 403 response to be returned; any subsequent plugin in the chain will not be executed. The headers on the OkHttpResponse returned from a plugin in the chain will be added to the request that will be sent to the next one(s) according to the rules described here: https://www.envoyproxy.io/docs/envoy/latest/api-v2/service/auth/v2/external_auth.proto#service-auth-v2-okhttpresponse |  |
 
 
 
@@ -396,6 +451,7 @@ Configures auth via dynamically loaded Go plugins.
 "basicAuth": .extauth.plugins.gloo.solo.io.BasicAuth
 "apiKeyAuth": .extauth.plugins.gloo.solo.io.ExtAuthConfig.ApiKeyAuthConfig
 "pluginAuth": .extauth.plugins.gloo.solo.io.PluginAuth
+"configs": []extauth.plugins.gloo.solo.io.ExtAuthConfig.AuthConfig
 
 ```
 
@@ -406,6 +462,7 @@ Configures auth via dynamically loaded Go plugins.
 | `basicAuth` | [.extauth.plugins.gloo.solo.io.BasicAuth](../extauth.proto.sk#basicauth) |  |  |
 | `apiKeyAuth` | [.extauth.plugins.gloo.solo.io.ExtAuthConfig.ApiKeyAuthConfig](../extauth.proto.sk#apikeyauthconfig) |  |  |
 | `pluginAuth` | [.extauth.plugins.gloo.solo.io.PluginAuth](../extauth.proto.sk#pluginauth) |  |  |
+| `configs` | [[]extauth.plugins.gloo.solo.io.ExtAuthConfig.AuthConfig](../extauth.proto.sk#authconfig) |  |  |
 
 
 
@@ -421,6 +478,7 @@ Configures auth via dynamically loaded Go plugins.
 "issuerUrl": string
 "appUrl": string
 "callbackPath": string
+"scopes": []string
 
 ```
 
@@ -431,6 +489,7 @@ Configures auth via dynamically loaded Go plugins.
 | `issuerUrl` | `string` | The url of the issuer. We will look for OIDC information in issuerUrl+ ".well-known/openid-configuration" |  |
 | `appUrl` | `string` | we to redirect after successful auth, if we can't determine the original url this should be your publicly available app url. |  |
 | `callbackPath` | `string` | a callback path relative to app url that will be used for OIDC callbacks. needs to not be used by the application |  |
+| `scopes` | `[]string` | scopes to request in addition to the openid scope. |  |
 
 
 
@@ -448,6 +507,50 @@ Configures auth via dynamically loaded Go plugins.
 | Field | Type | Description | Default |
 | ----- | ---- | ----------- |----------- | 
 | `validApiKeyAndUser` | `map<string, string>` | a map of valid apikeys to their associated plaintext users. |  |
+
+
+
+
+---
+### OpaAuthConfig
+
+
+
+```yaml
+"modules": map<string, string>
+"query": string
+
+```
+
+| Field | Type | Description | Default |
+| ----- | ---- | ----------- |----------- | 
+| `modules` | `map<string, string>` | An optional modules (filename, module content) maps containing modules assist in the resolution of `query`. |  |
+| `query` | `string` | The query that determines the auth decision. The result of this query must be either a boolean or an array with boolean as the first element. A boolean `true` value means that the request will be authorized. Any other value, or error, means that the request will be denied. |  |
+
+
+
+
+---
+### AuthConfig
+
+
+
+```yaml
+"oauth": .extauth.plugins.gloo.solo.io.ExtAuthConfig.OAuthConfig
+"basicAuth": .extauth.plugins.gloo.solo.io.BasicAuth
+"apiKeyAuth": .extauth.plugins.gloo.solo.io.ExtAuthConfig.ApiKeyAuthConfig
+"pluginAuth": .extauth.plugins.gloo.solo.io.AuthPlugin
+"opaAuth": .extauth.plugins.gloo.solo.io.ExtAuthConfig.OpaAuthConfig
+
+```
+
+| Field | Type | Description | Default |
+| ----- | ---- | ----------- |----------- | 
+| `oauth` | [.extauth.plugins.gloo.solo.io.ExtAuthConfig.OAuthConfig](../extauth.proto.sk#oauthconfig) |  |  |
+| `basicAuth` | [.extauth.plugins.gloo.solo.io.BasicAuth](../extauth.proto.sk#basicauth) |  |  |
+| `apiKeyAuth` | [.extauth.plugins.gloo.solo.io.ExtAuthConfig.ApiKeyAuthConfig](../extauth.proto.sk#apikeyauthconfig) |  |  |
+| `pluginAuth` | [.extauth.plugins.gloo.solo.io.AuthPlugin](../extauth.proto.sk#authplugin) |  |  |
+| `opaAuth` | [.extauth.plugins.gloo.solo.io.ExtAuthConfig.OpaAuthConfig](../extauth.proto.sk#opaauthconfig) |  |  |
 
 
 
