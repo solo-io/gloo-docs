@@ -42,7 +42,7 @@ should respond with
 
 ## Configuring an Open Policy Agent Policy 
 
-Open Policy Agent policies are written in Rego. The Rego language is inspired from Datalog, which inturn is a subset of Prolog. Rego is more suited to work with modern JSON documents.
+Open Policy Agent policies are written in [Rego](https://www.openpolicyagent.org/docs/latest/how-do-i-write-policies/). The Rego language is inspired from Datalog, which inturn is a subset of Prolog. Rego is more suited to work with modern JSON documents.
 
 ### Create the Policy 
 Let's create a Policy to control what actions are allowed on our service, and apply it to Kubernetes as a ConfigMap:
