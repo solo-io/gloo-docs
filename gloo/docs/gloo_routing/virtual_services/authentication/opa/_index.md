@@ -7,7 +7,7 @@ description: Illustrating how to combine OpenID Connect with Open Policy Agent t
 ## Motivation
 
 Open Policy Agent (OPA for short) can be used to express versatile organization policies.
-Starting of gloo-e version 0.18.20 you can used OPA policies to make authorization decisions
+Starting of gloo-e version 0.18.21 you can used OPA policies to make authorization decisions
 on incoming requests.
 This allows you having uniform policy language all across your organization.
 This also allows you to create more fine grained policies compared to RBAC authorization system. For more information, see [here](https://www.openpolicyagent.org/docs/latest/comparison-to-other-systems/).
