@@ -71,7 +71,7 @@ Let's break this down:
 - This policy denies everything by default
 - It is allowed if:
   - The path starts with "/api/pets" AND the http method is "GET"
-  - OR
+  - **OR**
   - The path is exactly "/api/pets/2" AND the http method is either "GET" or "DELETE"
 
 In the next setup, we will attach this policy to a Gloo VirtualService to enforce it.
@@ -83,6 +83,10 @@ To enforce the policy, we will create a Gloo VirtualService with OPA Authorizati
 only if the `allow` variable is `true`:
 
 {{< tabs >}}
+{{< tab name="glooctl" codelang="shell">}}
+glooctl create vs --name default --enable-opa-auth --opa-query 'data.test.allow == true' --opa-module-ref gloo-system.allow-get-users
+glooctl add route --name default --path-prefix / --dest-name default-petstore-8080 --dest-namespace gloo-system
+{{< /tab >}}
 {{< tab name="kubectl" codelang="yaml">}}
 kind: VirtualService
 metadata:
@@ -111,10 +115,6 @@ spec:
                 - name: allow-get-users
                   namespace: gloo-system
                 query: "data.test.allow == true"
-{{< /tab >}}
-{{< tab name="glooctl" codelang="shell">}}
-glooctl create vs --name default --enable-opa-auth --opa-query 'data.test.allow == true' --opa-module-ref gloo-system.allow-get-users
-glooctl add route --name default --path-prefix / --dest-name default-petstore-8080 --dest-namespace gloo-system
 {{< /tab >}}
 {{< /tabs >}} 
 
@@ -147,10 +147,11 @@ curl -s -w "%{http_code}\n" $URL/api/pets/2 -X DELETE
 204
 ```
 
-# Open Policy Agent and Open ID Connect
+## Open Policy Agent and Open ID Connect
 
 We can use OPA to verify policies on the JWT coming from Gloo's OpenID Connect authentication.
 
+### Install Dex
 Let's first configure an OpenID Connect provider on your cluster. Dex Identity provider is an OpenID Connect that's easy to install for our purposes:
 
 ```
@@ -181,6 +182,49 @@ EOF
 helm install --name dex --namespace gloo-system stable/dex -f /tmp/dex-values.yaml
 ```
 
+This configuration deploys dex with two static users.
+
+### Deploy Demo App
+
+Deploy the pet clinic demo app
+
+```shell
+kubectl --namespace default apply -f https://raw.githubusercontent.com/solo-io/gloo/v0.8.4/example/petclinic/petclinic.yaml
+```
+
+
+### Create a Policy
+
+```shell
+cat <<EOF > /tmp/allow-jwt.rego
+package test
+
+default allow = false
+
+allow {
+    [header, payload, signature] = io.jwt.decode(input.state.jwt)
+    payload["email"] = "admin@example.com"
+}
+allow {
+    [header, payload, signature] = io.jwt.decode(input.state.jwt)
+    payload["email"] = "user@example.com"
+    not startswith(input.http_request.path, "/owners")
+}
+EOF
+
+kubectl --namespace=gloo-system create configmap allow-jwt --from-file=/tmp/allow-jwt.rego
+```
+
+This policy allows the request if:
+
+- The user's email is "admin@example.com"
+- **OR**
+ - The user's email is "user@exmaple.com" 
+ - **AND**
+ - The path being accessed does **NOT** start with /owners
+
+### Configure Gloo
+
 Cleanup the VirtualService from the previous section:
 
 {{< tabs >}}
@@ -192,36 +236,25 @@ kubectl -n gloo-system delete virtualservice default
 {{< /tab >}}
 {{< /tabs >}} 
 
-
-
-```shell
-cat <<EOF > /tmp/allow-jwt.rego
-package test
-
-default allow = false
-allow {
-    [header, payload, signature] = io.jwt.decode(input.state.jwt)
-    payload["email"] = "admin@example.com"
-}
-EOF
-
-kubectl --namespace=gloo-system create configmap allow-jwt --from-file=/tmp/allow-jwt.rego
-```
-
-
+Create a new virtual service with the new policy and demo app.
 
 {{< tabs >}}
+{{< tab name="glooctl" codelang="shell">}}
+glooctl create  secret oauth --client-secret secretvalue oauth
+glooctl create vs --name default --namespace gloo-system --oidc-auth-app-url http://localhost:8080/ --oidc-auth-callback-path /callback --oidc-auth-client-id gloo --oidc-auth-client-secret-name oauth --oidc-auth-client-secret-namespace gloo-system --oidc-auth-issuer-url http://dex.gloo-system.svc.cluster.local:32000/ --oidc-scope email --enable-oidc-auth --enable-opa-auth --opa-query 'data.test.allow == true' --opa-module-ref gloo-system.allow-jwt
+glooctl add route --name default --path-prefix / --dest-name default-petclinic-80 --dest-namespace gloo-system
+{{< /tab >}}
 {{< tab name="kubectl" codelang="yaml">}}
 apiVersion: v1
-type: Opaque
-data:
-  extension: Y29uZmlnOgogIGNsaWVudF9zZWNyZXQ6IHNlY3JldHZhbHVlCg==
 kind: Secret
+type: Opaque
 metadata:
   annotations:
     resource_kind: '*v1.Secret'
   name: oauth
   namespace: gloo-system
+data:
+  extension: Y29uZmlnOgogIGNsaWVudF9zZWNyZXQ6IHNlY3JldHZhbHVlCg==
 ---
 apiVersion: gateway.solo.io/v1
 kind: VirtualService
@@ -239,7 +272,7 @@ spec:
       routeAction:
         single:
           upstream:
-            name: default-petstore-8080
+            name: default-petclinic-80
             namespace: gloo-system
     virtualHostPlugins:
       extensions:
@@ -262,11 +295,6 @@ spec:
                   namespace: gloo-system
                 query: data.test.allow == true
 {{< /tab >}}
-{{< tab name="glooctl" codelang="shell">}}
-glooctl create  secret oauth --client-secret secretvalue oauth
-glooctl create vs --name default --namespace gloo-system --oidc-auth-app-url http://localhost:8080/ --oidc-auth-callback-path /callback --oidc-auth-client-id gloo --oidc-auth-client-secret-name oauth --oidc-auth-client-secret-namespace gloo-system --oidc-auth-issuer-url http://dex.gloo-system.svc.cluster.local:32000/ --oidc-scope email --enable-oidc-auth --enable-opa-auth --opa-query 'data.test.allow == true' --opa-module-ref gloo-system.allow-jwt
-glooctl add route --name default --path-prefix / --dest-name default-petstore-8080 --dest-namespace gloo-system
-{{< /tab >}}
 {{< /tabs >}} 
 
 
@@ -283,4 +311,29 @@ Port forward to Gloo and Dex:
 ```
 kubectl -n gloo-system port-forward svc/dex 32000:32000 &
 kubectl -n gloo-system port-forward svc/gateway-proxy-v2 8080:80 &
+```
+
+### Verify!
+
+{{% notice note %}}
+As the demo app doesn't have a sign-out button, use a private browser window (also known as incognito mode) to access the demo app. This will make it easy to change the user we logged in with.
+If you would like to change the logged in user, just close and re-open the private browser window
+{{% /notice %}}
+
+Go to "localhost:8080". You can login with "admin@example.com" or "user@example.com" with the password "password".
+
+You will notice that the admin user has access to all pages, and that the regular user can't access the "Find Owners" page.
+
+**Success!**
+
+## Summary
+I this tutorial we explored Gloo's Open Policy Agent integration to enable policies on incoming requests. We also saw that we can combine OpenID Connect and Open Policy Agent together to create policies on JSON Web Tokens.
+
+## Cleanup
+
+```
+helm delete --purge dex
+kubectl delete -n gloo-system secret  dex-grpc-ca  dex-grpc-client-tls  dex-grpc-server-tls  dex-web-server-ca  dex-web-server-tls
+kubectl delete -n gloo-system vs default
+kubectl delete -n gloo-system configmap allow-get-users allow-jwt
 ```
