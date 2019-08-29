@@ -1,3 +1,9 @@
+### v0.18.21
+
+**Fixes**
+
+- Fixes babek bug that caused app to crash. (https://github.com/solo-io/solo-projects/issues/1011)
+
 ### v0.18.20
 
 **Dependency Bumps**
