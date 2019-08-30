@@ -1,3 +1,9 @@
+### v0.18.22
+
+**New Features**
+
+- Simplify CRUD operations by removing redundant input wrappers (https://github.com/solo-io/solo-projects/issues/947)
+
 ### v0.18.21
 
 **Fixes**
