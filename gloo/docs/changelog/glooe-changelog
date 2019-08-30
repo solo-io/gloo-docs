@@ -2,7 +2,7 @@
 
 **Fixes**
 
-- Fixes babek bug that caused app to crash. (https://github.com/solo-io/solo-projects/issues/1011)
+- Fixes babel bug that caused app to crash. (https://github.com/solo-io/solo-projects/issues/1011)
 
 ### v0.18.20
 
@@ -73,7 +73,7 @@
 
 - Show envoy status in ui. (https://github.com/solo-io/solo-projects/pull/953)
 - Add envoy status to envoy details. (https://github.com/solo-io/solo-projects/issues/949)
-- Add Gateway and Envoy api calls to redux store, refactor Gateway form to comform to backend. (https://github.com/solo-io/solo-projects/issues/951)
+- Add Gateway and Envoy api calls to redux store, refactor Gateway form to conform to backend. (https://github.com/solo-io/solo-projects/issues/951)
 
 **Fixes**
 
@@ -146,7 +146,7 @@
 - Publish a script that can be used during ext-auth plugin development to verify whether a plugin can be loaded by
 a specific version of GlooE. The next steps are 1) wiring script up in `ext-auth-plugins` repo and 2) add docs. (https://github.com/solo-io/solo-projects/issues/720)
 - Implement external auth via dynamically loaded Go plugins. The next steps are 1) publishing a script that can be used
-by plugin developers to verify that their plugins are compatible with a particulare version of GlooE and 2) add docs. (https://github.com/solo-io/solo-projects/issues/720)
+by plugin developers to verify that their plugins are compatible with a particular version of GlooE and 2) add docs. (https://github.com/solo-io/solo-projects/issues/720)
 
 **Fixes**
 
@@ -166,7 +166,7 @@ by plugin developers to verify that their plugins are compatible with a particul
 - External Auth and Rate Limiting links in the UI have been updated for the new documentation. The link to Join the Community within the UI now invites them to join our slack channel. (https://github.com/solo-io/solo-projects/issues/891)
 - The Admin Summary page is now available in the UI. (https://github.com/solo-io/solo-projects/issues/872)
 - The Admin Summary page is now available in the UI. (https://github.com/solo-io/solo-projects/issues/877)
-- Add upate api for gateways (https://github.com/solo-io/solo-projects/issues/857)
+- Add update api for gateways (https://github.com/solo-io/solo-projects/issues/857)
 
 **Fixes**
 
@@ -308,10 +308,10 @@ by plugin developers to verify that their plugins are compatible with a particul
 
 **Fixes**
 
-- Virtual Service details now has propre route creation UX. (https://github.com/solo-io/solo-projects/issues/636)
+- Virtual Service details now has proper route creation UX. (https://github.com/solo-io/solo-projects/issues/636)
 - Creating a route in the UI now requires all valid data. (https://github.com/solo-io/solo-projects/issues/775)
 - Virtual Service creation now requires proper values. (https://github.com/solo-io/solo-projects/issues/772)
-- Virtual Service details now has propre route creation UX. (https://github.com/solo-io/solo-projects/issues/773)
+- Virtual Service details now has proper route creation UX. (https://github.com/solo-io/solo-projects/issues/773)
 - Virtual Service OAuth configuration is now mutable from the UI. (https://github.com/solo-io/solo-projects/issues/636)
 - Fix parsing of anon/authorized rate limit from field map. (https://github.com/solo-io/solo-projects/issues/734)
 - Route order can now be swapped. (https://github.com/solo-io/solo-projects/issues/636)
@@ -413,13 +413,13 @@ by plugin developers to verify that their plugins are compatible with a particul
 
 **Fixes**
 
-- Change class names in svg elements so they dont override each other. (https://github.com/solo-io/solo-projects/pull/680)
+- Change class names in svg elements so they don't override each other. (https://github.com/solo-io/solo-projects/pull/680)
 
 ### v0.16.1
 
 **Fixes**
 
-- Fix an issue where virtual host name containings dots in external auth. (https://github.com/solo-io/solo-projects/pull/673)
+- Fix an issue where virtual host name containing dots in external auth. (https://github.com/solo-io/solo-projects/pull/673)
 
 ### v0.16.0
 
