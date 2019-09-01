@@ -21,9 +21,9 @@ Please see our [FAQ]({{< ref "/introduction/faq#what-s-the-difference-between-gl
 
 For this guide, we'll assume you want to use AWS App Mesh on Kubernetes (AWS EKS in this case, but it can be any Kubernetes on AWS), but AWS App Mesh is not limited to Kubernetes. 
 
-We recommend you follow this link:  [Tutorial: Configure App Mesh Integration with Kubernetes] (https://docs.aws.amazon.com/app-mesh/latest/userguide/mesh-k8s-integration.html) for getting started with AWS App Mesh and setting up the examples.
+We recommend you follow this link: [Tutorial: Configure App Mesh Integration with Kubernetes] (https://docs.aws.amazon.com/app-mesh/latest/userguide/mesh-k8s-integration.html) for getting started with AWS App Mesh and setting up the examples.
 
-We will assumed that you use `color-mesh` as the name of you mesh and you deployed your EKS cluster in the `us-east-2 (Oregon)` as the AWS region.
+We will assumed that you use `color-mesh` as the name of your mesh and you deployed your EKS cluster in the `us-east-2 (Oregon)` as the AWS region.
 
 Once you have the examples installed, you should have an environment like this:
 
