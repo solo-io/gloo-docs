@@ -1,3 +1,13 @@
+### v0.18.29
+
+**Dependency Bumps**
+
+- solo-io/solo-kit has been upgraded to v0.10.14.
+
+**Fixes**
+
+- consul client respects namespace (https://github.com/solo-io/gloo/pull/1101)
+
 ### v0.18.27
 
 This release contained no user-facing changes.
