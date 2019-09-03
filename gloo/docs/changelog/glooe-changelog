@@ -1,3 +1,19 @@
+### v0.18.23
+
+**Dependency Bumps**
+
+- solo-io/ext-auth-service has been upgraded to v0.4.4.
+- solo-io/gloo has been upgraded to v0.18.30.
+- solo-io/gloo has been upgraded to v0.18.29.
+- solo-io/envoy-gloo-ee has been upgraded to v0.1.16.
+
+**New Features**
+
+- Support clearRouteCache and statusOnError ext-auth settings (https://github.com/solo-io/solo-projects/pull/1039)
+- Add LDAP Ext Auth support. (https://github.com/solo-io/solo-projects/issues/1038)
+- Integrate WAF/ModSecurity filter into Gloo (https://github.com/solo-io/solo-projects/issues/695)
+- Implement server-side of editing resource YAML (https://github.com/solo-io/solo-projects/issues/997)
+
 ### v0.18.22
 
 **New Features**
