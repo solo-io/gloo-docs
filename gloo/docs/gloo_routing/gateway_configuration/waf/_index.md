@@ -14,13 +14,13 @@ Gloo Enterprise now includes the ability to enable the ModSecurity Web Applicati
 ### Configuring ModSecurity in Gloo
 ModSecurity rule sets are defined in gloo in one of 3 places:
 
-  * Http Listener
-  * VirtualService
-  * Route
+  * `HttpListener`
+  * `VirtualService`
+  * `Route`
 
-The precedence is as such Route > VirtualService > HttpListener. 
+The precedence is as such: `Route` > `VirtualService` > `HttpListener`. 
 
-The configuration of the three of them is nearly identical at the moment, and follows the same pattern as other enterprise feaures in Gloo. The configuration is included in the extensions object of the various plugins section, this process will be enumerated below, but first we will go over the general flow of configuring ModSecurity in Gloo.
+The configuration of the three of them is nearly identical at the moment, and follows the same pattern as other enterprise feaures in Gloo. The configuration is included in the extensions object of the various plugin sections, this process will be enumerated below, but first we will go over the general flow of configuring ModSecurity in Gloo.
 
 The ModSecurity filter at it's core supports a list of `RuleSet` objects which are then loaded into the ModSecurity library. The Gloo API has a few conveniences built on top of that to allow easier access to the Core Rule Set. The  `RuleSet` Api looks as follows:
 ```
@@ -47,11 +47,14 @@ A very simple example of a config is as follows:
     - ruleStr: |
         # Turn rule engine on
         SecRuleEngine On
+        # Deny requests which are container the header value user-agent:scammer
         SecRule REQUEST_HEADERS:User-Agent "scammer" "deny,status:403,id:107,phase:1,msg:'blocked scammer'"
 ```
-This tutorial will not do a deep dive on the rules as there is simply too much to discuss for one doc, further documentation on the rules can be found [here](https://github.com/SpiderLabs/ModSecurity/wiki/Reference-Manual-(v2.x)). The above rule does only 2 things. 
+This tutorial will not do a deep dive on the rules as there is already plenty of information available, further documentation on the rules can be found [here](https://github.com/SpiderLabs/ModSecurity/wiki/Reference-Manual-(v2.x)). The purpose instead will be to understand how to apply the rules into new and existing Gloo configs.
 
-1. It enabled the rules engine. This step is important, by default the rules engine is off, so it must be explicitally turned on. It can also be set to Detection Only, which runs the rules but does not perform any obtrusive actions.
+As stated earlier, the above rule is very simple. It does only two things:
+
+1. It enables the rules engine. This step is important, by default the rules engine is off, so it must be explicitally turned on. It can also be set to `DetectionOnly`, which runs the rules but does not perform any obtrusive actions.
 2. It creates a rule which inspects the request header `"user-agent"`. If that specific header equals the value `"scammer"` then the request will be denied and return a `403` status.
 
 This is a very basic example of the capabilities of the ModSecurity rules engine but useful in how it demonstrates it's implementation in Enterprise Gloo.
