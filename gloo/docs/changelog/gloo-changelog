@@ -1,3 +1,10 @@
+### v0.18.32
+
+**New Features**
+
+- Add api for delegate routing (https://github.com/solo-io/gloo/pull/1111)
+- Allow explicitly enabling or disabling auto-rewrite for upstreams. (https://github.com/solo-io/gloo/issues/1118)
+
 ### v0.18.31
 
 **Dependency Bumps**
