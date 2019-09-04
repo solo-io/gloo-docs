@@ -1,3 +1,14 @@
+### v0.18.24
+
+**New Features**
+
+- Surface error messages with modals. (https://github.com/solo-io/solo-projects/issues/993)
+- Implement front-side of editing resource YAML (https://github.com/solo-io/solo-projects/issues/997)
+
+**Fixes**
+
+- Only show error modals after mutations to prevent overly repetitive modals. (https://github.com/solo-io/solo-projects/issues/1052)
+
 ### v0.18.23
 
 **Dependency Bumps**
