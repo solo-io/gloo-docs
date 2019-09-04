@@ -1,3 +1,9 @@
+### v0.18.33
+
+**New Features**
+
+- Provide optional read-only UI with Gloo deployment. (https://github.com/solo-io/gloo/pull/1109)
+
 ### v0.18.32
 
 **New Features**
