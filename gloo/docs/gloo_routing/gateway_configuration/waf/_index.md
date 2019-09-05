@@ -5,13 +5,13 @@ weight: 30
 
 Gloo now suppports The popular Web Apppllication Firewall framework/ruleset [ModSecurity](https://www.modsecurity.org/) 3.0.3.
 
-## **Why ModSecurity**
+## **Why Web Application Firewall**
 API Gateways act as a control point for the outside world to access the various application services running in your environment. A Web Application Firewall offers a standard way to to inspect and handle all incoming traffic. Mod Security is one such firewall. ModSecurity uses a simple rules language to interpert and process incoming http traffic. There are many rule sets publically available, such as the [OWASP Core Rule Set](https://github.com/SpiderLabs/owasp-modsecurity-crs).
 
-## **ModSecurity in Gloo**
+## **Web Application Firewall in Gloo**
 Gloo Enterprise now includes the ability to enable the ModSecurity Web Application Firewall for any incoming and outgoing HTTP connections. The OWASP Core Rule Set is included by default and can be toggled on and off easily, as well as the ability to add or create custom rule sets. More information on the rule sets, and the rules language generally can be found [here](https://www.modsecurity.org/rules.html).
 
-### Configuring ModSecurity in Gloo
+### Configuring Web Application Firewall in Gloo
 ModSecurity rule sets are defined in gloo in one of 3 places:
 
   * `HttpListener`
@@ -20,9 +20,9 @@ ModSecurity rule sets are defined in gloo in one of 3 places:
 
 The precedence is as such: `Route` > `VirtualService` > `HttpListener`. 
 
-The configuration of the three of them is nearly identical at the moment, and follows the same pattern as other enterprise feaures in Gloo. The configuration is included in the extensions object of the various plugin sections, this process will be enumerated below, but first we will go over the general flow of configuring ModSecurity in Gloo.
+The configuration of the three of them is nearly identical at the moment, and follows the same pattern as other enterprise feaures in Gloo. The configuration is included in the extensions object of the various plugin sections, this process will be enumerated below, but first we will go over the general flow of configuring WAF in Gloo.
 
-The ModSecurity filter at it's core supports a list of `RuleSet` objects which are then loaded into the ModSecurity library. The Gloo API has a few conveniences built on top of that to allow easier access to the Core Rule Set. The  `RuleSet` Api looks as follows:
+The WAF filter at it's core supports a list of `RuleSet` objects which are then loaded into the ModSecurity library. The Gloo API has a few conveniences built on top of that to allow easier access to the Core Rule Set. The  `RuleSet` Api looks as follows:
 ```
 message ModSecurity {
     // Disable all rules on the current route
@@ -65,7 +65,7 @@ The following tutorials assume basic knowledge of Gloo and it's routing capabili
 
 #### Http Listener
 
-The first option for configuring ModSecurity is on the Http Listener level on the Gateway. This can be useful if the goal is to apply the rules to all incoming requests to a given address, and not specific subsets.
+The first option for configuring WAF is on the Http Listener level on the Gateway. This can be useful if the goal is to apply the rules to all incoming requests to a given address, and not specific subsets.
 
 Run the following command to edit the gateway object with the waf config:
 ```bash
@@ -148,7 +148,7 @@ spec:
 
 After this config has been successfully applied, run the curl command from above and the output should be the same.
 
-The two methods outlined above represent the two main ways to apply basic rule string Mod Security configs to Gloo routes.
+The two methods outlined above represent the two main ways to apply basic rule string WAF configs to Gloo routes.
 
 #### Core Rule Set
 
