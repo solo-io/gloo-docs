@@ -11,7 +11,7 @@ Gloo now suppports The popular Web Appplication Firewall framework/ruleset [ModS
 ## **WAF in Gloo**
 Gloo Enterprise now includes the ability to enable the ModSecurity Web Application Firewall for any incoming and outgoing HTTP connections. The OWASP Core Rule Set is included by default and can be toggled on and off easily, as well as the ability to add or create custom rule sets. More information on the rule sets, and the rules language generally can be found [here](https://www.modsecurity.org/rules.html).
 
-## **Why Mod Securityl**
+## **Why Mod Security**
 API Gateways act as a control point for the outside world to access the various application services running in your environment. A Web Application Firewall offers a standard way to to inspect and handle all incoming traffic. Mod Security is one such firewall. ModSecurity uses a simple rules language to interpert and process incoming http traffic. There are many rule sets publically available, such as the [OWASP Core Rule Set](https://github.com/SpiderLabs/owasp-modsecurity-crs).
 
 ### Configuring WAF in Gloo
