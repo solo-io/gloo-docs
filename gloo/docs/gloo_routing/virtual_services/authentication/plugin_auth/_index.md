@@ -15,8 +15,8 @@ network hop with the associated latency to any request that needs to be authenti
 likely need to update your existing service so that it can conform to the request/response format expected by Gloo.
 - You likely want to be able to define configuration for your auth server and that configuration should be context-specific, 
 e.g. based on which virtual host is serving the request. You could store this configuration outside of Gloo (e.g. in a 
-dedicated CRD) and try to derive the context from the request itself, but this would introduce additional latency and 
-negate the benefits of the centralized control plane that Gloo offers.
+dedicated Kubernetes CRD) and try to derive the context from the request itself, but this would introduce additional 
+latency and negate the benefits of the centralized control plane that Gloo provides.
 
 Wouldn't it be nice to be able to **write just the authentication logic you need, plug it into Gloo, and be able to 
 provide your specific configuration** right on the Virtual Services it applies to? Starting with **Gloo Enterprise**, 
@@ -25,13 +25,13 @@ release **0.18.11+**, you can do just that!
 In this guide we will show you how easy it is to extend Gloo's Ext Auth server via [Go plugins](https://golang.org/pkg/plugin/).
 
 ## Development workflow overview
-Following are the high-level steps required to use your auth plugins with Gloo. Through the course of this guide will 
+Following are the high-level steps required to use your auth plugins with Gloo. Through the course of this guide we will 
 see each one of them in greater detail.
 
 1. Write a plugin and publish it as a `docker image` which, when run, copies the compiled plugin file(s) to a 
 predefined directory.
 2. Configure Gloo to load the plugins by running the image as an `initContainer` on the `extauth` deployment. This can be 
-done by rendering the Gloo Helm chart with some value overrides or by modifying the Gloo installation manifest manually.
+done by rendering the Gloo Helm chart with dedicated value overrides or by modifying the Gloo YAML manifest manually.
 3. Reference your plugin in your Virtual Services for it to be invoked for requests matching particular virtual hosts or 
 routes.
 
@@ -43,15 +43,15 @@ For a more in-depth explanation of the Ext Auth Plugin development workflow, ple
 ## Building an Ext Auth plugin
 
 {{% notice note %}}
-The code used in this section can be found [in our ext-auth-plugin-examples GitHub repository](https://github.com/solo-io/ext-auth-plugin-examples).
+The code used in this section can be found in our [**ext-auth-plugin-examples**](https://github.com/solo-io/ext-auth-plugin-examples) GitHub repository.
 {{% /notice %}}
 
 The [official Go docs](https://golang.org/pkg/plugin/) define a plugin as:
 
 >> "*a Go main package with exported functions and variables that has been built with: `go build -buildmode=plugin`*"
 
-In order for Gloo to be able to load your plugin, its `main` package must export a variable that implements the 
-[ExtAuthPlugin](https://github.com/solo-io/ext-auth-plugins/blob/master/api/interface.go) interface:
+In order for Gloo to be able to load your plugin, the plugin's `main` package must export a variable that implements the 
+[ExtAuthPlugin](https://github.com/solo-io/ext-auth-plugins/blob/master/api/interface.go#L61) interface:
 
 ```go
 type ExtAuthPlugin interface {
@@ -63,11 +63,11 @@ type ExtAuthPlugin interface {
 Check the [plugin developer guide]({{< ref "dev/writing_auth_plugins#api-overview" >}}) for a detailed explanation of the API.
 
 For this guide we will use a simple example plugin that has already been built. You can find the source code to build it 
-yourself [here](https://github.com/solo-io/ext-auth-plugin-examples/tree/master/examples/required_header). 
+yourself [here](https://github.com/solo-io/ext-auth-plugin-examples/tree/master/plugins/required_header).
 The plugin authorizes requests if:
  
-- they contain a certain header, and
-- the value for the header is in a predefined whitelist
+1. they contain a certain header, and
+2. the value for the header is in a predefined whitelist.
 
 The `main` package for the plugin looks like this:
 
@@ -76,7 +76,7 @@ package main
 
 import (
 	"github.com/solo-io/ext-auth-plugins/api"
-	impl "github.com/solo-io/ext-auth-plugins/examples/required_header/pkg"
+	impl "github.com/solo-io/ext-auth-plugins/plugins/required_header/pkg"
 )
 
 func main() {}
@@ -103,15 +103,21 @@ plugins and copy these files to the `/auth-plugins` when they are run.
 
 In this guide we will use the image for the `RequiredHeaderPlugin` introduced above. It has been built using 
 [this Dockerfile](https://github.com/solo-io/ext-auth-plugin-examples/blob/master/Dockerfile) and can be found in 
-the `quay.io/solo-io/ext-auth-plugin-examples` docker repository. Let's inspect the image:
+the `quay.io/solo-io/ext-auth-plugins` docker repository. Let's inspect the image:
 
 {{< highlight shell_script "hl_lines=3" >}}
-docker run -it --entrypoint ls quay.io/solo-io/ext-auth-plugin-examples:0.0.1 -l compiled-auth-plugins
-total 55636
--rw-r--r--    1 root     root      28958552 Aug 13 19:37 RequiredHeader.so
+docker run -it --entrypoint ls quay.io/solo-io/ext-auth-plugins:0.18.23 -l compiled-auth-plugins
+total 28352
+-rw-r--r--    1 root     root      29029288 Sep  3 21:06 RequiredHeader.so
 {{< /highlight >}}
 
 You can see that it contains the compiled plugin file `RequiredHeader.so`.
+
+{{% notice warning %}}
+Make sure the plugin image tag matches the version of GlooE you are using. Plugins with mismatching versions will most 
+likely fail to be loaded due to the compatibility constraints imposed by the Go plugin model. See 
+[this section]({{< ref "dev/writing_auth_plugins#build-helper-tools" >}}) of the plugin developer guide for more information.
+{{% /notice %}}
 
 ## Configuring Gloo
 
@@ -121,7 +127,7 @@ Let's start by installing Gloo Enterprise (make sure the version is >= **0.18.11
 way of configuring Gloo to load your plugin. First we need to fetch the Helm chart:
 
 ```bash
-helm fetch glooe/gloo-ee --version "0.18.13"
+helm fetch glooe/gloo-ee --version "0.18.23 --untar"
 ```
 
 Then we have to create the following `plugin-values.yaml` value overrides file:
@@ -135,10 +141,10 @@ global:
       plugins:
         my-plugin:
           image:
-            repository: ext-auth-plugin-examples
+            repository: ext-auth-plugins
             registry: quay.io/solo-io
-            pullPolicy: Always
-            tag: 0.0.1
+            pullPolicy: IfNotPresent
+            tag: 0.18.23
 EOF
 {{< /highlight >}}
 
@@ -149,9 +155,10 @@ EOF
 
 Now we can render the helm chart and `apply` it:
 
-{{< highlight bash "hl_lines=7-12" >}}
-helm template gloo-ee --name glooe --namespace gloo-system -f plugin-values.yaml | kubectl apply -f -
-{{< /highlight >}}
+```bash
+kubectl create namespace gloo-system
+helm template gloo-ee --name glooe --namespace gloo-system -f plugin-values.yaml | kubectl apply -n gloo-system -f -
+```
 
 If we inspect the `extauth` deployment by running
 
@@ -180,7 +187,7 @@ spec:
         gloo: extauth
     spec:
       containers:
-      - image: quay.io/solo-io/extauth-ee:0.18.13
+      - image: quay.io/solo-io/extauth-ee:0.18.23
         imagePullPolicy: Always
         name: extauth
         resources: {}
@@ -188,7 +195,7 @@ spec:
         - mountPath: /auth-plugins
           name: auth-plugins
       initContainers:
-      - image: quay.io/solo-io/ext-auth-plugin-examples:0.0.1
+      - image: quay.io/solo-io/ext-auth-plugins:0.18.23
         imagePullPolicy: Always
         name: plugin-my-plugin
         volumeMounts:
@@ -199,8 +206,8 @@ spec:
         name: auth-plugins
 {{< /highlight >}}
 
-Each plugin container image built as described in the 
-[*Packaging and publishing the plugin* section]({{< ref "gloo_routing/virtual_services/authentication/plugin_auth#packaging-and-publishing-the-plugin" >}}) 
+Each plugin container image built as described in the *Packaging and publishing the plugin*
+[section]({{< ref "gloo_routing/virtual_services/authentication/plugin_auth#packaging-and-publishing-the-plugin" >}}) 
 has been added as an `initContainer` to the `extauth` deployment. A volume named `auth-plugins` is mounted in the 
 `initContainer`s and the `extauth` container at `/auth-plugins` path: when the `initContainer`s are run, they will copy 
 the compiled plugin files they contain (in this case `RequiredHeader.so`) to the shared volume, where they become available 
@@ -210,8 +217,8 @@ Let's verify that the `extauth` server did successfully start by checking its lo
 
 ```bash
 kc logs -n gloo-system deployment/extauth
-{"level":"info","ts":1566305605.7575822,"logger":"extauth","caller":"runner/run.go:78","msg":"Starting ext-auth server"}
-{"level":"info","ts":1566305605.7587602,"logger":"extauth","caller":"runner/run.go:93","msg":"extauth server running in grpc mode, listening at :8083"}
+{"level":"info","ts":1567688585.001545,"logger":"extauth","caller":"runner/run.go:84","msg":"Starting ext-auth server"}
+{"level":"info","ts":1567688585.0016475,"logger":"extauth","caller":"runner/run.go:103","msg":"extauth server running in [gRPC] mode, listening at [:8083]"}
 ```
 
 #### Create a simple Virtual Service
@@ -274,7 +281,7 @@ glooctl add route --path-prefix /echo --dest-name default-http-echo-5678
 To verify that the Virtual Service works, let's get the URL of the Gloo Gateway and send a request to `/echo`:
 
 ```bash
-export GATEWAY_URL=$(glooctl proxy url)
+export GATEWAY_URL=$(glooctl proxy url --name gateway-proxy-v2)
 ```
 
 ```bash
@@ -333,7 +340,7 @@ for the next two fields.
 - `config`: information that will be used to configure your plugin. Gloo will attempt to parse the value of this 
 attribute into the object pointer returned by your plugin's `NewConfigInstance` function implementation. In our case 
 this will be an instance of `*Config`, as seen in the 
-[*Building an Ext Auth plugin* section]({{< ref "gloo_routing/virtual_services/authentication/plugin_auth#building-an-ext-auth-plugin" >}}).
+*Building an Ext Auth plugin* [section]({{< ref "gloo_routing/virtual_services/authentication/plugin_auth#building-an-ext-auth-plugin" >}}).
 
 {{% notice note %}}
 Plugins in a **plugin chain** will be executed in the order they are defined. The first plugin to deny the request will 

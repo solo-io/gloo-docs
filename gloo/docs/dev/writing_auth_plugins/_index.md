@@ -8,16 +8,16 @@ description: Guidelines and best practices for developing and configuring Go plu
 In the [**Plugin Auth** guide]({{< ref "gloo_routing/virtual_services/authentication/plugin_auth" >}}) we showed how 
 easy it is to extend Gloo with custom authentication logic using Go plugins. That guide uses a 
 [plugin](https://github.com/solo-io/ext-auth-plugin-examples/tree/master/plugins/required_header) that has already been 
-built and published, and primarily focuses on giving an overview of the plugin development flow.
+built and published, and primarily focuses on giving an overview of the plugin development workflow.
 
 In this guide, we will get our hands dirty and dig into the nitty-gritty details of how to write, test, build, and 
-publish your ext auth plugins.
+publish your external auth plugins.
 
 #### Before you start
 This guide will make frequent references to the code contained in our 
-[Ext Auth Plugin examples](https://github.com/solo-io/ext-auth-plugin-examples) GitHub repository. In addition to sample 
+[Ext Auth Plugin examples](https://github.com/solo-io/ext-auth-plugin-examples) GitHub repository. In addition to the sample 
 plugin implementation, the repository contains useful tools to verify whether your plugin is compatible with a certain 
-version of Gloo. Given the [constraints imposed by Go plugins](#build-helper-tools), these utilities will make your life 
+version of GlooE. Given the [constraints imposed by Go plugins](#build-helper-tools), these utilities will make your life 
 significantly easier.
 
 {{% notice note %}}
@@ -26,7 +26,7 @@ We recommend that you fork the example repository and use it as a starting point
 
 #### Development workflow overview
 In the [**Plugin Auth** guide]({{< ref "gloo_routing/virtual_services/authentication/plugin_auth#development-workflow-overview" >}}) 
-we gave a high-level description of the steps required to use your plugin to extend Gloo:
+we gave a high-level description of the steps required to extend Gloo with your own plugins:
 
 1. Write a plugin and publish it as a `docker image` which, when run, copies the compiled plugin file to a 
 predefined directory.
@@ -38,12 +38,11 @@ routes.
 In the following sections we will see each one of them in greater detail.
 
 ## Building and publishing and auth plugin
-In this section we will see how to develop an auth plugin and distribute it in the format in which it can be consumed 
-by Gloo.
+In this section we will see how to develop an auth plugin and distribute it the format that Gloo expects.
 
 ### API overview
 When developing external auth plugins, there are two interfaces we need to be familiar with. They are both defined 
-[here](https://github.com/solo-io/ext-auth-plugins/blob/master/api/interface.go)
+[here](https://github.com/solo-io/ext-auth-plugins/blob/master/api/interface.go).
 
 ##### ExtAuthPlugin
 Gloo expects auth plugins to implement the 
@@ -113,7 +112,7 @@ possible to define multiple plugins on a virtual host. We'll see how [plugin cha
 
 The `GetAuthService` function will be invoked by Gloo right after this step. As its `configInstance` argument, Gloo will 
 pass the object that it just populated with the values from the plugin configuration. This function must return an 
-instance of the [AuthService](https://github.com/solo-io/ext-auth-plugins/blob/master/api/interface.go#L29) interface.
+instance of the [AuthService](https://github.com/solo-io/ext-auth-plugins/blob/master/api/interface.go#L49) interface.
 
 ##### AuthService
 `AuthService` instances are responsible for authorizing individual requests. This is the interface that all of Gloo's 
@@ -123,29 +122,30 @@ Gloo with a valid `AuthService` implementation.
 ```go
 type AuthService interface {
 	Start(ctx context.Context) error
-	Authorize(ctx context.Context, request *envoyauthv2.CheckRequest) (*AuthorizationResponse, error)
+	Authorize(ctx context.Context, request *AuthorizationRequest) (*AuthorizationResponse, error)
 }
 ```
 
 The `Start` function will be called once by Gloo, when the auth service is started. It is intended as a hook to perform 
 initialization logic or to start auxiliary processes that span the whole lifecycle of the service.
 
-All the functions we have just described will be invoked when Gloo detects a new auth configuration on your Virtual 
-Services. The `Authorize` function will be invoked when a request hits Gloo and matches the virtual host on which the 
-your plugin is defined. The `AuthorizationResponse` that it returns will determine whether the request will be allowed 
-or denied. We provide minimal responses of both types via the `AuthorizedResponse()` and `UnauthorizedResponse()` 
-functions in [the same package](https://github.com/solo-io/ext-auth-plugins/blob/master/api/interface.go#L95). You can 
-use them as a basis for your own responses.
+All the functions we have just described (`NewConfigInstance`, `GetAuthService`, and `Start`) will be invoked when Gloo 
+detects a new auth configuration on your Virtual Services. The `Authorize` function, on the other hand, will be invoked 
+each time a request hits Gloo and matches the virtual host on which the your plugin is defined. 
+The `AuthorizationResponse` that it returns will determine whether the request will be allowed or denied. 
+We provide minimal responses of both types via the `AuthorizedResponse()` and `UnauthorizedResponse()` 
+functions in [the same package](https://github.com/solo-io/ext-auth-plugins/blob/master/api/interface.go#L95). 
+You can use them as a basis for your own responses.
 
 #### About the AuthService lifecycle
 We mentioned how `ExtAuthPlugin` implementations function as factories for `AuthService` instances. It's worth spending 
 a few words on the lifecycle of `AuthService`s. You might have noticed that Gloo passes a `context.Context` to each of 
 the functions we just saw. The context will live as long as the plugin configuration that generated it is valid. 
 Whenever the auth configuration changes, Gloo will start new `AuthService` instances and signal the termination of the 
-previous one by cancelling the context it provided to them.
+previous ones by cancelling the context it provided them with.
 
 Following is the sequence of actions that Gloo performs when it detects a change in the overall auth configuration. 
-Let's assume we start with a blank sheet, that is, no plugins are configured on any of your Virtual Services.
+Let's assume we start with a blank sheet, i.e. no plugins are configured on any of your Virtual Services.
 
 1. Start a new cancellable `context.Context`
 2. Loop over all detected plugin configurations and for each one:
@@ -230,7 +230,7 @@ script for comparing them with the ones for GlooE. It located at `scripts/compar
 via the following `make` command:
 
 ```bash
-GLOOE_VERSION=desired_version make compare-deps`
+GLOOE_VERSION=desired_version make compare-deps
 ```
 
 If all dependencies match, the command will exit with a zero code, else it will output the discrepancies to both stdout 
@@ -429,7 +429,7 @@ spec:
         gloo: extauth
     spec:
       containers:
-      - image: quay.io/solo-io/extauth-ee:0.18.13
+      - image: quay.io/solo-io/extauth-ee:0.18.23
         imagePullPolicy: IfNotPresent
         name: extauth
 ```
@@ -455,14 +455,14 @@ spec:
         gloo: extauth
     spec:
       containers:
-      - image: quay.io/solo-io/extauth-ee:0.18.13
+      - image: quay.io/solo-io/extauth-ee:0.18.23
         imagePullPolicy: IfNotPresent
         name: extauth
         volumeMounts:
         - mountPath: /auth-plugins
           name: auth-plugins
       initContainers:
-      - image: quay.io/solo-io/ext-auth-plugin-examples:0.0.1
+      - image: quay.io/solo-io/ext-auth-plugins:0.18.23
         imagePullPolicy: IfNotPresent
         name: plugin-my-plugin
         volumeMounts:
@@ -513,7 +513,7 @@ Each external auth plugin can append, add or override headers from the request i
 upstream or the next plugin in the chain. It is important to understand how header modifications are handled when more 
 than one plugin gets executed.
 
-Let's look at the response you look at the [response object](https://github.com/solo-io/ext-auth-plugins/blob/master/api/interface.go#L15) 
+Let's look at the [response object](https://github.com/solo-io/ext-auth-plugins/blob/master/api/interface.go#L15) 
 returned by our `AuthService` instance:
 
 {{< highlight go "hl_lines=7-10" >}}
