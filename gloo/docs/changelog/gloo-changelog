@@ -1,3 +1,14 @@
+### v0.18.34
+
+**New Features**
+
+- support multiple proxy names on gateway (https://github.com/solo-io/gloo/pull/1116)
+- Enable delegate routing & use of RouteTable Resource in Gateway (https://github.com/solo-io/gloo/pull/1120)
+
+**Fixes**
+
+- fix install race condition with helm pre-install hook (https://github.com/solo-io/gloo/pull/1122)
+
 ### v0.18.33
 
 **New Features**
