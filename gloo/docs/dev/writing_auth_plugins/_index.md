@@ -134,7 +134,7 @@ detects a new auth configuration on your Virtual Services. The `Authorize` funct
 each time a request hits Gloo and matches the virtual host on which the your plugin is defined. 
 The `AuthorizationResponse` that it returns will determine whether the request will be allowed or denied. 
 We provide minimal responses of both types via the `AuthorizedResponse()` and `UnauthorizedResponse()` 
-functions in [the same package](https://github.com/solo-io/ext-auth-plugins/blob/master/api/interface.go#L95). 
+functions in [the same package](https://github.com/solo-io/ext-auth-plugins/blob/master/api/interface.go#L114-L134). 
 You can use them as a basis for your own responses.
 
 #### About the AuthService lifecycle
