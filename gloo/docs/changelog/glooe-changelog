@@ -1,3 +1,18 @@
+### v0.18.25
+
+**Dependency Bumps**
+
+- solo-io/gloo has been upgraded to v0.18.32.
+
+**New Features**
+
+- Show when all namespaces are being watched. (https://github.com/solo-io/solo-projects/issues/1050)
+
+**Fixes**
+
+- Show error modal when user makes invalid updates to the raw yaml. (https://github.com/solo-io/solo-projects/issues/1059)
+- Refreshing on the watch namespaces would sometimes resut in an error. (https://github.com/solo-io/solo-projects/issues/1063)
+
 ### v0.18.24
 
 **New Features**
