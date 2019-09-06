@@ -1,3 +1,9 @@
+### v0.18.36
+
+**New Features**
+
+- Add support for envoy health checks (https://github.com/solo-io/gloo/issues/1113)
+
 ### v0.18.35
 
 **New Features**
