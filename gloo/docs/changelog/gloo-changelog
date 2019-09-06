@@ -1,3 +1,9 @@
+### v0.18.35
+
+**New Features**
+
+- Add LDAP connection pool setting to Ext Auth API. (https://github.com/solo-io/gloo/issues/1128)
+
 ### v0.18.34
 
 **New Features**
