@@ -98,7 +98,7 @@ The majority is the same as the above, as the gateway has the same config, the d
 
 ## GRPC Access Logging
 
-Logging access data directly to a file can be very useful, but sometimes collecting the data via a GRPC service can is better. Envoy support GRPC access logging, and now so does Gloo.
+Logging access data directly to a file can be very useful, but sometimes collecting the data via a GRPC service can be better. Gloo now supports Envoy GRPC access logging.
 GRPC Access logging functions very similarly to the file sink, however there are no formatting directives, as all of the data is sent via GRPC requests, and management of said data falls to the user.
 There are only two configuration steps needed to get started:
 
@@ -107,7 +107,7 @@ There are only two configuration steps needed to get started:
 
 These instructions assume that a service already exists at the predefined location which is listening for access logging grpc connections. In order to make is easier to get up and running, we provide
 a simnple implementation which simply recieves the messages and then logs them. The code for this implementation can be found [here](https://github.com/solo-io/gloo/tree/master/projects/accesslogger/pkg/loggingservice).
-The server itself is extendable, and can be ran with callbacks if different behavior is needed. The implementation referenced above is included in our helm chart, and is included in the manifest when
+The server itself is extendable, and can be ran with callbacks if different behavior is needed. The implementation referenced above is included in our helm chart, which is included in the manifest when
 the access logger is enabled. In order to use a different service, simply swap the image name in the helm chart.
 
 In order to demonstrate the GRPC access logging in action, we are going to run the latest gloo as well as the petstore demo.
@@ -159,6 +159,6 @@ kubectl get logs -n gloo-system deployments/gateway-proxy-v2-access-logger | gre
 {"level":"info","ts":"2019-09-09T17:56:52.669Z","logger":"access_log","caller":"runner/run.go:50","msg":"received http request","logger_name":"test","node_id":"gateway-proxy-v2-59c46d569-kmjhb.gloo-system","node_cluster":"gateway","node_locality":"<nil>","node_metadata":"&Struct{Fields:map[string]*Value{role: &Value{Kind:&Value_StringValue{StringValue:gloo-system~gateway-proxy-v2,},XXX_unrecognized:[],},},XXX_unrecognized:[],}","protocol_version":"HTTP11","request_path":"/api/pets","request_method":"GET","response_status":"&UInt32Value{Value:200,XXX_unrecognized:[],}"}
 ```
 
-If all went well this command should yield all of the requests whose request path includes `/api/pets`. This particular implementation is just a shell, meant more for demonstration than anything.
+If all went well this command should yield all of the requests whose request path includes `/api/pets`. This particular implementation is very simplistic, meant more for demonstration than anything.
 However, the server code which was used to build this access logging service can be found [here](https://github.com/solo-io/gloo/tree/master/projects/accesslogger/pkg/loggingservice) 
 and is easily extendable to fit any needs. To run a different access logger than the one provided simply replace the image object in the helm configuration, and the service will be replaced by a custom image.
