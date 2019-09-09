@@ -106,7 +106,7 @@ There are only two configuration steps needed to get started:
  * Pass a reference to the cluster into the access logging API
 
 These instructions assume that a service already exists at the predefined location which is listening for access logging grpc connections. In order to make is easier to get up and running, we provide
-a simnple implementation which simply recieves the messages and then logs them. The code for this implementation can be found [here]().
+a simnple implementation which simply recieves the messages and then logs them. The code for this implementation can be found [here](https://github.com/solo-io/gloo/tree/master/projects/accesslogger/pkg/loggingservice).
 The server itself is extendable, and can be ran with callbacks if different behavior is needed. The implementation referenced above is included in our helm chart, and is included in the manifest when
 the access logger is enabled. In order to use a different service, simply swap the image name in the helm chart.
 
@@ -160,5 +160,5 @@ kubectl get logs -n gloo-system deployments/gateway-proxy-v2-access-logger | gre
 ```
 
 If all went well this command should yield all of the requests whose request path includes `/api/pets`. This particular implementation is just a shell, meant more for demonstration than anything.
-However, the server code which was used to build this access logging service can be found [here]() and is easily extendable to fit any needs. To run a different access logger than the one provided
-simply replace the image object in the helm configuration, and the service will be replaced by a custom image.
+However, the server code which was used to build this access logging service can be found [here](https://github.com/solo-io/gloo/tree/master/projects/accesslogger/pkg/loggingservice) 
+and is easily extendable to fit any needs. To run a different access logger than the one provided simply replace the image object in the helm configuration, and the service will be replaced by a custom image.
