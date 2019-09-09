@@ -1,3 +1,15 @@
+### v0.18.38
+
+**New Features**
+
+- Add support for GRPC access log streaming (https://github.com/solo-io/gloo/issues/1046)
+- Use secret converter in glooctl to flatten aws secrets and write proper tls secrets. (https://github.com/solo-io/gloo/issues/1138)
+- implement virtualservice selector (https://github.com/solo-io/gloo/pull/1143)
+
+**Fixes**
+
+- Regenerate the protobuf code. (https://github.com/solo-io/gloo/issues/1147)
+
 ### v0.18.37
 
 **Fixes**

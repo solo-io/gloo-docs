@@ -22,7 +22,7 @@
 |settings.create|bool|false|create a Settings CRD which configures Gloo controllers at boot time|
 |settings.extensions|interface|||
 |settings.singleNamespace|bool|false|Enable to use install namespace as WatchNamespace and WriteNamespace|
-|gloo.deployment.image.tag|string|0.18.37|tag for the container|
+|gloo.deployment.image.tag|string|0.18.38|tag for the container|
 |gloo.deployment.image.repository|string|gloo|image name (repository) for the container.|
 |gloo.deployment.image.registry|string||image prefix/registry e.g. (quay.io/solo-io)|
 |gloo.deployment.image.pullPolicy|string||image pull policy for the container|
@@ -34,7 +34,7 @@
 |gloo.deployment.resources.limits.cpu|string||amount of CPUs|
 |gloo.deployment.resources.requests.memory|string||amount of memory|
 |gloo.deployment.resources.requests.cpu|string||amount of CPUs|
-|discovery.deployment.image.tag|string|0.18.37|tag for the container|
+|discovery.deployment.image.tag|string|0.18.38|tag for the container|
 |discovery.deployment.image.repository|string|discovery|image name (repository) for the container.|
 |discovery.deployment.image.registry|string||image prefix/registry e.g. (quay.io/solo-io)|
 |discovery.deployment.image.pullPolicy|string||image pull policy for the container|
@@ -49,7 +49,7 @@
 |discovery.enabled|bool|true|enable Discovery features|
 |gateway.enabled|bool|true|enable Gloo API Gateway features|
 |gateway.upgrade|bool|false|Deploy a Job to convert (but not delete) v1 Gateway resources to v2 and not add a 'live' label to the gateway-proxy deployment's pod template. This allows for canary testing of gateway-v2 alongside an existing instance of gloo running with v1 gateway resources and controllers.|
-|gateway.deployment.image.tag|string|0.18.37|tag for the container|
+|gateway.deployment.image.tag|string|0.18.38|tag for the container|
 |gateway.deployment.image.repository|string|gateway|image name (repository) for the container.|
 |gateway.deployment.image.registry|string||image prefix/registry e.g. (quay.io/solo-io)|
 |gateway.deployment.image.pullPolicy|string||image pull policy for the container|
@@ -60,7 +60,7 @@
 |gateway.deployment.resources.limits.cpu|string||amount of CPUs|
 |gateway.deployment.resources.requests.memory|string||amount of memory|
 |gateway.deployment.resources.requests.cpu|string||amount of CPUs|
-|gateway.conversionJob.image.tag|string|0.18.37|tag for the container|
+|gateway.conversionJob.image.tag|string|0.18.38|tag for the container|
 |gateway.conversionJob.image.repository|string|gateway-conversion|image name (repository) for the container.|
 |gateway.conversionJob.image.registry|string||image prefix/registry e.g. (quay.io/solo-io)|
 |gateway.conversionJob.image.pullPolicy|string||image pull policy for the container|
@@ -117,7 +117,7 @@
 |gatewayProxies.gatewayProxyV2.kind.deployment.resources.requests.memory|string||amount of memory|
 |gatewayProxies.gatewayProxyV2.kind.deployment.resources.requests.cpu|string||amount of CPUs|
 |gatewayProxies.gatewayProxyV2.kind.daemonSet.hostPort|bool||whether or not to enable host networking on the pod. Only relevant when running as a DaemonSet|
-|gatewayProxies.gatewayProxyV2.podTemplate.image.tag|string|0.18.37|tag for the container|
+|gatewayProxies.gatewayProxyV2.podTemplate.image.tag|string|0.18.38|tag for the container|
 |gatewayProxies.gatewayProxyV2.podTemplate.image.repository|string|gloo-envoy-wrapper|image name (repository) for the container.|
 |gatewayProxies.gatewayProxyV2.podTemplate.image.registry|string||image prefix/registry e.g. (quay.io/solo-io)|
 |gatewayProxies.gatewayProxyV2.podTemplate.image.pullPolicy|string||image pull policy for the container|
@@ -225,6 +225,19 @@
 |apiServer.service.name|string|apiserver-ui||
 |apiServer.configMap.name|string|||
 |apiServer.enableBeta|bool|true||
+|accessLogger.image.tag|string|0.18.38|tag for the container|
+|accessLogger.image.repository|string|access-logger|image name (repository) for the container.|
+|accessLogger.image.registry|string||image prefix/registry e.g. (quay.io/solo-io)|
+|accessLogger.image.pullPolicy|string||image pull policy for the container|
+|accessLogger.image.pullSecret|string||image pull policy for the container |
+|accessLogger.port|uint|8083||
+|accessLogger.serviceName|string|AccessLog||
+|accessLogger.enabled|bool|false||
+|accessLogger.replicas|int|1|number of instances to deploy|
+|accessLogger.resources.limits.memory|string||amount of memory|
+|accessLogger.resources.limits.cpu|string||amount of CPUs|
+|accessLogger.resources.requests.memory|string||amount of memory|
+|accessLogger.resources.requests.cpu|string||amount of CPUs|
 |global.image.tag|string||tag for the container|
 |global.image.repository|string||image name (repository) for the container.|
 |global.image.registry|string|quay.io/solo-io|image prefix/registry e.g. (quay.io/solo-io)|
