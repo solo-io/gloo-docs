@@ -5,7 +5,7 @@ description: Extend Gloo's built-in auth server with custom Go plugins
 ---
 
 We have seen that one way of implementing custom authentication logic is by 
-[providing your own auth server]({{< ref "gloo_routing/virtual_services/authentication/custom_auth/_index.md" >}}). 
+[providing your own auth server]({{< ref "gloo_routing/virtual_services/security/custom_auth/_index.md" >}}). 
 While this approach gives you great freedom, it also comes at a cost: 
 
 - You have to write and manage an additional service. If your authentication logic is simple, the plumbing needed to get 
@@ -207,7 +207,7 @@ spec:
 {{< /highlight >}}
 
 Each plugin container image built as described in the *Packaging and publishing the plugin*
-[section]({{< ref "gloo_routing/virtual_services/authentication/plugin_auth#packaging-and-publishing-the-plugin" >}}) 
+[section]({{< ref "gloo_routing/virtual_services/security/plugin_auth#packaging-and-publishing-the-plugin" >}}) 
 has been added as an `initContainer` to the `extauth` deployment. A volume named `auth-plugins` is mounted in the 
 `initContainer`s and the `extauth` container at `/auth-plugins` path: when the `initContainer`s are run, they will copy 
 the compiled plugin files they contain (in this case `RequiredHeader.so`) to the shared volume, where they become available 
@@ -270,7 +270,7 @@ Now we can create a Virtual Service that will route any requests with the `/echo
 
 {{< tabs >}}
 {{< tab name="yaml" codelang="yaml">}}
-{{< readfile file="gloo_routing/virtual_services/authentication/plugin_auth/vs-echo-no-auth.yaml">}}
+{{< readfile file="gloo_routing/virtual_services/security/plugin_auth/vs-echo-no-auth.yaml">}}
 {{< /tab >}}
 {{< tab name="glooctl" codelang="shell">}}
 glooctl create vs --name http-echo --namespace gloo-system
@@ -340,7 +340,7 @@ for the next two fields.
 - `config`: information that will be used to configure your plugin. Gloo will attempt to parse the value of this 
 attribute into the object pointer returned by your plugin's `NewConfigInstance` function implementation. In our case 
 this will be an instance of `*Config`, as seen in the 
-*Building an Ext Auth plugin* [section]({{< ref "gloo_routing/virtual_services/authentication/plugin_auth#building-an-ext-auth-plugin" >}}).
+*Building an Ext Auth plugin* [section]({{< ref "gloo_routing/virtual_services/security/plugin_auth#building-an-ext-auth-plugin" >}}).
 
 {{% notice note %}}
 Plugins in a **plugin chain** will be executed in the order they are defined. The first plugin to deny the request will 

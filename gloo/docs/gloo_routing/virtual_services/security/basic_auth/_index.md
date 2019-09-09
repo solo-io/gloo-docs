@@ -37,7 +37,7 @@ First, let's create a virtual service with no auth configured.
 
 {{< tabs >}}
 {{< tab name="kubectl" codelang="yaml">}}
-{{< readfile file="gloo_routing/virtual_services/authentication/external_auth/test-no-auth-vs.yaml">}}
+{{< readfile file="gloo_routing/virtual_services/security/basic_auth/test-no-auth-vs.yaml">}}
 {{< /tab >}}
 {{< tab name="glooctl" codelang="shell">}}
 glooctl create vs --name test-no-auth --namespace gloo-system --domains foo
@@ -76,7 +76,7 @@ salt `TYiryv0/` and hashed password `8BvzLUO9IfGPGGsPnAgSu1`, and now we can con
 
 {{< tabs >}}
 {{< tab name="kubectl" codelang="yaml">}}
-{{< readfile file="gloo_routing/virtual_services/authentication/external_auth/basic_auth/test-auth-vs.yaml">}}
+{{< readfile file="gloo_routing/virtual_services/security/basic_auth/test-auth-vs.yaml">}}
 {{< /tab >}}
 {{< /tabs >}} 
 

@@ -41,7 +41,7 @@ First, let's create a virtual service with no auth configured.
 
 {{< tabs >}}
 {{< tab name="kubectl" codelang="yaml">}}
-{{< readfile file="gloo_routing/virtual_services/authentication/external_auth/test-no-auth-vs.yaml">}}
+{{< readfile file="gloo_routing/virtual_services/security/apikey_auth/test-no-auth-vs.yaml">}}
 {{< /tab >}}
 {{< tab name="glooctl" codelang="shell">}}
 glooctl create vs --name test-no-auth --namespace gloo-system --domains foo
@@ -124,7 +124,7 @@ to allow access from all apikeys in the `infrastructure` team to our upstream:
 
 {{< tabs >}}
 {{< tab name="kubectl" codelang="yaml">}}
-{{< readfile file="gloo_routing/virtual_services/authentication/external_auth/apikey_auth/test-auth-vs.yaml">}}
+{{< readfile file="gloo_routing/virtual_services/security/apikey_auth/test-auth-vs.yaml">}}
 {{< /tab >}}
 {{< tab name="glooctl" codelang="shell">}}
 glooctl create vs test-auth --domains bar --enable-apikey-auth --apikey-label-selector team=infrastructure
