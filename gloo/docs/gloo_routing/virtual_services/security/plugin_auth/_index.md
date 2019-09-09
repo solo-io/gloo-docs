@@ -1,6 +1,6 @@
 ---
 title: Plugin Auth
-weight: 40
+weight: 90
 description: Extend Gloo's built-in auth server with custom Go plugins
 ---
 

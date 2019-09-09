@@ -1,6 +1,6 @@
 ---
 title: OIDC
-weight: 1
+weight: 10
 description: How to setup authentication OpenID Connect (OIDC) identity providers. 
 ---
 

@@ -1,5 +1,5 @@
 ---
-title: Open Policy Agent
+title: Open Policy Agent (OPA)
 weight: 20
 description: Fine grained control over Gloo Configuration using Open Policy Agent
 ---

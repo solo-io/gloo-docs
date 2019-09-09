@@ -1,6 +1,6 @@
 ---
 title: ApiKey Auth
-weight: 1
+weight: 40
 description: How to setup ApiKey authentication. 
 ---
 

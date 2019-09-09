@@ -1,6 +1,6 @@
 ---
 title: Basic Auth
-weight: 1
+weight: 10
 description: Authenticating using a dictionary of usernames and passwords on a virtual service. 
 ---
 

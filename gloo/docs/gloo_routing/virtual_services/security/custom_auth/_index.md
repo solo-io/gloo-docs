@@ -1,6 +1,6 @@
 ---
 title: Custom Auth server
-weight: 30
+weight: 80
 description: External Authentication with your own auth server
 ---
 

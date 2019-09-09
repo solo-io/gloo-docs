@@ -1,6 +1,6 @@
 ---
-title: Open Policy Agent Authorization
-weight: 30
+title: OPA Authorization
+weight: 50
 description: Illustrating how to combine OpenID Connect with Open Policy Agent to achieve fine grained policy with Gloo.
 ---
 
