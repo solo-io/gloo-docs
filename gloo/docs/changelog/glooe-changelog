@@ -1,3 +1,14 @@
+### v0.18.27
+
+**Dependency Bumps**
+
+- solo-io/ext-auth-service has been upgraded to v0.5.1.
+- solo-io/gloo has been upgraded to v0.18.37.
+
+**New Features**
+
+- Pool extauth connections to LDAP server. (https://github.com/solo-io/solo-projects/issues/1066)
+
 ### v0.18.26
 
 **Dependency Bumps**
