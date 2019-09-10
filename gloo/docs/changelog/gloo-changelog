@@ -1,3 +1,9 @@
+### v0.18.40
+
+**Fixes**
+
+- Fix apiserver RBAC - allow listing setting. (https://github.com/solo-io/gloo/issues/1156)
+
 ### v0.18.39
 
 **Fixes**
