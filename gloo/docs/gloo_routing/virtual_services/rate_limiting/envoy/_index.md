@@ -246,7 +246,7 @@ Run the following a few times:
 curl --head $(glooctl proxy url)
 ```
 
-eventually the curl response shows it is being rate limited:
+Eventually the curl response shows it is being rate limited:
 
 ```http
 HTTP/1.1 429 Too Many Requests
