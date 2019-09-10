@@ -15,7 +15,7 @@ requests to these varied services in one place.
 #### Rate Limiting in Gloo
 Gloo Enterprise provides two rate rate-limiting APIs to meet the needs of your environment: an enhanced version of
 [Lyft's rate limit service](https://github.com/lyft/ratelimit) that supports the full Envoy rate limit server API, as
-well as simplified API built on top of this service. Gloo uses this rate-limit service to enforce rate-limits. The
+well as a simplified API built on top of this service. Gloo uses this rate-limit service to enforce rate-limits. The
 rate-limit service can work in tandem with the Gloo external auth service to define separate rate-limit policies for
 authorized/unauthorized users.
 
