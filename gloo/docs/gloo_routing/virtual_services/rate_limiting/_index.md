@@ -33,7 +33,7 @@ DynamoDB rate-limiting is a feature of **Gloo Enterprise**, release 0.18.29+
 {{% /notice %}}
 
 To enable DynamoDB rate-limiting (disables Redis), install Gloo with helm and provide an override for 
-`rateLimit.deployment.dynamodb.secretName`.
+`rateLimit.deployment.dynamodb.secretName`. This secret can be generated using `glooctl create secret aws`.
 
 Once deployed, the rate limit service will create the rate limits DynamoDB table (default `rate-limits`) in the
 provided aws region using the provided creds. If you want to turn the table into a globally replicated table, you
