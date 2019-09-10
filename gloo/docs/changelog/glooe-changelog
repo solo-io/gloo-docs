@@ -1,3 +1,15 @@
+### v0.18.28
+
+**New Features**
+
+- Improved UI version display, show UI version and indicate Gloo vs. GlooE. (https://github.com/solo-io/solo-projects/pull/1077)
+
+**Fixes**
+
+- Fix extauth update on virtual services API. (https://github.com/solo-io/solo-projects/issues/1036)
+- Send the correct AWS secret namespce value to the backend. (https://github.com/solo-io/solo-projects/issues/1078)
+- Do not require readConfig to be set in order to show Envoy details. (https://github.com/solo-io/solo-projects/issues/1061)
+
 ### v0.18.27
 
 **Dependency Bumps**
