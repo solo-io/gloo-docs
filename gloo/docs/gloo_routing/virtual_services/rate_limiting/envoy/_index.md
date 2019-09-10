@@ -138,7 +138,7 @@ kubectl apply \
 
 glooctl add route --name default --namespace gloo-system \
   --path-prefix / \
-  --dest-name default-petclinic-8080 \
+  --dest-name default-petclinic-80 \
   --dest-namespace gloo-system
 ```
 
@@ -240,11 +240,13 @@ You can run the same command for a *route* as well (`glooctl edit route ...`). W
 
 ### Test
 
-You can use `glooctl proxy url` to get Gloo proxy's external endpoint. Run `curl --head $URL` a few times and eventually the curl response shows it is being rate limited:
+Run the following a few times:
 
 ```bash
-curl --head $URL
+curl --head $(glooctl proxy url)
 ```
+
+eventually the curl response shows it is being rate limited:
 
 ```http
 HTTP/1.1 429 Too Many Requests
