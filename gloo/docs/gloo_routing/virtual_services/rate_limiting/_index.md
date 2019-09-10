@@ -9,8 +9,8 @@ API Gateways act as a control point for the outside world to access the various 
 (monoliths, microservices, serverless functions) running in your environment. In microservices or hybrid application 
 architecture, any number of these workloads will need to accept incoming requests from external end users (clients). 
 Incoming requests can be numerous and varied -- protecting backend services and globally enforcing business limits 
-can become incredibly complex being handled at the application level. Using an API gateway we can define limit client
-requests to these varied services in one place.
+can become incredibly complex being handled at the application level. Using an API gateway we can define client
+request limits to these varied services in one place.
 
 #### Rate Limiting in Gloo
 Gloo Enterprise provides two rate rate-limiting APIs to meet the needs of your environment: an enhanced version of
