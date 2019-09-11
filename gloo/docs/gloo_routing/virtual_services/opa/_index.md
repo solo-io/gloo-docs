@@ -30,7 +30,7 @@ You can use the [setup.sh](setup.sh) script for that purpose.
 Note this script follows the docs outlined in [official OPA docs](https://www.openpolicyagent.org/docs/latest/kubernetes-admission-control/)
 with some small adaptations for the Gloo API.
 
-For you convenience, here's the content of setup.sh (click to reveal):
+For your convenience, here's the content of setup.sh (click to reveal):
 <details><summary>[setup.sh](setup.sh)</summary>
 ```
 {{% readfile file="docs/gloo_routing/virtual_services/opa/setup.sh" %}}
@@ -145,7 +145,7 @@ for: "vs-err.yaml": admission webhook "validating-webhook.openpolicyagent.org" d
 ## Cleanup
 you can use the [teardown.sh](teardown.sh) to clean-up the resources created in this document.
 
-For you conveniences, here's the content of teardown.sh (click to reveal):
+For your convenience, here's the content of teardown.sh (click to reveal):
 <details><summary>[teardown.sh](teardown.sh)</summary>
 ```
 {{% readfile file="docs/gloo_routing/virtual_services/opa/teardown.sh" %}}
