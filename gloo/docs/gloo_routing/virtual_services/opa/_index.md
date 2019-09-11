@@ -15,13 +15,13 @@ With OPA, in addition to specifying access,  you can say "virtual services must 
 
 You can of-course combine both, as you see fit.
 
-In this document we will show a simple OPA policy, that dictates that all virtual services must not 
+In this document we will show a simple OPA policy that dictates that all virtual services must not 
 have a prefix re-write.
 
-## Setup
-In this guide we will demonstrate OPA and Gloo
+### Prereqs
+- Install Gloo gateway.
 
-As a first install Gloo.
+### Setup
 
 First, setup OPA as a validating web hook. In this mode, OPA validates the Kubernetes objects before
 they are visible to the controllers that act on them (Gloo in our case).
@@ -30,7 +30,7 @@ You can use the [setup.sh](setup.sh) script for that purpose.
 Note this script follows the docs outlined in [official OPA docs](https://www.openpolicyagent.org/docs/latest/kubernetes-admission-control/)
 with some small adaptations for the Gloo API.
 
-For you convenience, here's the content of setup.sh (click to reveal):
+For your convenience, here's the content of setup.sh (click to reveal):
 <details><summary>[setup.sh](setup.sh)</summary>
 ```
 {{% readfile file="docs/gloo_routing/virtual_services/opa/setup.sh" %}}
@@ -145,7 +145,7 @@ for: "vs-err.yaml": admission webhook "validating-webhook.openpolicyagent.org" d
 ## Cleanup
 you can use the [teardown.sh](teardown.sh) to clean-up the resources created in this document.
 
-For you conveniences, here's the content of teardown.sh (click to reveal):
+For your convenience, here's the content of teardown.sh (click to reveal):
 <details><summary>[teardown.sh](teardown.sh)</summary>
 ```
 {{% readfile file="docs/gloo_routing/virtual_services/opa/teardown.sh" %}}

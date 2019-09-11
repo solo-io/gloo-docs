@@ -18,7 +18,7 @@ Possible use cases include:
 
 *  specially formatted string logs
 *  formatted JSON logging to be ingested by log aggregators
-*  GRPC streaming of logs to external services (future update)
+*  GRPC streaming of logs to external services
 
 #### Configuration
 
@@ -95,3 +95,75 @@ spec:
 
 The majority is the same as the above, as the gateway has the same config, the differece exists in the formatting of the file sink. Instead of a simple string formatting directive, this config accepts an object value which is transformed by envoy into JSON formatted logs. The object inside of the `jsonFormat` field is interperted as a JSON object. This object consists of nested json objects as well as keys which point to individual formatting directives. More documentation on JSON formatting can be found [here](https://www.envoyproxy.io/docs/envoy/v1.10.0/configuration/access_log#format-dictionaries).
 
+
+## GRPC Access Logging
+
+To access the GRPC Access logging feature Gloo `v0.18.38` or above is required.
+
+Gloo now supports Envoy GRPC access logging. Logging access data directly to a file can be very useful, but sometimes collecting the data via a GRPC service can be a better fit. 
+The best example of such a situation is when the access logging data is useful or required by other microservices. File Sink has filtering options, but programmatic filtering, as well as 
+eventing with the GRPC data can be very powerful, and allow for unique features to be built using the data being streamed.
+
+GRPC Access logging functions very similarly to the file sink, however there are no formatting directives, as all of the data is sent via GRPC requests, and management of said data falls to the user.
+There are only two configuration steps needed to get started:
+
+ * Add a cluster to the envoy bootstrap config which points to the access-logging service.
+ * Pass a reference to the cluster into the access logging API
+
+These instructions assume that a service already exists at the predefined location which is listening for access logging grpc connections. In order to make is easier to get up and running, we provide
+a simnple implementation which simply recieves the messages and then logs them. The code for this implementation can be found [here](https://github.com/solo-io/gloo/tree/master/projects/accesslogger/pkg/loggingservice).
+The server itself is extendable, and can be ran with callbacks if different behavior is needed. The implementation referenced above is included in our helm chart, which is included in the manifest when
+the access logger is enabled. In order to use a different service, simply swap the image name in the helm chart.
+
+In order to demonstrate the GRPC access logging in action, we are going to run the latest gloo as well as the petstore demo.
+To install Gloo we will be using `glooctl`
+
+Firstly, save the following values file locally:
+```yaml
+accessLogger:
+  enabled: true
+```
+There are more options available, but this is the simplest to get up and running. Once this is saved locally we can install gloo.
+Save the location of this file to the env variable `LOCAL_VALUES_FILE`
+
+Using glooctl:
+```bash
+glooctl install gateway -n gloo-system --values $LOCAL_VALUES_FILE
+```
+
+Now run
+```bash
+kubectl get pods -n gloo-system
+
+NAME                                              READY   STATUS    RESTARTS   AGE
+api-server-5c46c77c9-9724f                        3/3     Running   0          2m49s
+discovery-56dcb649c8-4m9d4                        1/1     Running   0          2m49s
+gateway-proxy-v2-59c46d569-lwhbh                  1/1     Running   0          2m49s
+gateway-proxy-v2-access-logger-6bb9f97fb8-8v8h8   1/1     Running   0          2m49s
+gateway-v2-58c58fcd46-vccmt                       1/1     Running   0          2m49s
+gloo-7975c97546-ssh26                             1/1     Running   0          2m49s
+```
+The output should be similar to the above, minus the generated section of the names.
+
+Once all of the gloo pods are up and running let's go ahead and install the petstore. The tutorial on how to do this as well as basic gloo routing is located [here](../../hello_world/).
+Once the petstore pod is up and running we will route some traffic to it, and test that the traffic is being recorded in the access logs.
+
+Run the following curl from the routing tutorial doc.
+```bash
+export GATEWAY_URL=$(glooctl proxy url)
+curl ${GATEWAY_URL}/sample-route-1
+```
+```
+[{"id":1,"name":"Dog","status":"available"},{"id":2,"name":"Cat","status":"pending"}]
+```
+
+Once this command has been run successfully let's go check the access logs to see that it has been delivered and reported.
+
+```bash
+kubectl get logs -n gloo-system deployments/gateway-proxy-v2-access-logger | grep /api/pets
+{"level":"info","ts":"2019-09-09T17:56:52.669Z","logger":"access_log","caller":"runner/run.go:50","msg":"received http request","logger_name":"test","node_id":"gateway-proxy-v2-59c46d569-kmjhb.gloo-system","node_cluster":"gateway","node_locality":"<nil>","node_metadata":"&Struct{Fields:map[string]*Value{role: &Value{Kind:&Value_StringValue{StringValue:gloo-system~gateway-proxy-v2,},XXX_unrecognized:[],},},XXX_unrecognized:[],}","protocol_version":"HTTP11","request_path":"/api/pets","request_method":"GET","response_status":"&UInt32Value{Value:200,XXX_unrecognized:[],}"}
+```
+
+If all went well this command should yield all of the requests whose request path includes `/api/pets`. This particular implementation is very simplistic, meant more for demonstration than anything.
+However, the server code which was used to build this access logging service can be found [here](https://github.com/solo-io/gloo/tree/master/projects/accesslogger/pkg/loggingservice) 
+and is easily extendable to fit any needs. To run a different access logger than the one provided simply replace the image object in the helm configuration, and the service will be replaced by a custom image.
