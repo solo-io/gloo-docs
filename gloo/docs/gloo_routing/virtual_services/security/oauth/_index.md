@@ -8,7 +8,7 @@ description: External Auth with Oauth
 
 - Prior to creating an OAuth config, you must create a client secret. This can be done through `glooctl create secret --namespace gloo-system --name google oauth --client-secret $CLIENT_SECRET`
 
-- The values required for configuring OAuth are as follows:
+The values required for configuring OAuth are as follows:
 
 ```yaml
 extauth:
