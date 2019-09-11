@@ -98,7 +98,12 @@ The majority is the same as the above, as the gateway has the same config, the d
 
 ## GRPC Access Logging
 
-Logging access data directly to a file can be very useful, but sometimes collecting the data via a GRPC service can be better. Gloo now supports Envoy GRPC access logging.
+To access the GRPC Access logging feature Gloo `v0.18.38` or above is required.
+
+Gloo now supports Envoy GRPC access logging. Logging access data directly to a file can be very useful, but sometimes collecting the data via a GRPC service can be a better fit. 
+The best example of such a situation is when the access logging data is useful or required by other microservices. File Sink has filtering options, but programmatic filtering, as well as 
+eventing with the GRPC data can be very powerful, and allow for unique features to be built using the data being streamed.
+
 GRPC Access logging functions very similarly to the file sink, however there are no formatting directives, as all of the data is sent via GRPC requests, and management of said data falls to the user.
 There are only two configuration steps needed to get started:
 
