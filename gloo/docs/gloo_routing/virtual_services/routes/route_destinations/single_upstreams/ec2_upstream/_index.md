@@ -5,13 +5,13 @@ weight: 3
 description: Example of routing to EC2 instances.
 ---
 
-
 Gloo allows you to create upstreams from groups of EC2 instances.
+
+Before jumping into the tutorial, let's become familiar with the EC2 upstream specification.
 
 #### Sample EC2 Upstream Config
 
-- Before jumping into the tutorial, familiarize yourself with the EC2 upstream specification.
-  - The upstream config below creates an upstream that load balances to all EC2 instances that both match the filter criteria and are available to a user with the credentials provided by the secret.
+The upstream config below creates an upstream that load balances to all EC2 instances that both match the filter criteria and are available to a user with the credentials provided by the secret.
 
 ```yaml
 apiVersion: gloo.solo.io/v1
@@ -47,7 +47,7 @@ spec:
 ## Tutorial: Basic Configuration of EC2 Upstreams
 
 - Below is an outline of how to use the EC2 plugin to create routes to EC2 instances.
-- Requirements: Gloo 0.17.4 or greater installed as a gateway.
+- Requirements: **Gloo 0.17.4+** installed as a gateway.
 
 
 ### Prepare sample resources in AWS
@@ -107,17 +107,18 @@ ability to assume the specific role it requires.
 composed from the user account associated with the secret and the provided role (via the AssumeRole feature).
 
 ##### Create a role
-- To configure you AWS account with the relevant ARN Role, there are two steps to take (if you have not already done so):
+- To configure your AWS account with the relevant ARN Role, there are two steps to take (if you have not already done so):
   - Create a policy that allows the policy holder to describe EC2 instances
   - Create a role that contains that policy and trusts (ie: grants role assumption to) the upstream's account 
-- First create a role. In the AWS console:
+
+1. First create a role. In the AWS console:
   - Navigate to IAM > Roles, choose "Create Role"
   - Follow the interactive guide to create a role
     - Choose "AWS account" as the type of trusted entity and provide the 12 digit account id of the account which holds
     the EC2 instances you want to route to.
-- Choose or create a policy for the role
-    - An example of a **Policy** that allows the role to describe EC2 instances is shown below.
+2. Choose or create a policy for the role
 
+Example of a **Policy** that allows the role to describe EC2 instances:
 ```json
 {
     "Version": "2012-10-17",
@@ -139,8 +140,9 @@ composed from the user account associated with the secret and the provided role 
       - Note the entries under the "Trusted entities" table
   - Click "Edit trust relationship"
   - Add your user/service account's ARN to the Principal.AWS list, as shown below
-- An example of **Trust Relationship** is shown below (many other variants are possible)
-  - Add the ARNs of each of the user accounts that you want to allow to assume this role.
+
+An example of **Trust Relationship** follows (many other variants are possible).
+Add the ARNs of each of the user accounts that you want to allow to assume this role.
 
 ```json
 {
@@ -163,12 +165,6 @@ composed from the user account associated with the secret and the provided role 
 ### Create an EC2 Upstream
 
 - Finally, make an upstream that points to the resources that you want to route to.
-- Take note of a few of the options we have set for this sample upstream:
-  - **Region**: this upstream indicates that it reads instances from the "us-east-1" region
-  - **Public IP**: this upstream routes to the instances' public IPs. If not set, Gloo will default the private IPs.
-  - **Secret Ref**: a reference to the secret associated with the AWS account that Gloo should use on behalf of the upstream.
-  - **Role ARN**: a role that Gloo should assume on behalf of the upstream when listing the set of available instances.
-  - **Filters**: this upstream uses three tag filters to indicate which instances, among those that are accessible given the upstream's credentials, should be routed to. One of the filters only specifies that a certain tag should be present on the instance. The other two filters require that a given tag and tag value are present.
 
 ```yaml
 apiVersion: gloo.solo.io/v1
@@ -196,16 +192,23 @@ spec:
       roleArn: "<arn-for-the-role-you-created>"
 ```
 
-- Save the spec to ``ec2-demo-upstream.yaml` and use `kubectl` to create the upstream in Kubernetes.
+- Take note of a few of the options we have set for this sample upstream:
+  - **Region**: this upstream indicates that it reads instances from the "us-east-1" region
+  - **Public IP**: this upstream routes to the instances' public IPs. If not set, Gloo will default the private IPs.
+  - **Secret Ref**: a reference to the secret associated with the AWS account that Gloo should use on behalf of the upstream.
+  - **Role ARN**: a role that Gloo should assume on behalf of the upstream when listing the set of available instances.
+  - **Filters**: this upstream uses three tag filters to indicate which instances, among those that are accessible given the upstream's credentials, should be routed to. One of the filters only specifies that a certain tag should be present on the instance. The other two filters require that a given tag and tag value are present.
 
 
-```
+Save the spec to ``ec2-demo-upstream.yaml` and use `kubectl` to create the upstream in Kubernetes.
+
+```bash
 kubectl apply -f ec2-demo-upstream.yaml
 ```
 
 ### Create a route to your upstream
 
-- Now that you have created an upstream, you can route to it as you would with any other upstream.
+Now that you have created an upstream, you can route to it as you would with any other upstream.
 
 ```bash
 glooctl add route  \
@@ -214,13 +217,14 @@ glooctl add route  \
   --prefix-rewrite /
 ```
 
-- Verify that the route works
-  - You should see the same output as when you queried the EC2 instance directly.
+Verify that the route works
 
 ```bash
 export URL=`glooctl proxy url`
 curl $URL/echoapp
 ```
+
+You should see the same output as when you queried the EC2 instance directly.
 
 ### Summary
 
