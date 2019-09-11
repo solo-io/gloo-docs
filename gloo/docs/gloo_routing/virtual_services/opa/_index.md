@@ -15,13 +15,13 @@ With OPA, in addition to specifying access,  you can say "virtual services must 
 
 You can of-course combine both, as you see fit.
 
-In this document we will show a simple OPA policy, that dictates that all virtual services must not 
+In this document we will show a simple OPA policy that dictates that all virtual services must not 
 have a prefix re-write.
 
-## Setup
-In this guide we will demonstrate OPA and Gloo
+### Prereqs
+- Install Gloo gateway.
 
-As a first install Gloo.
+### Setup
 
 First, setup OPA as a validating web hook. In this mode, OPA validates the Kubernetes objects before
 they are visible to the controllers that act on them (Gloo in our case).
