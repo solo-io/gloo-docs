@@ -5,7 +5,7 @@ description: Gloo allows you to configure properties of your listeners with the 
 ---
 
 
-**Gateway** definitions set up the protocols and ports on which Gloo listens for traffic.  For example, by default Gloo will have a gateway configured for HTTTP and HTTPS traffic. Gloo allows you to configure properties of your gateways with several plugins.
+**Gateway** definitions set up the protocols and ports on which Gloo listens for traffic.  For example, by default Gloo will have a gateway configured for HTTP and HTTPS traffic. Gloo allows you to configure properties of your gateways with several plugins.
 
 
 These guides show you how to apply these advanced listener configurations to refine your gateways' behavior.
