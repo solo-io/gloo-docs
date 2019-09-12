@@ -1,3 +1,22 @@
+### v0.18.29
+
+**Dependency Bumps**
+
+- solo-io/rate-limiter has been upgraded to v0.0.1.
+
+**New Features**
+
+- Add DynamoDb implementation for rate-limiting service backend (https://github.com/solo-io/customers/issues/1)
+- Enable active health checks for ext-auth server. (https://github.com/solo-io/gloo/issues/941)
+
+**Fixes**
+
+- Add user-friendly error messages for UI in read-only mode. (https://github.com/solo-io/solo-projects/issues/1086)
+- Fix AWS upstream creation in UI. (https://github.com/solo-io/solo-projects/issues/1078)
+- Allow the grafana UI to be loaded after install (https://github.com/solo-io/solo-projects/issues/1028)
+- Don't start the observability loop without a valid license (https://github.com/solo-io/solo-projects/issues/1032)
+- Fix observability RBAC settings (https://github.com/solo-io/solo-projects/issues/1026)
+
 ### v0.18.28
 
 **New Features**
