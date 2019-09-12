@@ -29,7 +29,7 @@ and [service specs](../../v1/github.com/solo-io/gloo/projects/gloo/api/v1/plugin
 
 ## Gateways
 
-**Gateway** definitions set up the protocols and ports on which Gloo listens for traffic.  For example, by default Gloo will have a gateway configured for HTTTP and HTTPS traffic:
+**Gateway** definitions set up the protocols and ports on which Gloo listens for traffic.  For example, by default Gloo will have a gateway configured for HTTP and HTTPS traffic:
 
 ```bash
 $  kubectl get gateway -n gloo-system 
