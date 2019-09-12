@@ -13,7 +13,7 @@ In this guide we will deploy a simple LDAP server to your Kubernetes cluster and
 Gloo to authenticate users and control access to a target service based on the user's group memberships.
 
 {{% notice note %}}
-We recommend that you check out [this excellent tutorial](https://www.digitalocean.com/community/tutorials/understanding-the-ldap-protocol-data-hierarchy-and-entry-components) 
+We recommend that you check out [**this excellent tutorial**](https://www.digitalocean.com/community/tutorials/understanding-the-ldap-protocol-data-hierarchy-and-entry-components) 
 by Digital Ocean to familiarize yourself with the basic concepts and components of an LDAP server; although it is not 
 strictly necessary, it will help you better understand this guide.
 {{% /notice %}}
@@ -22,7 +22,7 @@ strictly necessary, it will help you better understand this guide.
 ### Prerequisites
 
 {{% notice warning %}}
-LDAP authentication/authorization has been introduced as a feature starting with **Gloo Enterprise**, release **0.18.27**. 
+LDAP authentication/authorization is a feature of **Gloo Enterprise**, release **0.18.27+**.
 If you are using Open Source Gloo, this tutorial will not work.
 {{% /notice %}}
 
@@ -212,7 +212,7 @@ The user credentials and memberships are summarized in the following table:
 | rick      | rickpwd      | Y                    |  N              |   Y               |
 | scott     | scottpwd     | Y                    |  Y              |   N               |
 
-To test that the LDAP server has been correctly deployed, let's port-forward the correspondent deployment:
+To test that the LDAP server has been correctly deployed, let's port-forward the corresponding deployment:
 
 ```bash
 kubectl port-forward deployment/ldap 8088:389
