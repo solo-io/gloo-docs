@@ -26,7 +26,7 @@ The precedence is as such: `Route` > `VirtualService` > `HttpGateway`.
 The configuration of the three of them is nearly identical at the moment, and follows the same pattern as other enterprise feaures in Gloo. The configuration is included in the extensions object of the various plugin sections, this process will be enumerated below, but first we will go over the general flow of configuring WAF in Gloo.
 
 The WAF filter at it's core supports a list of `RuleSet` objects which are then loaded into the ModSecurity library. The Gloo API has a few conveniences built on top of that to allow easier access to the Core Rule Set. The  `RuleSet` Api looks as follows:
-```
+```proto
 message ModSecurity {
     // Disable all rules on the current route
     bool disabled = 1;

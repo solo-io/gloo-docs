@@ -13,7 +13,7 @@ The envoy documentation on Access Logging can be found [here](https://www.envoyp
 
 #### Usage
 
-Access Logging allows for more verbose, customizable Usage logs from envoy. These logs will not replace the normal logs outputted by envoy, but can be used instead to supplement them. 
+Access Logging allows for more verbose, customizable usage logs from envoy. These logs will not replace the normal logs outputted by envoy, but can be used instead to supplement them. 
 Possible use cases include:
 
 *  specially formatted string logs
@@ -22,11 +22,13 @@ Possible use cases include:
 
 #### Configuration
 
-The following explination assumes that the user has gloo `v0.18.1` or above running, as well as some previous knowledge of Gloo resources, and how to use them. In order to install Gloo if it is not already please refer to the following [tutorial](../../../installation/gateway/kubernetes). The only Gloo resource involved in enabling Access Loggins is the `Gateway`. Further Documentation can be found [here]().
+The following explanation assumes that the user has gloo `v0.18.1+` running, as well as some previous knowledge of Gloo resources, and how to use them. In order to install Gloo if it is not already please refer to the following [tutorial](../../../installation/gateway/kubernetes). The only Gloo resource involved in enabling Access Loggins is the `Gateway`. Further Documentation can be found [here]({{% ref "/v1/github.com/solo-io/gloo/projects/gateway/api/v1/gateway.proto.sk" %}}).
 
 Enabling access logs in Gloo is as simple as adding a [listener plugin](../../gateway_configuration/) to any one of the gateway resources. The documentation for the `Access Logging Service` plugin API can be found [here]({{% ref "/v1/github.com/solo-io/gloo/projects/gloo/api/v1/plugins/als/als.proto.sk" %}}).
 
-Envoy supports two types of Access Logging. `File Sink` and `GRPC`. Currently Gloo supports `File Sink` with plans to add GRPC streaming in the future.
+Gloo supports two types of Access Logging. `File Sink` and `GRPC`.
+
+### File Sink
 
 Within the `File Sink` category of Access Logs there are 2 options for output, those being:
 
@@ -98,7 +100,7 @@ The majority is the same as the above, as the gateway has the same config, the d
 
 ## GRPC Access Logging
 
-To access the GRPC Access logging feature Gloo `v0.18.38` or above is required.
+To access the GRPC Access logging feature Gloo `v0.18.38+` is required.
 
 Gloo now supports Envoy GRPC access logging. Logging access data directly to a file can be very useful, but sometimes collecting the data via a GRPC service can be a better fit. 
 The best example of such a situation is when the access logging data is useful or required by other microservices. File Sink has filtering options, but programmatic filtering, as well as 
