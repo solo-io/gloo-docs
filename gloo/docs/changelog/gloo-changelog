@@ -1,3 +1,17 @@
+### v0.18.42
+
+**New Features**
+
+- Allow container user ids to be dynamically set by the cluster (https://github.com/solo-io/customers/issues/5)
+- Modify glooctl version command to output both client and server versions (https://github.com/solo-io/gloo/issues/722)
+- Add support for add route query parameter matching. (https://github.com/solo-io/gloo/issues/932)
+
+**Fixes**
+
+- Add back the virtualservice create consul related flags. (https://github.com/solo-io/gloo/issues/1172)
+- If we run glooctl uninstall -all with a nonexistent namespace, still uninstall everything instead of erroring out. (https://github.com/solo-io/gloo/issues/602)
+- For both glooctl add and glooctl create, a --dry-run will output a kube-yaml file unless the --output flag overrides it. (https://github.com/solo-io/gloo/issues/907)
+
 ### v0.18.41
 
 **New Features**
