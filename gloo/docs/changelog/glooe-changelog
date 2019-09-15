@@ -1,3 +1,23 @@
+### v0.18.30
+
+**Dependency Bumps**
+
+- solo-io/go-utils has been upgraded to v0.10.2.
+- solo-io/gloo has been upgraded to v0.18.42.
+- solo-io/solo-kit has been upgraded to v0.10.17.
+
+**New Features**
+
+- Allow creating a route without specifying a virtual service. (https://github.com/solo-io/solo-projects/issues/1096)
+
+**Fixes**
+
+- Create route modal UX fixes. (https://github.com/solo-io/solo-projects/issues/1106)
+- Fix grafana dashboards not updating when an upstream changes (https://github.com/solo-io/solo-projects/issues/1030)
+- Fix the prometheus expressions in the auto-generated grafana dashboards (https://github.com/solo-io/solo-projects/issues/1029)
+- Show a loading spinner when edits to the raw yaml are accepted. (https://github.com/solo-io/solo-projects/issues/1091)
+- After error, stay in editor context when editing raw yaml. (https://github.com/solo-io/solo-projects/issues/1092)
+
 ### v0.18.29
 
 **Dependency Bumps**
