@@ -1,3 +1,18 @@
+### v0.18.43
+
+**New Features**
+
+- Ability to specify non-standard kube config from glooctl. (https://github.com/solo-io/gloo/issues/1094)
+- Move rate-limit API from opaque `extensions` to strongly-typed `enterprise` tag and deprecate old api (https://github.com/solo-io/gloo/issues/1171)
+- add gloo and gateway configuration options to settings (https://github.com/solo-io/gloo/pull/1145)
+- add detailed proxy validation to gloo translator (https://github.com/solo-io/gloo/pull/1165)
+- add proxy validation server to gloo (https://github.com/solo-io/gloo/pull/1166)
+
+**Fixes**
+
+- fix prepending of route prefixes when the prefix is a / (https://github.com/solo-io/gloo/pull/1178)
+- Allow you to skip choosing a function when adding routes interactively. (https://github.com/solo-io/gloo/issues/470)
+
 ### v0.18.42
 
 **New Features**
