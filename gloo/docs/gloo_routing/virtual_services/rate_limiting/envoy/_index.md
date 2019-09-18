@@ -147,7 +147,7 @@ kubectl apply \
 
 glooctl add route --name default --namespace gloo-system \
   --path-prefix / \
-  --dest-name default-petclinic-80 \
+  --dest-name default-petclinic-8080 \
   --dest-namespace gloo-system
 ```
 
