@@ -1,3 +1,14 @@
+### v0.18.44
+
+**New Features**
+
+- Add glooctl debug log command, which prints out all the gloo pod logs. A --zip flag will save them in a tar file (location optionally specified by the --file flag). A --errors-only flag will filter the logs for 'error' level logs. (https://github.com/solo-io/gloo/issues/997)
+
+**Fixes**
+
+- fix ratelimit setting propagation with new config location (https://github.com/solo-io/gloo/issues/1209)
+- Fix upstream status write status error from hybrid client, and generation hash mismatch. (https://github.com/solo-io/gloo/issues/1212)
+
 ### v0.18.43
 
 **New Features**
