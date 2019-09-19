@@ -117,25 +117,15 @@ The table for gloo open-source overrides (also available in enterprise) is [here
 
 | option                                                    | type     | description                                                                                                                                                                                                                                                    |
 | --------------------------------------------------------- | -------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| grafana.enabled                                           | bool     | deploy grafana in your gloo system namespace. default is `true` |
+| grafana.defaultInstallationEnabled                        | bool     | deploy grafana in your gloo system namespace. default is `true` |
 | prometheus.enabled                                        | bool     | deploy prometheus in your gloo system namespace. default is `true` |
 | rateLimit.enabled                                         | bool     | deploy rate-limiting in your gloo system namespace. default is `true` |
 | global.extensions.extAuth.envoySidecar                    | bool     | deploy ext-auth in the gateway-proxy pod, as a sidecar to envoy. communicates over unix domain socket instead of TCP. default is `false` |
-
-A common setup may be to run your own prometheus (and grafana), separate from the gloo-provided ones. The enterprise Gloo UI makes use of its own grafana to display dashboards for Envoy and Kubernetes, leveraging gloo custom resources such as `Upstreams`. You can point gloo's system grafana toward your prometheus by overriding grafana's datasources tag, i.e.
-
-```yaml
-grafana:
-  datasources:
-    datasources.yaml:
-      apiVersion: 1
-      datasources:
-        - name: gloo
-          type: prometheus
-          access: proxy
-          url: http://{{ your.prometheus }}:{{ your.port }}  # fill this in!
-          isDefault: true
-``` 
+| observability.customGrafana.enabled                       | bool     | indicate you'll be using your own instance of grafana rather than the one shipped with Gloo. default is `false`
+| observability.customGrafana.username                      | string   | set this and the `password` field to authenticate to the custom grafana instance using basic auth
+| observability.customGrafana.password                      | string   | set this and the `username` field to authenticate to the custom grafana instance using basic auth
+| observability.customGrafana.apiKey                        | string   | authenticate to the custom grafana instance using this api key
+| observability.customGrafana.url                           | string   | the URL for the custom grafana instance
 
 ---
 ## Verify your Installation
