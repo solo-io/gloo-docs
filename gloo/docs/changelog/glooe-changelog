@@ -1,3 +1,18 @@
+### v0.18.31
+
+**New Features**
+
+- Allow the observability pod to talk to a custom grafana deployment (https://github.com/solo-io/solo-projects/issues/1108)
+- Allow the upstream dashboard template to be customized through a configmap (https://github.com/solo-io/solo-projects/issues/1103)
+- Revamp the default envoy stats dashboard that installs with Grafana (https://github.com/solo-io/solo-projects/issues/1115)
+- Support new rate limit API location; continue support for deprecated rate limit config in opaque extensions (https://github.com/solo-io/gloo/issues/1171)
+
+**Fixes**
+
+- Fix the UI when WatchNamespaces is a subset of cluster namespaces. (https://github.com/solo-io/solo-projects/issues/1065)
+- Fix bug that prevented functions list component in upstreams card view to close. (https://github.com/solo-io/solo-projects/issues/1095)
+- Rebuild all k8s resource clients when the settings change (https://github.com/solo-io/solo-projects/issues/1054)
+
 ### v0.18.30
 
 **Dependency Bumps**
