@@ -1,3 +1,15 @@
+### v0.19.1
+
+**New Features**
+
+- Allow the default gateways to be configurable through helm (https://github.com/solo-io/gloo/issues/1048)
+- Option to install Gloo with a visual dashboard. (https://github.com/solo-io/gloo/issues/1218)
+- Update enterprise API to have strongly-typed WAF config; deprecated opaque extensions WAF config still supported (https://github.com/solo-io/gloo/issues/1171)
+
+**Fixes**
+
+- Make sure that glooctl check catches all possible pod conditions (https://github.com/solo-io/solo-projects/issues/1121)
+
 ### v0.19.0
 
 **Dependency Bumps**
