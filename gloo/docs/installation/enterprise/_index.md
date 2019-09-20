@@ -29,10 +29,12 @@ Verify the CLI is installed and running correctly with:
 ```bash
 glooctl --version
 ```
-
+returns
 ```shell
-glooctl community edition version 0.13.29
+glooctl community edition version 0.18.43
 ```
+
+Glooctl reports as a community edition, but it supports enterprise commands so long as a valid license key is provided.
 
 
 ## Installing Gloo Enterprise on Kubernetes
