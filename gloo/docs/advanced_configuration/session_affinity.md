@@ -112,7 +112,6 @@ spec:
   virtualHost:
     domains:
     - '*'
-    name: gloo-system.default
     routes:
     - matcher:
         exact: /route1
@@ -338,7 +337,6 @@ spec:
   virtualHost:
     domains:
     - '*'
-    name: gloo-system.default
     routes:
     - matcher:
         exact: /route1

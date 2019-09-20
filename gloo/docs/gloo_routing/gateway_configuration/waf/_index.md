@@ -135,7 +135,6 @@ spec:
   virtualHost:
     domains:
     - '*'
-    name: gloo-system.default
     virtualHostPlugins:
       extensions:
         configs:

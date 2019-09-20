@@ -196,7 +196,6 @@ status:
 virtualHost:
   domains:
   - '*'
-  name: default.default
   routes:
   - matcher:
       prefix: /

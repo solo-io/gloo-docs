@@ -116,7 +116,6 @@ spec:
   virtualHost:
     domains:
     - '*'
-    name: gloo-system.details
     routes:
     - matcher:
         prefix: /

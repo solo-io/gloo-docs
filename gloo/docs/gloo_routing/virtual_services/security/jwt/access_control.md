@@ -140,7 +140,6 @@ spec:
   virtualHost:
     domains:
     - '*'
-    name: gloo-system.default
     routes:
     - matcher:
         prefix: /
@@ -198,7 +197,6 @@ spec:
   virtualHost:
     domains:
     - '*'
-    name: gloo-system.default
     routes:
     - matcher:
         prefix: /

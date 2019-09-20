@@ -70,7 +70,6 @@ spec:
   virtualHost:
     domains:
     - '*'
-    name: gloo-system.books
     routes:
     - matcher:
         prefix: /
