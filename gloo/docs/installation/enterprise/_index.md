@@ -62,7 +62,7 @@ Kubernetes cluster [here](../cluster_setup).
 Once your Kubernetes cluster is up and running, run the following command to deploy the Gloo Gateway to the `gloo-system` namespace:
 
 ```bash
-glooctl install gateway --license-key YOUR_LICENSE_KEY
+glooctl install gateway enterprise --license-key YOUR_LICENSE_KEY
 ```
 
 > Note: You can run the command with the flag `--dry-run` to output 
