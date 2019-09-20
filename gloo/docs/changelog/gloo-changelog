@@ -1,3 +1,24 @@
+### v0.19.0
+
+**Dependency Bumps**
+
+- solo-io/go-utils has been upgraded to v0.10.8.
+
+**Breaking Changes**
+
+- Update the external auth APIs to support configuring authentication/authorization on **routes and weighted destinations**, in addition to virtual hosts. The auth configuration that currently is defined directly on the virtual service/proxy resources (under virtualHostPlugins) will become a top-level solo-kit resource (in the context of Kubernetes this means **a new CRD**). Resources that need to use a particular auth configuration can now just reference the correspondent new `AuthConfig` resource. The advantages of this change are twofold: besides reducing the duplication of configuration, it guarantees the stability of secured upstreams between auth configuration updates. (https://github.com/solo-io/gloo/issues/1201)
+
+**New Features**
+
+- add plugin to enable envoy health check filter (https://github.com/solo-io/gloo/pull/1230)
+- Allow users to specify the kubernetes cluster name in `glooctl proxy url` and `glooctl proxy address` (https://github.com/solo-io/gloo/issues/1095)
+
+**Fixes**
+
+- Speed up the Helm tests. (https://github.com/solo-io/gloo/issues/1226)
+- Gloo will not re-start it's XDS service when settings change (https://github.com/solo-io/gloo/issues/1191)
+- Gloo will optionally wait for EDS to be ready before continuing (https://github.com/solo-io/gloo/issues/1191)
+
 ### v0.18.44
 
 **New Features**
