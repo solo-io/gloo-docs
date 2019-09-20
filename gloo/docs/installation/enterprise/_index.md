@@ -6,32 +6,32 @@ weight: 10
 
 ## Install command line tool (CLI)
 
-Download the CLI Command appropriate to your environment:
+The `glooctl` command line provides useful functions to install, configure, and debug Gloo, though it is not required to use Gloo.
 
-* [MacOs]( {{% siteparam "glooctl-darwin" %}})
-* [Linux]( {{% siteparam "glooctl-linux" %}})
-* [Windows]( {{% siteparam "glooctl-windows" %}})
+* To install `glooctl` using the [Homebrew](https://brew.sh) package manager, run the following.
 
-To get your trial license key, go to: https://www.solo.io/gloo-trial
+  ```shell
+  brew install solo-io/tap/glooctl
+  ```
 
-{{% notice note %}}
-To facilitate usage we recommend renaming the file to **`glooctl`** and adding the CLI to your PATH.
-{{% /notice %}}
+* To install on any platform run the following.
 
-If your are running Linux or MacOs, make sure the `glooctl` is an executable file by running:
+  ```bash
+  curl -sL https://run.solo.io/gloo/install | sh
 
-```shell
-chmod +x glooctl
-```
+  export PATH=$HOME/.gloo/bin:$PATH
+  ```
 
-Verify that you have the Enterprise version of the `glooctl` by running:
+* You can download `glooctl` directly via the GitHub releases page. You need to add `glooctl` to your system's `PATH` after downloading.
 
-```shell
+Verify the CLI is installed and running correctly with:
+
+```bash
 glooctl --version
 ```
 
 ```shell
-glooctl enterprise edition version 0.14.0
+glooctl community edition version 0.13.29
 ```
 
 
@@ -53,9 +53,6 @@ your unique key.
 Before starting installation, please ensure that you've prepared your Kubernetes cluster per the community
 [Prep Kubernetes]({{< ref "/installation/cluster_setup" >}}) instructions.
 
-
-These directions assume you've prepared your Kubernetes cluster appropriately. Full details on setting up your
-Kubernetes cluster [here](../cluster_setup).
 
 ### Installing on Kubernetes with `glooctl`
 
