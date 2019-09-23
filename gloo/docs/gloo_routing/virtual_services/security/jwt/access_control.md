@@ -22,7 +22,7 @@ minikube start
 
 Install gloo-enterprise and create a virtual service and an example app:
 ```shell
-glooctl install gateway --license-key <YOUR KEY>
+glooctl install gateway enterprise --license-key <YOUR KEY>
 ```
 
 Wait for the deployments to finish:
