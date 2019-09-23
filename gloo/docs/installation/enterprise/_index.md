@@ -35,8 +35,7 @@ Client: {"version":"0.18.43"}
 Server: {"type":"Gateway","enterprise":true,"kubernetes":{"containers":[{"Tag":"0.18.29","Name":"grpcserver-ui","Registry":"quay.io/solo-io"},{"Tag":"0.18.29","Name":"grpcserver-ee","Registry":"quay.io/solo-io"},{"Tag":"0.18.29","Name":"grpcserver-envoy","Registry":"quay.io/solo-io"},{"Tag":"0.18.40","Name":"discovery","Registry":"quay.io/solo-io"},{"Tag":"0.18.29","Name":"extauth-ee","Registry":"quay.io/solo-io"},{"Tag":"0.18.29","Name":"gloo-ee-envoy-wrapper","Registry":"quay.io/solo-io"},{"Tag":"0.18.40","Name":"gateway","Registry":"quay.io/solo-io"},{"Tag":"0.18.29","Name":"gloo-ee","Registry":"quay.io/solo-io"},{"Tag":"0.18.29","Name":"observability-ee","Registry":"quay.io/solo-io"},{"Tag":"0.18.29","Name":"rate-limit-ee","Registry":"quay.io/solo-io"},{"Tag":"5","Name":"redis","Registry":"docker.io"}],"namespace":"gloo-system"}}
 ```
 
-Glooctl reports as a community edition, but it supports enterprise commands so long as a valid license key is provided.
-
+If you run `glooctl --version`, you may notice that glooctl reports as a community version, but it supports enterprise commands so long as a valid license key is provided.
 
 ## Installing Gloo Enterprise on Kubernetes
 
