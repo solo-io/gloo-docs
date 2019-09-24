@@ -1,3 +1,19 @@
+### v0.18.32
+
+**Dependency Bumps**
+
+- solo-io/envoy-gloo-ee has been upgraded to v0.1.17.
+
+**New Features**
+
+- Expose some ext auth stats in the built-in envoy grafana dashboard (https://github.com/solo-io/solo-projects/issues/1151)
+- Add a resource tag in the NACK stats. (https://github.com/solo-io/solo-projects/issues/287)
+
+**Fixes**
+
+- Make sure that the extauth binaries get copied from the Docker container, even when running Docker in a VM context (https://github.com/solo-io/solo-projects/issues/1080)
+- Fix core rule set bug where specific config is applied after general config (https://github.com/solo-io/solo-projects/issues/1139)
+
 ### v0.18.31
 
 **New Features**
