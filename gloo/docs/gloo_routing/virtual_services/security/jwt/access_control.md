@@ -16,8 +16,12 @@ We will use the following utilities
 ## Initial setup
 
 Start minikube:
-```
+```shell script
 minikube start
+```
+Make sure your kubectl context is configured to use the `default` namespace:
+```shell script
+kubectl config set-context --current --namespace default
 ```
 
 Install gloo-enterprise and create a virtual service and an example app:
