@@ -439,7 +439,7 @@ kubectl proxy &
 ```
 
 We will use kubernetes api server service proxy capabilities to reach Gloo's gateway-proxy service.
-The kubernets api server will proxy traffic going to `/api/v1/namespaces/gloo-system/services/gateway-proxy-v2:80/proxy/` to port 80 on the `gateway-proxy-v2` service, in the `gloo-system` namespace.
+The kubernetes api server will proxy traffic going to `/api/v1/namespaces/gloo-system/services/gateway-proxy-v2:80/proxy/` to port 80 on the `gateway-proxy-v2` service, in the `gloo-system` namespace.
 
 A request without a token should be rejected (will output *Jwt is missing*):
 ```shell
