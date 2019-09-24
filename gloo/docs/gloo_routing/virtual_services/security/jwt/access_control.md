@@ -96,7 +96,7 @@ claims later to verify the identity of the JWT.
 
 ### Configuring Gloo to verify service account JWT
 
-To get the public key for verify service accounts, use this command:
+To get the public key to verify service accounts, use this command:
 ```shell
 minikube ssh sudo cat /var/lib/minikube/certs/sa.pub | tee public-key.pem
 ```
