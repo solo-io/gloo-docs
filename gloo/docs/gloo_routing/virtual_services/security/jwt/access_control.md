@@ -399,7 +399,7 @@ We will use the [jwt.io](https://jwt.io) debugger to do so easily.
   bottom box (labeled "Private Key").
 - Paste the following to the payload data (replacing what is already there):
 
-
+Payload:
 ```json
 {
   "iss": "solo.io",
@@ -410,6 +410,13 @@ We will use the [jwt.io](https://jwt.io) debugger to do so easily.
 
 You should now have an encoded JWT token in the "Encoded" box. Copy it and save to to a file called 
 `token.jwt`
+
+{{% notice note %}}
+ You may have noticed **jwt.io** complaining about an invalid signature in the bottom left corner. This is fine
+ because we don't need the public key to create an encoded JWT.
+ If you'd like to resolve the invalid signature, under the "VERIFY SIGNATURE" section, paste the output of
+ `openssl rsa -pubout -in private-key.pem` to the bottom box (labeled "Public Key")
+{{% /notice %}}
 
 This is how it should look like (click to enlarge):
 
