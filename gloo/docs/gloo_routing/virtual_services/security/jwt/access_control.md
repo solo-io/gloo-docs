@@ -35,7 +35,7 @@ kubectl -n gloo-system rollout status deployment/gateway-proxy
 
 Install the petstore demo app and add a route and test that everything so far works (you may need to wait a minutes until all the gloo containers are initialized):
 ```shell
-kubectl apply -f https://raw.githubusercontent.com/solo-io/gloo/master/example/petstore/petstore.yaml
+kubectl apply -f https://raw.githubusercontent.com/sololabs/demos2/master/resources/petstore.yaml
 glooctl add route --name default --namespace gloo-system --path-prefix / --dest-name default-petstore-8080 --dest-namespace gloo-system
 URL=$(glooctl proxy url)
 ```
@@ -70,7 +70,7 @@ Let's see the claims for `svc-a` - the service account we just created:
 ```shell
 CLAIMS=$(kubectl exec test-pod cat /var/run/secrets/kubernetes.io/serviceaccount/token | cut -d. -f2)
 PADDING_LEN=$(( (  4 - ( ${#CLAIMS} % 4 )  ) % 4 ))
-PADDING=$(head -c $PADDING_LEN /dev/zero |tr '\0' =)
+PADDING=$(head -c $PADDING_LEN /dev/zero | tr '\0' =)
 PADDED_CLAIMS="${CLAIMS}${PADDING}"
 # Note: jq makes the output easier to read. It can be ommited if you do not have it installed
 echo $PADDED_CLAIMS | base64 --decode | jq .
@@ -118,14 +118,14 @@ FYkg7AesknSyCIVMObSaf6ZO3T2jVGrWc0iKfrR3Oo7WpiMH84SdBYXPaS1VdLC1
 If the above command doesn't produce the expected output, it could be that the
 `/var/lib/minikube/certs/sa.pub` is different on your minikube.
 The public key is given to the kube api-server in the command line arg `--service-account-key-file`.
-You can see it like so: `minikube ssh ps ax ww |grep kube-apiserver`
+You can see it like so: `minikube ssh ps ax ww | grep kube-apiserver`
 {{% /notice %}}
 
 Configure JWT verification in Gloo's default virtual service:
 
 ```shell
 # escape the spaces in the public key file:
-PUBKEY=$(cat public-key.pem|python -c 'import json,sys; print(json.dumps(sys.stdin.read()).replace(" ", "\\u0020"))')
+PUBKEY=$(cat public-key.pem | python -c 'import json,sys; print(json.dumps(sys.stdin.read()).replace(" ", "\\u0020"))')
 # patch the default virtual service
 kubectl patch virtualservice --namespace gloo-system default --type=merge -p '{"spec":{"virtualHost":{"virtualHostPlugins":{"extensions":{"configs":{"jwt":{"providers":{"kube":{"jwks":{"local":{"key":'$PUBKEY'}},"issuer":"kubernetes/serviceaccount"}}}}}}}}}' -o yaml
 ```
@@ -183,7 +183,7 @@ POLICIES='{
 }
 }'
 # remove spaces, we can use `tr` as there are no spaces in the values.
-POLICIES=$(echo $POLICIES|tr -d '[:space:]')
+POLICIES=$(echo $POLICIES | tr -d '[:space:]')
 kubectl patch virtualservice --namespace gloo-system default --type=merge -p '{"spec":{"virtualHost":{"virtualHostPlugins":{"extensions":{"configs":{"rbac":{"config":'$POLICIES'}}}}}}}' -o yaml
 ```
 
@@ -238,22 +238,22 @@ Let's verify that everything is working properly:
 
 An un-authenticated request should fail (will output *Jwt is missing*):
 ```shell
-kubectl exec test-pod -- bash -c 'curl -s http://gateway-proxy.gloo-system/api/pets/1'
+kubectl exec test-pod -- bash -c 'curl -s http://gateway-proxy-v2.gloo-system/api/pets/1'
 ```
 
 An authenticated GET request to that start with /api/pets should succeed:
 ```shell
-kubectl exec test-pod -- bash -c 'curl -s http://gateway-proxy.gloo-system/api/pets/1 -H"Authorization: Bearer $(cat /var/run/secrets/kubernetes.io/serviceaccount/token)"'
+kubectl exec test-pod -- bash -c 'curl -s http://gateway-proxy-v2.gloo-system/api/pets/1 -H "Authorization: Bearer $(cat /var/run/secrets/kubernetes.io/serviceaccount/token)"'
 ```
 
 An authenticated POST request to that start with /api/pets should fail (will output *RBAC: access denied*):
 ```shell
-kubectl exec test-pod -- bash -c 'curl -s -XPOST http://gateway-proxy.gloo-system/api/pets/1 -H"Authorization: Bearer $(cat /var/run/secrets/kubernetes.io/serviceaccount/token)"'
+kubectl exec test-pod -- bash -c 'curl -s -X POST http://gateway-proxy-v2.gloo-system/api/pets/1 -H "Authorization: Bearer $(cat /var/run/secrets/kubernetes.io/serviceaccount/token)"'
 ```
 
 An authenticated GET request to that doesn't start with /api/pets should fail (will output *RBAC: access denied*):
 ```shell
-kubectl exec test-pod -- bash -c 'curl -s http://gateway-proxy.gloo-system/foo/ -H"Authorization: Bearer $(cat /var/run/secrets/kubernetes.io/serviceaccount/token)"'
+kubectl exec test-pod -- bash -c 'curl -s http://gateway-proxy-v2.gloo-system/foo/ -H "Authorization: Bearer $(cat /var/run/secrets/kubernetes.io/serviceaccount/token)"'
 ```
 
 ## Conclusion
