@@ -221,13 +221,13 @@ URL=$(glooctl proxy url)
 ```
 curl as a solo.io team member:
 ```
-curl $URL?token=$SOLO_TOKEN
+curl "$URL?token=$SOLO_TOKEN"
 ```
 The output should be `canary`.
 
 curl as a othercompany.com team member:
 ```
-curl $URL?token=$OTHER_TOKEN
+curl "$URL?token=$OTHER_TOKEN"
 ```
 The output should be `primary`.
 
