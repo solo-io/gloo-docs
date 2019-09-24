@@ -163,7 +163,7 @@ spec:
 ```
 
 The updated virtual service now contains JWT configuration with the public key, and the issuer for the JWT.
-JWTs will be auhtorized if they can be verified with this public key, and have 'kubernetes/serviceaccount' in their 'iss' claim.
+JWTs will be authorized if they can be verified with this public key, and have 'kubernetes/serviceaccount' in their 'iss' claim.
 
 ## Configuring Gloo to perform access control for the service account
 
