@@ -28,9 +28,9 @@ glooctl install gateway --license-key <YOUR KEY>
 Wait for the deployments to finish:
 ```shell
 kubectl -n gloo-system rollout status deployment/discovery
-kubectl -n gloo-system rollout status deployment/gateway
+kubectl -n gloo-system rollout status deployment/gateway-v2
 kubectl -n gloo-system rollout status deployment/gloo
-kubectl -n gloo-system rollout status deployment/gateway-proxy
+kubectl -n gloo-system rollout status deployment/gateway-proxy-v2
 ```
 
 Install the petstore demo app and add a route and test that everything so far works (you may need to wait a minutes until all the gloo containers are initialized):
