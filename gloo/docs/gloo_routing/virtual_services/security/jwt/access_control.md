@@ -425,16 +425,16 @@ kubectl proxy &
 ```
 
 We will use kubernetes api server service proxy capabilities to reach Gloo's gateway-proxy service.
-The kubernets api server will proxy traffic going to `/api/v1/namespaces/gloo-system/services/gateway-proxy:80/proxy/` to port 80 on the `gateway-proxy` service, in the `gloo-system` namespace.
+The kubernets api server will proxy traffic going to `/api/v1/namespaces/gloo-system/services/gateway-proxy-v2:80/proxy/` to port 80 on the `gateway-proxy-v2` service, in the `gloo-system` namespace.
 
 A request without a token should be rejected (will output *Jwt is missing*):
 ```shell
-curl localhost:8001/api/v1/namespaces/gloo-system/services/gateway-proxy:80/proxy/api/pets
+curl localhost:8001/api/v1/namespaces/gloo-system/services/gateway-proxy-v2:80/proxy/api/pets
 ```
 
 A request with a token should be accepted:
 ```shell
-curl localhost:8001/api/v1/namespaces/gloo-system/services/gateway-proxy:80/proxy/api/pets?access_token=$(cat token.jwt)
+curl localhost:8001/api/v1/namespaces/gloo-system/services/gateway-proxy-v2:80/proxy/api/pets?access_token=$(cat token.jwt)
 ```
 ### Conclusion
 We have created a JWKS server, signed a custom JWT and used Gloo to verify that JWT
