@@ -10,7 +10,7 @@ primary version.
 ## Prerequisites
 You will need:
 
-- gloo-e 0.14.0 or higher.
+- gloo-e 0.14.0 or higher installed.
 - openssl
 
 ## Setup
