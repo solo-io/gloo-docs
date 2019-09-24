@@ -265,7 +265,7 @@ We have used Gloo to verify service account identity, and provide access control
 To clean up individual resources created:
 ```shell
 kubectl delete pod test-pod
-kubectl delete -f https://raw.githubusercontent.com/solo-io/gloo/master/example/petstore/petstore.yaml
+kubectl delete -f https://raw.githubusercontent.com/sololabs/demos2/master/resources/petstore.yaml
 glooctl uninstall
 rm public-key.pem
 ```
