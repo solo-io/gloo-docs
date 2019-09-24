@@ -167,7 +167,7 @@ JWTs will be authorized if they can be verified with this public key, and have '
 
 ## Configuring Gloo to perform access control for the service account
 
-To make this interesting, we can add an access control policy for JWT. let's add a policy to the virtual service:
+To make this interesting, we can add an access control policy for JWT. Let's add a policy to the virtual service:
 ```shell
 POLICIES='{
 "policies": {
