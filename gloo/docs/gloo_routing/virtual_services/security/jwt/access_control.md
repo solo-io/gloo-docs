@@ -270,7 +270,7 @@ glooctl uninstall
 rm public-key.pem
 ```
 
-Alternativly, you can just tear down minikube:
+Alternatively, you can just tear down minikube:
 ```
 minikube delete
 ```
