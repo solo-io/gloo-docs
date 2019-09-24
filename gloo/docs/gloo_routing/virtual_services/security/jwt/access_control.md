@@ -318,10 +318,10 @@ then use the `pem-jwk` utility to convert our public key to a Json Web Key forma
 # install pem-jwk utility.
 npm install -g pem-jwk
 # extract public key and convert it to JWK.
-openssl rsa -in private-key.pem -pubout | pem-jwk | jq .
+openssl rsa -in private-key.pem -pubout | pem-jwk | jq . > jwks.json
 ```
 
-Output should look like so:
+Output should look similar to:
 ```json
 {
   "kty": "RSA",
@@ -331,6 +331,10 @@ Output should look like so:
 ```
 
 To that, we'll add the signing algorithm and usage:
+```shell script
+jq '.+{alg:"RS256"}|.+{use:"sig"}' jwks.json | tee tmp.json && mv tmp.json jwks.json
+```
+returns
 {{< highlight json "hl_lines=5-6" >}}
 {
     "kty": "RSA",
@@ -342,6 +346,10 @@ To that, we'll add the signing algorithm and usage:
 {{< /highlight >}}
 
 One last modification, is to turn the single key into a key set:
+```shell script
+jq '{"keys":[.]}' jwks.json | tee tmp.json && mv tmp.json jwks.json
+```
+returns
 {{< highlight json "hl_lines=1-2 10-11" >}}
 {
     "keys": [
