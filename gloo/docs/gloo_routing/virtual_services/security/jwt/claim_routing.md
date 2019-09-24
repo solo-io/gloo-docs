@@ -105,7 +105,7 @@ OTHER_TOKEN=eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzb2xvLmlvIiwic3ViIjo
 ```
 
 ### Example app
-We will now create an example app. This app will simulate a primary\canary deployment mode. 
+We will now create an example app. This app will simulate a primary/canary deployment mode. 
 We will use hashicorp's http-echo utility to send us a predefined response for demo purposes.
 To create the demo app, we will deploy a pod to simulate the primary deployment, a pod to simulate the canary deployment and a service to route to them:
 ```
@@ -207,7 +207,7 @@ EOF
 ```
 
 {{% notice note %}}
-if you generated your own private\public key pair, replace this public key with yours.
+if you generated your own private/public key pair, replace this public key with yours.
 You can use the JWTs provided in this guide with the public key above.
 {{% /notice %}}
 
