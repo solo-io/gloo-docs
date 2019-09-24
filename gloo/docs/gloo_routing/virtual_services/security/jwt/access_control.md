@@ -45,8 +45,11 @@ URL=$(glooctl proxy url)
 ```
 
 Test that everything so far works:
-```
+```shell script
 curl $URL/api/pets/
+```
+returns
+```shell script
 [{"id":1,"name":"Dog","status":"available"},{"id":2,"name":"Cat","status":"pending"}]
 ```
 
