@@ -37,7 +37,7 @@ kubectl -n gloo-system rollout status deployment/gloo
 kubectl -n gloo-system rollout status deployment/gateway-proxy-v2
 ```
 
-Install the petstore demo app and add a route and test that everything so far works (you may need to wait a minutes until all the gloo containers are initialized):
+Install the petstore demo app, add a route, and test that everything so far works (you may need to wait a few moments for all the Gloo containers to be initialized):
 ```shell
 kubectl apply -f https://raw.githubusercontent.com/sololabs/demos2/master/resources/petstore.yaml
 glooctl add route --name default --namespace gloo-system --path-prefix / --dest-name default-petstore-8080 --dest-namespace gloo-system
