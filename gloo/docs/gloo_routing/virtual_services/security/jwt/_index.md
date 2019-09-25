@@ -13,6 +13,7 @@ be setup with a private key for verification - JWTs signed by that key will be v
 application server. Those who are not will be rejected (usually via an HTTP 401 response code).
 
 JWTs are in use in various scenarios:
+
 - OpenID Connect's id_token is a JWT. The id_token is used to identify the End User (Resource Owner 
   in the OIDC\OAuth terminology) and is usually sent by the client (phone app or web-browser) to
   the cloud back-end ("Resource Server" in the OIDC\OAuth terminology)
@@ -23,6 +24,7 @@ JWTs are in use in various scenarios:
 ## How is a JWT structured
 
 A JWT has three parts:
+
 - The header
 - The payload
 - The signature
