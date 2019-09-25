@@ -76,7 +76,7 @@ Let's see the claims for `svc-a` - the service account we just created:
 
 ```shell
 CLAIMS=$(kubectl exec test-pod cat /var/run/secrets/kubernetes.io/serviceaccount/token | cut -d. -f2)
-PADDING_LEN=$(( (  4 - ( ${#CLAIMS} % 4 )  ) % 4 ))
+PADDING_LEN=$(( 4 - ( ${#CLAIMS} % 4 ) ))
 PADDING=$(head -c $PADDING_LEN /dev/zero | tr '\0' =)
 PADDED_CLAIMS="${CLAIMS}${PADDING}"
 # Note: jq makes the output easier to read. It can be ommited if you do not have it installed
