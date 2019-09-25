@@ -12,7 +12,7 @@ authentication server. To support this use case, the application server verifyin
 be setup with a private key for verification - JWTs signed by that key will be verified by the
 application server. Those who are not will be rejected (usually via an HTTP 401 response code).
 
-JWTs are in use in various scenarios:
+JWTs are useful in various scenarios, such as:
 
 - OpenID Connect's id_token is a JWT. The id_token is used to identify the End User (Resource Owner 
   in the OIDC/OAuth terminology) and is usually sent by the client (phone app or web-browser) to
