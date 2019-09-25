@@ -56,7 +56,7 @@ Gloo supports JWT verification using the JWT extension. You can define multiple 
 In each provider you can specify where to find the keys required for JWT verification, the 
 values for the issuer and audience claims to verify, as well as [other settings](../../../../v1/github.com/solo-io/solo-projects/projects/gloo/api/v1/plugins/jwt/jwt.proto.sk/#provider).
 
-We have a few guides that go into more details:
+We have a few guides that go into more detail:
 
 - [JWT and Access Control](./access_control) - Demonstrates how to use Gloo as an internal API Gateway
   in a Kubernetes environment. Gloo is used to verify Kuberentes service accounts JWTs and to define
