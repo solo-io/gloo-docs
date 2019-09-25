@@ -48,7 +48,7 @@ The claims are encoded as a JSON object, and then encoded with base64 to form th
 ## How is a JWT Verified
 
 Most commonly asymmetric encryption is used to sign JWTs. To verify them a public key is used. This 
-has the advantage of make verification easy - the public key can be distributed as it is not secret
+has the advantage of making verification easy - the public key can be distributed as it is not secret
 and cannot be used to sign new JWTs. The JWT can be independently verified by anyone using the public key.
 
 ## JWTs in Gloo
