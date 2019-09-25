@@ -36,12 +36,12 @@ signs the header and the payload.
 
 ## How does a JWT Carry Identity Information
 
-Inside the JWT various *claims* are encoded, that provide identity information. A few of standard claims are:
+Inside the JWT various *claims* are encoded; claims provide identity information. A few standard claims are:
 
-- iss - The entity that issued the token
-- sub - Subject of the token. This is usually a user id.
-- aud - The audience the token was issued for. This is an important security feature that makes sure
-        that a token issued for one use cannot be used for other purposes.
+- `iss` - The entity that issued the token
+- `sub` - Subject of the token. This is usually a user id.
+- `aud` - The audience the token was issued for. This is an important security feature that makes sure
+          that a token issued for one use cannot be used for other purposes.
 
 The claims are encoded as a JSON object, and then encoded with base64 to form the payload of the JWT
 
