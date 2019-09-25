@@ -79,7 +79,7 @@ CLAIMS=$(kubectl exec test-pod cat /var/run/secrets/kubernetes.io/serviceaccount
 PADDING_LEN=$(( 4 - ( ${#CLAIMS} % 4 ) ))
 PADDING=$(head -c $PADDING_LEN /dev/zero | tr '\0' =)
 PADDED_CLAIMS="${CLAIMS}${PADDING}"
-# Note: jq makes the output easier to read. It can be ommited if you do not have it installed
+# Note: jq makes the output easier to read. It can be omitted if you do not have it installed
 echo $PADDED_CLAIMS | base64 --decode | jq .
 ```
 The output should look like so:

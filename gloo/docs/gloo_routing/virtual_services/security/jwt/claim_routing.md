@@ -217,7 +217,7 @@ For convenience, we added the `tokenSource` settings so we can pass the token as
 
 get the url for the proxy
 ```
-$GATEWAY_URL=$(glooctl proxy url)
+GATEWAY_URL=$(glooctl proxy url)
 ```
 curl as a solo.io team member:
 ```
