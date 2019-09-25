@@ -59,8 +59,8 @@ values for the issuer and audience claims to verify, as well as [other settings]
 We have a few guides that go into more detail:
 
 - [JWT and Access Control](./access_control) - Demonstrates how to use Gloo as an internal API Gateway
-  in a Kubernetes environment. Gloo is used to verify Kuberentes service accounts JWTs and to define
-  and RBAC policy on what those service accounts are allowed to access.
+  in a Kubernetes environment. Gloo is used to verify Kuberentes service account JWTs and to define
+  an RBAC policy on what those service accounts are allowed to access.
 - [JWT Claim Based Routing](./claim_routing) - Shows a method of using JWT claims to perform routing
-  decisions. This can be used for example, to send your own organization employees to a canary build
-  of your app, while sending other traffic to the primary/production build of the app.
+  decisions. This can be used, for example, to send your own organization employees to a canary build
+  of your app while sending other traffic to the primary/production build of the app.
