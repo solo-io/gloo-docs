@@ -1,6 +1,6 @@
 ---
 title: Tracing Setup
-weight: 45
+weight: 4
 description: Configure Gloo for tracing
 ---
 
