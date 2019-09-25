@@ -46,7 +46,7 @@ URL=$(glooctl proxy url)
 
 Test that everything so far works:
 ```shell script
-curl $URL/api/pets/
+curl "$URL/api/pets/"
 ```
 returns
 ```shell script
