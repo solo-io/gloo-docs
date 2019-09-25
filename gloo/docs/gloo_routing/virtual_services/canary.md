@@ -4,7 +4,7 @@ weight: 5
 description: Reducing the risk of making changes with canary release
 ---
 
-One of the most important capabilities enabled by Gloo is reducing the risk of making changes to your services by controlling what traffic goes to which backend services. The term ["canary release"](https://blog.christianposta.com/deploy/blue-green-deployments-a-b-testing-and-canary-releases/) in this case refers to slowly and iteratively introducing a new deployment into your production environment by putting a "canary" into the environment. The idea with the canary is to test whether the intended changes behave well and without issues when taking a small fraction (think, 1% ) of the traffic. If this canary deployment starts to misbehave (as judged by external metric collection like request throughout or latency) then we immediately roll it back and direct traffic to the last known-working deployment.
+One of the most important capabilities enabled by Gloo is reducing the risk of making changes to your services by controlling what traffic goes to which backend services. The term ["canary release"](https://blog.christianposta.com/deploy/blue-green-deployments-a-b-testing-and-canary-releases/) in this case refers to slowly and iteratively introducing a new deployment into your production environment by putting a "canary" into the environment. The idea with the canary is to test whether the intended changes behave well and without issues when taking a small fraction (think, 1% ) of the traffic. If this canary deployment starts to misbehave (as judged by external metric collection like request throughput or latency) then we immediately roll it back and direct traffic to the last known-working deployment.
 
 ![Canary traffic](/img/solo-canary.png)
 
@@ -15,10 +15,10 @@ This is significantly different than a big bang release where 100% of traffic ge
 ## Canary with Kubernetes
 Kubernetes has an incredibly powerful workload selection mechanism which forms the basis of Kubernetes Services. With Kubernetes Services, we can select which pods belong to a routing group. Using this mechanism, we can include pods from more than one Kubernetes Deployment. We can use this approach to slowly introduce a canary deployment. The drawback for this approach is twofold: 
 
-1. You're % based traffic depends on how many pods you run from each deployment
-2. Out of the box, Kubernetes Services only load balance L4 traffic (new connections)
+1. How fine-grained you can route traffic depends on how many pods you run from each deployment
+2. Out of the box, Kubernetes Services only load-balance L4 traffic (new connections)
 
-With these drawbacks, to achieve 1% traffic routing, you will need 100 pods: 1 with the new (canary) deployment and the other 99 with the existing service. Using an approach with Gloo, you have control down to the request and load-balancing level (not just connection level as in (2)) coming into the cluster. You can have 1 of the new service and 1 of the old service and still achieve 1% request canarying. 
+With these drawbacks, to achieve 1% traffic routing, you will need 100 pods: 1 with the new (canary) deployment and the other 99 with the existing service. Using an approach with Gloo, you have control down to the request and load-balancing level (not just connection level as in **2.**) coming into the cluster. You can have 1 of the new service and 1 of the old service and still achieve 1% request canarying. 
 
 ## Traffic shadowing for Canary
 
@@ -28,7 +28,7 @@ A step you could perform _before_ a percentage based canary of traffic is traffi
 
 ## Canary with Gloo
 
-Gloo supports a very powerful Canary mechanism through [UpstreamGroups]({{< ref "/gloo_routing/virtual_services/routes/route_destinations/multiple_upstreams/upstream_groups/_index.md" >}}) Using [UpstreamGroups]({{< ref "/gloo_routing/virtual_services/routes/route_destinations/multiple_upstreams/upstream_groups/_index.md" >}}) we can specify very fine-grained traffic weight to control request by % of requests. 
+Gloo supports a very powerful Canary mechanism through [UpstreamGroups]({{< ref "/gloo_routing/virtual_services/routes/route_destinations/multiple_upstreams/upstream_groups/_index.md" >}}). Using `UpstreamGroups` we can specify very fine-grained traffic weight to control request by % of requests. 
 
 ## Canary with Gloo+Flagger
 

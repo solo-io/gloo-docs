@@ -6,7 +6,7 @@ weight: 30
 ## **What is a Web Application Firewall (WAF)**
 A web application firewall (WAF) protects web applications by monitoring, filtering and blocking potentially harmful traffic and attacks that can overtake or exploit them. WAFs do this by intercepting and inspecting the network packets and uses a set of rules to determine access to the web application. In enterprise security infrastructure, WAFs can be deployed to an application or group of applications to provide a layer of protection between the applications and the end users.
 
-Gloo now suppports The popular Web Appplication Firewall framework/ruleset [ModSecurity](https://www.modsecurity.org/) 3.0.3.
+Gloo now supports the popular Web Appplication Firewall framework/ruleset [ModSecurity](https://www.modsecurity.org/) 3.0.3.
 
 ## **WAF in Gloo**
 Gloo Enterprise now includes the ability to enable the ModSecurity Web Application Firewall for any incoming and outgoing HTTP connections. The OWASP Core Rule Set is included by default and can be toggled on and off easily, as well as the ability to add or create custom rule sets. More information on the rule sets, and the rules language generally can be found [here](https://www.modsecurity.org/rules.html).
