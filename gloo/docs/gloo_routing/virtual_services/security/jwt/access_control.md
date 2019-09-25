@@ -443,12 +443,12 @@ The kubernetes api server will proxy traffic going to `/api/v1/namespaces/gloo-s
 
 A request without a token should be rejected (will output *Jwt is missing*):
 ```shell
-curl -s 'localhost:8001/api/v1/namespaces/gloo-system/services/gateway-proxy-v2:80/proxy/api/pets'
+curl -s "localhost:8001/api/v1/namespaces/gloo-system/services/gateway-proxy-v2:80/proxy/api/pets"
 ```
 
 A request with a token should be accepted:
 ```shell
-curl -s 'localhost:8001/api/v1/namespaces/gloo-system/services/gateway-proxy-v2:80/proxy/api/pets?access_token=$(cat token.jwt)'
+curl -s "localhost:8001/api/v1/namespaces/gloo-system/services/gateway-proxy-v2:80/proxy/api/pets?access_token=$(cat token.jwt)"
 ```
 ### Conclusion
 We have created a JWKS server, signed a custom JWT and used Gloo to verify that JWT
