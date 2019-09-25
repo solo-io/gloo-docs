@@ -9,9 +9,9 @@ description: JWT verification and Access Control (without an external auth serve
 We will use the following utilities
 
 - minikube
-- jq (optional)
-- tr, python (for text transformations)
-- glooctl enterprise version v0.13.16 or later.
+- `jq` (optional)
+- `tr`, python (for text transformations)
+- `glooctl` enterprise version v0.13.16 or later.
 
 ## Initial setup
 
