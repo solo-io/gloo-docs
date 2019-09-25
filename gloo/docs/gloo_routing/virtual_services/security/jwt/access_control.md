@@ -364,7 +364,7 @@ returns
 }
 {{< /highlight >}}
 
-We now have a valid Json Web Key Set (JWKS). Save this into a file called `jwks.json`.
+We now have a valid Json Web Key Set (JWKS), saved into a file called `jwks.json`.
 
 ### Create JWKS Server
 
@@ -397,7 +397,7 @@ kubectl patch virtualservice --namespace gloo-system default --type=merge -p '{"
 
 ### Create the Json Web Token (JWT)
 
-We need have everything we need to sign and verify a custom JWT with our custom claims.
+We have everything we need to sign and verify a custom JWT with our custom claims.
 We will use the [jwt.io](https://jwt.io) debugger to do so easily.
 
 - Go to https://jwt.io.
