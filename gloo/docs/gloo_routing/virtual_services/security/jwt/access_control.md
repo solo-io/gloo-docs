@@ -41,12 +41,12 @@ Install the petstore demo app, add a route, and test that everything so far work
 ```shell
 kubectl apply -f https://raw.githubusercontent.com/sololabs/demos2/master/resources/petstore.yaml
 glooctl add route --name default --namespace gloo-system --path-prefix / --dest-name default-petstore-8080 --dest-namespace gloo-system
-URL=$(glooctl proxy url)
+GATEWAY_URL=$(glooctl proxy url)
 ```
 
 Test that everything so far works:
 ```shell script
-curl "$URL/api/pets/"
+curl "$GATEWAY_URL/api/pets/"
 ```
 returns
 ```shell script
