@@ -15,8 +15,8 @@ application server. Those who are not will be rejected (usually via an HTTP 401 
 JWTs are in use in various scenarios:
 
 - OpenID Connect's id_token is a JWT. The id_token is used to identify the End User (Resource Owner 
-  in the OIDC\OAuth terminology) and is usually sent by the client (phone app or web-browser) to
-  the cloud back-end ("Resource Server" in the OIDC\OAuth terminology)
+  in the OIDC/OAuth terminology) and is usually sent by the client (phone app or web-browser) to
+  the cloud back-end ("Resource Server" in the OIDC/OAuth terminology)
 - Kubernetes uses JWT as service accounts secrets within Pods. A program running in a Pod can
   use this JWT to authenticate with the Kuberenetes API server with the permissions of the 
   service account.
@@ -63,4 +63,4 @@ We have a few guides that go into more details:
   and RBAC policy on what those service accounts are allowed to access.
 - [JWT Claim Based Routing](./claim_routing) - Shows a method of using JWT claims to perform routing
   decisions. This can be used for example, to send your own organization employees to a canary build
-  of your app, while sending other traffic to the primary \ production build of the app.
+  of your app, while sending other traffic to the primary/production build of the app.

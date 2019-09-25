@@ -16,7 +16,7 @@ You will need:
 ## Setup
 
 ### Generate JWTs
-If you would like to generate your own JWTs, create a private\public key pair.
+If you would like to generate your own JWTs, create a private/public key pair.
 ```shell
 openssl genrsa 2048 > private-key.pem
 openssl rsa -in private-key.pem -pubout > public-key.pem
