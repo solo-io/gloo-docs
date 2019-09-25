@@ -49,7 +49,7 @@ Test that everything so far works:
 curl "$GATEWAY_URL/api/pets/"
 ```
 returns
-```shell script
+```json
 [{"id":1,"name":"Dog","status":"available"},{"id":2,"name":"Cat","status":"pending"}]
 ```
 
