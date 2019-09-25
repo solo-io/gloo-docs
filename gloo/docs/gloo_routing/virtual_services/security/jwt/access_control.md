@@ -253,7 +253,7 @@ An authenticated GET request to that start with /api/pets should succeed:
 kubectl exec test-pod -- bash -c 'curl -s http://gateway-proxy-v2.gloo-system/api/pets/1 -H "Authorization: Bearer $(cat /var/run/secrets/kubernetes.io/serviceaccount/token)"'
 ```
 
-An authenticated POST request to that start with /api/pets should fail (will output *RBAC: access denied*):
+An authenticated POST request to a path that starts with `/api/pets` should fail (will output *RBAC: access denied*):
 ```shell
 kubectl exec test-pod -- bash -c 'curl -s -X POST http://gateway-proxy-v2.gloo-system/api/pets/1 -H "Authorization: Bearer $(cat /var/run/secrets/kubernetes.io/serviceaccount/token)"'
 ```
