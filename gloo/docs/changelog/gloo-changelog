@@ -1,3 +1,15 @@
+### v0.19.2
+
+**New Features**
+
+- Allow using IAM credentials with AWS Upstreams (https://github.com/solo-io/gloo/issues/680)
+- Update enterprise API to have strongly-typed JWT & RBAC config; deprecated opaque extensions config still supported (https://github.com/solo-io/gloo/issues/1171)
+
+**Fixes**
+
+- Fix glooctl version output formatting. (https://github.com/solo-io/gloo/issues/1243)
+- The grafana and prometheus pods are now installed to the correct gloo system namespace instead of default (https://github.com/solo-io/solo-projects/issues/1146)
+
 ### v0.19.1
 
 **New Features**
