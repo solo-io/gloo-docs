@@ -76,10 +76,11 @@ You can define authentication configuration your Virtual Services at three diffe
 
 The configuration format is the same in all three cases. It must be specified under the relevant `plugins` attribute 
 (`VirtualHostPlugins`, `RoutePlugins`, or `WeightedDestinationPlugins`) and can take one of two forms. 
-The first is use to enable authentication and requires you to reference an existing `AuthConfig`:
+The first is used to enable authentication and requires you to reference an existing `AuthConfig`. An example Virtual Host 
+configuration of this kind is the following:
 
 ```yaml
-(virtualHost|route|weightedDestination)Plugins:
+virtualHostPlugins:
   extensions:
     configs:
       extauth:
@@ -89,10 +90,12 @@ The first is use to enable authentication and requires you to reference an exist
           namespace: gloo-system
 ```
 
+In case of a route or weighted destination the top attribute would be names `routePlugins` and `weightedDestinationPlugins` respectively.
+
 The second form is used to explicitly disable authentication:
 
 ```yaml
-(virtualHost|route|weightedDestination)Plugins:
+virtualHostPlugins: #  use `routePlugins` or `weightedDestinationPlugins` for routes or weighted destinations respectively
   extensions:
     configs:
       extauth:

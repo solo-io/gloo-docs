@@ -45,7 +45,7 @@ spec:
                     hashedPassword: "8BvzLUO9IfGPGGsPnAgSu1"
 {{< /highlight >}}
 
-On a **Route** level, it was only possible to opt out of auth configurations specified on parent Virtual Hosts:
+On a **Route** level, it is only possible to opt out of auth configurations specified on parent Virtual Hosts:
 
 {{< highlight yaml "hl_lines=25-29" >}}
 apiVersion: gateway.solo.io/v1
