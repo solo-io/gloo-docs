@@ -181,7 +181,7 @@ When a request matches on a route, the route can perform one of the following ac
 - *Route* the request to a destination
 - Reply with a *Direct Response*
 - Send a *Redirect* response to the client
-- *Delegate* the action for the request to a top-level [`RouteTable`]({{< ref "/v1/github.com/solo-io/gloo/projects/gateway/api/v1/route_table.proto.sk.md" >}}) resource
+- *Delegate* the action for the request to a top-level [`RouteTable`]({{< ref "/api/github.com/solo-io/gloo/projects/gateway/api/v1/route_table.proto.sk.md" >}}) resource
 DelegateActions can be used to delegate the behavior for a set out routes with a given *prefix* to
 a top-level `RouteTable` resource.
 
