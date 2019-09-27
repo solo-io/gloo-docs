@@ -1,6 +1,6 @@
 ---
 title: "Developer Guides"
-weight: 1000
+weight: 100
 ---
 
 ## Intro
