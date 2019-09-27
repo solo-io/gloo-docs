@@ -1,3 +1,28 @@
+### v0.19.0
+
+**Dependency Bumps**
+
+- solo-io/envoy-gloo-ee has been upgraded to v0.1.17.
+- solo-io/gloo has been upgraded to v0.19.1.
+- solo-io/ext-auth-service has been upgraded to v0.6.0.
+- solo-io/go-utils has been upgraded to v0.10.8.
+
+**Breaking Changes**
+
+- Implement the [new external auth API](https://github.com/solo-io/gloo/pull/1186) to support configuring authentication/authorization on **routes and weighted destinations**, in addition to virtual hosts. (https://github.com/solo-io/gloo/issues/1201)
+
+**New Features**
+
+- Expose some ext auth stats in the built-in envoy grafana dashboard (https://github.com/solo-io/solo-projects/issues/1151)
+- Support new jwt/rbac API location; continue support for deprecated jwt/rbac config in opaque extensions (https://github.com/solo-io/gloo/issues/1171)
+- Support strongly-typed waf config directly on listener/vhost/route (https://github.com/solo-io/gloo/issues/1171)
+
+**Fixes**
+
+- Make sure that the extauth binaries get copied from the Docker container, even when running Docker in a VM context (https://github.com/solo-io/solo-projects/issues/1080)
+- Make sure that all observability-related pods get cleaned up by glooctl uninstall (https://github.com/solo-io/solo-projects/issues/1157)
+- Fix core rule set bug where specific config is applied after general config (https://github.com/solo-io/solo-projects/issues/1139)
+
 ### v0.18.32
 
 **Dependency Bumps**
