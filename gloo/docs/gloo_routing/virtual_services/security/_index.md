@@ -74,9 +74,9 @@ You can define authentication configuration your Virtual Services at three diffe
 - on **Routes**, and
 - on **WeightedDestinations**.
 
-The configuration format is the same in all three cases and can take one of two forms. It must be specified under the 
-relevant `plugins` attribute (`VirtualHostPlugins`, `RoutePlugins`, or `WeightedDestinationPlugins`) and can take one 
-of two forms. To enable authentication you must reference an existing `AuthConfig`:
+The configuration format is the same in all three cases. It must be specified under the relevant `plugins` attribute 
+(`VirtualHostPlugins`, `RoutePlugins`, or `WeightedDestinationPlugins`) and can take one of two forms. 
+The first is use to enable authentication and requires you to reference an existing `AuthConfig`:
 
 ```yaml
 (virtualHost|route|weightedDestination)Plugins:
