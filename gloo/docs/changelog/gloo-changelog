@@ -1,3 +1,9 @@
+### v0.20.1
+
+**Fixes**
+
+- When deploying OS gloo with the admin console, use a known version for the chart that packages the read-only UI, which is versioned with enterprise Gloo, instead of looking for the current open source version. (https://github.com/solo-io/gloo/issues/1278)
+
 ### v0.20.0
 
 **Breaking Changes**
