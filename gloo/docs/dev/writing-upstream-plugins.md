@@ -6,7 +6,7 @@ weight: 5
 
 ## Intro
 
-Gloo uses the [v1.Upstream]({{< ref "/v1/github.com/solo-io/gloo/projects/gloo/api/v1/upstream.proto.sk.md">}}) config object to define routable destinations for Gloo. These are converted inside Gloo
+Gloo uses the [v1.Upstream]({{< ref "/api/github.com/solo-io/gloo/projects/gloo/api/v1/upstream.proto.sk.md">}}) config object to define routable destinations for Gloo. These are converted inside Gloo
 
 This tutorial will show how we can add an *Upstream Plugin* to Gloo to extend Gloo with service discovery data.
 
@@ -39,7 +39,7 @@ Let's begin.
 
 ## Adding the new Upstream Type to Gloo's API
 
-The first step we'll take will be to add a new [**UpstreamType**]({{< ref "/v1/github.com/solo-io/gloo/projects/gloo/api/v1/upstream.proto.sk.md#upstreamspec" >}}) to Gloo. 
+The first step we'll take will be to add a new [**UpstreamType**]({{< ref "/api/github.com/solo-io/gloo/projects/gloo/api/v1/upstream.proto.sk.md#upstreamspec" >}}) to Gloo. 
 
 All of Gloo's APIs are defined as protobuf files (`.proto`). The list of Upstream Types live in the [plugins.proto](https://github.com/solo-io/gloo/blob/master/projects/gloo/api/v1/plugins.proto) file, where Gloo's core API objects (Upstream, Virtual Service, Proxy, Gateway) are bound to plugin-specific configuration.
 

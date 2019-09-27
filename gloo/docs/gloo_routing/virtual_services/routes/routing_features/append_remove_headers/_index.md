@@ -8,9 +8,9 @@ description: Append and Remove Headers from Requests and Responses using Route c
 Gloo can add and remove headers to/from requests and responses. We refer to this feature as "Header Manipulation".
 
 Header Manipulation is configured via the 
-[`headerManipulation`]({{% ref "/v1/github.com/solo-io/gloo/projects/gloo/api/v1/plugins/headers/headers.proto.sk.md#headermanipulation" %}}) struct.
+[`headerManipulation`]({{% ref "/api/github.com/solo-io/gloo/projects/gloo/api/v1/plugins/headers/headers.proto.sk.md#headermanipulation" %}}) struct.
 
-This struct can be added to [Route Plugins]({{% ref "/v1/github.com/solo-io/gloo/projects/gloo/api/v1/plugins.proto.sk.md#routeplugins" %}}), [Virtual Host Plugins]({{% ref "/v1/github.com/solo-io/gloo/projects/gloo/api/v1/plugins.proto.sk.md#virtualhostplugins" %}}), and [Weighted Destination Plugins]({{% ref "/v1/github.com/solo-io/gloo/projects/gloo/api/v1/plugins.proto.sk.md#weighteddestinationplugins" %}}).
+This struct can be added to [Route Plugins]({{% ref "/api/github.com/solo-io/gloo/projects/gloo/api/v1/plugins.proto.sk.md#routeplugins" %}}), [Virtual Host Plugins]({{% ref "/api/github.com/solo-io/gloo/projects/gloo/api/v1/plugins.proto.sk.md#virtualhostplugins" %}}), and [Weighted Destination Plugins]({{% ref "/api/github.com/solo-io/gloo/projects/gloo/api/v1/plugins.proto.sk.md#weighteddestinationplugins" %}}).
 
 The `headerManipulation` struct contains four optional fields `requestHeadersToAdd`, `requestHeadersToRemove`,  `responseHeadersToAdd`, and `responseHeadersToRemove` :
 

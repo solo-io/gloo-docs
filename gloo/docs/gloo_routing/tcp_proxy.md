@@ -12,8 +12,8 @@ of the relative simplicity of TCP level routing. Current features include standa
 
 For reference on  the 
 
-- [Gateway]({{% ref "/v1/github.com/solo-io/gloo/projects/gateway/api/v2/gateway.proto.sk" %}})
-- [Proxy]({{% ref "/v1/github.com/solo-io/gloo/projects/gloo/api/v1/proxy.proto.sk" %}})
+- [Gateway]({{% ref "/api/github.com/solo-io/gloo/projects/gateway/api/v2/gateway.proto.sk" %}})
+- [Proxy]({{% ref "/api/github.com/solo-io/gloo/projects/gloo/api/v1/proxy.proto.sk" %}})
 
 ### What you'll need
 
@@ -59,9 +59,9 @@ EOF
 
 Once the `tcp-echo` pod is up and running we are ready to create our gateway resource and begin routing to it.
 
-As of vesion v2 of the [gateway]({{% ref "/v1/github.com/solo-io/gloo/projects/gateway/api/v2/gateway.proto.sk" %}}) 
+As of vesion v2 of the [gateway]({{% ref "/api/github.com/solo-io/gloo/projects/gateway/api/v2/gateway.proto.sk" %}}) 
 resource, it now supports 2 different types, those being HTTP, and TCP. 
-The [proxy]({{% ref "/v1/github.com/solo-io/gloo/projects/gloo/api/v1/proxy.proto.sk" %}}) resource has been extended as well with
+The [proxy]({{% ref "/api/github.com/solo-io/gloo/projects/gloo/api/v1/proxy.proto.sk" %}}) resource has been extended as well with
 the TCP listener type. This is not a breaking change and therefore does not require an API upgrade. 
 
 The gateway will contain the following: 

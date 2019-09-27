@@ -16,7 +16,7 @@ This document describes how to write configuration YAML to Consul's Key-Value st
 ## Configuring Gloo using custom Settings
 
 When Gloo boots, it attempts to read a 
-[`v1.Settings`]({{< ref "/v1/github.com/solo-io/gloo/projects/gloo/api/v1/settings.proto.sk.md" >}}) resource from a 
+[`v1.Settings`]({{< ref "/api/github.com/solo-io/gloo/projects/gloo/api/v1/settings.proto.sk.md" >}}) resource from a 
 preconfigured location. By default, Gloo will attempt to connect to a Kubernetes cluster and look up the `gloo.solo.io/v1.Settings`
 Custom Resource in namespace `gloo-system`, named `default`. 
 
@@ -45,7 +45,7 @@ The default namespace for Gloo is `gloo-system`. This can be overridden with the
 ## Customizing the Gloo Settings file
 
 The full list of options for Gloo Settings, including the ability to set auth/TLS parameters for Consul can be found
-[`in the v1.Settings API reference`]({{< ref "/v1/github.com/solo-io/gloo/projects/gloo/api/v1/settings.proto.sk.md" >}}).
+[`in the v1.Settings API reference`]({{< ref "/api/github.com/solo-io/gloo/projects/gloo/api/v1/settings.proto.sk.md" >}}).
 
 Here is provided an example Settings so Gloo will read config from Consul Key-Value store:
 
@@ -96,7 +96,7 @@ status: {}
 
 ## Writing Config Objects to Consul
 
-Consul Values should be written using Gloo-style YAML, whose structure is described in the [`API Reference`]({{< ref "/v1/_index.md" >}}).
+Consul Values should be written using Gloo-style YAML, whose structure is described in the [`API Reference`]({{< ref "/api" >}}).
 
 `glooctl` provides a convenience to get started writing Gloo resources for use with Consul.
 
@@ -145,9 +145,9 @@ Consul keys adhere to the following format:
 Where:
 
 - `root key`: is the `rootKey` configured in the Settings `consulKvSource`. Defaults to `gloo`
-- `resource group`: is the API group/proto package in which resources of the given type are contained. For example, [Gloo Upstreams]({{< ref "/v1/github.com/solo-io/gloo/projects/gloo/api/v1/upstream.proto.sk.md" >}}) have the resource group `gloo.solo.io`.
-- `group version`: is the API group version/go package in which resources of the given type are contained. For example, [Gloo Upstreams]({{< ref "/v1/github.com/solo-io/gloo/projects/gloo/api/v1/upstream.proto.sk.md" >}}) have the resource group version `v1`.
-- `resource kind`: is the full name of the resource type. For example, [Gloo Upstreams]({{< ref "/v1/github.com/solo-io/gloo/projects/gloo/api/v1/upstream.proto.sk.md" >}}) have the resource kind `Upstream`.
+- `resource group`: is the API group/proto package in which resources of the given type are contained. For example, [Gloo Upstreams]({{< ref "/api/github.com/solo-io/gloo/projects/gloo/api/v1/upstream.proto.sk.md" >}}) have the resource group `gloo.solo.io`.
+- `group version`: is the API group version/go package in which resources of the given type are contained. For example, [Gloo Upstreams]({{< ref "/api/github.com/solo-io/gloo/projects/gloo/api/v1/upstream.proto.sk.md" >}}) have the resource group version `v1`.
+- `resource kind`: is the full name of the resource type. For example, [Gloo Upstreams]({{< ref "/api/github.com/solo-io/gloo/projects/gloo/api/v1/upstream.proto.sk.md" >}}) have the resource kind `Upstream`.
 - `resource namespace`: is the namespace in which the resource should live. this should match the `metadata.namespace` of the resource YAML.
 - `resource name`: is the name of the given resource. this should match the `metadata.name` of the resource YAML, and should be unique for all resources of a type within a given namespace.
 
@@ -155,10 +155,10 @@ The paths for Gloo's API objects are as follows:
 
 | Resource | Key |
 | ----- | ---- | 
-| [Upstreams]({{< ref "/v1/github.com/solo-io/gloo/projects/gloo/api/v1/upstream.proto.sk.md" >}}) | `gloo/gloo.solo.io/v1/Upstream/<namespace>/<name>`  |
-| [Virtual Services]({{< ref "/v1/github.com/solo-io/gloo/projects/gateway/api/v1/virtual_service.proto.sk.md" >}}) | `gloo/gateway.solo.io/v1/VirtualService/<namespace>/<name>`  |
-| [Gateways]({{< ref "/v1/github.com/solo-io/gloo/projects/gateway/api/v2/gateway.proto.sk.md" >}}) | `gloo/gateway.solo.io.v2/v2/Gateway/<namespace>/<name>`  |
-| [Proxies]({{< ref "/v1/github.com/solo-io/gloo/projects/gloo/api/v1/proxy.proto.sk.md" >}}) | `gloo/gloo.solo.io/v1/Proxy/<namespace>/<name>`  |
+| [Upstreams]({{< ref "/api/github.com/solo-io/gloo/projects/gloo/api/v1/upstream.proto.sk.md" >}}) | `gloo/gloo.solo.io/v1/Upstream/<namespace>/<name>`  |
+| [Virtual Services]({{< ref "/api/github.com/solo-io/gloo/projects/gateway/api/v1/virtual_service.proto.sk.md" >}}) | `gloo/gateway.solo.io/v1/VirtualService/<namespace>/<name>`  |
+| [Gateways]({{< ref "/api/github.com/solo-io/gloo/projects/gateway/api/v2/gateway.proto.sk.md" >}}) | `gloo/gateway.solo.io.v2/v2/Gateway/<namespace>/<name>`  |
+| [Proxies]({{< ref "/api/github.com/solo-io/gloo/projects/gloo/api/v1/proxy.proto.sk.md" >}}) | `gloo/gloo.solo.io/v1/Proxy/<namespace>/<name>`  |
 
 To store a Gloo resource in Consul, one can use `curl` or the `consul` CLI:
 
