@@ -1,3 +1,18 @@
+### v0.20.0
+
+**Breaking Changes**
+
+- require parent route prefix to be present in delegated routes (https://github.com/solo-io/gloo/pull/1262)
+
+**New Features**
+
+- The default version of GlooE installed by the CLI is now 0.19.0. (https://github.com/solo-io/gloo/issues/1272)
+- Update enterprise API to support strongly typed external auth configurations in settings, virtual hosts, routes, and weighted destinations. The current format based on opaque extensions has been deprecated but is still fully supported. (https://github.com/solo-io/gloo/issues/1171)
+
+**Fixes**
+
+- Remove the grafana and prometheus pods on uninstall (https://github.com/solo-io/solo-projects/issues/1157)
+
 ### v0.19.2
 
 **New Features**
