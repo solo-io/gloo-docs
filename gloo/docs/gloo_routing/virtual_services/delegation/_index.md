@@ -280,7 +280,7 @@ And would result in the following Proxy:
 {{<mermaid align="left">}}
 graph LR;
 
-    px{Proxy <br> <br> <code>*.petclinic.com</code>}
+    px{Proxy <br> <br> <code>any.com</code>}
     
     style px fill:#0DFFDD,stroke:#333,stroke-width:4px
     
