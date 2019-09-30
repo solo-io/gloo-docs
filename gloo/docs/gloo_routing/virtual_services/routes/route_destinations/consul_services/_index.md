@@ -5,7 +5,7 @@ description: Routing to services that are registered in Consul service-discovery
 ---
 
 Gloo is capable of discovering services registered with [HashiCorp Consul](https://www.hashicorp.com/products/consul/). 
-If this feature has been enabled via the `serviceDiscovery` field in the [ConsulConfiguration]({{% ref "/v1/github.com/solo-io/gloo/projects/gloo/api/v1/settings.proto.sk#consulconfiguration" %}}) 
+If this feature has been enabled via the `serviceDiscovery` field in the [ConsulConfiguration]({{% ref "/api/github.com/solo-io/gloo/projects/gloo/api/v1/settings.proto.sk#consulconfiguration" %}}) 
 section of the `Settings` resource, it is possible to specify Consul services as routing destinations.
 
 A single Consul service usually maps to several service instances, which can have distinct sets of tags, listen on 
@@ -47,7 +47,7 @@ get when querying Consul for a service with a given name:
 ]
 ```
 
-The [`consul` destination type]({{% ref "/v1/github.com/solo-io/gloo/projects/gloo/api/v1/proxy.proto.sk#consulservicedestination" %}}) 
+The [`consul` destination type]({{% ref "/api/github.com/solo-io/gloo/projects/gloo/api/v1/proxy.proto.sk#consulservicedestination" %}}) 
 allows you to target a subset of these service instances via the optional `tags` and `dataCenters` fields. Gloo will 
 detect the correspondent IP addresses and ports and load balance traffic between them. 
 

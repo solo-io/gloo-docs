@@ -37,7 +37,7 @@ curl "$(glooctl proxy url)/api/pets/"
 
 When using an HTTP auth service, the request will be forwarded to the authentication service. If the
 auth service returns `200 OK` it is considered authorized. Otherwise the request is denied.
-You can fine tune which headers are sent to the the auth service, and wether or not the body is forwarded as well, by editing the [extauth extension](/v1/github.com/solo-io/solo-projects/projects/gloo/api/v1/plugins/extauth/extauth.proto.sk/#settings) settings in the Gloo settings (see [below](#configure-gloo-settings) for an example of the Gloo settings with the extension settings).
+You can fine tune which headers are sent to the the auth service, and wether or not the body is forwarded as well, by editing the [extauth extension](/api/github.com/solo-io/solo-projects/projects/gloo/api/v1/plugins/extauth/extauth.proto.sk/#settings) settings in the Gloo settings (see [below](#configure-gloo-settings) for an example of the Gloo settings with the extension settings).
 
 For reference, here's the code for the authorization server used in this tutorial:
 
@@ -121,7 +121,7 @@ spec:
   refreshRate: 60s
 {{< /highlight >}}
 
-More details about the `httpService` object are available [here](/v1/github.com/solo-io/solo-projects/projects/gloo/api/v1/plugins/extauth/extauth.proto.sk#httpservice). For example, if you want to copy some of the request headers to your custom auth server
+More details about the `httpService` object are available [here](/api/github.com/solo-io/solo-projects/projects/gloo/api/v1/plugins/extauth/extauth.proto.sk#httpservice). For example, if you want to copy some of the request headers to your custom auth server
 you would do something like the following example that will pass the `X-foo` request header to the auth server.
 
 {{< highlight yaml "hl_lines=15-18" >}}

@@ -6,13 +6,13 @@ description: Routing to subsets of an upstream
 
 ## Subset
 
-[Subset]({{% ref "/v1/github.com/solo-io/gloo/projects/gloo/api/v1/subset.proto.sk#subset" %}}) currently lets you
+[Subset]({{% ref "/api/github.com/solo-io/gloo/projects/gloo/api/v1/subset.proto.sk#subset" %}}) currently lets you
 provide a Kubernetes selector to allow request forwarding to a subset of Kubernetes Pods within the upstream associated
 Kubernetes Service. There are currently two steps required to get subsetting to work for Kubernetes upstreams, which are
 the only upstream type currently supported. 
 
-**First**, you need to edit the [Spec]({{% ref "/v1/github.com/solo-io/gloo/projects/gloo/api/v1/plugins/kubernetes/kubernetes.proto.sk" %}})
-of the Kubernetes Upstream that you want to define subsets for by adding a [`subsetSpec`]({{% ref "/v1/github.com/solo-io/gloo/projects/gloo/api/v1/plugins/subset_spec.proto.sk#subsetspec" %}}). 
+**First**, you need to edit the [Spec]({{% ref "/api/github.com/solo-io/gloo/projects/gloo/api/v1/plugins/kubernetes/kubernetes.proto.sk" %}})
+of the Kubernetes Upstream that you want to define subsets for by adding a [`subsetSpec`]({{% ref "/api/github.com/solo-io/gloo/projects/gloo/api/v1/plugins/subset_spec.proto.sk#subsetspec" %}}). 
 The `subsetSpec` contains a list of `selectors`, each of which consist of a set of `keys`. Each key represents a Kubernetes 
 label key. These selectors determine how the subsets for the upstream are to be calculated. For example, the following 
 `subsetSpec`:
@@ -32,8 +32,8 @@ labels, and on the value of the `size` label alone. Envoy requires this informat
 that it needs to compute. The [Envoy documentation](https://github.com/envoyproxy/envoy/blob/master/source/docs/subset_load_balancer.md) 
 contains a great explanation of how on subset load balancing works and we strongly recommend that you read it if you plan to use this feature.
 
-**Second**, you need to add a [`subset`]({{% ref "/v1/github.com/solo-io/gloo/projects/gloo/api/v1/subset.proto.sk#subset" %}})
-within the [`Destination` spec]({{% ref "/v1/github.com/solo-io/gloo/projects/gloo/api/v1/proxy.proto.sk#destination" %}})
+**Second**, you need to add a [`subset`]({{% ref "/api/github.com/solo-io/gloo/projects/gloo/api/v1/subset.proto.sk#subset" %}})
+within the [`Destination` spec]({{% ref "/api/github.com/solo-io/gloo/projects/gloo/api/v1/proxy.proto.sk#destination" %}})
 of the Route Action. This will determine which of the upstream subsets should be selected as destination for this route.
 
 Following is an example of using a label, e.g. `color: blue`, to subset pods handling requests.
