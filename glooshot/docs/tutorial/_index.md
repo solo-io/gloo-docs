@@ -28,8 +28,8 @@ ratings data is not available.
 
 To follow this demo, you will need the following:
 
-- `glooshot` [(download)](https://github.com/solo-io/glooshot/releases) command line tool, v0.0.4 or greater
-- `supergloo` [(download)](https://supergloo.solo.io/installation/) command line tool, v0.3.18 or greater, for simplified mesh management during the tutorial.
+- `glooshot` [(download)](https://github.com/solo-io/glooshot/releases) command line tool, v0.0.5
+- `supergloo` [(download)](https://supergloo.solo.io/installation/) command line tool, v0.3.18, for simplified mesh management during the tutorial.
 - `kubectl` [(download)](https://kubernetes.io/docs/tasks/tools/install-kubectl/)
 - A Kubernetes cluster - [minikube](https://kubernetes.io/docs/tasks/tools/install-minikube/#install-minikube) will do
 
