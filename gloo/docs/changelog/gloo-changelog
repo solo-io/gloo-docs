@@ -1,3 +1,19 @@
+### v0.20.2
+
+**New Features**
+
+- Flatten enterprise RBAC config by removing useless 'config' nesting from new (not-yet documented/supported) strongly-typed API; deprecated opaque RBAC API unchanged and still supported. Also add ability to disable RBAC on vhosts in strongly-typed API (routes already supported in deprecated config) (https://github.com/solo-io/gloo/issues/1171)
+- Flatten ratelimit config by creating v2 version of settings (https://github.com/solo-io/gloo/issues/1171)
+- Flatten strongly-typed WAF config (https://github.com/solo-io/gloo/issues/1171)
+- Gloo can now report warnings on resources for certain types of invalid configuration. (https://github.com/solo-io/gloo/issues/1290)
+
+**Fixes**
+
+- Better implementation to flatten ratelimit API; use more intuitive name for service settings rather than a v2 (https://github.com/solo-io/gloo/issues/1171)
+- Fix issue where gloo validation server does not restart properly (https://github.com/solo-io/gloo/issues/1296)
+- Add `weighted_destination_plugins` field to `WeightedDestination` object. The previous `weighed_destination_plugins` (no "t") has been deprecated and is still supported. (https://github.com/solo-io/gloo/issues/1307)
+- Fix reporting on Route Tables (https://github.com/solo-io/gloo/issues/1291)
+
 ### v0.20.1
 
 **Fixes**

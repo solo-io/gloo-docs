@@ -18,6 +18,7 @@ weight: 5
 - [Settings](#settings)
 - [EnvoySettings](#envoysettings)
 - [RateLimitCustomConfig](#ratelimitcustomconfig)
+- [ServiceSettings](#servicesettings)
 - [RateLimitActions](#ratelimitactions)
 - [RateLimitVhostExtension](#ratelimitvhostextension)
 - [RateLimitRouteExtension](#ratelimitrouteextension)
@@ -44,7 +45,8 @@ weight: 5
 ---
 ### Descriptor
 
-
+ 
+Descriptors can be nested for your convenience and flexibility
 
 ```yaml
 "key": string
@@ -102,7 +104,8 @@ weight: 5
 ---
 ### IngressRateLimit
 
-
+ 
+Basic rate-limiting API
 
 ```yaml
 "authorizedLimits": .ratelimit.plugins.gloo.solo.io.RateLimit
@@ -142,7 +145,8 @@ weight: 5
 ---
 ### EnvoySettings
 
-
+ 
+TODO(kdorosh) remove this when we stop supporting opaque rate limit configuration
 
 ```yaml
 "customConfig": .ratelimit.plugins.gloo.solo.io.EnvoySettings.RateLimitCustomConfig
@@ -174,6 +178,39 @@ weight: 5
 
 
 ---
+### ServiceSettings
+
+ 
+API based on Envoy's rate-limit service API. (reference here: https://github.com/lyft/ratelimit#configuration)
+Sample configuration below
+
+descriptors:
+- key: account_id
+ descriptors:
+ - key: plan
+   value: BASIC
+   rateLimit:
+     requestsPerUnit: 1
+     unit: MINUTE
+ - key: plan
+   value: PLUS
+   rateLimit:
+     requestsPerUnit: 20
+     unit: MINUTE
+
+```yaml
+"descriptors": []ratelimit.plugins.gloo.solo.io.Descriptor
+
+```
+
+| Field | Type | Description | Default |
+| ----- | ---- | ----------- |----------- | 
+| `descriptors` | [[]ratelimit.plugins.gloo.solo.io.Descriptor](../ratelimit.proto.sk#descriptor) |  |  |
+
+
+
+
+---
 ### RateLimitActions
 
 
@@ -185,7 +222,7 @@ weight: 5
 
 | Field | Type | Description | Default |
 | ----- | ---- | ----------- |----------- | 
-| `actions` | [[]ratelimit.plugins.gloo.solo.io.Action](../ratelimit.proto.sk#action) |  |  |
+| `actions` | [[]ratelimit.plugins.gloo.solo.io.Action](../ratelimit.proto.sk#action) | descriptors: - key: account_id descriptors: - key: plan value: BASIC rateLimit: requestsPerUnit: 1 unit: MINUTE - key: plan value: PLUS rateLimit: requestsPerUnit: 20 unit: MINUTE. |  |
 
 
 
@@ -202,7 +239,7 @@ weight: 5
 
 | Field | Type | Description | Default |
 | ----- | ---- | ----------- |----------- | 
-| `rateLimits` | [[]ratelimit.plugins.gloo.solo.io.RateLimitActions](../ratelimit.proto.sk#ratelimitactions) |  |  |
+| `rateLimits` | [[]ratelimit.plugins.gloo.solo.io.RateLimitActions](../ratelimit.proto.sk#ratelimitactions) | Define individual rate limits here. Each rate limit will be evaluated, if any rate limit would be throttled, the entire request returns a 429 (gets throttled). |  |
 
 
 
@@ -220,8 +257,8 @@ weight: 5
 
 | Field | Type | Description | Default |
 | ----- | ---- | ----------- |----------- | 
-| `includeVhRateLimits` | `bool` |  |  |
-| `rateLimits` | [[]ratelimit.plugins.gloo.solo.io.RateLimitActions](../ratelimit.proto.sk#ratelimitactions) |  |  |
+| `includeVhRateLimits` | `bool` | Whether or not to include rate limits as defined on the VirtualHost in addition to rate limits on the Route. |  |
+| `rateLimits` | [[]ratelimit.plugins.gloo.solo.io.RateLimitActions](../ratelimit.proto.sk#ratelimitactions) | Define individual rate limits here. Each rate limit will be evaluated, if any rate limit would be throttled, the entire request returns a 429 (gets throttled). |  |
 
 
 
