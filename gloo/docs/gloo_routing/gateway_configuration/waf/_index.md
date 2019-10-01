@@ -72,7 +72,7 @@ The first option for configuring WAF is on the Http Gateway level on the Gateway
 
 Run the following command to edit the gateway object with the waf config:
 ```bash
-kubectl edit gateways.gateway.solo.io.v2 -n gloo-system gateway
+kubectl edit gateway -n gloo-system gateway-proxy-v2
 ```
 
 {{< highlight yaml "hl_lines=12-20" >}}
@@ -101,7 +101,7 @@ spec:
 
 Once this config has been accepted run the following to test that the rule has been applied
 ```bash
-curl -v -H user-agent:scammer ${GATEWAY_URL}/sample-route-1
+curl -v -H user-agent:scammer $(glooctl proxy url)/sample-route-1
 
 *   Trying IP_REDACTED...
 * TCP_NODELAY set
@@ -197,7 +197,7 @@ spec:
 
 Once this config has been accepted run the following to test that it works.
 ```bash
-curl -v  ${GATEWAY_URL}/sample-route-1
+curl -v  $(glooctl proxy url)/sample-route-1
 *   Trying IP_REDACTED...
 * TCP_NODELAY set
 * Connected to IP_REDACTED (IP_REDACTED) port 80 (#0)
