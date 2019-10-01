@@ -12,7 +12,11 @@ The Gloo Virtual Service makes it possible to define all routes for a domain on 
 
 However, condensing all routing config onto a single object can be cumbersome when dealing with a large number of routes.
 
-For this reason, in v0.20.0, Gloo a feature referred to as *delegation*. Delegation allows routing to be configured by from a tree of config objects. The tree always has a *Virtual Service* as its root, which delgates to any number of *Route Tables*. Route Tables  can further delegate to other Route Tables.
+Gloo provides a feature referred to as *delegation*. 
+Delegation allows a complete routing configuration to be assembled from separate config objects. The root config object
+*delegates* responsibility to other objects, forming a tree of config objects. 
+The tree always has a *Virtual Service* as its root, which delgates to any number of *Route Tables*. 
+Route Tables  can further delegate to other Route Tables.
 
 ## Motivation
 
