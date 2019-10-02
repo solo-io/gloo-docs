@@ -1,3 +1,14 @@
+### v0.20.1
+
+**Dependency Bumps**
+
+- solo-io/go-utils has been upgraded to v0.10.15.
+
+**New Features**
+
+- Remove the GlooE cli, use the OS cli with enterprise subcommand instead (https://github.com/solo-io/solo-projects/issues/1177)
+- Support new external auth API location (directly on `*Plugins` messages instead of nested under `*Plugins.Extensions`). The new APIs maintain the same structure as the existing ones but are strongly-typed, meaning that you can now access the configuration without having to marshal generic protobuf types to the relevant structs, e.g. you can just do `virtualHost.GetVirtualHostPlugins().GetExtauth()`. The deprecated configuration format via opaque extensions is still supported. (https://github.com/solo-io/gloo/issues/1171)
+
 ### v0.20.0
 
 **Dependency Bumps**
