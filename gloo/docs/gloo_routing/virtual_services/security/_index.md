@@ -81,13 +81,11 @@ configuration of this kind is the following:
 
 ```yaml
 virtualHostPlugins:
-  extensions:
-    configs:
-      extauth:
-        config_ref:
-          # references the example AuthConfig we defined earlier
-          name: basic-auth
-          namespace: gloo-system
+  extauth:
+    config_ref:
+      # references the example AuthConfig we defined earlier
+      name: basic-auth
+      namespace: gloo-system
 ```
 
 In case of a route or weighted destination the top attribute would be names `routePlugins` and `weightedDestinationPlugins` respectively.
@@ -96,11 +94,9 @@ The second form is used to explicitly disable authentication:
 
 ```yaml
 virtualHostPlugins: #  use `routePlugins` or `weightedDestinationPlugins` for routes or weighted destinations respectively
-  extensions:
-    configs:
-      extauth:
-        config_ref:
-          disabled: true
+  extauth:
+    config_ref:
+      disabled: true
 ```
 
 ##### Inheritance rules
