@@ -1,3 +1,22 @@
+### v0.20.0
+
+**Dependency Bumps**
+
+- solo-io/gloo has been upgraded to v0.20.2.
+
+**New Features**
+
+- Add the Route Table API (https://github.com/solo-io/solo-projects/issues/1160)
+- Support flattened strongly-typed ratelimit, rbac, and waf configs (https://github.com/solo-io/gloo/issues/1171)
+- Add the UpstreamGroup API (https://github.com/solo-io/solo-projects/issues/1168)
+
+**Fixes**
+
+- Fix bug that causes weighted destinations to disable auth if no extauth config is provided. (https://github.com/solo-io/solo-projects/issues/1183)
+- Fix route duplication bug when attempting to reorder routes with the same path name. (https://github.com/solo-io/solo-projects/issues/1113)
+- Fix bug that prevented proxy page from loading when proxy had no listeners. (https://github.com/solo-io/gloo/issues/1276)
+- Fix inconsistent ordering of upstreams between renders. (https://github.com/solo-io/solo-projects/issues/1171)
+
 ### v0.19.0
 
 **Dependency Bumps**
