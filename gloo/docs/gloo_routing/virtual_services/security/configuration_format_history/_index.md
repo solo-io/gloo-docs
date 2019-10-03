@@ -129,7 +129,7 @@ As of now, this configuration format is still supported by **Gloo Enterprise**.
 
 **Gloo Enterprise**, release [**0.18.21**]({{< ref "/changelog#gloo-enterprise" >}}), introduced a change in the 
 authentication configuration format. It turned the `extauth` attribute from being an object into an array. This allows us 
-to define multiple configuration steps that are executed in the order in which they are specified. I any one of these 
+to define multiple configuration steps that are executed in the order in which they are specified. If any one of these 
 steps fails, the request will be denied without executing any subsequent steps. Authentication can still be configured 
 only on virtual hosts, with the possibility for child routes to opt out.
 
