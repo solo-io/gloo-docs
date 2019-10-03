@@ -96,7 +96,7 @@ The second form is used to explicitly disable authentication:
 virtualHostPlugins: #  use `routePlugins` or `weightedDestinationPlugins` for routes or weighted destinations respectively
   extauth:
     config_ref:
-      disabled: true
+      disable: true
 ```
 
 ##### Inheritance rules
@@ -108,7 +108,7 @@ By default, an `AuthConfig` defined on a `Virtual Service` attribute is inherite
 There are two exceptions to this rule:
 
 - if the child attribute attribute defines its own `AuthConfig`, or
-- if the child explicitly disables authentication via the `disabled: true` configuration.
+- if the child explicitly disables authentication via the `disable: true` configuration.
 
 #### Implementations
 We have seen how `AuthConfigs` can be used to define granular authentication configurations for `Virtual Services`. For 
