@@ -18,9 +18,9 @@ With this simple authentication mechanism the encoded user credentials are sent 
 
 To secure your VirtualServices using Basic Authentication, you first need to provide Gloo with a set of known users and 
 their passwords. You can then use this information to decide who is allowed to access which routes.
-If a request matches a route on which Basic Authentication is configured, Gloo will verify the credentials in the header 
-before sending the request to its destination. If the user associated with the credentials is not explicitly allowed 
-to access that route, Gloo will return a 401 response to the downstream client.
+If a request matches a route on which Basic Authentication is configured, Gloo will verify the credentials in the 
+standard `Authorization` header before sending the request to its destination. If the user associated with the credentials 
+is not explicitly allowed to access that route, Gloo will return a 401 response to the downstream client.
 
 Be sure to check the external auth [configuration overview]({{< ref "gloo_routing/virtual_services/security#configuration-overview" >}}) 
 for detailed information about how authentication is configured on Virtual Services.
