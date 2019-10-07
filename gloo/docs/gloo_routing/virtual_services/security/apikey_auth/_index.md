@@ -9,7 +9,7 @@ description: How to setup ApiKey authentication.
 {{% /notice %}}
 
 {{% notice note %}}
-The API keys authentication feature has been introduced with **Gloo Enterprise**, release 0.18.5+. If you are using earlier version, this tutorial will not work.
+The API keys authentication feature has been introduced with **Gloo Enterprise**, release 0.18.5. If you are using an earlier version, this tutorial will not work.
 {{% /notice %}}
 
 {{% notice warning %}}
