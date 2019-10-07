@@ -37,7 +37,7 @@ the Virtual Service, Gloo will deny the request and return a 401 response to the
 
 Be sure to check the external auth [configuration overview]({{< ref "gloo_routing/virtual_services/security#configuration-overview" >}}) 
 for detailed information about how authentication is configured on Virtual Services.
-s
+
 ## Setup
 {{< readfile file="/static/content/setup_notes" markdown="true">}}
 
