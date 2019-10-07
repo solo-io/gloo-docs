@@ -15,9 +15,9 @@ description: How to setup ApiKey authentication.
 Sometimes when you need to protect a service, the set of users that will need to access it is known in advance and does 
 not change frequently. For example, these users might be other services or specific persons or teams in your organization. 
 You might also want to retain direct control over how credentials are generated and when they expire. If one of these 
-conditions apply to your use case, you should consider securing your service using 
+conditions applies to your use case, you should consider securing your service using 
 [API Keys](https://en.wikipedia.org/wiki/Application_programming_interface_key). API keys are secure, long-lived UUIDs 
-that clients must provide when sending request to a service that is protected using this method. 
+that clients must provide when sending requests to a service that is protected using this method. 
 
 {{% notice warning %}}
 It is important to note that **your services are only as secure as your API keys**; securing API keys and proper API key 
@@ -25,14 +25,15 @@ rotation is up to the user, thus the security of the routes is up to the user.
 {{% /notice %}}
 
 To secure your services using API keys, you first need to provide Gloo with your secret API keys in the form of `Secrets`. 
-After you API key secrets are in place, you can secure your Virtual Services by referencing the secrets in one of two ways:
+After your API key secrets are in place, you can configure authentication on your Virtual Services by referencing the 
+secrets in one of two ways:
 
 1. you can specify a **label selector** that matches one or more labelled API keys secrets (this is the preferred option), or
 2. you can **explicitly reference** a set of secrets by their identifier (namespace and name).
 
 When Gloo matches a request to a route secured with API Keys, it looks for a valid API key in the `api-key` header. If 
 the header is not present, or if the API key it contains does not match one of the API keys in the secrets referenced on 
-the  Virtual Service, Gloo will deny the request and return a 401 response to the downstream client.
+the Virtual Service, Gloo will deny the request and return a 401 response to the downstream client.
 
 Be sure to check the external auth [configuration overview]({{< ref "gloo_routing/virtual_services/security#configuration-overview" >}}) 
 for detailed information about how authentication is configured on Virtual Services.
