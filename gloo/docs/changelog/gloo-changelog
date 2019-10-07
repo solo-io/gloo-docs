@@ -1,3 +1,19 @@
+### v0.20.3
+
+**New Features**
+
+- The default version of GlooE installed by the CLI is now 0.20.1. (https://github.com/solo-io/gloo/issues/1272)
+- Glooctl can now add routes to Route Tables (https://github.com/solo-io/gloo/issues/1320)
+- Glooctl can now add delegate action routes (https://github.com/solo-io/gloo/issues/1319)
+- Glooctl can now get/list Route Tables (https://github.com/solo-io/gloo/issues/1318)
+- add ValidatingWebhook for Gateway resources (https://github.com/solo-io/gloo/pull/1234)
+
+**Fixes**
+
+- Gateway waits for Gloo validation server to become available during setup (https://github.com/solo-io/gloo/issues/1322)
+- Fix panic on nil route matcher (https://github.com/solo-io/gloo/issues/1316)
+- Fix issue where validation cannot be enabled via helm due to treatment of zero values (https://github.com/solo-io/gloo/issues/1314)
+
 ### v0.20.2
 
 **New Features**
