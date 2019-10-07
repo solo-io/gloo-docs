@@ -9,7 +9,7 @@ description: How to setup ApiKey authentication.
 {{% /notice %}}
 
 {{% notice note %}}
-The API Key authentication feature has been introduced with **Gloo Enterprise**, release 0.18.5+. If you are using earlier version, this tutorial will not work.
+The API keys authentication feature has been introduced with **Gloo Enterprise**, release 0.18.5+. If you are using earlier version, this tutorial will not work.
 {{% /notice %}}
 
 {{% notice warning %}}
@@ -20,7 +20,7 @@ Sometimes when you need to protect a service, the set of users that will need to
 not change frequently. For example, these users might be other services or specific persons or teams in your organization. 
 You might also want to retain direct control over how credentials are generated and when they expire. If one of these 
 conditions applies to your use case, you should consider securing your service using 
-[API Keys](https://en.wikipedia.org/wiki/Application_programming_interface_key). API keys are secure, long-lived UUIDs 
+[API keys](https://en.wikipedia.org/wiki/Application_programming_interface_key). API keys are secure, long-lived UUIDs 
 that clients must provide when sending requests to a service that is protected using this method. 
 
 {{% notice warning %}}
@@ -32,10 +32,10 @@ To secure your services using API keys, you first need to provide Gloo with your
 After your API key secrets are in place, you can configure authentication on your Virtual Services by referencing the 
 secrets in one of two ways:
 
-1. you can specify a **label selector** that matches one or more labelled API keys secrets (this is the preferred option), or
+1. you can specify a **label selector** that matches one or more labelled API key secrets (this is the preferred option), or
 2. you can **explicitly reference** a set of secrets by their identifier (namespace and name).
 
-When Gloo matches a request to a route secured with API Keys, it looks for a valid API key in the `api-key` header. If 
+When Gloo matches a request to a route secured with API keys, it looks for a valid API key in the `api-key` header. If 
 the header is not present, or if the API key it contains does not match one of the API keys in the secrets referenced on 
 the Virtual Service, Gloo will deny the request and return a 401 response to the downstream client.
 
@@ -96,7 +96,7 @@ As we just saw, we were able to reach the upstream without having to provide any
 Gloo allows any request on routes that do not specify authentication configuration. Let's change this behavior. 
 We will update the Virtual Service so that only requests containing a valid API key in their `api-key` header are allowed.
 
-We start by creating an API key using `glooctl`:
+We start by creating an API key secret using `glooctl`:
 
 ```shell
 glooctl create secret apikey infra-apikey --apikey N2YwMDIxZTEtNGUzNS1jNzgzLTRkYjAtYjE2YzRkZGVmNjcy --apikey-labels team=infrastructure
@@ -153,7 +153,8 @@ config:
 
 Our API key is indeed `N2YwMDIxZTEtNGUzNS1jNzgzLTRkYjAtYjE2YzRkZGVmNjcy`! 
 
-Now that we have a valid API key secret, let's go ahead and create and `AuthConfig` CRD with our API keys configuration:
+Now that we have a valid API key secret, let's go ahead and create and `AuthConfig` CRD with our API key 
+authentication configuration:
 
 {{< highlight shell "hl_lines=9-11" >}}
 kubectl apply -f - <<EOF
@@ -247,7 +248,7 @@ We are now able to reach the upstream again!
 ## Summary
 
 In this tutorial, we installed Gloo Enterprise and created an unauthenticated Virtual Service that routes requests to a 
-static upstream. We then created an API Keys `AuthConfig` object and used it to secure our Virtual Service. 
+static upstream. We then created an API key `AuthConfig` object and used it to secure our Virtual Service. 
 We first showed how unauthenticated requests fail with a `401 Unauthorized` response, and then showed how to send 
 authenticated requests successfully to the upstream. 
 
