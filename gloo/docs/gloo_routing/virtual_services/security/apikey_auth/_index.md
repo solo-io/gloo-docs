@@ -12,9 +12,9 @@ description: How to setup ApiKey authentication.
 {{< readfile file="/static/content/extauth_version_info_note" >}}
 {{% /notice %}}
 
-Sometimes when you need to protect a service, the set of users that will need to access it is known in advance and might 
+Sometimes when you need to protect a service, the set of users that will need to access it is known in advance and does 
 not change frequently. For example, these users might be other services or specific persons or teams in your organization. 
-You might also want to retain direct control of how these keys are generated and when they expire. If one of these 
+You might also want to retain direct control over how credentials are generated and when they expire. If one of these 
 conditions apply to your use case, you should consider securing your service using 
 [API Keys](https://en.wikipedia.org/wiki/Application_programming_interface_key). API keys are secure, long-lived UUIDs 
 that clients must provide when sending request to a service that is protected using this method. 
