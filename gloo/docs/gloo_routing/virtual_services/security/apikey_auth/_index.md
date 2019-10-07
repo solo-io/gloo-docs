@@ -1,11 +1,15 @@
 ---
-title: ApiKey Auth
+title: API Keys
 weight: 40
 description: How to setup ApiKey authentication. 
 ---
 
 {{% notice note %}}
 {{< readfile file="static/content/enterprise_only_feature_disclaimer" markdown="true">}}
+{{% /notice %}}
+
+{{% notice note %}}
+The API Key authentication feature has been introduced with **Gloo Enterprise**, release 0.18.5+. If you are using earlier version, this tutorial will not work.
 {{% /notice %}}
 
 {{% notice warning %}}
