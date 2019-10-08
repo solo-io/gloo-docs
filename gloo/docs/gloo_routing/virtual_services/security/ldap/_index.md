@@ -4,6 +4,19 @@ weight: 60
 description: Authenticate and authorize requests using LDAP.
 ---
 
+{{% notice note %}}
+{{< readfile file="static/content/enterprise_only_feature_disclaimer" markdown="true">}}
+{{% /notice %}}
+
+{{% notice note %}}
+The LDAP AuthN/Z feature was introduced with **Gloo Enterprise**, release 0.18.27. If you are using an earlier 
+version, this tutorial will not work.
+{{% /notice %}}
+
+{{% notice warning %}}
+{{< readfile file="/static/content/extauth_version_info_note" >}}
+{{% /notice %}}
+
 The _Lightweight Directory Access Protocol_, commonly referred to as LDAP, is an open protocol used to store and retrieve 
 hierarchically structured data over a network. It has been widely adopted by enterprises to centrally store and secure 
 organizational information. A common use case for LDAP is to maintain information about members of an organization, 
@@ -20,18 +33,11 @@ strictly necessary, it will help you better understand this guide.
 
 
 ### Prerequisites
-
-{{% notice warning %}}
-LDAP authentication/authorization is a feature of **Gloo Enterprise**, release **0.18.27+**.
-If you are using Open Source Gloo, this tutorial will not work.
-{{% /notice %}}
-
 {{< readfile file="/static/content/setup_notes" markdown="true">}}
 
 
 #### Create a simple Virtual Service
-Let's start by creating a simple service (an `Upstream`, in Gloo terminology) that will return "Hello World" when 
-receiving HTTP requests:
+Let's start by creating a simple service that returns "Hello World" when receiving HTTP requests:
 
 ```bash
 kubectl apply -f - <<EOF
@@ -74,17 +80,12 @@ spec:
 EOF
 ```
 
-Now we can create a Virtual Service that routes any requests with the `/echo` prefix to the `echo` service.
+Now we can create a Virtual Service that routes any requests with the `/echo` prefix to the `http-echo` service.
 
-{{< tabs >}}
-{{< tab name="yaml" codelang="yaml">}}
+{{< highlight yaml "hl_lines=16-20" >}}
 {{< readfile file="gloo_routing/virtual_services/security/ldap/vs-echo-no-auth.yaml">}}
-{{< /tab >}}
-{{< tab name="glooctl" codelang="shell">}}
-glooctl create vs --name http-echo --namespace gloo-system
-glooctl add route --path-prefix /echo --dest-name default-http-echo-5678
-{{< /tab >}}
-{{< /tabs >}} 
+{{< /highlight >}}
+
 
 To verify that the Virtual Service works, let's send a request to `/echo`:
 
@@ -255,7 +256,7 @@ earlier .
 
 #### LDAP auth flow
 Before updating our Virtual Service, it is important to understand how Gloo interacts with the LDAP server. Let's first 
-look at the [LDAP auth configuration](https://gloo.solo.io/api/github.com/solo-io/gloo/projects/gloo/api/v1/enterprise/plugins/extauth/extauth.proto.sk/#ldap):
+look at the [LDAP auth configuration]({{< ref "/api/github.com/solo-io/gloo/projects/gloo/api/v1/enterprise/plugins/extauth/v1/extauth.proto.sk#ldap" >}}):
 
 - `address`: this is the address of the LDAP server that Gloo will query when a request matches the Virtual Service.
 - `userDnTemplate`: this is a template string that Gloo uses to build the DNs of the user entry that 
@@ -280,27 +281,47 @@ request that needs to be authenticated with LDAP:
    for an attribute with a name equal to `membershipAttributeName` on the user entry.
 6. Check if one of the values for the attribute matches one of the `allowedGroups`; if so, allow the request, otherwise return a `403` response.
 
-#### Update the Virtual Service
-Now that we have a good understanding of how Gloo interacts with the LDAP server, it's time to update our Virtual Service 
-definition. We need to add the following lines:
+#### Create an LDAP AuthConfig
+Now that we have a good understanding of how Gloo interacts with the LDAP server we can create an `AuthConfig` CRD with 
+our LDAP configuration:
 
-{{< highlight yaml "hl_lines=20-29" >}}
-{{< readfile file="gloo_routing/virtual_services/security/ldap/vs-auth-ldap.yaml" >}}
+{{< highlight shell "hl_lines=10-13" >}}
+kubectl apply -f - <<EOF
+apiVersion: enterprise.gloo.solo.io/v1
+kind: AuthConfig
+metadata:
+  name: ldap
+  namespace: gloo-system
+spec:
+  configs:
+  - ldap:
+      address: "ldap.default.svc.cluster.local:389" # Substitute your namespace for `default` here
+      userDnTemplate: "uid=%s,ou=people,dc=solo,dc=io"
+      allowedGroups:
+      - "cn=managers,ou=groups,dc=solo,dc=io"
+EOF
 {{< /highlight >}}
 
-This configures the virtual host to authenticate requests using Gloo's `extauth` server. `configs` is an array of 
-[AuthConfig](https://gloo.solo.io/api/github.com/solo-io/gloo/projects/gloo/api/v1/enterprise/plugins/extauth/extauth.proto.sk/#authconfig) 
-objects with a single entry, an instance of the 
-[LDAP auth configuration](https://gloo.solo.io/api/github.com/solo-io/gloo/projects/gloo/api/v1/enterprise/plugins/extauth/extauth.proto.sk/#ldap).
 We can see that:
 
-- the configuration points to the Kubernetes DNS name  and port of our LDAP service (`ldap.default.svc.cluster.local:389` if 
+- the configuration points to the Kubernetes DNS name and port of our LDAP service (`ldap.default.svc.cluster.local:389` if 
   you deployed it to the `default` namespace);
 - Gloo will look for user entries with DNs in the format `uid=<USERNAME_FROM_HEADER>,ou=people,dc=solo,dc=io`, which, 
   if you recall, is the format of the user entry DNs we bootstrapped our server with;
 - only members of the `cn=managers,ou=groups,dc=solo,dc=io` group can access the upstream.
 
-Let's verify that our Virtual Service behaves as expected. The basic auth headers requires credentials to be encoded, 
+#### Update the Virtual Service
+Once the `AuthConfig` containing the LDAP configuration has been created, we can use it to secure our Virtual Service 
+by adding the following lines to its definition:
+
+{{< highlight yaml "hl_lines=21-25" >}}
+{{< readfile file="gloo_routing/virtual_services/security/ldap/vs-auth-ldap.yaml" >}}
+{{< /highlight >}}
+
+This configures the Virtual Service to authenticate all requests to `/echo` using using the configuration stored in the 
+`AuthConfig` CRD named `ldap` in the `gloo-system` namespace.
+
+Let's verify that our Virtual Service behaves as expected. The basic auth header requires credentials to be encoded, 
 so here are the `base64`-encoded credentials for some test users:
 
 | username | password | basic auth header                         | comments                                    |

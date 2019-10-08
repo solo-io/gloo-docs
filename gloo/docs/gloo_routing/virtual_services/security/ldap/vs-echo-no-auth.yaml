@@ -13,6 +13,8 @@ spec:
         prefix: /echo
       routeAction:
         single:
-          upstream:
-            name: default-http-echo-5678
-            namespace: gloo-system
+          kube:
+            ref:
+              name: http-echo
+              namespace: default
+            port: 5678
