@@ -5,15 +5,7 @@ description: How to setup ApiKey authentication.
 ---
 
 {{% notice note %}}
-{{< readfile file="static/content/enterprise_only_feature_disclaimer" markdown="true">}}
-{{% /notice %}}
-
-{{% notice note %}}
 The API keys authentication feature was introduced with **Gloo Enterprise**, release 0.18.5. If you are using an earlier version, this tutorial will not work.
-{{% /notice %}}
-
-{{% notice warning %}}
-{{< readfile file="/static/content/extauth_version_info_note" >}}
 {{% /notice %}}
 
 Sometimes when you need to protect a service, the set of users that will need to access it is known in advance and does 
@@ -92,6 +84,10 @@ The above command should return:
 ```
 
 ## Securing the Virtual Service
+{{% notice warning %}}
+{{< readfile file="/static/content/extauth_version_info_note" >}}
+{{% /notice %}}
+
 As we just saw, we were able to reach the upstream without having to provide any credentials. This is because by default 
 Gloo allows any request on routes that do not specify authentication configuration. Let's change this behavior. 
 We will update the Virtual Service so that only requests containing a valid API key in their `api-key` header are allowed.

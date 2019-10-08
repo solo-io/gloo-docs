@@ -8,10 +8,6 @@ description: Authenticating using a dictionary of usernames and passwords on a v
 {{< readfile file="static/content/enterprise_only_feature_disclaimer" markdown="true">}}
 {{% /notice %}}
 
-{{% notice warning %}}
-{{< readfile file="/static/content/extauth_version_info_note" >}}
-{{% /notice %}}
-
 In certain cases - such as during testing or when releasing a new API to a small number of known users - it may be 
 convenient to secure a Virtual Service using [**Basic Authentication**](https://en.wikipedia.org/wiki/Basic_access_authentication). 
 With this simple authentication mechanism the encoded user credentials are sent along with the request in a standard header.
@@ -75,6 +71,10 @@ The above command should produce the following output:
 ```
 
 ## Securing the Virtual Service
+{{% notice warning %}}
+{{< readfile file="/static/content/extauth_version_info_note" >}}
+{{% /notice %}}
+
 As we just saw, we were able to reach the upstream without having to provide any credentials. This is because by default 
 Gloo allows any request on routes that do not specify authentication configuration. Let's change this behavior. 
 We will update the Virtual Service so that only requests by the user `user` with password `password` are allowed.
