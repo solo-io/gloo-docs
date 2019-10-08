@@ -5,16 +5,8 @@ description: Authenticate and authorize requests using LDAP.
 ---
 
 {{% notice note %}}
-{{< readfile file="static/content/enterprise_only_feature_disclaimer" markdown="true">}}
-{{% /notice %}}
-
-{{% notice note %}}
-The LDAP AuthN/Z feature was introduced with **Gloo Enterprise**, release 0.18.27. If you are using an earlier 
+The LDAP feature was introduced with **Gloo Enterprise**, release 0.18.27. If you are using an earlier 
 version, this tutorial will not work.
-{{% /notice %}}
-
-{{% notice warning %}}
-{{< readfile file="/static/content/extauth_version_info_note" >}}
 {{% /notice %}}
 
 The _Lightweight Directory Access Protocol_, commonly referred to as LDAP, is an open protocol used to store and retrieve 
@@ -251,6 +243,10 @@ dn: cn=managers,ou=groups,dc=solo,dc=io
 ```
 
 ### Secure the Virtual Service
+{{% notice warning %}}
+{{< readfile file="/static/content/extauth_version_info_note" >}}
+{{% /notice %}}
+
 Now that we have all the necessary components in place, let use the LDAP server to secure the Virtual Service we created 
 earlier .
 
