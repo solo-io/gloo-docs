@@ -175,7 +175,7 @@ kubectl apply -f - <<EOF
 apiVersion: gateway.solo.io/v1
 kind: VirtualService
 metadata:
-  name: test-auth
+  name: auth-tutorial
   namespace: gloo-system
 spec:
   virtualHost:
@@ -252,6 +252,6 @@ Cleanup the resources by running:
 
 ```
 kubectl delete ac -n gloo-system apikey-auth
-kubectl delete vs -n gloo-system test-auth
+kubectl delete vs -n gloo-system auth-tutorial
 kubectl delete upstream -n gloo-system json-upstream
 ```
