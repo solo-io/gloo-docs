@@ -74,8 +74,8 @@ EOF
 
 Now we can create a Virtual Service that routes any requests with the `/echo` prefix to the `http-echo` service.
 
-{{< highlight yaml "hl_lines=16-20" >}}
-{{< readfile file="gloo_routing/virtual_services/security/ldap/vs-echo-no-auth.yaml">}}
+{{< highlight shell "hl_lines=17-21" >}}
+{{< readfile file="gloo_routing/virtual_services/security/ldap/vs-echo-no-auth.sh">}}
 {{< /highlight >}}
 
 
@@ -310,8 +310,8 @@ We can see that:
 Once the `AuthConfig` containing the LDAP configuration has been created, we can use it to secure our Virtual Service 
 by adding the following lines to its definition:
 
-{{< highlight yaml "hl_lines=21-25" >}}
-{{< readfile file="gloo_routing/virtual_services/security/ldap/vs-auth-ldap.yaml" >}}
+{{< highlight shell "hl_lines=22-26" >}}
+{{< readfile file="gloo_routing/virtual_services/security/ldap/vs-auth-ldap.sh" >}}
 {{< /highlight >}}
 
 This configures the Virtual Service to authenticate all requests to `/echo` using using the configuration stored in the 

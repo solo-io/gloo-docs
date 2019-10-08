@@ -1,3 +1,4 @@
+kubectl apply -f - << EOF
 apiVersion: gateway.solo.io/v1
 kind: VirtualService
 metadata:
@@ -18,3 +19,4 @@ spec:
               name: http-echo
               namespace: default
             port: 5678
+EOF

@@ -1,3 +1,4 @@
+kubectl apply -f - << EOF
 apiVersion: gateway.solo.io/v1
 kind: VirtualService
 metadata:
@@ -23,3 +24,4 @@ spec:
         config_ref:
           name: ldap
           namespace: gloo-system
+EOF
