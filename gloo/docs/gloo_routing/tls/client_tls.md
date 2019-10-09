@@ -181,11 +181,6 @@ Now we've got to configure the `default-example-tls-server-8080` upstream to ref
 
 This can be done easily with `glooctl`:
 
-```bash
-
-```
-
-Lastly, let's configure the VirtualService to use this cert via the Kubernetes secrets:
 
 ```bash
 glooctl edit upstream \
