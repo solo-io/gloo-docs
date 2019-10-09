@@ -2,9 +2,7 @@
 menuTitle: Validation
 title: Config Reporting & Validation
 weight: 11
-description: >
- (Kubernetes Only) Gloo can be configured to validate configuration before it is applied to the cluster.
- With validation enabled, any attempt to apply invalid configuration to the cluster will be rejected.
+description: (Kubernetes Only) Gloo can be configured to validate configuration before it is applied to the cluster. With validation enabled, any attempt to apply invalid configuration to the cluster will be rejected.
 ---
 
 # Motivation
