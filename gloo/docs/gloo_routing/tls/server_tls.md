@@ -1,12 +1,12 @@
 ---
 title: Setting up Server TLS
 weight: 50
-description: Understanding how to set up TLS for Gloo
+description: Understanding how to set up Server-side TLS for Gloo
 ---
 
 ## Configuring TLS for Gloo
 
-We can configure HTTPS for our Gloo services to encrypt traffic coming from external clients. We can also configure Gloo to do mTLS with external clients as well. In this document, we'll explore configuring Gloo for server TLS.
+Gloo can encrypt traffic coming from external clients over TLS/HTTPS. [We can also configure Gloo to do mTLS with external clients as well](client_tls.md). In this document, we'll explore configuring Gloo for server TLS.
 
 ## Server TLS
 

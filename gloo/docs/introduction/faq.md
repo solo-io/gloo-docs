@@ -166,7 +166,13 @@ status:
 
 #### How do I configure TLS for Gloo
 
-Gloo can be configured with TLS and SNI for multiple virtual hosts. Please [see the documentation for how to do that]({{< ref "/advanced_configuration/tls_setup">}})
+Gloo can perform *TLS termination* for downstream clients, unencrypting traffic arriving from downstream clients. 
+
+Gloo is also capable of loading client certificates to perform mutual TLS with an *upstream server* which is already serving TLS.
+
+For downstream TLS termination, [see the guide on setting up Server TLS]({{< ref "/gloo_routing/tls/server_tls">}})
+
+For upstream TLS connections, [see the documentation on setting up Client TLS]({{< ref "/gloo_routing/tls/client_tls">}})
 
 #### I want to call my HTTP/HTTPS services; what URL do I use?
 
@@ -400,7 +406,7 @@ This is by design with the intention of not over-exposing your cluster by accide
 
 #### Why am I getting error: multiple "filter chains with the same matching rules are defined"
 
-When you create multiple VirtualServices that have TLS/SSL configuration, Gloo will use SNI to try and route to the correct VirtualService. For this to work, you need to specify the `domain` explicitly in your VirtualService as well as the SNI domains. [See the TLS documentation for more]({{< ref "/advanced_configuration/tls_setup">}}). If you don't do this, then you'll have multiple VirtualServices with different certificate information and Envoy will not know which one to use since the hosts are the same.
+When you create multiple VirtualServices that have TLS/SSL configuration, Gloo will use SNI to try and route to the correct VirtualService. For this to work, you need to specify the `domain` explicitly in your VirtualService as well as the SNI domains. [See the TLS documentation for more]({{< ref "/gloo_routing/tls/server_tls">}}). If you don't do this, then you'll have multiple VirtualServices with different certificate information and Envoy will not know which one to use since the hosts are the same.
 
 #### When I have both HTTP and HTTPS routes, why are they merged and only available on HTTPS?
 
