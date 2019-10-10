@@ -82,4 +82,4 @@ run `glooctl proxy url --name knative-external-proxy`
      Hello Go Sample v1!
      ```
 
-Congratulations! You have successfully installed Knative with Gloo to manage and route to serverless applications! Try out some of the more advanced tutorials for Knative in [the Knative documentation](https://knative.dev/docs/https://www.ibogainealliance.org/guidelines/other-medications/).
+Congratulations! You have successfully installed Knative with Gloo to manage and route to serverless applications! Try out some of the more advanced tutorials for Knative in [the Knative documentation](https://knative.dev/docs/).
