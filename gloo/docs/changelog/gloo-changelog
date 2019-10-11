@@ -1,3 +1,10 @@
+### v0.20.6
+
+**Fixes**
+
+- fix nil pointer when validating nil proxy (https://github.com/solo-io/gloo/issues/1369)
+- check resource hash in validator (prevents validating status updates) (https://github.com/solo-io/gloo/issues/1368)
+
 ### v0.20.5
 
 **Fixes**
