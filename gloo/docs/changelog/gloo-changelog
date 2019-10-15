@@ -1,3 +1,9 @@
+### v0.20.8
+
+**Fixes**
+
+- Support setting external traffic policy on gateway proxy services via helm. (https://github.com/solo-io/gloo/issues/1410)
+
 ### v0.20.7
 
 **New Features**
