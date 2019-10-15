@@ -200,7 +200,7 @@ spec:
 {{< /highlight >}}
 
 {{% notice tip %}}
-When using a gRPC auth service, remove the `httpService` attribute line from the configuration above.
+When using a gRPC auth service, remove the `httpService` attribute from the configuration above.
 {{% /notice %}}
 
 This configuration also sets other configuration parameters:
@@ -239,7 +239,7 @@ spec:
 EOF
 {{< /highlight >}}
 
-If you have followed this guide verbatim, you can just download and apply [this manifest](gloo-vs.yaml)  to update 
+If you have followed this guide verbatim, you can just download and apply [this manifest](gloo-vs.yaml) to update 
 both the `Settings` and the `Virtual Service`.
 
 ## Test
