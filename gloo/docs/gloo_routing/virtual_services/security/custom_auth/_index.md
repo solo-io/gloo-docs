@@ -10,7 +10,7 @@ If you are using an earlier version, this tutorial will not work.
 {{% /notice %}}
 
 Gloo Enterprise ships with an external auth server that implements a wide array of authentication and authorization models. 
-Even though these features are currently not available in the open source version of Gloo, you can deploy your own 
+Even though these features are not available in the open source version of Gloo, you can deploy your own 
 service and configure Gloo to use it to secure your Virtual Services.
 
 In this guide we will see how to create such a custom external auth service. For simplicity, we will implement an HTTP 
