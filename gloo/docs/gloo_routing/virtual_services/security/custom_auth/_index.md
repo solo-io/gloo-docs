@@ -73,7 +73,7 @@ When a request matches a route that defines an `extauth` configuration, Gloo wil
 auth service. If the HTTP service returns a `200 OK` response, the request will be considered authorized and sent to 
 its original destination. Otherwise the request will be denied.
 You can fine tune which headers are sent to the the auth service, and whether or not the body is forwarded as well, 
-by editing the [extauth settings]({{< ref "/api/github.com/solo-io/gloo/projects/gloo/api/v1/enterprise/plugins/extauth/v1/extauth.proto.sk#settings" >}}) 
+by editing the [extauth settings]({{< ref "/api/github.com/solo-io/gloo/projects/gloo/api/v1/enterprise/plugins/extauth/v1/extauth.proto.sk/#settings" >}}) 
 in the Gloo settings (see the example [below](#configure-gloo-settings)).
 
 For reference, here's the code for the authorization server used in this tutorial:
@@ -127,8 +127,7 @@ kubectl --namespace gloo-system delete pod -l app=sample-auth
 
 ### Configure Gloo settings
 
-To use our custom auth server, we need to edit the Gloo Settings resource. Run the following command to edit the settings 
-directly in your terminal window:
+To use our custom auth server, we need to edit the Gloo Settings resource. Run the following command to edit the settings:
 
 ```shell script
 kubectl --namespace gloo-system edit settings default`) to point to your auth server.
@@ -213,8 +212,7 @@ to the authentication logic, e.g. when it is used to compute an HMAC.
 
 ### Securing the Virtual Service
 
-Edit the VirtualService (`kubectl --namespace gloo-system edit virtualservice default`), and mark it with custom auth 
-to turn authentication on:
+Edit the VirtualService and mark it with custom auth to turn authentication on:
 
 {{< highlight yaml "hl_lines=11-13" >}}
 kubectl apply -f - <<EOF
