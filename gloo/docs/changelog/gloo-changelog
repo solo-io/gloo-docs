@@ -1,3 +1,16 @@
+### v0.20.7
+
+**New Features**
+
+- Add support for custom authentication. You can now provide your own external authentication/authorization server and configure Gloo to call it on the virtual hosts, routes, and weighted destinations that you want to secure. (https://github.com/solo-io/gloo/issues/1396)
+- The default version of GlooE installed by the CLI is now 0.20.4. (https://github.com/solo-io/gloo/issues/1386)
+- Add support for users to provide their own Envoy grpc rate-limit server. (https://github.com/solo-io/gloo/issues/1398)
+
+**Fixes**
+
+- Glooctl no longer registers CRDs when performing read/write operations (https://github.com/solo-io/gloo/issues/1380)
+- fix nil pointer when validating nil proxy (https://github.com/solo-io/gloo/issues/1369)
+
 ### v0.20.6
 
 **Fixes**
