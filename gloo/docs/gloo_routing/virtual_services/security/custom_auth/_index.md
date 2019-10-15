@@ -14,7 +14,7 @@ Even though these features are currently not available in the open source versio
 service and configure Gloo to use it to secure your Virtual Services.
 
 In this guide we will see how to create such a custom external auth service. For simplicity, we will implement an HTTP 
-service. With minor adjustments, you should be able to use the contents of this guide to deploy gRPC server that implements
+service. With minor adjustments, you should be able to use the contents of this guide to deploy a gRPC server that implements
 the Envoy spec for an [external authorization server](https://github.com/envoyproxy/envoy/blob/master/api/envoy/service/auth/v2/external_auth.proto).
 
 ## Setup
@@ -26,7 +26,7 @@ Let's start by creating the sample `petstore` application:
 kubectl apply --filename https://raw.githubusercontent.com/solo-io/gloo/master/example/petstore/petstore.yaml
 ```
 
-We can not add a route to the sample application by running the following command:
+We can now add a route to the sample application by running the following command:
 
 {{< tabs >}}
 {{< tab name="kubectl" codelang="shell" >}}
