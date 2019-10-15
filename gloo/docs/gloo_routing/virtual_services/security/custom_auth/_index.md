@@ -201,7 +201,7 @@ spec:
 {{< /highlight >}}
 
 {{% notice tip %}}
-When using a gRPC auth service, remove the `httpService` attribute line from the configuration above.
+When using a gRPC auth service, remove the `httpService` attribute from the configuration above.
 {{% /notice %}}
 
 This configuration also sets other configuration parameters:
