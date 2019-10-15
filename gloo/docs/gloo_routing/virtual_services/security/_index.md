@@ -1,5 +1,5 @@
 ---
-title: Authentication (Enterprise)
+title: Authentication
 weight: 30
 description: Gloo has a few different options for Authentication; choose the one that best suits your use case.
 ---
@@ -13,6 +13,12 @@ establish and validate who the client is, the service they are requesting and de
 control policies.
 
 ### Authentication in Gloo
+{{% notice note %}}
+This section refers specifically to the **Gloo Enterprise** external auth server. If you are using the open source version 
+of Gloo, please refer to the [Custom Auth section]({{< ref "gloo_routing/virtual_services/security/custom_auth" >}})
+of the security docs.
+{{% /notice %}}
+
 Gloo Enterprise provides a variety of authentication options to meet the needs of your environment. They range from 
 supporting basic use cases to complex and fine grained secure access control. Architecturally, Gloo uses a dedicated
 auth server to verify the user credentials and determine their permissions. Gloo provides an auth server that can support 
