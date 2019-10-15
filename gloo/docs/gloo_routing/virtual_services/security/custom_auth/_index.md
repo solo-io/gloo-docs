@@ -241,7 +241,7 @@ spec:
 EOF
 {{< /highlight >}}
 
-If you have followed this guide verbatim, you can just download and apply [this manifest](gloo-vs.yaml)  to update 
+If you have followed this guide verbatim, you can just download and apply [this manifest](gloo-vs.yaml) to update 
 both the `Settings` and the `Virtual Service`.
 
 ## Test
