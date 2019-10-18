@@ -22,7 +22,7 @@ use `:authority` (HTTP/2) as the name instead.
   * If no value is specified, then the presence of the header in the request with any value will match
 ([Envoy present_match](https://www.envoyproxy.io/docs/envoy/latest/api-v2/api/v2/route/route.proto#envoy-api-field-route-headermatcher-present-match))
   * If present, then field value interpreted based on the value of `regex` field
-* `invertMatch` - inverts the matching logic. A request matches if it does**not** match the above criteria.
+* `invertMatch` - inverts the matching logic. A request matches if it does **not** match the above criteria.
 
 ## Setup
 
