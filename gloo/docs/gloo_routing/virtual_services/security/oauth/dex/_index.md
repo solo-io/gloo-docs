@@ -259,7 +259,7 @@ glooctl create virtualservice --oidc-auth-app-url http://localhost:8080/ --oidc-
 
 Add a route to the pet clinic demo app.
 ```
-glooctl add route --name default --namespace gloo-system --path-prefix / --dest-name default-petclinic-80 --dest-namespace gloo-system
+glooctl add route --name default --namespace gloo-system --path-prefix / --dest-name default-petclinic-8080 --dest-namespace gloo-system
 ```
 
 ### Local Cluster Adjustments
