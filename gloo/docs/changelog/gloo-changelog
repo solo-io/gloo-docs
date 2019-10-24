@@ -1,3 +1,24 @@
+### v0.20.9
+
+**Dependency Bumps**
+
+- solo-io/go-utils has been upgraded to v0.10.20.
+- solo-io/solo-kit has been upgraded to v0.11.4.
+
+**New Features**
+
+- In order to enable routing directly to Kubernetes services (by using `KubernetesServiceDestinations`), Gloo currently scans the cluster for services and creates a special type of in-memory Upstream (via the `HybridUpstreamClient`). If the cluster contains a lot of services and the user does not take advantage of this feature, this results in unnecessary overhead. This change adds a new `disable_kubernetes_destinations` attribute to the `Settings` resource to allow disabling the feature. (https://github.com/solo-io/gloo/issues/1466)
+- Support matching on headers that do NOT match the specified criteria. (https://github.com/solo-io/gloo/issues/1424)
+- Add Enterprise API to allow for customization of waf intervention message. (https://github.com/solo-io/solo-projects/issues/1235)
+- Allow running the rate limit filter before the auth filters. *NOTE* that, when this new setting is used, it will result in the loss of the extauth-aware rate limiting feature (ie, different rate limits for authenticated vs unauthenticated users) (https://github.com/solo-io/gloo/issues/1445)
+
+**Fixes**
+
+- Avoid panicking on routes without matchers. (https://github.com/solo-io/gloo/issues/1438)
+- Fix controller pod crash when settings is missing (https://github.com/solo-io/gloo/issues/1498)
+- Mute logging of kubernetes health check in gateway (https://github.com/solo-io/gloo/issues/1435)
+- The Helm chart contained a `Role`/`ClusterRole` named `kube-crd-creator` which was unused. This role caused problems to users with limited privileges and effectively prevented them from installing Gloo in namespace-scoped mode. This fix removes the `kube-crd-creator` resource from the Helm chart. (https://github.com/solo-io/gloo/issues/1491)
+
 ### v0.20.8
 
 **Fixes**
