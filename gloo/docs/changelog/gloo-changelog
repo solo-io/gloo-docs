@@ -1,3 +1,13 @@
+### v0.20.10
+
+**Dependency Bumps**
+
+- solo-io/solo-kit has been upgraded to v0.10.5.
+
+**New Features**
+
+- Add native generated Kubernetes types for Gloo config resources (https://github.com/solo-io/gloo/issues/)
+
 ### v0.20.9
 
 **Dependency Bumps**
