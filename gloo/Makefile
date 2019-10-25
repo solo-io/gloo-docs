@@ -12,7 +12,8 @@ site:
 
 .PHONY: deploy-site
 deploy-site: site
-	firebase deploy --only hosting:gloo-docs
+	echo "DISABLED: gloo docs are now stored in the gloo repo and hosted at docs.solo.io/gloo/latest/"
+	# firebase deploy --only hosting:gloo-docs
 
 .PHONY: serve-site
 serve-site: site
@@ -36,7 +37,7 @@ check-links:
 install-tools:
 	gem install html-proofer
 
-.PHONY: docker-push
-docker-push:
-	docker build -t gcr.io/solo-test-236622/gloo-docs:dev .
-	docker push gcr.io/solo-test-236622/gloo-docs:dev
+# .PHONY: docker-push
+# docker-push:
+# 	docker build -t gcr.io/solo-test-236622/gloo-docs:dev .
+# 	docker push gcr.io/solo-test-236622/gloo-docs:dev
