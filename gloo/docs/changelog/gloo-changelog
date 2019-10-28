@@ -1,3 +1,9 @@
+### v0.20.11
+
+**New Features**
+
+- The default version of GlooE installed by the CLI is now 0.20.6. (https://github.com/solo-io/gloo/issues/1386)
+
 ### v0.20.10
 
 **Dependency Bumps**
