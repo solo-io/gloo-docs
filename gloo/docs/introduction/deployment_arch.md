@@ -33,7 +33,7 @@ Since the Kubernetes Ingress API is very limited and restricted to HTTP traffic,
 In this model, the `gloo`, and `gateway` components of the control plane are required. You will probably see a `discovery` component as well since that handles all of the automatic service discovery (from endpoints like Kubernetes, Consul, EC2, Lambda, etc). Please [see this blog for more information](https://medium.com/solo-io/api-gateways-are-going-through-an-identity-crisis-d1d833a313d7) on the identity crisis with ingress controllers, API management, and cloud-native API gateways. 
 
 
-## As a sharded API Gateway
+## As a shared API Gateway
 
 Sometimes, you'll want to isolate against the ["noisy neighbor"](https://en.wikipedia.org/wiki/Cloud_computing_issues#Performance_interference_and_noisy_neighbors) problem in your API infrastructure. For example, you may have a few high-traffic APIs and some low-traffic ones where it's possible the low-traffic APIs are very valuable and should not be starved by the higher-traffic ones. In this scenario, it makes sense to split up the traffic through different proxies. We can share a single control plane across all of the sharded proxies in this architecture.
 
