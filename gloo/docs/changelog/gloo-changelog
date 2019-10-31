@@ -1,3 +1,15 @@
+### v0.20.12
+
+**Dependency Bumps**
+
+- solo-io/envoy-gloo has been upgraded to v0.1.18.
+- solo-io/solo-kit has been upgraded to v0.11.7.
+
+**New Features**
+
+- Allow the gateway-proxy pod to optionally receive both init containers to run and extra volumes to define through helm (https://github.com/solo-io/gloo/issues/1537)
+- This change adds new features to the transformation API. It is now possible to define `Extractor`s which target the request/response body and use the resulting data in templates. You can decide whether to parse the body as JSON or as raw text; in the latter case extraction happens via regular expressions, in the former you will also be able to use all the templating capabilities. These have been augmented with three new template functions: `body()` will return the whole request body, `context()` will return the base JSON context (allowing for example to `range` on a JSON body that is an array), and `env(NAME)` will return the value of an environment variable with the given name. Finally, it is now possible to set [Dynamic Metadata](https://www.envoyproxy.io/docs/envoy/latest/configuration/advanced/well_known_dynamic_metadata) using all the available extraction and templating features. You can now use this metadata to include any request/response property you like in the access logs (see the `DYNAMIC_METADATA` command operator [here](https://www.envoyproxy.io/docs/envoy/latest/configuration/observability/access_log#command-operators)). (https://github.com/solo-io/gloo/issues/1546)
+
 ### v0.20.11
 
 **New Features**
