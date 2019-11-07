@@ -1,3 +1,28 @@
+### v0.21.0
+
+**Dependency Bumps**
+
+- solo-io/go-utils has been upgraded to v0.10.25.
+
+**Breaking Changes**
+
+- This release changes the names of Gloo's ClusterRoles. By default, cluster-scoped roles will have the namespace of the associated Gloo installation appended to their name (i.e., the cluster-scoped role "gloo-resource-reader" created along with a Gloo installation to the gloo-system namespace will now become "gloo-resource-reader-gloo-system"). This may cause a problem during upgrades from Gloo <0.21.0 to Gloo >=0.21.0 for both open-source and enterprise Gloo, as the role ref in a ClusterRoleBinding is immutable. To resolve this, you can delete the existing ClusterRoleBindings with "kubectl delete clusterrolebinding -l app=gloo" and they will be recreated correctly by the rest of the upgrade process. (https://github.com/solo-io/gloo/issues/1459)
+
+**Helm Changes**
+
+- At install time, set an installation ID on all resources. This ID is determined by using the value of the new Helm setting "installConfig.installationId", or selecting an ID at random if that setting is not provided. If providing your own installation ID, the value you provide must be a valid kubernetes label (refer to https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/#syntax-and-character-set). (https://github.com/solo-io/gloo/issues/1589)
+- Allow RBAC resource names to receive custom suffixes through the introduction of the new Helm setting "global.glooRbac.nameSuffix". This enables, for example, blue/green deployments of Gloo to different namespaces within the same cluster when using cluster-scoped RBAC resources. This change is backwards compatible. However, if you are performing an upgrade of Gloo from a version prior to this change and plan to use the new Helm value, then you may end up with duplicate RBAC resources in your cluster (e.g. Roles/RoleBindings with and without the suffix). If this is the case, the old resources (without the suffix) can be safely cleaned up. (https://github.com/solo-io/gloo/issues/1459)
+
+**New Features**
+
+- The default version of GlooE installed by the CLI is now 0.20.8. (https://github.com/solo-io/gloo/issues/1596)
+- Support for Envoy's `forward_client_cert_details` and `set_current_client_cert_details` HTTP connection manager options (https://github.com/solo-io/gloo/issues/1577)
+
+**Fixes**
+
+- Use the installation ID set by Helm to ensure that glooctl uninstalls only resources created for the instance of Gloo being uninstalled. It does this by attempting to read the "installationId" label from the gloo pod. If the label is not found, the uninstall will fail. You can choose to proceed by passing the new --force flag to "glooctl uninstall", which will attempt to perform an uninstall that may inadvertently delete cluster-scoped resources belonging to some other installation of Gloo. (https://github.com/solo-io/gloo/issues/1593)
+- Currently Gloo logs a warning each time it replaces an illegal character in the name of a Virtual Host. Change it to a debug level message to not flood the logs. (https://github.com/solo-io/gloo/issues/1604)
+
 ### v0.20.13
 
 **Fixes**
