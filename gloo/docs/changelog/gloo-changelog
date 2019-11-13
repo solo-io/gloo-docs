@@ -1,3 +1,19 @@
+### v0.21.1
+
+**Helm Changes**
+
+- Allow the gateway certgen job to have a ttlSecondsAfterFinished set on it, defaulting to 60 seconds. A new Helm value "gateway.certGenJob.ttlSecondsAfterFinished" is provided to configure the value. This setting is currently in k8s Alpha (https://kubernetes.io/docs/concepts/workloads/controllers/jobs-run-to-completion/#ttl-mechanism-for-finished-jobs) so you may disable it entirely by setting "gateway.certGenJob.setTtlAfterFinished" to false. See https://kubernetes.io/docs/reference/command-line-tools-reference/feature-gates/#feature-gates for information on the k8s feature flag corresponding to this setting ("TTLAfterFinished"). (https://github.com/solo-io/gloo/issues/1631)
+
+**New Features**
+
+- Adds the glooctl command "glooctl debug yaml". This command dumps a YAML manifest representing the current state of the Gloo installation running in the specified namespace. This is mainly used as a debug tool, and is not yet suitable for use as a Gloo backup tool; the dumped manifest contains resourceVersions, so you may be unable to do, for example, "glooctl debug yaml | kubectl apply -f -" if a resource has changed between the dump and the "kubectl apply". (https://github.com/solo-io/gloo/issues/1650)
+- Implement a utility to print snapshot content with the Secret content redacted (https://github.com/solo-io/gloo/issues/1679)
+
+**Fixes**
+
+- Downgrade the log level from Error to Warn when gloo fails to report statistics (https://github.com/solo-io/gloo/issues/1633)
+- **Security Fix**: Fix a bug where, when Gloo's logging level is set to Debug, we may inadvertently write the content of Secrets into the pod logs. We now print the same content into the logs, but with the Secret data redacted. (https://github.com/solo-io/gloo/issues/1679)
+
 ### v0.21.0
 
 **Dependency Bumps**
