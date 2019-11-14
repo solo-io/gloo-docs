@@ -1,4 +1,0 @@
-rate_limits:
-- actions:
-  - generic_key:
-      descriptor_value: "some_value"
