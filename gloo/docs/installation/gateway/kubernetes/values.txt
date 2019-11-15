@@ -23,7 +23,8 @@
 |settings.create|bool|true|create a Settings CRD which provides bootstrap configuration to Gloo controllers|
 |settings.extensions|interface|||
 |settings.singleNamespace|bool|false|Enable to use install namespace as WatchNamespace and WriteNamespace|
-|gloo.deployment.image.tag|string|0.21.1|tag for the container|
+|settings.linkerd|bool|false|Enable automatic Linkerd integration in Gloo.|
+|gloo.deployment.image.tag|string|0.21.2|tag for the container|
 |gloo.deployment.image.repository|string|gloo|image name (repository) for the container.|
 |gloo.deployment.image.registry|string||image prefix/registry e.g. (quay.io/solo-io)|
 |gloo.deployment.image.pullPolicy|string||image pull policy for the container|
@@ -39,7 +40,7 @@
 |gloo.deployment.resources.limits.cpu|string||amount of CPUs|
 |gloo.deployment.resources.requests.memory|string||amount of memory|
 |gloo.deployment.resources.requests.cpu|string||amount of CPUs|
-|discovery.deployment.image.tag|string|0.21.1|tag for the container|
+|discovery.deployment.image.tag|string|0.21.2|tag for the container|
 |discovery.deployment.image.repository|string|discovery|image name (repository) for the container.|
 |discovery.deployment.image.registry|string||image prefix/registry e.g. (quay.io/solo-io)|
 |discovery.deployment.image.pullPolicy|string||image pull policy for the container|
@@ -55,11 +56,12 @@
 |discovery.fdsMode|string||mode for function discovery (blacklist or whitelist). See more info in the settings docs|
 |discovery.enabled|bool|true|enable Discovery features|
 |gateway.enabled|bool|true|enable Gloo API Gateway features|
+|gateway.validation.enabled|bool|true|enable Gloo API Gateway validation hook (default true)|
 |gateway.validation.alwaysAcceptResources|bool|true|unless this is set this to false in order to ensure validation webhook rejects invalid resources. by default, validation webhook will only log and report metrics for invalid resource admission without rejecting them outright.|
 |gateway.validation.secretName|string|gateway-validation-certs|Name of the Kubernetes Secret containing TLS certificates used by the validation webhook server. This secret will be created by the certGen Job if the certGen Job is enabled.|
 |gateway.validation.failurePolicy|string|Ignore|failurePolicy defines how unrecognized errors from the Gateway validation endpoint are handled - allowed values are 'Ignore' or 'Fail'. Defaults to Ignore |
 |gateway.upgrade|bool|false|Deploy a Job to convert (but not delete) v1 Gateway resources to v2 and not add a 'live' label to the gateway-proxy deployment's pod template. This allows for canary testing of gateway-v2 alongside an existing instance of gloo running with v1 gateway resources and controllers.|
-|gateway.deployment.image.tag|string|0.21.1|tag for the container|
+|gateway.deployment.image.tag|string|0.21.2|tag for the container|
 |gateway.deployment.image.repository|string|gateway|image name (repository) for the container.|
 |gateway.deployment.image.registry|string||image prefix/registry e.g. (quay.io/solo-io)|
 |gateway.deployment.image.pullPolicy|string||image pull policy for the container|
@@ -72,18 +74,19 @@
 |gateway.deployment.resources.limits.cpu|string||amount of CPUs|
 |gateway.deployment.resources.requests.memory|string||amount of memory|
 |gateway.deployment.resources.requests.cpu|string||amount of CPUs|
-|gateway.conversionJob.image.tag|string|0.21.1|tag for the container|
+|gateway.conversionJob.image.tag|string|0.21.2|tag for the container|
 |gateway.conversionJob.image.repository|string|gateway-conversion|image name (repository) for the container.|
 |gateway.conversionJob.image.registry|string||image prefix/registry e.g. (quay.io/solo-io)|
 |gateway.conversionJob.image.pullPolicy|string||image pull policy for the container|
 |gateway.conversionJob.image.pullSecret|string||image pull policy for the container |
 |gateway.conversionJob.restartPolicy|string|Never|restart policy to use when the pod exits|
-|gateway.certGenJob.image.tag|string|0.21.1|tag for the container|
+|gateway.certGenJob.image.tag|string|0.21.2|tag for the container|
 |gateway.certGenJob.image.repository|string|certgen|image name (repository) for the container.|
 |gateway.certGenJob.image.registry|string||image prefix/registry e.g. (quay.io/solo-io)|
 |gateway.certGenJob.image.pullPolicy|string||image pull policy for the container|
 |gateway.certGenJob.image.pullSecret|string||image pull policy for the container |
 |gateway.certGenJob.restartPolicy|string|OnFailure|restart policy to use when the pod exits|
+|gateway.certGenJob.enabled|bool|true|enable the job that generates the certificates for the validating webhook at install time (default true)|
 |gateway.certGenJob.setTtlAfterFinished|bool|true|Set ttlSecondsAfterFinished (a k8s feature in Alpha) on the job. Defaults to true|
 |gateway.certGenJob.ttlSecondsAfterFinished|int|60|Clean up the finished job after this many seconds. Defaults to 60|
 |gateway.updateValues|bool|false|if true, will use a provided helm helper 'gloo.updatevalues' to update values during template render - useful for plugins/extensions|
@@ -145,7 +148,7 @@
 |gatewayProxies.gatewayProxyV2.kind.deployment.resources.requests.memory|string||amount of memory|
 |gatewayProxies.gatewayProxyV2.kind.deployment.resources.requests.cpu|string||amount of CPUs|
 |gatewayProxies.gatewayProxyV2.kind.daemonSet.hostPort|bool||whether or not to enable host networking on the pod. Only relevant when running as a DaemonSet|
-|gatewayProxies.gatewayProxyV2.podTemplate.image.tag|string|0.21.1|tag for the container|
+|gatewayProxies.gatewayProxyV2.podTemplate.image.tag|string|0.21.2|tag for the container|
 |gatewayProxies.gatewayProxyV2.podTemplate.image.repository|string|gloo-envoy-wrapper|image name (repository) for the container.|
 |gatewayProxies.gatewayProxyV2.podTemplate.image.registry|string||image prefix/registry e.g. (quay.io/solo-io)|
 |gatewayProxies.gatewayProxyV2.podTemplate.image.pullPolicy|string||image pull policy for the container|
@@ -217,7 +220,7 @@
 |ingressProxy.configMap.data.NAME|string|||
 |ingressProxy.tracing|string|||
 |k8s.clusterName|string|cluster.local|cluster name to use when referencing services.|
-|accessLogger.image.tag|string|0.21.1|tag for the container|
+|accessLogger.image.tag|string|0.21.2|tag for the container|
 |accessLogger.image.repository|string|access-logger|image name (repository) for the container.|
 |accessLogger.image.registry|string||image prefix/registry e.g. (quay.io/solo-io)|
 |accessLogger.image.pullPolicy|string||image pull policy for the container|
