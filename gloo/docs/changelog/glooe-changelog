@@ -1,0 +1,1014 @@
+### v0.20.1
+
+**Dependency Bumps**
+
+- solo-io/go-utils has been upgraded to v0.10.15.
+
+**New Features**
+
+- Remove the GlooE cli, use the OS cli with enterprise subcommand instead (https://github.com/solo-io/solo-projects/issues/1177)
+- Support new external auth API location (directly on `*Plugins` messages instead of nested under `*Plugins.Extensions`). The new APIs maintain the same structure as the existing ones but are strongly-typed, meaning that you can now access the configuration without having to marshal generic protobuf types to the relevant structs, e.g. you can just do `virtualHost.GetVirtualHostPlugins().GetExtauth()`. The deprecated configuration format via opaque extensions is still supported. (https://github.com/solo-io/gloo/issues/1171)
+
+### v0.20.0
+
+**Dependency Bumps**
+
+- solo-io/gloo has been upgraded to v0.20.2.
+
+**New Features**
+
+- Add the Route Table API (https://github.com/solo-io/solo-projects/issues/1160)
+- Support flattened strongly-typed ratelimit, rbac, and waf configs (https://github.com/solo-io/gloo/issues/1171)
+- Add the UpstreamGroup API (https://github.com/solo-io/solo-projects/issues/1168)
+
+**Fixes**
+
+- Fix bug that causes weighted destinations to disable auth if no extauth config is provided. (https://github.com/solo-io/solo-projects/issues/1183)
+- Fix route duplication bug when attempting to reorder routes with the same path name. (https://github.com/solo-io/solo-projects/issues/1113)
+- Fix bug that prevented proxy page from loading when proxy had no listeners. (https://github.com/solo-io/gloo/issues/1276)
+- Fix inconsistent ordering of upstreams between renders. (https://github.com/solo-io/solo-projects/issues/1171)
+
+### v0.19.0
+
+**Dependency Bumps**
+
+- solo-io/envoy-gloo-ee has been upgraded to v0.1.17.
+- solo-io/gloo has been upgraded to v0.19.1.
+- solo-io/ext-auth-service has been upgraded to v0.6.0.
+- solo-io/go-utils has been upgraded to v0.10.8.
+
+**Breaking Changes**
+
+- Implement the [new external auth API](https://github.com/solo-io/gloo/pull/1186) to support configuring authentication/authorization on **routes and weighted destinations**, in addition to virtual hosts. (https://github.com/solo-io/gloo/issues/1201)
+
+**New Features**
+
+- Expose some ext auth stats in the built-in envoy grafana dashboard (https://github.com/solo-io/solo-projects/issues/1151)
+- Support new jwt/rbac API location; continue support for deprecated jwt/rbac config in opaque extensions (https://github.com/solo-io/gloo/issues/1171)
+- Support strongly-typed waf config directly on listener/vhost/route (https://github.com/solo-io/gloo/issues/1171)
+
+**Fixes**
+
+- Make sure that the extauth binaries get copied from the Docker container, even when running Docker in a VM context (https://github.com/solo-io/solo-projects/issues/1080)
+- Make sure that all observability-related pods get cleaned up by glooctl uninstall (https://github.com/solo-io/solo-projects/issues/1157)
+- Fix core rule set bug where specific config is applied after general config (https://github.com/solo-io/solo-projects/issues/1139)
+
+### v0.18.32
+
+**Dependency Bumps**
+
+- solo-io/envoy-gloo-ee has been upgraded to v0.1.17.
+
+**New Features**
+
+- Expose some ext auth stats in the built-in envoy grafana dashboard (https://github.com/solo-io/solo-projects/issues/1151)
+- Add a resource tag in the NACK stats. (https://github.com/solo-io/solo-projects/issues/287)
+
+**Fixes**
+
+- Make sure that the extauth binaries get copied from the Docker container, even when running Docker in a VM context (https://github.com/solo-io/solo-projects/issues/1080)
+- Fix core rule set bug where specific config is applied after general config (https://github.com/solo-io/solo-projects/issues/1139)
+
+### v0.18.31
+
+**New Features**
+
+- Allow the observability pod to talk to a custom grafana deployment (https://github.com/solo-io/solo-projects/issues/1108)
+- Allow the upstream dashboard template to be customized through a configmap (https://github.com/solo-io/solo-projects/issues/1103)
+- Revamp the default envoy stats dashboard that installs with Grafana (https://github.com/solo-io/solo-projects/issues/1115)
+- Support new rate limit API location; continue support for deprecated rate limit config in opaque extensions (https://github.com/solo-io/gloo/issues/1171)
+
+**Fixes**
+
+- Fix the UI when WatchNamespaces is a subset of cluster namespaces. (https://github.com/solo-io/solo-projects/issues/1065)
+- Fix bug that prevented functions list component in upstreams card view to close. (https://github.com/solo-io/solo-projects/issues/1095)
+- Rebuild all k8s resource clients when the settings change (https://github.com/solo-io/solo-projects/issues/1054)
+
+### v0.18.30
+
+**Dependency Bumps**
+
+- solo-io/go-utils has been upgraded to v0.10.2.
+- solo-io/gloo has been upgraded to v0.18.42.
+- solo-io/solo-kit has been upgraded to v0.10.17.
+
+**New Features**
+
+- Allow creating a route without specifying a virtual service. (https://github.com/solo-io/solo-projects/issues/1096)
+
+**Fixes**
+
+- Create route modal UX fixes. (https://github.com/solo-io/solo-projects/issues/1106)
+- Fix grafana dashboards not updating when an upstream changes (https://github.com/solo-io/solo-projects/issues/1030)
+- Fix the prometheus expressions in the auto-generated grafana dashboards (https://github.com/solo-io/solo-projects/issues/1029)
+- Show a loading spinner when edits to the raw yaml are accepted. (https://github.com/solo-io/solo-projects/issues/1091)
+- After error, stay in editor context when editing raw yaml. (https://github.com/solo-io/solo-projects/issues/1092)
+
+### v0.18.29
+
+**Dependency Bumps**
+
+- solo-io/rate-limiter has been upgraded to v0.0.1.
+
+**New Features**
+
+- Add DynamoDb implementation for rate-limiting service backend (https://github.com/solo-io/customers/issues/1)
+- Enable active health checks for ext-auth server. (https://github.com/solo-io/gloo/issues/941)
+
+**Fixes**
+
+- Add user-friendly error messages for UI in read-only mode. (https://github.com/solo-io/solo-projects/issues/1086)
+- Fix AWS upstream creation in UI. (https://github.com/solo-io/solo-projects/issues/1078)
+- Allow the grafana UI to be loaded after install (https://github.com/solo-io/solo-projects/issues/1028)
+- Don't start the observability loop without a valid license (https://github.com/solo-io/solo-projects/issues/1032)
+- Fix observability RBAC settings (https://github.com/solo-io/solo-projects/issues/1026)
+
+### v0.18.28
+
+**New Features**
+
+- Improved UI version display, show UI version and indicate Gloo vs. GlooE. (https://github.com/solo-io/solo-projects/pull/1077)
+
+**Fixes**
+
+- Fix extauth update on virtual services API. (https://github.com/solo-io/solo-projects/issues/1036)
+- Send the correct AWS secret namespce value to the backend. (https://github.com/solo-io/solo-projects/issues/1078)
+- Do not require readConfig to be set in order to show Envoy details. (https://github.com/solo-io/solo-projects/issues/1061)
+
+### v0.18.27
+
+**Dependency Bumps**
+
+- solo-io/ext-auth-service has been upgraded to v0.5.1.
+- solo-io/gloo has been upgraded to v0.18.37.
+
+**New Features**
+
+- Pool extauth connections to LDAP server. (https://github.com/solo-io/solo-projects/issues/1066)
+
+### v0.18.26
+
+**Dependency Bumps**
+
+- solo-io/gloo has been upgraded to v0.18.35.
+
+### v0.18.25
+
+**Dependency Bumps**
+
+- solo-io/gloo has been upgraded to v0.18.32.
+
+**New Features**
+
+- Show when all namespaces are being watched. (https://github.com/solo-io/solo-projects/issues/1050)
+
+**Fixes**
+
+- Show error modal when user makes invalid updates to the raw yaml. (https://github.com/solo-io/solo-projects/issues/1059)
+- Refreshing on the watch namespaces would sometimes resut in an error. (https://github.com/solo-io/solo-projects/issues/1063)
+
+### v0.18.24
+
+**New Features**
+
+- Surface error messages with modals. (https://github.com/solo-io/solo-projects/issues/993)
+- Implement front-side of editing resource YAML (https://github.com/solo-io/solo-projects/issues/997)
+
+**Fixes**
+
+- Only show error modals after mutations to prevent overly repetitive modals. (https://github.com/solo-io/solo-projects/issues/1052)
+
+### v0.18.23
+
+**Dependency Bumps**
+
+- solo-io/ext-auth-service has been upgraded to v0.4.4.
+- solo-io/gloo has been upgraded to v0.18.30.
+- solo-io/gloo has been upgraded to v0.18.29.
+- solo-io/envoy-gloo-ee has been upgraded to v0.1.16.
+
+**New Features**
+
+- Support clearRouteCache and statusOnError ext-auth settings (https://github.com/solo-io/solo-projects/pull/1039)
+- Add LDAP Ext Auth support. (https://github.com/solo-io/solo-projects/issues/1038)
+- Integrate WAF/ModSecurity filter into Gloo (https://github.com/solo-io/solo-projects/issues/695)
+- Implement server-side of editing resource YAML (https://github.com/solo-io/solo-projects/issues/997)
+
+### v0.18.22
+
+**New Features**
+
+- Simplify CRUD operations by removing redundant input wrappers (https://github.com/solo-io/solo-projects/issues/947)
+
+### v0.18.21
+
+**Fixes**
+
+- Fixes babel bug that caused app to crash. (https://github.com/solo-io/solo-projects/issues/1011)
+
+### v0.18.20
+
+**Dependency Bumps**
+
+- solo-io/gloo has been upgraded to v0.18.26.
+
+**New Features**
+
+- For gateways and proxies that are invalid, pipe their status and reason through to the UI. (https://github.com/solo-io/solo-projects/issues/961)
+- Added OPA support for glooctl (https://github.com/solo-io/solo-projects/pull/1001)
+- Added OPA support for gloo (https://github.com/solo-io/solo-projects/pull/992)
+- Allow specifying custom scopes to OIDC (https://github.com/solo-io/solo-projects/pull/1005)
+- Yaml configurations can now be seen within UI for Gateways and Virtual Services. (https://github.com/solo-io/solo-projects/issues/931)
+
+**Fixes**
+
+- Headers and Query Parameters may now fully be created with blank values. (https://github.com/solo-io/solo-projects/issues/925)
+- Hitting enter in an input box will, in more cases, complete the desired form. (https://github.com/solo-io/solo-projects/issues/946)
+- Upstream names now get properly verified during creation. (https://github.com/solo-io/solo-projects/issues/982)
+- Use helms values in glooctl. (https://github.com/solo-io/solo-projects/issues/995)
+- Glooctl install works when disabling grafana and/or prometheus. (https://github.com/solo-io/solo-projects/issues/996)
+- Fix indentation in yaml renderer. (https://github.com/solo-io/solo-projects/issues/990)
+
+### v0.18.19
+
+**New Features**
+
+- Glooctl now has a check command to detect known issues with CRDs. (https://github.com/solo-io/solo-projects/issues/978)
+
+**Fixes**
+
+- UI now routes to overview by default. (https://github.com/solo-io/solo-projects/issues/985)
+
+### v0.18.18
+
+**Dependency Bumps**
+
+- solo-io/gloo has been upgraded to v0.18.22.
+
+**New Features**
+
+- Show Upstream counts. (https://github.com/solo-io/solo-projects/issues/957)
+- Provide feedback after updating a gateway. (https://github.com/solo-io/solo-projects/issues/975)
+
+**Fixes**
+
+- Switch Envoy logo. (https://github.com/solo-io/solo-projects/issues/955)
+- Center text in boxes with numbers. (https://github.com/solo-io/solo-projects/issues/956)
+- Fix updating values in the gateway form. (https://github.com/solo-io/solo-projects/issues/967)
+- Include pipe and description on same level in dialogs. (https://github.com/solo-io/solo-projects/issues/968)
+- Fix spacing on upstream count. (https://github.com/solo-io/solo-projects/issues/973)
+- Remove extra text on gateway form. (https://github.com/solo-io/solo-projects/issues/974)
+- The Overview page now properly displays errors for Envoy. (https://github.com/solo-io/solo-projects/issues/965)
+- Make the secret selection more use friendly when creating AWS Upstreams. (https://github.com/solo-io/solo-projects/issues/969)
+
+### v0.18.17
+
+**Fixes**
+
+- Fix long loading time for proxies and gateways in Admin page. (https://github.com/solo-io/solo-projects/issues/958)
+- Fix update gateway functionality. (https://github.com/solo-io/solo-projects/issues/959)
+- Show correct envoy status on overview page. (https://github.com/solo-io/solo-projects/issues/960)
+
+### v0.18.16
+
+**New Features**
+
+- Show envoy status in ui. (https://github.com/solo-io/solo-projects/pull/953)
+- Add envoy status to envoy details. (https://github.com/solo-io/solo-projects/issues/949)
+- Add Gateway and Envoy api calls to redux store, refactor Gateway form to conform to backend. (https://github.com/solo-io/solo-projects/issues/951)
+
+**Fixes**
+
+- The UI no longer sends an erroneous empty rate limit while editing Virtual Services. (https://github.com/solo-io/solo-projects/issues/924)
+
+### v0.18.15
+
+**New Features**
+
+- Envoy information is now displayed in UI. (https://github.com/solo-io/solo-projects/issues/876)
+- Gateway configurations can now be edited in the UI (http only currently). (https://github.com/solo-io/solo-projects/issues/875)
+- Implement polling to ensure up to date data. (https://github.com/solo-io/solo-projects/issues/822)
+- Upstream status is up to date. (https://github.com/solo-io/solo-projects/issues/893)
+
+**Fixes**
+
+- Always set Raw on virtual service details regardless of whether there are plugins. (https://github.com/solo-io/solo-projects/issues/942)
+
+### v0.18.14
+
+**Dependency Bumps**
+
+- solo-io/gloo has been upgraded to v0.18.20.
+
+**New Features**
+
+- Yaml configurations are now viewable and downloadable from several spots in the UI. (https://github.com/solo-io/solo-projects/issues/874)
+
+**Fixes**
+
+- Scrub contents when returning secrets from the apiserver. (https://github.com/solo-io/solo-projects/issues/933)
+
+### v0.18.13
+
+**Dependency Bumps**
+
+- solo-io/ext-auth-plugins has been upgraded to v0.0.3.
+
+**New Features**
+
+- Add list envoy details to the apiserver. (https://github.com/solo-io/solo-projects/issues/894)
+- Add raw yaml to upstream API on the new upstream details object. (https://github.com/solo-io/solo-projects/issues/928)
+
+**Fixes**
+
+- Set default Helm value for `imagePullPolicy` to `IfNotPresent`. (https://github.com/solo-io/solo-projects/issues/930)
+
+### v0.18.12
+
+**New Features**
+
+- Allows extauth to run as an envoy sidecar and communicate over unix domain sockets. (https://github.com/solo-io/gloo/issues/871)
+- Gateways are now editable from the UI, though HTTP only. (https://github.com/solo-io/solo-projects/issues/875)
+- The Admin Summary page setup is complete. (https://github.com/solo-io/solo-projects/issues/877)
+
+**Fixes**
+
+- Watched namespaces editing again works as intended. (https://github.com/solo-io/solo-projects/issues/890)
+- Empty function lists are not shown during route creation. (https://github.com/solo-io/solo-projects/issues/895)
+
+### v0.18.11
+
+**Dependency Bumps**
+
+- solo-io/ext-auth-service has been upgraded to v0.3.0.
+- solo-io/ext-auth-plugins has been upgraded to v0.0.1.
+
+**New Features**
+
+- Publish a script that can be used during ext-auth plugin development to verify whether a plugin can be loaded by
+a specific version of GlooE. The next steps are 1) wiring script up in `ext-auth-plugins` repo and 2) add docs. (https://github.com/solo-io/solo-projects/issues/720)
+- Implement external auth via dynamically loaded Go plugins. The next steps are 1) publishing a script that can be used
+by plugin developers to verify that their plugins are compatible with a particular version of GlooE and 2) add docs. (https://github.com/solo-io/solo-projects/issues/720)
+
+**Fixes**
+
+- - Observability service account and settings-user role.
+- Apiserver service account and custom role.
+- Apiserver will not register settings CRD unless an env var is set. (https://github.com/solo-io/solo-projects/issues/915)
+
+### v0.18.10
+
+**Dependency Bumps**
+
+- solo-io/gloo has been upgraded to v0.18.17.
+
+**New Features**
+
+- Style filter headers to match design. (https://github.com/solo-io/solo-projects/issues/873)
+- External Auth and Rate Limiting links in the UI have been updated for the new documentation. The link to Join the Community within the UI now invites them to join our slack channel. (https://github.com/solo-io/solo-projects/issues/891)
+- The Admin Summary page is now available in the UI. (https://github.com/solo-io/solo-projects/issues/872)
+- The Admin Summary page is now available in the UI. (https://github.com/solo-io/solo-projects/issues/877)
+- Add update api for gateways (https://github.com/solo-io/solo-projects/issues/857)
+
+**Fixes**
+
+- The route creation and editing modal is now, hopefully, more easily digested. (https://github.com/solo-io/solo-projects/issues/892)
+
+### v0.18.9
+
+**Dependency Bumps**
+
+- solo-io/envoy-gloo-ee has been upgraded to v0.1.11.
+
+**New Features**
+
+- Gateway configurations can now be viewed in the UI (http only currently). (https://github.com/solo-io/solo-projects/issues/875)
+
+**Fixes**
+
+- Make klog not restart gloo when ewatches end (https://github.com/solo-io/gloo/issues/1021)
+
+### v0.18.8
+
+**New Features**
+
+- The UI has a new overview page which shows the status of various configurations. (https://github.com/solo-io/solo-projects/issues/872)
+
+**Fixes**
+
+- Switch table/cataglog icons to correct ones, truncate card names to avoid awkward spacing. (https://github.com/solo-io/solo-projects/issues/888)
+
+### v0.18.7
+
+**Dependency Bumps**
+
+- solo-io/gloo has been upgraded to v0.18.15.
+- solo-io/go-utils has been upgraded to v0.9.17.
+
+**New Features**
+
+- The UI now confirms before deleting a route. (https://github.com/solo-io/solo-projects/issues/843)
+- API for reading and listing gateways and proxies. (https://github.com/solo-io/solo-projects/issues/856)
+- Support global image variables in helm chart (https://github.com/solo-io/gloo/issues/892)
+- Filter upstreams by rejected and accepted and show in the url and breadcrumb. (https://github.com/solo-io/solo-projects/issues/873)
+- Show table view in url to keep table view on refresh. (https://github.com/solo-io/solo-projects/issues/841)
+- Show feedback after creating and deleting secrets. (https://github.com/solo-io/solo-projects/issues/850)
+- Give regex options in UI for matchers and query parameters. (https://github.com/solo-io/solo-projects/issues/816)
+- Sort upstreams and virtual services by status and reflect it on url. (https://github.com/solo-io/solo-projects/issues/873)
+
+**Fixes**
+
+- Allow deselecting status filters and navigating to vs details page. (https://github.com/solo-io/solo-projects/issues/873)
+- In UI, when the list of virtual services is empty it now looks less goofy. (https://github.com/solo-io/solo-projects/issues/859)
+- Update envoy (https://github.com/solo-io/solo-projects/pull/885)
+
+### v0.18.6
+
+**Fixes**
+
+- Allow routing to a normal kube service without rest and fix a bug where aws destination spec wasnt being set. (https://github.com/solo-io/solo-projects/issues/854)
+
+### v0.18.5
+
+**New Features**
+
+- Add external auth support for apikey-based authentication. (https://github.com/solo-io/solo-projects/issues/719)
+- provide feedback after upstream creation (https://github.com/solo-io/solo-projects/issues/822)
+
+### v0.18.4
+
+**Fixes**
+
+- Can now create routes without specifying a virtual service. (https://github.com/solo-io/solo-projects/issues/818)
+- Routes are now editable in their modal via the VS Details route list. (https://github.com/solo-io/solo-projects/issues/814)
+- Fix bug in displaying the available functions to route to. (https://github.com/solo-io/solo-projects/issues/847)
+
+### v0.18.3
+
+**New Features**
+
+- Use default namespace from API in front-end (https://github.com/solo-io/solo-projects/issues/821)
+- Replace former UI and API server with gRPC implementations. (https://github.com/solo-io/solo-projects/issues/745)
+- Add GetPodNamespace to the config service. (https://github.com/solo-io/solo-projects/issues/820)
+- allow routing to kube upstreams (https://github.com/solo-io/solo-projects/issues/826)
+
+**Fixes**
+
+- Delete virtual services and upstreams from the table view. (https://github.com/solo-io/solo-projects/issues/818)
+- Routes now be sorted more smoothly. (https://github.com/solo-io/solo-projects/issues/824)
+
+### v0.18.2
+
+**Dependency Bumps**
+
+- solo-io/gloo has been upgraded to v0.18.10.
+
+**New Features**
+
+- Allow users to delete upstreams. (https://github.com/solo-io/gloo/issues/818)
+
+**Fixes**
+
+- Fix virtual service deletion. (https://github.com/solo-io/solo-projects/issues/819)
+- Remove pre-install hook from settings. (https://github.com/solo-io/solo-projects/issues/827)
+- Create a default virtual service if one isn't provided and can't be identified. (https://github.com/solo-io/solo-projects/issues/792)
+- Only filter upstream types that are handled in the grpc server. (https://github.com/solo-io/solo-projects/issues/817)
+
+### v0.18.1
+
+**New Features**
+
+- Support creating ec2 upstreams via the new apiserver (https://github.com/solo-io/solo-projects/issues/785)
+- Show a confirmation modal and redirect after upstream creation. (https://github.com/solo-io/solo-projects/issues/796)
+- Allow users to delete virtual services. (https://github.com/solo-io/gloo/issues/794)
+
+**Fixes**
+
+- Do not overwrite all upstreamspec fields when updating an upstream (https://github.com/solo-io/solo-projects/issues/785)
+- Creating virtual services and routes now default to the gloo-system namespace. (https://github.com/solo-io/solo-projects/issues/793)
+- Routes can now be created while specifying a brand new virtual service at the same time. (https://github.com/solo-io/solo-projects/issues/792)
+- Stats page link removed until its true calling is discovered. A long journey awaits it. (https://github.com/solo-io/solo-projects/issues/825)
+- Creating a route in the UI now redirects the user to the virtual service details which house it. (https://github.com/solo-io/solo-projects/issues/823)
+- Methods, Headers, and Query Params now have prettier UI to highlight their natural beauty. (https://github.com/solo-io/solo-projects/issues/815)
+- Allow entering static upstreams. (https://github.com/solo-io/solo-projects/issues/790)
+
+### v0.18.0
+
+**Breaking Changes**
+
+- Bump Gloo to v0.18.2. This involves a breaking change to the Gateway API. Follow this guide for instructions on upgrading: https://gloo.solo.io/upgrading/0.18.1/. (https://github.com/solo-io/solo-projects/issues/754)
+
+**New Features**
+
+- Allow users to enable/disable grafana, prometheus, and rate-limiting. (https://github.com/solo-io/gloo/issues/840)
+- Allow users to route to aws upstreams. (https://github.com/solo-io/gloo/issues/744)
+- Add button to redirect user to the secrets page if no secret is found. (https://github.com/solo-io/gloo/issues/744)
+- Display the list of lambda functions on the upstreams page. (https://github.com/solo-io/gloo/issues/744)
+- Allow users to delete secrets from the table. (https://github.com/solo-io/gloo/issues/639)
+- Show all upstream types we can discover in the checkboxes. (https://github.com/solo-io/solo-projects/issues/744)
+- Version is now actually tied to something in the UI. (https://github.com/solo-io/gloo/issues/781)
+
+**Fixes**
+
+- Virtual Service details now has proper route creation UX. (https://github.com/solo-io/solo-projects/issues/636)
+- Creating a route in the UI now requires all valid data. (https://github.com/solo-io/solo-projects/issues/775)
+- Virtual Service creation now requires proper values. (https://github.com/solo-io/solo-projects/issues/772)
+- Virtual Service details now has proper route creation UX. (https://github.com/solo-io/solo-projects/issues/773)
+- Virtual Service OAuth configuration is now mutable from the UI. (https://github.com/solo-io/solo-projects/issues/636)
+- Fix parsing of anon/authorized rate limit from field map. (https://github.com/solo-io/solo-projects/issues/734)
+- Route order can now be swapped. (https://github.com/solo-io/solo-projects/issues/636)
+- Make it easier to work with virtual service plugins on the front end (https://github.com/solo-io/solo-projects/issues/767)
+- Add smoother validation. Tape patch bug in anticipation of real fix. (https://github.com/solo-io/solo-projects/issues/682)
+- Upstream names, and all titles, no longer break their cards in the listing. (https://github.com/solo-io/solo-projects/issues/761)
+- Virtual service creation now ends more naturally for user. (https://github.com/solo-io/solo-projects/issues/760)
+- Now catch and inform user when attempting to create a route without setting upstream. (https://github.com/solo-io/solo-projects/issues/759)
+- Dropdowns in UI fields now work fine on blur. (https://github.com/solo-io/solo-projects/issues/782)
+- The rate limit form in the UI now disables and submits properly. (https://github.com/solo-io/solo-projects/issues/782)
+- The checkboxes for Lambda functions in the UI are now aligned. (https://github.com/solo-io/solo-projects/issues/782)
+- Other minor errors in the Rate Limit form are now fixed. (https://github.com/solo-io/solo-projects/issues/782)
+- Upstream dropdowns now show the upstream type by icon. (https://github.com/solo-io/solo-projects/issues/744)
+- Add a new virtual service input object to create / update API to allow delta-style updates. (https://github.com/solo-io/solo-projects/issues/749)
+
+### v0.17.3
+
+**Dependency Bumps**
+
+- solo-io/gloo has been upgraded to v0.17.6.
+
+**New Features**
+
+- Clean up static and consul forms. (https://github.com/solo-io/solo-projects/issues/682)
+
+**Fixes**
+
+- Rates now updatable. (https://github.com/solo-io/solo-projects/issues/636)
+
+### v0.17.2
+
+**Dependency Bumps**
+
+- solo-io/gloo has been upgraded to v0.17.5.
+
+### v0.17.1
+
+**Dependency Bumps**
+
+- solo-io/gloo has been upgraded to v0.17.4.
+- solo-io/gloo-i has been upgraded to v0.1.26.
+
+**New Features**
+
+- Allow for entering secrets in the secrets page table. (https://github.com/solo-io/solo-projects/issues/682)
+- Allow for entering aws secrets in the secrets page table. (https://github.com/solo-io/solo-projects/issues/682)
+- Can now set all fields in the aws upstream form. (https://github.com/solo-io/solo-projects/issues/682)
+- Can now set all fields in the azure upstream form. (https://github.com/solo-io/solo-projects/issues/682)
+- Watch namespaces is now hooked up to api. (https://github.com/solo-io/solo-projects/issues/639)
+
+**Fixes**
+
+- Create routes modal fed by tables in VS list and tables+cards in Upstreams list. (https://github.com/solo-io/solo-projects/issues/705)
+- Fix error state in upstream cards. (https://github.com/solo-io/solo-projects/issues/682)
+- New route modal now has full parity with previous version. (https://github.com/solo-io/solo-projects/issues/705)
+- First parts of create new route modal. (https://github.com/solo-io/solo-projects/issues/705)
+- First working version of create new route modal. Does not handle all cases. (https://github.com/solo-io/solo-projects/issues/705)
+- Route table in VS Details and Route creation fixes. (https://github.com/solo-io/solo-projects/issues/705)
+- Domain names now fully display in their lists in UI. (https://github.com/solo-io/solo-projects/issues/712)
+- Domains now listed in Virtual Service details page, and updates going through API. (https://github.com/solo-io/solo-projects/issues/636)
+- Routes in virtual service details page now delete and addable. (https://github.com/solo-io/solo-projects/issues/636)
+
+### v0.17.0
+
+**Dependency Bumps**
+
+- solo-io/gloo has been upgraded to v0.17.0.
+
+**Breaking Changes**
+
+- Update to gloo 0.17.0 (https://github.com/solo-io/solo-projects/pull/683)
+
+**New Features**
+
+- Add the components for the AWS specific create us fields. (https://github.com/solo-io/solo-projects/issues/682)
+- Add the components for the Azure specific create us fields. (https://github.com/solo-io/solo-projects/issues/682)
+- Add the components for the Consul specific create upstream fields. (https://github.com/solo-io/solo-projects/issues/682)
+- Group upstreams by namespace in listing page. (https://github.com/solo-io/solo-projects/issues/682)
+- Add the components for the Kubernetes specific create upstream fields. (https://github.com/solo-io/solo-projects/issues/682)
+- Add the components for the create Static upstream fields. (https://github.com/solo-io/solo-projects/issues/682)
+
+**Fixes**
+
+- Upgrade cards to show health better. Creates component for status information. (https://github.com/solo-io/solo-projects/issues/685)
+- Fix typo in the static upstream form. (https://github.com/solo-io/solo-projects/issues/682)
+- Tables now have more functionality and real data showing. (https://github.com/solo-io/solo-projects/issues/687)
+- Show correct virtual service status on icons in vs listing page. (https://github.com/solo-io/solo-projects/issues/701)
+- Fix vulnerability. (https://github.com/solo-io/solo-projects/pull/692)
+- Fix vulnerability. (https://github.com/solo-io/solo-projects/pull/692)
+
+### v0.16.2
+
+**New Features**
+
+- Support basic create upstream functionality. (https://github.com/solo-io/solo-projects/issues/635)
+- Create VS form with basic functionality. (https://github.com/solo-io/solo-projects/issues/634)
+- Filter upstreams by type on the catalog and table views (https://github.com/solo-io/solo-projects/issues/635)
+- Use correct logos for upstream cards. (https://github.com/solo-io/solo-projects/issues/635)
+
+**Fixes**
+
+- Change class names in svg elements so they don't override each other. (https://github.com/solo-io/solo-projects/pull/680)
+
+### v0.16.1
+
+**Fixes**
+
+- Fix an issue where virtual host name containing dots in external auth. (https://github.com/solo-io/solo-projects/pull/673)
+
+### v0.16.0
+
+**Dependency Bumps**
+
+- solo-io/gloo has been upgraded to v0.16.0.
+
+**Breaking Changes**
+
+- Update to gloo 0.16.0 (https://github.com/solo-io/solo-projects/pull/669)
+
+**Fixes**
+
+- Fix a bug where OIDC was constantly returning 403 (https://github.com/solo-io/solo-projects/pull/669)
+
+### v0.14.1
+
+**Dependency Bumps**
+
+- solo-io/gloo has been upgraded to v0.14.3.
+
+**New Features**
+
+- Ext auth modal form set up, needs API hookup. (https://github.com/solo-io/solo-projects/issues/636)
+- Virtual services catalog. Reusable elsewhere. (https://github.com/solo-io/solo-projects/issues/634)
+- Breadcrumbs are now in (https://github.com/solo-io/solo-projects/issues/640)
+- Settings page tables prepped (https://github.com/solo-io/solo-projects/issues/639)
+- Virtual services page table and toggle complete (https://github.com/solo-io/solo-projects/issues/634)
+- Tables now look closer to spec (https://github.com/solo-io/solo-projects/issues/634)
+- Watched namespace page visualizations, 80% setup (https://github.com/solo-io/solo-projects/issues/638)
+- Rate Limit form scaffold. (https://github.com/solo-io/solo-projects/issues/636)
+- Security page data hookup (https://github.com/solo-io/solo-projects/issues/637)
+- Watched Namespaces page data hookup (https://github.com/solo-io/solo-projects/issues/638)
+- Secrets page data hookup (https://github.com/solo-io/solo-projects/issues/639)
+- Display real upstream data in the tables and cards. (https://github.com/solo-io/solo-projects/issues/635)
+- Display real upstream data. (https://github.com/solo-io/solo-projects/issues/635)
+- Add upstream service to grpc server. (https://github.com/solo-io/solo-projects/issues/612)
+- Populate the virtual service details view with real data. (https://github.com/solo-io/solo-projects/issues/636)
+- Clicking on a virtual service tile now redirects to vs details page as per spec. (https://github.com/solo-io/solo-projects/issues/634)
+- Virtual Services details page skeleton. (https://github.com/solo-io/solo-projects/issues/636)
+- Populate the virtual service list view with real data. (https://github.com/solo-io/solo-projects/issues/634)
+- Implement virtual service API on grpc server. (https://github.com/solo-io/solo-projects/issues/613)
+
+**Fixes**
+
+- Fix race condition where helm chart sometimes wouldn't publish on release builds. (https://github.com/solo-io/solo-projects/issues/656)
+
+### v0.14.0
+
+**Dependency Bumps**
+
+- solo-io/gloo has been upgraded to v0.14.1.
+
+**Breaking Changes**
+
+- Update to gloo 0.14.0 (https://github.com/solo-io/solo-projects/pull/622)
+
+**New Features**
+
+- Support multiple providers for JWT (https://github.com/solo-io/solo-projects/pull/622)
+- Support setting claims as headers (https://github.com/solo-io/solo-projects/pull/622)
+
+**Fixes**
+
+- Use apps/v1 api group for deployments (https://github.com/solo-io/gloo/issues/767)
+
+### v0.13.18
+
+**New Features**
+
+- Add config service to grpc service. (https://github.com/solo-io/solo-projects/issues/609)
+- Add gRPC service for artifacts. (https://github.com/solo-io/solo-projects/issues/610)
+- Add gRPC service for secrets. (https://github.com/solo-io/solo-projects/issues/611)
+
+
+### v0.13.17
+
+**Dependency Bumps**
+
+- solo-io/gloo-i has been upgraded to v0.1.25.
+
+### v0.13.16
+
+**New Features**
+
+- Add support for local JWKS (https://github.com/solo-io/solo-projects/pull/604)
+- JWT and RBAC support (https://github.com/solo-io/solo-projects/pull/602)
+
+### v0.13.15
+
+**Fixes**
+
+- Allow helm to provide an array of namespaces to watch. (https://github.com/solo-io/solo-projects/issues/597)
+
+### v0.13.14
+
+**Fixes**
+
+- User redis image instead of kubernetes/redis. (https://github.com/solo-io/solo-projects/pull/595)
+
+### v0.13.13
+
+**Dependency Bumps**
+
+- solo-io/gloo-i has been upgraded to v0.1.23.
+- solo-io/gloo-i has been upgraded to v0.1.24.
+
+### v0.13.12
+
+**Dependency Bumps**
+
+- solo-io/gloo-i has been upgraded to v0.1.22.
+- solo-io/envoy-gloo-ee has been upgraded to v0.1.5.
+
+### v0.13.11
+
+**Dependency Bumps**
+
+- solo-io/gloo-i has been upgraded to v0.1.21.
+
+### v0.13.10
+
+This release contained no user-facing changes.
+
+### v0.13.9
+
+**Fixes**
+
+- Use latest envoy to address envoy security release (https://github.com/solo-io/solo-projects/pull/577)
+
+### v0.13.8
+
+This release contained no user-facing changes.
+
+
+### v0.13.6
+
+This release contained no user-facing changes.
+
+### v0.13.5
+
+**Fixes**
+
+- Add default values for ext auth in http mode. (https://github.com/solo-io/solo-projects/pull/571)
+
+
+### v0.13.4
+
+**New Features**
+
+- Allow using custom http service when using ext auth. (https://github.com/solo-io/solo-projects/pull/570)
+
+### v0.13.2
+
+**Dependency Bumps**
+
+- solo-io/gloo-i has been upgraded to v0.1.18.
+
+**Fixes**
+
+- Fixed the description of the `--enable-oidc-auth` flag for `glooctl` virtual service commands. (https://github.com/solo-io/solo-projects/issues/561)
+
+### v0.13.1
+
+**New Features**
+
+- `glooctl create virtualservice` and `glooctl create secret oauth` now also support `--dry-run`. This was already supported for other commands inherited from open source `glooctl`. (https://github.com/solo-io/solo-projects/issues/558)
+
+**Fixes**
+
+- `glooctl create virtualservice` now sets the display name if the flag is provided, or defaults to the name. (https://github.com/solo-io/solo-projects/issues/557)
+
+### v0.13.0
+
+**Dependency Bumps**
+
+- solo-io/gloo has been upgraded to v0.13.0.
+- solo-io/solo-kit has been upgraded to v0.4.1.
+- solo-io/go-utils has been upgraded to v0.6.1.
+
+**Breaking Changes**
+
+- The upgrade to Gloo 0.13.3 refactored the install and uninstall commands. (https://github.com/solo-io/solo-projects/issues/504)
+
+### v0.12.3
+
+This release contained no user-facing changes.
+
+### v0.12.2
+
+**Fixes**
+
+- Use latest envoy with an upstream fix to SIGSEGV that happens under heavy load (https://github.com/solo-io/gloo/issues/590)
+
+### v0.12.1
+
+**Dependency Bumps**
+
+- solo-io/gloo-i has been upgraded to v0.1.16.
+
+### v0.12.0
+
+**Dependency Bumps**
+
+- solo-io/gloo-i has been upgraded to v0.1.15.
+- solo-io/gloo has been upgraded to v0.12.0.
+- solo-io/solo-kit has been upgraded to v0.3.10.
+
+**Breaking Changes**
+
+- Incremental changed to Delta in ratelimit and extauth protos. (https://github.com/solo-io/solo-projects/issues/540)
+
+**Fixes**
+
+- Fixes generation of rate limit XDS service. (https://github.com/solo-io/solo-projects/issues/293)
+
+### v0.11.3
+
+**New Features**
+
+- Allow customizing the timeout and failure mode for ratelimit (https://github.com/solo-io/solo-projects/issues/532)
+
+### v0.11.2
+
+This release contained no user-facing changes.
+
+### v0.11.1
+
+This release contained no user-facing changes.
+
+### v0.11.0
+
+**Breaking Changes**
+
+- Updated to gloo v0.11.X (https://github.com/solo-io/solo-projects/issues/525)
+
+**New Features**
+
+- allow rate limit with envoy config language. (https://github.com/solo-io/solo-projects/issues/525)
+
+### v0.10.19
+
+**Dependency Bumps**
+
+- solo-io/gloo-i has been upgraded to v0.1.14.
+
+**Fixes**
+
+- Use the same factory generation logic in the apiserver and gloo. (https://github.com/solo-io/solo-projects/issues/493)
+
+### v0.10.18
+
+**Dependency Bumps**
+
+- solo-io/gloo-i has been upgraded to v0.1.13.
+
+### v0.10.17
+
+**Fixes**
+
+- rate limit to work when using multiple listeners (https://github.com/solo-io/solo-projects/issues/514)
+
+### v0.10.16
+
+**Dependency Bumps**
+
+- solo-io/gloo-i has been upgraded to v0.1.12.
+
+### v0.10.15
+
+**Dependency Bumps**
+
+- solo-io/gloo-i has been upgraded to v0.1.11.
+
+### v0.10.14
+
+**Dependency Bumps**
+
+- solo-io/gloo-i has been upgraded to v0.1.10.
+
+**New Features**
+
+- Allow apiserver to query for all secrets at once. (https://github.com/solo-io/solo-projects/issues/507)
+
+### v0.10.13
+
+**Dependency Bumps**
+
+- solo-io/gloo-i has been upgraded to v0.1.9.
+
+### v0.10.12
+
+**Dependency Bumps**
+
+- solo-io/gloo-i has been upgraded to v0.1.8.
+
+### v0.10.11
+
+**Dependency Bumps**
+
+- solo-io/gloo-i has been upgraded to v0.1.7.
+
+### v0.10.10
+
+This release contained no user-facing changes.
+
+### v0.10.9
+
+**Dependency Bumps**
+
+- solo-io/gloo-i has been upgraded to v0.1.6.
+
+**Fixes**
+
+- Check connection to Kubernetes before running any CLI command. (https://github.com/solo-io/solo-projects/issues/463)
+
+### v0.10.8
+
+**Fixes**
+
+- Ignore whitespaces in the license key (https://github.com/solo-io/solo-projects/issues/461)
+
+### v0.10.7
+
+**Fixes**
+
+- Upgrade Gloo-I to v0.1.5. (https://github.com/solo-io/solo-projects/issues/456)
+
+### v0.10.6
+
+**Fixes**
+
+- Upgrade Gloo-I to v0.1.4. (https://github.com/solo-io/solo-projects/issues/456)
+
+### v0.10.5
+
+**New Features**
+
+- Added `glooctl uninstall` command. (https://github.com/solo-io/solo-projects/issues/454)
+
+**Fixes**
+
+- Add `POD_NAMESPACE` environment variable to deployment manifests. (https://github.com/solo-io/solo-projects/issues/452)
+- Upgrade GlooI to v0.1.3. (https://github.com/solo-io/solo-projects/issues/456)
+
+### v0.10.4
+
+**Fixes**
+
+- Wait for CRD registration before creating resources in `glooctl install`. (https://github.com/solo-io/solo-projects/issues/346)
+
+### v0.10.3
+
+**Fixes**
+
+- Increased the size of the prometheus persistent volume claim to 16G. (https://github.com/solo-io/solo-projects/issues/447)
+
+### v0.10.2
+
+**Fixes**
+
+- Now require license key in `glooctl install gateway`. (https://github.com/solo-io/solo-projects/issues/407)
+
+### v0.10.1
+
+**Fixes**
+
+- Call out features that are for enterprise Gloo only in the CLI docs and output. (https://github.com/solo-io/solo-projects/issues/439)
+
+### v0.10.0
+
+**Breaking Changes**
+
+- CLI installs from Helm chart istead of from GitHub release assets. (https://github.com/solo-io/solo-projects/issues/425)
+
+**New Features**
+
+- A fresh look has been given to tiles, filters, and searching. (https://github.com/solo-io/solo-projects/issues/434)
+
+### v0.9.0
+
+**Breaking Changes**
+
+- Moves temporarily private images to quay.io. (https://github.com/solo-io/solo-projects/issues/421)
+
+### v0.8.4
+
+This release contained no user-facing changes.
+
+
