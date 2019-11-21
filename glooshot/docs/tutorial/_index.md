@@ -22,7 +22,10 @@ The version on the bottom right handles the error more gracefully. It still prov
 ratings data is not available.
 
 
-{{< figure src="/tutorial/bookinfo_resilience_demo.png" title="The book info app consists of three services. If the ratings service fails, we do not want it to break the reviews service, as shown in the top-right frame. In a resilient app, the reviews service will continue to work, even if one of its dependencies is unavailable, as shown in the bottom-right frame." >}}
+<img src="/tutorial/bookinfo_resilience_demo.png" ></img>
+
+The book info app consists of three services. If the ratings service fails, we do not want it to break the reviews service, as shown in the top-right frame. In a resilient app, the reviews service will continue to work, even if one of its dependencies is unavailable, as shown in the bottom-right frame.
+
 
 ### Prerequisites
 
