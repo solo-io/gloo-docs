@@ -3,7 +3,7 @@
 Consolidated repo for building and deploying Solo docs. 
 
 # Deprecation notice:
-- Gloo docs are now managed in the [Gloo Repo](https://github.com/solo-io/gloo/tree/feature-rc1)
+- Gloo docs are now managed in the [Gloo Repo](https://github.com/solo-io/gloo/)
   - hosted at docs.solo.io/gloo/latest/
 - Other products' docs will soon move to their own repos.
 
@@ -24,4 +24,3 @@ pull request must be reviewed and approved by a member of Solo.
 # Version management and publishing. 
 
 Currently, this repo contains the consolidated docs for the latest versions of Gloo and Sqoop. When a PR merges into master, the docs are automatically deployed to `gloo.solo.io` and `sqoop.solo.io`. 
-
